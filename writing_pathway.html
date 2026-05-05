@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing Pathway · Year 8 English</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14140f;
+    --paper: #f5f1e8;
+    --paper-soft: #ede7d7;
+    --accent: #d94e2a;
+    --accent-soft: #f4a58a;
+    --green: #4a6b3a;
+    --blue: #2c4f6b;
+    --gold: #c89b3c;
+    --line: #14140f;
+    --shadow: 4px 4px 0 var(--ink);
+    --shadow-lg: 6px 6px 0 var(--ink);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(20,20,15,0.08) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  /* Print-Styles */
+  @media print {
+    body { background: white; background-image: none; }
+    .nav, .level-picker, .topic-picker, .toggle-btn, .timer-display, .print-hide { display: none !important; }
+    .stage { page-break-inside: avoid; box-shadow: none; border: 2px solid #000; }
+    .checklist label { page-break-inside: avoid; }
+  }
+
+  /* HEADER */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--accent);
+  }
+  .nav-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+  .nav-title span { color: var(--accent); }
+  .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+  .nav-links a {
+    color: var(--paper);
+    text-decoration: none;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { background: var(--accent); border-color: var(--paper); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 60px;
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 6px 14px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+    max-width: 1100px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 19px;
+    max-width: 720px;
+    color: var(--ink);
+    opacity: 0.85;
+    margin-bottom: 40px;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    margin-top: 40px;
+  }
+  .stat {
+    padding: 24px 20px;
+    border-right: 1px solid var(--ink);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 32px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .section-intro {
+    font-size: 17px;
+    max-width: 720px;
+    margin-bottom: 40px;
+    opacity: 0.85;
+  }
+
+  /* STEP 1 — LEVEL PICKER */
+  .level-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .level-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 28px;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    box-shadow: var(--shadow);
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+  }
+  .level-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .level-card.active {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .level-card.active .level-tag { background: var(--accent); }
+  .level-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 10px;
+    margin-bottom: 16px;
+  }
+  .level-name {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .level-cefr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 16px;
+  }
+  .level-desc {
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  /* TOPIC PICKER */
+  .topic-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .topic-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 22px 20px;
+    cursor: pointer;
+    transition: all 0.18s;
+    box-shadow: var(--shadow);
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  .topic-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 40px; height: 40px;
+    background: var(--accent);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    opacity: 0.85;
+  }
+  .topic-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+  .topic-card.active {
+    background: var(--accent);
+    color: var(--paper);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+  .topic-card.active::before { background: var(--paper); }
+  .topic-icon {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .topic-name {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .topic-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+
+  /* SELECTION SUMMARY */
+  .selection-summary {
+    margin-top: 40px;
+    padding: 24px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+  }
+  .selection-summary strong {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .selection-summary .accent { color: var(--accent-soft); }
+  .selection-summary span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* SESSION HEADER */
+  .session-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 3px solid var(--ink);
+    flex-wrap: wrap;
+  }
+  .session-mark {
+    font-family: 'Fraunces', serif;
+    font-size: 100px;
+    font-weight: 900;
+    line-height: 0.85;
+    color: var(--accent);
+    letter-spacing: -0.05em;
+  }
+  .session-info h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .session-info p {
+    font-size: 16px;
+    opacity: 0.8;
+    max-width: 600px;
+  }
+  .session-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 6px 14px;
+    margin-top: 12px;
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  /* STAGES (PHASEN) */
+  .stages {
+    display: grid;
+    gap: 28px;
+  }
+  .stage {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .stage-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .stage-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stage-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    flex: 1;
+    min-width: 200px;
+  }
+  .stage-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--accent);
+    padding: 5px 11px;
+    font-weight: 600;
+  }
+  .stage-body {
+    padding: 28px 32px;
+  }
+  .stage-body p { margin-bottom: 14px; }
+  .stage-body strong { font-weight: 700; }
+
+  /* TIPP-BOX */
+  .tip {
+    background: var(--paper-soft);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    margin: 18px 0;
+    font-size: 14.5px;
+  }
+  .tip strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .warn { border-left-color: var(--gold); }
+  .warn strong { color: var(--gold); }
+  .info { border-left-color: var(--blue); }
+  .info strong { color: var(--blue); }
+
+  /* TWO-COL TEMPLATE BOX */
+  .template-box {
+    border: 2px solid var(--ink);
+    margin: 20px 0;
+    background: white;
+  }
+  .template-row {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    border-bottom: 1px solid var(--ink);
+  }
+  .template-row:last-child { border-bottom: none; }
+  .template-cell {
+    padding: 16px 20px;
+    border-right: 1px solid var(--ink);
+    font-size: 14.5px;
+  }
+  .template-cell:last-child {
+    border-right: none;
+    background: var(--paper-soft);
+    font-style: italic;
+  }
+  .template-cell strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    margin-bottom: 6px;
+    font-style: normal;
+    font-weight: 700;
+  }
+  .template-cell ul {
+    margin-left: 16px;
+    margin-top: 4px;
+  }
+  .template-cell li { margin-bottom: 3px; }
+
+  /* CHECKLIST */
+  .checklist {
+    display: grid;
+    gap: 0;
+    border: 2px solid var(--ink);
+    background: white;
+    margin: 20px 0;
+  }
+  .checklist-section {
+    border-bottom: 2px solid var(--ink);
+  }
+  .checklist-section:last-child { border-bottom: none; }
+  .checklist-section-title {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+  .checklist label {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 18px;
+    border-bottom: 1px solid #e0d9c4;
+    cursor: pointer;
+    transition: background 0.12s;
+    font-size: 14.5px;
+  }
+  .checklist label:last-child { border-bottom: none; }
+  .checklist label:hover { background: var(--paper-soft); }
+  .checklist input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--ink);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    background: white;
+  }
+  .checklist input[type="checkbox"]:checked {
+    background: var(--green);
+  }
+  .checklist input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: -3px;
+    left: 2px;
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .checklist input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
+  /* WRITING WORKSPACE (TEXTAREA) */
+  .writing-area {
+    margin: 20px 0;
+  }
+  .writing-area label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  textarea, input.text-input {
+    width: 100%;
+    border: 2px solid var(--ink);
+    background: white;
+    padding: 14px 16px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    resize: vertical;
+    color: var(--ink);
+  }
+  textarea:focus, input.text-input:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  textarea.draft { min-height: 280px; }
+  textarea.notes { min-height: 130px; }
+
+  .word-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    margin-top: 6px;
+    opacity: 0.7;
+  }
+
+  /* AI PROMPT BOXES */
+  .ai-prompt {
+    background: #14140f;
+    color: #f5f1e8;
+    padding: 22px 24px;
+    margin: 18px 0;
+    border-left: 6px solid var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.65;
+    position: relative;
+  }
+  .ai-prompt::before {
+    content: 'PROMPT FOR THE AI';
+    position: absolute;
+    top: -10px;
+    left: 18px;
+    background: var(--green);
+    color: var(--paper);
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+  .ai-prompt code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 6px;
+    color: var(--accent-soft);
+  }
+  .copy-btn {
+    background: var(--green);
+    color: var(--paper);
+    border: none;
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: var(--ink); border: 1px solid var(--green); }
+  .copy-btn.copied { background: var(--gold); color: var(--ink); }
+
+  /* PHASE PROCESS DIAGRAM */
+  .process-wheel {
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-lg);
+  }
+  .process-step {
+    padding: 24px 20px;
+    border-right: 2px solid var(--ink);
+    background: var(--paper);
+    text-align: center;
+    position: relative;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:nth-child(1) { background: #f4d4b8; }
+  .process-step:nth-child(2) { background: #d4e4b8; }
+  .process-step:nth-child(3) { background: #b8d4e4; }
+  .process-step:nth-child(4) { background: #e4b8d4; }
+  .process-icon {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  .process-name {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 720px) {
+    .process-wheel { grid-template-columns: 1fr 1fr; }
+    .process-step { border-right: 2px solid var(--ink); }
+    .process-step:nth-child(2) { border-right: none; }
+    .process-step:nth-child(1), .process-step:nth-child(2) { border-bottom: 2px solid var(--ink); }
+    .template-row { grid-template-columns: 1fr; }
+    .template-cell { border-right: none; border-bottom: 1px solid var(--ink); }
+    .template-cell:last-child { border-bottom: none; }
+  }
+
+  /* STAGE TOGGLE */
+  .toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-left: auto;
+  }
+  .toggle-btn:hover { background: var(--accent); }
+  .stage-content { display: block; }
+  .stage.collapsed .stage-content { display: none; }
+  .stage.collapsed .toggle-btn::after { content: '+'; }
+  .stage:not(.collapsed) .toggle-btn::after { content: '−'; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 32px 30px;
+    margin-top: 80px;
+  }
+  .footer-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  footer h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+  footer h4 span { color: var(--accent); }
+  footer p, footer li {
+    font-size: 13.5px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+  footer ul { list-style: none; }
+  .footer-meta {
+    max-width: 1280px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(245,241,232,0.2);
+    padding-top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  /* GALLERY WALK */
+  .gallery-card {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 36px;
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-lg);
+    margin-top: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .gallery-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .gallery-card ol {
+    margin-left: 20px;
+    margin-top: 16px;
+  }
+  .gallery-card ol li {
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  .gallery-card .deco {
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 150px; height: 150px;
+    background: var(--ink);
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+
+  /* HELPER */
+  [hidden] { display: none !important; }
+  .hide-on-pick { display: none; }
+  body.has-selection .show-on-pick { display: block; }
+  body.has-selection .hide-on-pick { display: none; }
+
+  /* sentence starter pills */
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 16px;
+  }
+  .pill {
+    display: inline-block;
+    background: var(--paper-soft);
+    border: 1px solid var(--ink);
+    padding: 4px 10px;
+    font-size: 13px;
+    font-style: italic;
+    cursor: copy;
+    transition: all 0.12s;
+  }
+  .pill:hover { background: var(--accent); color: var(--paper); }
+
+  .session-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 0;
+    border-bottom: 2px solid var(--ink);
+  }
+  .session-tab {
+    background: var(--paper-soft);
+    border: 2px solid var(--ink);
+    border-bottom: none;
+    padding: 14px 24px;
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: -2px;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .session-tab.active {
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-title">Writing <span>Pathway</span> · Year 8</div>
+  <div class="nav-links">
+    <a href="#start">Start</a>
+    <a href="#process">Process</a>
+    <a href="#session1">Session 1</a>
+    <a href="#session2">Session 2</a>
+    <a href="#gallery">Gallery</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="start">
+  <span class="hero-tag">English · Year 8 · Self-paced</span>
+  <h1>Become a <em>confident</em> writer<br>— one stage at a time.</h1>
+  <p class="hero-sub">
+    A three-part pathway built on the Berlin handout
+    <em>Textsortenspezifisches Schreiben</em>. You pick your level. You pick your text type.
+    You walk through every step of the writing process — plan, draft, revise, present —
+    with templates, sentence starters and AI feedback that protects your privacy.
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">2<span style="font-size:24px;">×60</span></div>
+      <div class="stat-label">Sessions of writing</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Levels to choose from</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Text types on offer</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">30'</div>
+      <div class="stat-label">Gallery walk finale</div>
+    </div>
+  </div>
+</header>
+
+<!-- THE WRITING PROCESS -->
+<section id="process">
+  <span class="section-num">01 / Foundation</span>
+  <h2 class="section-title">The four phases of writing</h2>
+  <p class="section-intro">
+    Writing is not one big leap — it's four steps. Every stage in this pathway helps you move
+    from one phase to the next, with the right kind of support at the right time.
+  </p>
+
+  <div class="process-wheel">
+    <div class="process-step">
+      <div class="process-icon">①</div>
+      <div class="process-name">Plan</div>
+      <div class="process-desc">Read the task. Brainstorm ideas. Structure your notes (mind map, table).</div>
+    </div>
+    <div class="process-step">
+      <div class="process-icon">②</div>
+      <div class="process-name">Draft</div>
+      <div class="process-desc">Use a template. Write paragraphs. Connect ideas with linking words.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-icon">③</div>
+      <div class="process-name">Revise</div>
+      <div class="process-desc">Use the checklist. Get feedback. Fix content, structure, vocab and grammar.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-icon">④</div>
+      <div class="process-name">Present</div>
+      <div class="process-desc">Display your final text in the Gallery Walk and read what others wrote.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEVEL PICKER -->
+<section id="picker">
+  <span class="section-num">02 / Choose your level</span>
+  <h2 class="section-title">Pick what challenges you — but feels possible.</h2>
+  <p class="section-intro">
+    The three levels match the steps of the Berlin Rahmenlehrplan. Most Year 8 students work in
+    Level I (E/F) or Level II (F/G). If you need more support to get started, choose Starter.
+    You can always switch up or down.
+  </p>
+
+  <div class="level-picker" id="levelPicker">
+    <button class="level-card" data-level="starter">
+      <span class="level-tag">Starter</span>
+      <div class="level-name">Starter</div>
+      <div class="level-cefr">CEFR · A1–A2  ·  Niveaustufe D/E</div>
+      <p class="level-desc">
+        You get a writing frame with sentence starters and tips in German.
+        The text skeleton is mostly already there — you replace examples with your own ideas.
+      </p>
+    </button>
+    <button class="level-card" data-level="level1">
+      <span class="level-tag">Level I</span>
+      <div class="level-name">Level I</div>
+      <div class="level-cefr">CEFR · A2 → B1  ·  Niveaustufe E/F</div>
+      <p class="level-desc">
+        A structured template with German hints on the left, English sentence starters on the right.
+        You build the whole text yourself, with help close at hand.
+      </p>
+    </button>
+    <button class="level-card" data-level="level2">
+      <span class="level-tag">Level II</span>
+      <div class="level-name">Level II</div>
+      <div class="level-cefr">CEFR · B1 → B1+  ·  Niveaustufe F/G</div>
+      <p class="level-desc">
+        The full template, all in English. You handle every typical feature of the text type
+        and choose from a wider range of sentence starters and linking words.
+      </p>
+    </button>
+  </div>
+</section>
+
+<!-- TOPIC PICKER -->
+<section id="topic">
+  <span class="section-num">03 / Choose your text type</span>
+  <h2 class="section-title">Five everyday text types — pick one to write.</h2>
+  <p class="section-intro">
+    Each text type has its own structure and tone. Pick the one you find most interesting today.
+    Once you choose, the workspace below will adapt to it.
+  </p>
+
+  <div class="topic-picker" id="topicPicker">
+    <button class="topic-card" data-topic="email">
+      <span class="topic-icon">@</span>
+      <div class="topic-name">E-mail</div>
+      <div class="topic-meta">Informal or formal</div>
+    </button>
+    <button class="topic-card" data-topic="diary">
+      <span class="topic-icon">✎</span>
+      <div class="topic-name">Diary entry</div>
+      <div class="topic-meta">Personal · feelings</div>
+    </button>
+    <button class="topic-card" data-topic="blog">
+      <span class="topic-icon">≡</span>
+      <div class="topic-name">Blog entry</div>
+      <div class="topic-meta">Opinion or experience</div>
+    </button>
+    <button class="topic-card" data-topic="story">
+      <span class="topic-icon">★</span>
+      <div class="topic-name">Story</div>
+      <div class="topic-meta">Narrative · creative</div>
+    </button>
+    <button class="topic-card" data-topic="report">
+      <span class="topic-icon">▣</span>
+      <div class="topic-name">Report</div>
+      <div class="topic-meta">Personal experience</div>
+    </button>
+  </div>
+
+  <div class="selection-summary" id="summary" style="display:none;">
+    <strong>You're writing:</strong>
+    <strong class="accent" id="sumTopic">—</strong>
+    <span>at</span>
+    <strong class="accent" id="sumLevel">—</strong>
+    <span style="margin-left:auto;">↓ Scroll to Session 1</span>
+  </div>
+</section>
+
+<!-- SESSION 1 -->
+<section id="session1">
+  <div class="session-header">
+    <div class="session-mark">01</div>
+    <div class="session-info">
+      <h2>Session 1 · Plan & Draft</h2>
+      <p>Step by step, you'll move through the planning and drafting phases. Work through each
+      stage in order — every workspace saves automatically in your browser.</p>
+      <span class="session-time">⏱ 60 minutes total</span>
+    </div>
+  </div>
+
+  <!-- STAGE 1.1 — TASK -->
+  <div class="stages">
+
+    <div class="stage" id="stage-1-1">
+      <div class="stage-header">
+        <span class="stage-num">1.1</span>
+        <span class="stage-title">Read the task carefully</span>
+        <span class="stage-time">⏱ 5'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>Look at your task. Mark or note <strong>three</strong> things every writing task tells you:</p>
+        <div class="template-box">
+          <div class="template-row">
+            <div class="template-cell"><strong>① Audience</strong>Who are you writing to? (formal / informal?)</div>
+            <div class="template-cell">e.g. a friend in London, a head teacher, blog readers …</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>② Purpose</strong>Why are you writing? What do you want to do?</div>
+            <div class="template-cell">e.g. to invite, to inform, to convince, to share an experience …</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>③ Content</strong>Which points must your text cover?</div>
+            <div class="template-cell">List the bullets or aspects from your task.</div>
+          </div>
+        </div>
+
+        <div class="writing-area">
+          <label for="taskNotes">Your task analysis</label>
+          <textarea id="taskNotes" class="notes" placeholder="Audience: …&#10;Purpose: …&#10;Content points: …"></textarea>
+        </div>
+
+        <div class="tip">
+          <strong>Tip · Hilfekarte „Dealing with texts"</strong>
+          Read the task at least twice. Mark key words with a coloured pen. If a word is new,
+          look it up before you start writing.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1.2 — BRAINSTORM -->
+    <div class="stage" id="stage-1-2">
+      <div class="stage-header">
+        <span class="stage-num">1.2</span>
+        <span class="stage-title">Brainstorm & structure your notes</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Now collect ideas. Don't write full sentences yet — just words and phrases.
+          Pick one structuring method:
+        </p>
+        <div class="template-box">
+          <div class="template-row">
+            <div class="template-cell"><strong>Mind map</strong>Topic in the centre, branches outwards. Best for creative or open topics (story, blog).</div>
+            <div class="template-cell">★ Topic → branch 1, branch 2, branch 3 …</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>Table</strong>Two or three columns. Best for comparing ideas (pros/cons, before/after).</div>
+            <div class="template-cell">| Argument | Example | Explanation |</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>Herringbone diagram (fish-bone)</strong>Main line = topic, side bones = subtopics. Good for reports.</div>
+            <div class="template-cell">Topic ─┬─ when ─┬─ where ─┬─ what ─┬─ why</div>
+          </div>
+        </div>
+
+        <div class="writing-area">
+          <label for="brainstorm">Your raw ideas (German + English mixed is fine here)</label>
+          <textarea id="brainstorm" class="notes" placeholder="Brainstorm freely. You can use German words you'll later look up."></textarea>
+        </div>
+
+        <div class="tip warn">
+          <strong>Watch out</strong>
+          Don't try to write perfect sentences yet. Mistakes here cost you time you'll need later.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1.3 — TEMPLATE (changes depending on choice) -->
+    <div class="stage" id="stage-1-3">
+      <div class="stage-header">
+        <span class="stage-num">1.3</span>
+        <span class="stage-title">Use your structure template</span>
+        <span class="stage-time">⏱ 5'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Below is the structure for your chosen text type at your chosen level.
+          Use the left column to remind yourself what each part should contain.
+          Click any sentence starter on the right to copy it, so you can paste it into your draft.
+        </p>
+
+        <!-- DYNAMIC TEMPLATE GOES HERE -->
+        <div id="templateContainer"><em>Pick a level and a text type above to see your template.</em></div>
+
+        <div class="tip info">
+          <strong>How to use this</strong>
+          Copy a sentence starter, then continue in your own words. The starters are scaffolds —
+          you replace them or extend them with your own ideas.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1.4 — DRAFT -->
+    <div class="stage" id="stage-1-4">
+      <div class="stage-header">
+        <span class="stage-num">1.4</span>
+        <span class="stage-title">Write your first draft</span>
+        <span class="stage-time">⏱ 35'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Now write. Keep the template open and use your notes from stage 1.2.
+          Don't aim for perfection — aim for a complete draft you can revise next session.
+        </p>
+
+        <div class="writing-area">
+          <label for="draft">Your first draft</label>
+          <textarea id="draft" class="draft" placeholder="Start writing here. Use paragraphs. Don't worry about every word being perfect — that's what Session 2 is for."></textarea>
+          <div class="word-count" id="wordCount">0 words</div>
+        </div>
+
+        <div class="tip">
+          <strong>Tip · paragraphs & topic sentences</strong>
+          Start a new paragraph for each new idea. The first sentence of a paragraph
+          (the topic sentence) tells the reader what the paragraph is about.
+        </div>
+
+        <div class="tip">
+          <strong>Tip · linking words</strong>
+          Connect ideas: <em>first, then, after that, finally</em> · <em>because, so, therefore, however</em> ·
+          <em>for example, in addition, besides</em>.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1.5 — END OF SESSION 1 -->
+    <div class="stage" id="stage-1-5">
+      <div class="stage-header">
+        <span class="stage-num">1.5</span>
+        <span class="stage-title">End of Session 1 — save & rest</span>
+        <span class="stage-time">⏱ 5'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Read your draft once, slowly. <strong>Don't fix anything yet.</strong>
+          Distance helps you see things you can't see now. Save your draft (it stays
+          in your browser) and come back fresh for Session 2.
+        </p>
+        <div class="tip warn">
+          <strong>Before you close the browser</strong>
+          Your draft is saved automatically — but copy it into your school cloud or e-mail it to
+          yourself as a backup, just in case.
+        </div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SESSION 2 -->
+<section id="session2">
+  <div class="session-header">
+    <div class="session-mark">02</div>
+    <div class="session-info">
+      <h2>Session 2 · Revise with AI feedback</h2>
+      <p>Today you ask a privacy-safe AI tool (e.g. fobizz, SchulKI) to give you feedback on
+      your draft. Then you implement the feedback and finalise your text.</p>
+      <span class="session-time">⏱ 60 minutes total</span>
+    </div>
+  </div>
+
+  <div class="stages">
+
+    <!-- STAGE 2.1 — REREAD -->
+    <div class="stage">
+      <div class="stage-header">
+        <span class="stage-num">2.1</span>
+        <span class="stage-title">Re-read your draft & self-check</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Read your draft from yesterday. Tick what you've already done well.
+          Don't tick things you're unsure about — leave them empty for now.
+        </p>
+
+        <div id="checklistContainer"><em>Pick a level and a text type above to see your checklist.</em></div>
+
+        <div class="tip">
+          <strong>Tip · Hilfekarte „Proofreading"</strong>
+          Read your text aloud. Read it backwards (from the last sentence up) to catch spelling
+          mistakes. Cover the lines below the one you're reading with a piece of paper.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2.2 — AI PROMPT -->
+    <div class="stage">
+      <div class="stage-header">
+        <span class="stage-num">2.2</span>
+        <span class="stage-title">Ask the AI for structured feedback</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Open your school's privacy-safe AI tool (e.g. <strong>fobizz Tools</strong>,
+          <strong>SchulKI</strong>, <strong>telli</strong>) and use the prompt below.
+          The prompt is built around the same checklist criteria you just used —
+          so the AI will check the four areas you need: <strong>content, structure, vocabulary, grammar</strong>.
+        </p>
+
+        <div class="ai-prompt" id="aiPrompt">Pick your text type and level above to see the matching AI prompt.</div>
+        <button class="copy-btn" id="copyPrompt">Copy prompt</button>
+
+        <div class="tip warn">
+          <strong>Important · privacy</strong>
+          Use only the AI tool your school recommends. Don't paste personal data
+          (full names, addresses, phone numbers) into the AI. Replace them with placeholders
+          like <code>[my friend]</code> or <code>[my city]</code>.
+        </div>
+
+        <div class="tip info">
+          <strong>What the AI gives you back</strong>
+          The AI will return feedback in four sections (content / structure / vocabulary / grammar).
+          For each section it tells you what's good and what to improve. <strong>Don't accept everything blindly</strong> —
+          the AI can be wrong. You decide what to change.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2.3 — IMPLEMENT FEEDBACK -->
+    <div class="stage">
+      <div class="stage-header">
+        <span class="stage-num">2.3</span>
+        <span class="stage-title">Implement the feedback</span>
+        <span class="stage-time">⏱ 30'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Work through the AI's feedback systematically. Tackle big issues first
+          (content, structure), then language (vocabulary, grammar). After each change,
+          re-read the paragraph you've changed.
+        </p>
+
+        <div class="writing-area">
+          <label for="aiFeedback">Paste the AI's feedback here (optional, for your records)</label>
+          <textarea id="aiFeedback" class="notes" placeholder="Paste the feedback you got from the AI tool. You can keep this for next time."></textarea>
+        </div>
+
+        <div class="writing-area">
+          <label for="finalDraft">Your revised, final text</label>
+          <textarea id="finalDraft" class="draft" placeholder="Rewrite or edit your draft here using the AI feedback. This is the version that goes into the gallery walk."></textarea>
+          <div class="word-count" id="finalWordCount">0 words</div>
+        </div>
+
+        <div class="tip">
+          <strong>Strategy · revise in this order</strong>
+          1) <strong>Content</strong> — is anything missing? · 2) <strong>Structure</strong> — paragraphs and linking words · 3) <strong>Vocabulary</strong> — repetitions, simpler/stronger words · 4) <strong>Grammar & spelling</strong> — last, with the help of a dictionary.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2.4 — PROOFREAD -->
+    <div class="stage">
+      <div class="stage-header">
+        <span class="stage-num">2.4</span>
+        <span class="stage-title">Final proofread</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>One last pass before the gallery walk. Use this final mini-checklist:</p>
+
+        <div class="checklist">
+          <div class="checklist-section">
+            <div class="checklist-section-title">CONTENT</div>
+            <label><input type="checkbox"><span>I covered every point the task asked for.</span></label>
+            <label><input type="checkbox"><span>There are no repetitions.</span></label>
+            <label><input type="checkbox"><span>My message is clear.</span></label>
+          </div>
+          <div class="checklist-section">
+            <div class="checklist-section-title">STRUCTURE</div>
+            <label><input type="checkbox"><span>The structure fits the text type.</span></label>
+            <label><input type="checkbox"><span>I used clear paragraphs.</span></label>
+            <label><input type="checkbox"><span>I used linking words to connect ideas.</span></label>
+          </div>
+          <div class="checklist-section">
+            <div class="checklist-section-title">VOCABULARY & SPELLING</div>
+            <label><input type="checkbox"><span>No short forms in formal texts (won't → will not).</span></label>
+            <label><input type="checkbox"><span>Capital letters at the start of sentences and names.</span></label>
+            <label><input type="checkbox"><span>Vocabulary is varied (no word repeats too often).</span></label>
+          </div>
+          <div class="checklist-section">
+            <div class="checklist-section-title">GRAMMAR</div>
+            <label><input type="checkbox"><span>Sentences are complete.</span></label>
+            <label><input type="checkbox"><span>Subject and verb agree (3rd person singular -s).</span></label>
+            <label><input type="checkbox"><span>Tenses are correct (especially past tenses).</span></label>
+            <label><input type="checkbox"><span>It is clear who/what the pronouns refer to.</span></label>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY WALK -->
+<section id="gallery">
+  <span class="section-num">04 / Showcase</span>
+  <h2 class="section-title">Gallery Walk · share what you wrote</h2>
+  <p class="section-intro">
+    The whole class displays their final texts on the walls (or on tables). For 30 minutes,
+    you walk around, read others' work, and leave kind, useful comments on sticky notes.
+  </p>
+
+  <div class="gallery-card">
+    <div class="deco"></div>
+    <h3>How the Gallery Walk works</h3>
+    <ol>
+      <li><strong>Print or display</strong> your final text. Add your name (or pen-name) on top.</li>
+      <li><strong>Walk silently</strong> for the first 10 minutes — read at least four other texts.</li>
+      <li><strong>Leave feedback</strong> on a sticky note: one thing you liked + one question / suggestion. Use the “Two stars and a wish" format.</li>
+      <li><strong>Read the comments</strong> you got, and pick one piece of feedback you'll remember for next time.</li>
+      <li><strong>Whole class</strong>: share one new word, phrase or idea you discovered today.</li>
+    </ol>
+    <p style="margin-top:18px;"><strong>Two stars and a wish:</strong>
+    ★ I liked … · ★ It works because … · ✦ I wish / I wonder …</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>Writing <span>Pathway</span></h4>
+      <p>Built for Year 8 English, based on the Berlin handout
+      <em>Textsortenspezifisches Schreiben im Englischunterricht der Sekundarstufe I</em> (2016).</p>
+    </div>
+    <div>
+      <h4>Privacy-safe AI tools</h4>
+      <ul>
+        <li>fobizz Tools (DSGVO-konform)</li>
+        <li>SchulKI</li>
+        <li>telli</li>
+        <li>Always check with your teacher first.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>What's saved</h4>
+      <ul>
+        <li>Your level &amp; text-type choice</li>
+        <li>Your task notes &amp; brainstorm</li>
+        <li>Your draft &amp; final text</li>
+        <li>Saved in your browser only.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help cards (Hilfekarten)</h4>
+      <ul>
+        <li>Structuring notes (mind map, table)</li>
+        <li>Using paragraphs &amp; topic sentences</li>
+        <li>Using linking words</li>
+        <li>Proofreading &amp; giving feedback</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Source: Senatsverwaltung für Bildung, Jugend und Wissenschaft (Hg.), Bauer / Nöth (2016) ·
+    Pathway design adapted for self-paced classroom use.
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   DATA · templates, sentence starters, checklists per text type & level
+   Adapted from the Berlin handout (Bauer/Nöth 2016, Sek. I).
+   ========================================================================= */
+
+const DATA = {
+  email: {
+    label: 'E-mail',
+    starter: {
+      structure: [
+        ['Subject line', 'I write the topic.', ['Subject: Our holiday programme']],
+        ['Greeting', 'I write a friendly or formal greeting.', ['Hi …,', 'Hello …,', 'Dear Mr/Mrs/Ms …,']],
+        ['Introduction', 'I say who I am and why I am writing.', ['My name is …', 'I am writing because …']],
+        ['Main part', 'I write everything that is important.', ['First I want to …', 'It\'s interesting/sad that …', 'I (don\'t) like …']],
+        ['Closing line', 'I write a polite final sentence.', ['I look forward to hearing from you.']],
+        ['Sign off', 'I say good-bye and sign with my name.', ['Bye/Love, [first name]', 'Best wishes, [full name]']]
+      ]
+    },
+    level1: {
+      structure: [
+        ['Subject', 'Im Betreff schreibe ich, worum es geht.', ['Subject: Your visit to Berlin']],
+        ['Anrede', 'Formelle Anrede für Unbekannte, informell für Freunde.', ['Dear Mr/Mrs/Ms …,', 'Dear Sir or Madam,', 'Hi/Hello/Hey …,']],
+        ['Anfang', 'Großbuchstabe am Satzanfang. Höflicher Einstieg.', ['Thank you for your e-mail.', 'How are you?']],
+        ['Erster Teil', 'Ich stelle mich vor (wenn nötig) und sage, warum ich schreibe.', ['My name is …', 'I am writing to tell you …', 'I would like to ask you about …']],
+        ['Hauptteil', 'Alle wichtigen Infos. Absätze + Bindewörter.', ['First I want to …', 'Second …', 'It\'s interesting/great/sad that …', 'After … / Then … / Finally …', 'Besides … / In addition …', 'That\'s why … / … because …']],
+        ['Schlusssatz', 'Höflicher Abschluss.', ['I look forward to hearing from you.']],
+        ['Verabschiedung', 'Formell oder informell, mit Namen.', ['Best wishes, …', 'Yours sincerely, …', 'Bye/Love/Yours, …']]
+      ]
+    },
+    level2: {
+      structure: [
+        ['Subject', 'I write the topic of my e-mail.', ['Subject: Our exchange programme']],
+        ['Greeting', 'My greeting fits the addressee (formal vs. informal).', ['Dear Mr/Mrs/Ms …, (name known)', 'Dear Sir or Madam, (name unknown)', 'Hi/Hello/Hey …, (close friend)']],
+        ['First sentence', 'Capital letter; polite opening.', ['Thank you for …', 'How are you?']],
+        ['Introduction', 'I introduce myself if needed; I explain why I am writing.', ['My name is … / I am writing about …', 'I am contacting you to … (formal)', 'I wanted to tell you about … (informal)']],
+        ['Main part', 'Clear sentences; paragraphs with topic sentences; linking words.', ['First I want to …', 'Maybe … / However …', 'It\'s interesting/great/sad that …', 'In my opinion … / To my mind …', 'I would like to suggest/propose …', 'As / Therefore / After / Finally …', 'Besides / In addition / Apart from that …']],
+        ['Closing remark', 'Final sentence signalling the end.', ['That\'s all for now.', 'I look forward to hearing from you.']],
+        ['Sign-off', 'Formal or informal, with full or first name.', ['Kind / Warm regards, [Full name]', 'Yours sincerely, [Full name]', 'Yours faithfully, [Full name]', 'Take care / Best wishes / All the best, [First name]']]
+      ]
+    },
+    checklist: {
+      starter: {
+        Anfang: ['Betreff', 'formelle/informelle Anrede', 'Großbuchstabe am Satzanfang', 'Zweck genannt'],
+        Hauptteil: ['Alle wichtigen Punkte aus der Aufgabe behandelt'],
+        Ende: ['formelle/informelle Schlussformel', 'Vor- und Nachname (formell) oder Vorname (informell)'],
+        'Final check': ['Sätze klar verständlich', 'Wörter im Wörterbuch geprüft', 'Grammatik mit Buch geprüft', '"Lieblings"-Fehler geprüft']
+      },
+      level1: {
+        Beginning: ['Subject is written', 'Formal or informal greeting', 'Capital letter at the start', 'Purpose explained'],
+        'Main part': ['All required points covered'],
+        Ending: ['Formal or informal good-bye', 'Full name (formal) or first name (informal)'],
+        'Final check': ['Readers can understand my sentences', 'Used a dictionary to check words', 'Grammar checked with the book', 'Checked my "favourite" mistakes']
+      },
+      level2: {
+        Beginning: ['Subject/topic written', 'Greeting fits addressee (formal/informal)'],
+        Introduction: ['Capital letter at the start', 'Purpose stated at the beginning'],
+        'Main part': ['Everything is relevant to the subject', 'Paragraphs with topic sentences'],
+        Ending: ['Formal or informal good-bye', 'Signed with full name (formal) or first name (informal)'],
+        'Final check': ['Used a dictionary for unknown words', 'Used grammar pages of my book', 'Used my list of "favourite" mistakes', 'Asked a fellow student for feedback']
+      }
+    }
+  },
+
+  diary: {
+    label: 'Diary entry',
+    starter: {
+      structure: [
+        ['Date & greeting', 'I write the date and "Dear Diary,".', ['12/24/2025', 'Dear Diary,']],
+        ['Opening', 'Time, mood, kind of day.', ['It\'s … o\'clock and …', 'Today was a special day.', 'I feel great.', 'Today was a terrible day.', 'I feel sad.']],
+        ['Main part', 'Place, event, feelings.', ['I was at …', 'At first …', 'Suddenly …', 'I felt really good/horrible/ …']],
+        ['Sign off', 'Sign with my first name (or the character\'s).', ['Yours, [first name]']]
+      ]
+    },
+    level1: {
+      structure: [
+        ['Anrede', 'Datum rechts, dann "Dear Diary,".', ['Dear Diary,']],
+        ['Einleitung', 'Wo, wann, in welcher Situation. Wie der Tag war / wie ich mich fühle.', ['I can\'t believe I\'m in/at …', 'It\'s … o\'clock and I\'m … verb+-ing', 'Today was a special/weird day.', 'I feel terrible/great because …', 'I\'d like to tell you about …']],
+        ['Hauptteil', 'Erfahrungen in simple past, mit Zeitadverbien. Pläne in Zukunft. Gefühle mit Adjektiven, Adverbien, Vergleichen, Superlativen.', ['I saw / went to / verb+-ed …', 'At first / then / tomorrow …', 'I\'m going to make / go …', 'I felt really strange / horrible …', 'I felt like a superstar / millionaire.', 'I think this was the best/worst day of my life.']],
+        ['Verabschiedung', 'Mit Vornamen abschließen.', ['Yours, [first name]']]
+      ]
+    },
+    level2: {
+      structure: [
+        ['Greeting', 'Date on the right; "Dear Diary,".', ['Dear Diary,']],
+        ['Introduction', 'Where, when, the situation. General mood or topic.', ['I can\'t believe I\'m in/at …', 'It\'s … o\'clock and I\'m … verb+-ing', 'Today was a special / weird day.', 'I feel terrible / great because …', 'I\'d like to tell you about …']],
+        ['Main part', 'Experiences in simple past with time phrases. Plans in future. Feelings with adjectives, adverbs, comparisons, superlatives.', ['I saw / went to / verb+-ed …', 'At first / then / tomorrow …', 'I\'m going to make / go …', 'I felt really strange / horrible …', 'I felt like a superstar / millionaire.', 'I think this was the best / worst day of my life.']],
+        ['Sign-off', 'Sign with first name (yours or character\'s).', ['Yours, [first name]']]
+      ]
+    },
+    checklist: {
+      starter: {
+        Anfang: ['Datum', '"Dear Diary,"'],
+        Hauptteil: ['Erfahrungen, Gefühle, Gedanken', 'Wenn aus Sicht einer Figur: Ideen aus dem Text genutzt'],
+        Ende: ['Verabschiedung mit Vornamen'],
+        'Final check': ['Verständliche Sätze', 'Wörter geprüft', 'Grammatik geprüft']
+      },
+      level1: {
+        Beginning: ['Date written', 'Started with "Dear Diary,"'],
+        'Main part': ['Wrote about experiences, feelings, plans', 'If from a character: used ideas from the text'],
+        Ending: ['Signed off with first name'],
+        'Final check': ['Sentences are clear', 'Used a dictionary', 'Checked grammar']
+      },
+      level2: {
+        Beginning: ['Date and "Dear Diary,"'],
+        'Main part': ['Experiences in simple past with time phrases', 'Plans in future tense', 'Feelings with adjectives/adverbs/comparisons', 'If a character\'s perspective: voice fits the character'],
+        Ending: ['Signed off with first name'],
+        'Final check': ['Used dictionary', 'Used grammar pages', 'Checked my "favourite" mistakes', 'Asked a peer for feedback']
+      }
+    }
+  },
+
+  blog: {
+    label: 'Blog entry',
+    starter: {
+      structure: [
+        ['Headline', 'A title that fits the topic.', ['I wish it was summer …']],
+        ['Introduction', 'Topic + opinion.', ['A topic that interests me is …', 'I think that …']],
+        ['Main part', 'Arguments and examples.', ['At first …', 'For example …', 'Secondly, …', 'You can see that in …']],
+        ['Conclusion', 'My opinion + main reason.', ['In my opinion …', 'I think so because …']],
+        ['Invite comments', 'Ask readers to react.', ['What do you think about this?', 'Please comment.']]
+      ]
+    },
+    level1: {
+      structure: [
+        ['Überschrift', 'Interessant, zum Thema.', ['I wish it was summer']],
+        ['Einleitung', 'Aufmerksamkeit wecken, Thema/Problem nennen, Meinung äußern.', ['In the news I heard …', 'You won\'t believe what happened …', 'Can you imagine …?', 'The problem/question is …', 'Well, I think that …', 'In my opinion …']],
+        ['Hauptteil', 'Erlebnis erzählen ODER Argumente + Erklärungen + Beispiele.', ['Yesterday I had a great day. I …', 'First / Then / Finally …', 'Firstly / Secondly / Finally …', 'which / who is … / … because …', 'For example … / … like …']],
+        ['Schluss', 'Zusammenfassen oder Schlussfolgerung ziehen.', ['To sum up …', 'All in all / Finally …']]
+      ]
+    },
+    level2: {
+      structure: [
+        ['Headline', 'Catchy, links to topic.', ['Summer time – party time?']],
+        ['Introduction', 'Topic + experience or problem; catch attention; address readers.', ['Should we …? / Can we …? / What about …?', 'Have you ever …? / Isn\'t it incredible that …?', 'The reason I am writing this is …', 'What I\'m trying to say is that …', 'I think we should keep in mind that …']],
+        ['Main part', 'Experience with vivid description OR opinion with arguments + examples. Linking words. Paragraphs.', ['I\'d like to share my experiences/thoughts with you.', 'Firstly / To start with …', 'Secondly / Besides / Apart from that / In addition …', 'I think … / To my mind … / In my opinion …', 'What is clear is that / The problem here is …', 'Therefore / So / That\'s why / Thus …', 'For example/instance … / As you can see in …']],
+        ['Conclusion', 'Sum up; conclusion / outlook; invite comments.', ['To sum up / To cut a long story short …', 'It seems quite clear that / After all / Finally …', 'In future …', 'Share your thoughts!', 'Let me know what you think …']]
+      ]
+    },
+    checklist: {
+      starter: {
+        Überschrift: ['interessant', 'zum Thema'],
+        Einleitung: ['was ich beschreibe ODER meine Meinung'],
+        Hauptteil: ['Beschreibung der Ereignisse ODER Argumente + Erklärungen + Beispiele', 'Bindewörter und Absätze'],
+        'Final check': ['Aufgabenerfüllung (Thema, Inhalt)', 'Länge', 'klare Sprache', 'Wortschatz/Grammatik geprüft']
+      },
+      level1: {
+        Headline: ['Catchy, refers to topic'],
+        Introduction: ['What I describe OR my opinion'],
+        'Main part': ['Description of events OR arguments with explanations + examples', 'Linking words and paragraphs'],
+        'Final check': ['Task: focused on topic, all important points', 'Length is enough', 'Clear description / argumentation', 'Sentences clear', 'Dictionary used', 'Grammar checked', '"Favourite" mistakes checked']
+      },
+      level2: {
+        Headline: ['Catchy headline that refers to topic'],
+        Introduction: ['Introduces topic/problem', 'Interesting beginning that hooks readers', 'Position / what I want to say is clear', 'Personal experience / opinion is clear'],
+        'Main part': ['Directly addressed readers', 'Detailed description of experience OR convincing arguments with explanations + examples'],
+        Conclusion: ['Summed up experience/main arguments', 'Final statement / conclusion / outlook for the future', 'Invited readers to comment'],
+        'Final check': ['Task: topic, content points, addressees, length', 'Used all important ideas from notes', 'Paragraphs and logical linking', 'Dictionary used', 'Grammar pages used', '"Favourite" mistakes list used', 'Peer feedback asked for']
+      }
+    }
+  },
+
+  story: {
+    label: 'Story',
+    starter: {
+      structure: [
+        ['Title', 'A catchy title.', ['"A visit from outer space"']],
+        ['Beginning', 'Time + place, characters, action, goal, sudden situation.', ['It was in Berlin in the early evening …', '… left the house.', 'She wanted to go to …', 'Suddenly she heard something strange.']],
+        ['Main part', 'A small character speaks; a conflict appears.', ['There was a small green man.', 'He whispered, "…, I need your help."', 'If you don\'t help me, my planet will …"', 'She … .']],
+        ['Ending', 'A solution and a closing scene.', ['In the end …', '… could … again.']]
+      ]
+    },
+    level1: {
+      structure: [
+        ['Titel', 'Fesselnder Titel.', ['"Adventures from Mars" (Zukunftsgeschichte)']],
+        ['Anfang', 'Ort, Zeit, Wetter, Charaktere, Konflikt. Mit etwas Überraschendem starten.', ['It was a summer\'s day in London …', 'It was a rainy afternoon in …', 'The children sat in a dark room. Unfortunately, …', 'The girl looked up and suddenly she saw …']],
+        ['Handlung', 'Konflikt entwickelt sich. Simple past + Zeitangaben.', ['They feared / saw / felt …', 'In the year …', 'One morning / The other day …', 'When / After a while / At that moment …']],
+        ['Auflösung', 'Lösung des Konflikts.', ['Fortunately, …', 'When she heard that … she was very happy.']],
+        ['Ende', 'Lösung bestätigen + Ausblick auf zukünftige Probleme.', ['In the end / Finally, …', 'And so they lived …', 'But what they didn\'t know was that …']]
+      ]
+    },
+    level2: {
+      structure: [
+        ['Title', 'Interesting; tells readers what kind of story to expect.', ['"The flying jelly bean – an extraordinary science fiction story"']],
+        ['Introduction', 'Setting (place, time, weather), characters, conflict. Catch attention with a surprise.', ['It was a hot summer\'s day at Brightview Palace …', 'It was a quiet, rainy afternoon at Monrose Square …', 'The boy sat unhappily in his room, because unfortunately…', 'The children looked up at the sky, and suddenly they saw …']],
+        ['Action', 'Conflict develops; simple past + time phrases for chronological order.', ['he was very afraid / she felt as if …', 'she realized / he worried / they feared', 'Early one morning / The other day / As soon as …', 'When / After a while / At that moment …']],
+        ['Solution', 'A clear solution to the conflict.', ['How lucky! / Fortunately, …', 'When they heard that … they were very happy.']],
+        ['Ending', 'Confirm solution + outlook on what could still happen.', ['In the end / Finally, … / And so they lived …', 'But what they didn\'t know by then, was that …']]
+      ]
+    },
+    checklist: {
+      starter: {
+        Anfang: ['Titel', 'Ort + Zeit', 'Charaktere', 'Konflikt'],
+        Hauptteil: ['Verben in Vergangenheit', 'Zeitangaben', 'Lösung des Konflikts'],
+        Ende: ['interessantes oder offenes Ende'],
+        'Final check': ['lebendige Sprache', 'klare Beschreibungen', 'Wörter und Grammatik geprüft']
+      },
+      level1: {
+        Beginning: ['Good title', 'Characters', 'Time and place', 'Situation', 'Conflict'],
+        'Main part': ['Simple past verbs', 'Time phrases', 'Detailed descriptions', 'Direct speech', 'Solution to the conflict'],
+        Ending: ['Interesting ending OR outlook on the future'],
+        'Final check': ['Thrilling / romantic / thoughtful / funny story', 'Suitable content + language', 'Vivid language (verbs, adjectives, superlatives)', 'Descriptions help readers imagine', 'Sentences clear', 'Dictionary, grammar checked']
+      },
+      level2: {
+        Title: ['Interesting; makes readers want to read'],
+        Introduction: ['Setting (time, place, weather)', 'Main characters introduced', 'Conflict / problem set up'],
+        'Main part': ['Detailed descriptions with adverbs and adjectives', 'Events in simple past with time phrases', 'Direct speech with comma + quotation marks', 'Words fit the situation/characters', 'Lively language (verbs, adjectives, adverbs, superlatives)', 'Solution to the problem'],
+        Ending: ['Confirms solution + outlook'],
+        'Final check': ['Type of story (thrilling/romantic/etc.) is clear', 'Content + language fit the type', 'Dictionary used', 'Grammar pages used', '"Favourite" mistakes list used', 'Peer feedback used']
+      }
+    }
+  },
+
+  report: {
+    label: 'Report',
+    starter: {
+      structure: [
+        ['Title', 'A clear title naming the experience.', ['My first day at the new school']],
+        ['Introduction', 'When, where, who, what.', ['Last weekend I went to …', 'I was with …']],
+        ['Main part', 'What happened — in order.', ['First … / Then … / After that …', 'It was great because …']],
+        ['Conclusion', 'How I felt; what I learned.', ['In the end …', 'I really enjoyed it because …']]
+      ]
+    },
+    level1: {
+      structure: [
+        ['Überschrift', 'Klar und sachlich.', ['My weekend trip to Hamburg']],
+        ['Einleitung', 'W-Fragen: Wann? Wo? Wer? Was?', ['Last weekend / Two weeks ago …', 'I went to …', 'I was with my family / friends.', 'We wanted to …']],
+        ['Hauptteil', 'Was ist passiert — in der richtigen Reihenfolge. Simple past + Zeitangaben.', ['First we …', 'Then / After that / Later …', 'Suddenly …', 'It was fun because …', 'The best moment was when …']],
+        ['Schluss', 'Eindruck zusammenfassen.', ['All in all it was a great / boring day.', 'I would definitely go again because …', 'Next time I would like to …']]
+      ]
+    },
+    level2: {
+      structure: [
+        ['Title', 'Concise, informative.', ['A weekend I will never forget']],
+        ['Introduction', 'Set the scene: when, where, who, what, why.', ['Last weekend I went to …', 'I was with my family / friends.', 'The reason was …', 'We had been looking forward to it for weeks.']],
+        ['Main part', 'Chronological account; simple past + time phrases. Use vivid details (adjectives, adverbs, direct speech where useful).', ['First / To begin with …', 'Then / After that / Later / Meanwhile …', 'Suddenly / All of a sudden …', 'The highlight was when …', 'What surprised me most was …']],
+        ['Conclusion', 'Overall impression; what I learned; recommendation / outlook.', ['All in all it was a fantastic / disappointing experience.', 'I particularly enjoyed … because …', 'I would definitely recommend it / I would think twice before …', 'Next time I would …']]
+      ]
+    },
+    checklist: {
+      starter: {
+        Anfang: ['Überschrift', 'wann/wo/wer/was'],
+        Hauptteil: ['Reihenfolge klar', 'Vergangenheit + Zeitangaben'],
+        Ende: ['Eindruck zusammenfassen'],
+        'Final check': ['Verständliche Sätze', 'Wörter und Grammatik geprüft']
+      },
+      level1: {
+        Beginning: ['Title', 'Setting (when, where, who, what)'],
+        'Main part': ['Events in chronological order', 'Simple past + time phrases', 'Detail / why something was great or not'],
+        Ending: ['Overall impression', 'Recommendation or outlook'],
+        'Final check': ['Sentences clear', 'Dictionary used', 'Grammar checked', '"Favourite" mistakes checked']
+      },
+      level2: {
+        Title: ['Concise and informative'],
+        Introduction: ['Sets the scene clearly: when, where, who, what, why'],
+        'Main part': ['Chronological account', 'Simple past with time phrases', 'Vivid details (adjectives, adverbs)', 'Direct speech where useful', 'Highlights and surprises mentioned'],
+        Conclusion: ['Overall impression', 'What I learned', 'Recommendation or outlook'],
+        'Final check': ['Task: topic, content points, length', 'Paragraphs + linking words', 'Dictionary used', 'Grammar pages used', 'Peer feedback used']
+      }
+    }
+  }
+};
+
+const LEVEL_LABELS = {
+  starter: 'Starter (A1–A2)',
+  level1: 'Level I (A2–B1)',
+  level2: 'Level II (B1+)'
+};
+
+const TOPIC_LABELS = {};
+Object.keys(DATA).forEach(k => TOPIC_LABELS[k] = DATA[k].label);
+
+/* =========================================================================
+   STATE
+   ========================================================================= */
+
+const state = {
+  level: localStorage.getItem('wp_level') || null,
+  topic: localStorage.getItem('wp_topic') || null
+};
+
+/* =========================================================================
+   RENDER
+   ========================================================================= */
+
+function renderTemplate() {
+  const container = document.getElementById('templateContainer');
+  if (!state.level || !state.topic) {
+    container.innerHTML = '<em>Pick a level and a text type above to see your template.</em>';
+    return;
+  }
+  const t = DATA[state.topic][state.level];
+  let html = '<div class="template-box">';
+  t.structure.forEach(([part, hint, starters]) => {
+    html += `<div class="template-row">
+      <div class="template-cell"><strong>${escapeHtml(part)}</strong>${escapeHtml(hint)}</div>
+      <div class="template-cell">
+        <div class="pills">
+          ${starters.map(s => `<span class="pill" data-copy="${escapeAttr(s)}">${escapeHtml(s)}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+
+  // attach pill copy handlers
+  container.querySelectorAll('.pill').forEach(el => {
+    el.addEventListener('click', () => {
+      navigator.clipboard.writeText(el.dataset.copy).catch(()=>{});
+      const original = el.textContent;
+      el.textContent = '✓ copied';
+      setTimeout(() => { el.textContent = original; }, 900);
+    });
+  });
+}
+
+function renderChecklist() {
+  const container = document.getElementById('checklistContainer');
+  if (!state.level || !state.topic) {
+    container.innerHTML = '<em>Pick a level and a text type above to see your checklist.</em>';
+    return;
+  }
+  const cl = DATA[state.topic].checklist[state.level];
+  let html = '<div class="checklist">';
+  Object.keys(cl).forEach(section => {
+    html += `<div class="checklist-section">
+      <div class="checklist-section-title">${escapeHtml(section)}</div>`;
+    cl[section].forEach((item, idx) => {
+      const id = `cl_${state.topic}_${state.level}_${section}_${idx}`.replace(/\W/g, '_');
+      html += `<label><input type="checkbox" id="${id}"><span>${escapeHtml(item)}</span></label>`;
+    });
+    html += `</div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+
+  // restore checked state
+  container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    const saved = localStorage.getItem('wp_' + cb.id);
+    if (saved === '1') cb.checked = true;
+    cb.addEventListener('change', () => {
+      localStorage.setItem('wp_' + cb.id, cb.checked ? '1' : '0');
+    });
+  });
+}
+
+function renderAIPrompt() {
+  const target = document.getElementById('aiPrompt');
+  if (!state.level || !state.topic) {
+    target.textContent = 'Pick your text type and level above to see the matching AI prompt.';
+    return;
+  }
+
+  const topicLabel = TOPIC_LABELS[state.topic];
+  const levelLabel = LEVEL_LABELS[state.level];
+
+  // Build a checklist-criteria-aware prompt
+  const cl = DATA[state.topic].checklist[state.level];
+  const criteriaList = [];
+  Object.keys(cl).forEach(section => {
+    cl[section].forEach(item => criteriaList.push(`${section} – ${item}`));
+  });
+
+  const promptText = `You are a friendly English teacher giving feedback on a ${topicLabel} written by a German Year 8 student at ${levelLabel}.
+
+I am going to paste my text. Please give me feedback in EXACTLY four sections, in this order:
+
+1. CONTENT – Did I cover everything the task asks for? Is anything missing or unclear?
+2. STRUCTURE – Are the parts of a ${topicLabel.toLowerCase()} all there? Are paragraphs and linking words used well?
+3. VOCABULARY – Where are words too simple, repeated, or wrong for this text type? Suggest 2–3 stronger alternatives.
+4. GRAMMAR & SPELLING – List the most important mistakes (max. 5) with a short explanation, but do NOT rewrite the whole text for me.
+
+For each section: first say what works WELL, then what to IMPROVE. End each section with one concrete next step I can do myself.
+
+Use these criteria from my checklist when you give feedback:
+- ${criteriaList.slice(0, 12).join('\n- ')}
+
+Important: Do NOT rewrite my text. Help me improve it myself. Reply in English.
+
+Here is my text:
+[PASTE YOUR DRAFT HERE]`;
+
+  target.textContent = promptText;
+  target.dataset.prompt = promptText;
+}
+
+function updateSelectionSummary() {
+  const summary = document.getElementById('summary');
+  if (state.level && state.topic) {
+    summary.style.display = 'flex';
+    document.getElementById('sumTopic').textContent = TOPIC_LABELS[state.topic];
+    document.getElementById('sumLevel').textContent = LEVEL_LABELS[state.level];
+    document.body.classList.add('has-selection');
+  } else {
+    summary.style.display = 'none';
+    document.body.classList.remove('has-selection');
+  }
+}
+
+function highlightSelection() {
+  document.querySelectorAll('#levelPicker .level-card').forEach(b => {
+    b.classList.toggle('active', b.dataset.level === state.level);
+  });
+  document.querySelectorAll('#topicPicker .topic-card').forEach(b => {
+    b.classList.toggle('active', b.dataset.topic === state.topic);
+  });
+}
+
+function rerenderAll() {
+  renderTemplate();
+  renderChecklist();
+  renderAIPrompt();
+  updateSelectionSummary();
+  highlightSelection();
+}
+
+/* =========================================================================
+   EVENTS
+   ========================================================================= */
+
+document.querySelectorAll('#levelPicker .level-card').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.level = btn.dataset.level;
+    localStorage.setItem('wp_level', state.level);
+    rerenderAll();
+  });
+});
+
+document.querySelectorAll('#topicPicker .topic-card').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.topic = btn.dataset.topic;
+    localStorage.setItem('wp_topic', state.topic);
+    rerenderAll();
+  });
+});
+
+// Auto-save text areas + restore
+['taskNotes', 'brainstorm', 'draft', 'aiFeedback', 'finalDraft'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const saved = localStorage.getItem('wp_' + id);
+  if (saved) el.value = saved;
+  el.addEventListener('input', () => {
+    localStorage.setItem('wp_' + id, el.value);
+    if (id === 'draft') updateWordCount('draft', 'wordCount');
+    if (id === 'finalDraft') updateWordCount('finalDraft', 'finalWordCount');
+  });
+});
+
+function updateWordCount(textareaId, counterId) {
+  const t = document.getElementById(textareaId).value.trim();
+  const wc = t.length === 0 ? 0 : t.split(/\s+/).length;
+  document.getElementById(counterId).textContent = wc + ' words';
+}
+updateWordCount('draft', 'wordCount');
+updateWordCount('finalDraft', 'finalWordCount');
+
+// Stage toggling
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.stage').classList.toggle('collapsed');
+  });
+});
+
+// Copy AI prompt
+document.getElementById('copyPrompt').addEventListener('click', () => {
+  const text = document.getElementById('aiPrompt').dataset.prompt;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyPrompt');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy prompt';
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+});
+
+/* =========================================================================
+   HELPERS
+   ========================================================================= */
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+// Initial render
+rerenderAll();
+</script>
+
+</body>
+</html>
