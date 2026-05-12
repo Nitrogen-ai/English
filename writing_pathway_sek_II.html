@@ -848,7 +848,7 @@
   <div class="nav-title">Writing <span>Pathway</span> · Sek II</div>
   <div class="nav-links">
     <a href="#start">Start</a>
-    <a href="#context">Your Essay</a>
+    <a href="#context">Your Task</a>
     <a href="#process">Process</a>
     <a href="#picker">Level &amp; Genre</a>
     <a href="#session1">Research &amp; Plan</a>
@@ -865,7 +865,7 @@
     A five-phase writing pathway built on the Berlin handout
     <em>Materialien zur Textproduktion in der gymnasialen Oberstufe</em>. You pick your level.
     You pick your genre. You move from research and thesis-building through drafting and AI-supported
-    revising to a polished final text — with templates, phrase banks, checklists and a referee-ready submission.
+    revising to a polished final text — with templates, phrase banks, checklists and self-assessment.
   </p>
   <div class="hero-stats">
     <div class="stat">
@@ -887,31 +887,29 @@
   </div>
 </header>
 
-<!-- CONTEXT BLOCK: Personal essay context for the student -->
+<!-- CONTEXT BLOCK: Your essay task -->
 <section id="context" style="padding-top: 30px; padding-bottom: 30px;">
   <div class="essay-context">
-    <span class="pre-tag">Your project · John Locke Institute Global Essay Competition</span>
-    <h3>Your competition question · category Law</h3>
-    <div class="quote">
-      "If legislators and judges all accepted the philosophical theory of determinism,
-      what would be the effect on criminal sentencing?"
+    <span class="pre-tag">Your essay · enter your own question</span>
+    <h3>What are you writing about?</h3>
+    <p>
+      Paste or type your essay question / task below. Keep it visible while you work — every later
+      stage refers back to it.
+    </p>
+    <div class="writing-area">
+      <label for="essayQuestion">Your essay question or task</label>
+      <textarea id="essayQuestion" class="small" placeholder="e.g. Discuss whether …  /  Analyze the use of …  /  To what extent …  /  …"></textarea>
     </div>
     <p>
-      This pathway is set up so you can work through the John Locke essay independently. The competition
-      requires an <strong>original, argumentative essay of ~2,000 words</strong> — closest in the Berlin
-      Sek II handout to <em>"Discussing and commenting on an issue"</em> (chapter 5.1) combined with
-      <em>article writing</em> (chapter 5.2). At the recommended level you will produce a piece that
-      could be submitted with an academic referee's confirmation of legitimacy and originality.
-    </p>
-    <p>
-      The pathway also flags, at each step, what an <strong>academic referee</strong> will check —
-      so when you submit, both you and your referee can be confident the work is your own.
+      This pathway works for any academic-style essay or extended piece of writing you have to produce
+      in the Oberstufe: a Klausur, a Facharbeit, a Präsentationsprüfung essay, a competition entry,
+      or an exam-style task. Pick your level and your text type below, then move through the five phases
+      at your own pace.
     </p>
     <div class="tip warn" style="margin-bottom: 0;">
       <strong>Originality &amp; integrity</strong>
-      The John Locke Institute requires your essay to be your own writing. Use AI only the way this pathway
-      describes: <em>feedback on a finished draft, never as a writer.</em> Keep your brainstorms, notes
-      and drafts — your referee may want to see them.
+      Use AI only the way this pathway describes: <em>feedback on a finished draft, never as a writer.</em>
+      Keep your brainstorms, notes and drafts — they document that the work is yours.
     </div>
   </div>
 </section>
@@ -959,9 +957,9 @@
   <span class="section-num">02 / Choose your level</span>
   <h2 class="section-title">Pick the level that fits your year — and your ambition.</h2>
   <p class="section-intro">
-    The three levels match the steps of the Berlin Rahmenlehrplan for the Oberstufe. For a John Locke
-    competition submission, work at <strong>Level C</strong>. For early Q-phase practice in similar
-    discussion essays, Level B fits well.
+    The three levels match the steps of the Berlin Rahmenlehrplan for the Oberstufe. Choose the level
+    that fits your year — and your ambition for this particular piece of writing. You can switch
+    later if a level turns out to be too easy or too demanding.
   </p>
 
   <div class="level-picker" id="levelPicker">
@@ -988,11 +986,11 @@
     <button class="level-card" data-level="levelC">
       <span class="level-tag">Level C</span>
       <div class="level-name">Excellence</div>
-      <div class="level-cefr">CEFR · C1 → C1+  ·  Leistungskurs / Competition-level</div>
+      <div class="level-cefr">CEFR · C1 → C1+  ·  Leistungskurs / Abitur-level</div>
       <p class="level-desc">
-        Competition-grade output: thesis with nuance, sustained engagement with counter-arguments,
-        evidence from primary sources, formal academic register, careful citation. Ideal for
-        John Locke essay submissions. Word count target: ~1,800–2,000 words.
+        Top-grade output: thesis with nuance, sustained engagement with counter-arguments,
+        evidence from primary sources, formal academic register, careful citation. Suitable for
+        Abitur essays, Facharbeiten, and competition entries. Word count target: ~1,800–2,000 words.
       </p>
     </button>
   </div>
@@ -1003,17 +1001,16 @@
   <span class="section-num">03 / Choose your text type</span>
   <h2 class="section-title">Seven Sek II text types — pick the one your task asks for.</h2>
   <p class="section-intro">
-    Each text type has its own structure, register and conventions. The card marked
-    <strong>recommended</strong> matches your John Locke essay; pick another for school tasks
-    in different genres.
+    Each text type has its own structure, register and conventions. Pick the one your task asks for —
+    if you are not sure, the <em>Comment / Discussion essay</em> is the most common Sek II genre for
+    argumentative writing.
   </p>
 
   <div class="topic-picker" id="topicPicker">
-    <button class="topic-card recommended" data-topic="comment">
+    <button class="topic-card" data-topic="comment">
       <span class="topic-icon">§</span>
       <div class="topic-name">Comment / Discussion essay</div>
       <div class="topic-meta">Argumentative · academic</div>
-      <span class="rec-badge">For John Locke</span>
     </button>
     <button class="topic-card" data-topic="article">
       <span class="topic-icon">▤</span>
@@ -1081,24 +1078,24 @@
       </div>
       <div class="stage-content">
       <div class="stage-body">
-        <p>Read your essay question slowly. Most Sek II tasks (and the John Locke prompt) bury at least
+        <p>Read your essay question slowly. Most Sek II tasks bury at least
           <strong>four</strong> things inside one sentence. Identify them before you do anything else:</p>
         <div class="template-box">
           <div class="template-row">
             <div class="template-cell"><strong>① Operator(s)</strong>What is the verb of the task? (<em>discuss, comment on, analyze, evaluate, assess…</em>)</div>
-            <div class="template-cell">For John Locke: implicit "<em>discuss</em>" / "<em>evaluate the effect of</em>". See §8 of the handout for the operator definitions.</div>
+            <div class="template-cell">See §8 of the Berlin handout for the official Sek II operator definitions and what each one demands.</div>
           </div>
           <div class="template-row">
-            <div class="template-cell"><strong>② Topic / domain</strong>Which field is this in? Law, ethics, philosophy, politics, economics?</div>
-            <div class="template-cell">For John Locke "Law": philosophy of law &amp; criminal justice; here also philosophy of mind / free will.</div>
+            <div class="template-cell"><strong>② Topic / domain</strong>Which field is this in? Politics, ethics, literature, science, society, economics?</div>
+            <div class="template-cell">Name the field — it tells you what kind of evidence will count.</div>
           </div>
           <div class="template-row">
             <div class="template-cell"><strong>③ Key concepts</strong>Which terms must you define before you can argue?</div>
-            <div class="template-cell">determinism, criminal sentencing, retribution, deterrence, rehabilitation, moral responsibility…</div>
+            <div class="template-cell">Underline every term that more than one reasonable person could understand differently.</div>
           </div>
           <div class="template-row">
             <div class="template-cell"><strong>④ Hidden assumptions</strong>What does the question take for granted? What could you challenge?</div>
-            <div class="template-cell">e.g. that "accepting determinism" entails a single set of sentencing consequences; that there is only one kind of determinism.</div>
+            <div class="template-cell">Good answers often start by questioning a premise the question quietly assumes.</div>
           </div>
         </div>
 
@@ -1129,14 +1126,14 @@
       <div class="stage-content">
       <div class="stage-body">
         <p>
-          Sek II essays — especially competition essays — must show that you have <strong>read around</strong>
+          Sek II essays must show that you have <strong>read around</strong>
           the question. You do not need to read everything; you need to read <em>strategically</em>.
         </p>
         <p>For each key concept and each side of the argument, find:</p>
         <ul>
-          <li>At least <strong>one primary source</strong> (a philosopher's own words, a statute, a court ruling, a peer-reviewed paper). For determinism: e.g. Pereboom, Strawson, Caruso. For criminal-law theory: e.g. Hart, Greene &amp; Cohen.</li>
-          <li>At least <strong>one good encyclopaedia entry</strong> (Stanford Encyclopedia of Philosophy is the gold standard for philosophy topics).</li>
-          <li>At least <strong>one current example</strong> (a case, a piece of recent legislation, a news story).</li>
+          <li>At least <strong>one primary source</strong> (an author's own words, a statute, a literary text, a peer-reviewed paper, an original document). For philosophy: e.g. the Stanford Encyclopedia of Philosophy will point you to the canonical texts. For history/politics: original speeches, treaties, press releases. For literature: the work itself.</li>
+          <li>At least <strong>one good reference work</strong> (encyclopaedia, handbook, scholarly introduction).</li>
+          <li>At least <strong>one current example</strong> (a case, a piece of recent legislation, a news story, a contemporary debate).</li>
         </ul>
 
         <div class="writing-area">
@@ -1152,7 +1149,7 @@
         </div>
 
         <div class="tip critical">
-          <strong>Originality (referee-relevant)</strong>
+          <strong>Originality</strong>
           Never paste a passage from a source into your draft. Always read, then close the source,
           then write the idea in your own words from your notes. This is the single most important habit
           for keeping your essay honest.
@@ -1177,15 +1174,15 @@
         <div class="template-box">
           <div class="template-row">
             <div class="template-cell"><strong>Weak (description)</strong>States a fact or restates the question.</div>
-            <div class="template-cell">"Determinism is the view that all events are caused by prior events, and it has effects on criminal sentencing."</div>
+            <div class="template-cell">"Social media has effects on young people, both positive and negative."</div>
           </div>
           <div class="template-row">
             <div class="template-cell"><strong>Stronger (claim)</strong>Takes a position.</div>
-            <div class="template-cell">"If determinism were accepted, criminal sentencing would shift from retribution to rehabilitation."</div>
+            <div class="template-cell">"Social media does more harm than good to teenagers' mental health."</div>
           </div>
           <div class="template-row">
             <div class="template-cell"><strong>Best (specific + arguable + roadmap)</strong>Position + key reasons + nuance.</div>
-            <div class="template-cell">"A consistent acceptance of determinism by legislators and judges would not abolish criminal sentencing, but would force three changes: a collapse of retributive justification, a strengthening of consequentialist aims (deterrence and incapacitation), and a redirection of moral language from blame to public-health-style intervention."</div>
+            <div class="template-cell">"The dominant narrative that social media universally harms teenagers conceals a more uneven picture: while heavy use of image-based platforms is reliably linked to lower self-esteem in adolescent girls, moderate, community-based use can support identity formation and access to support — so the policy answer is not abstinence but design reform."</div>
           </div>
         </div>
 
@@ -1224,8 +1221,8 @@
             <div class="template-cell">Thesis → Arg 1 → (ev, obj, response) · Arg 2 → … · Arg 3 → …</div>
           </div>
           <div class="template-row">
-            <div class="template-cell"><strong>Concept map</strong>Concepts in boxes, relations on arrows. Best when key terms interact in complex ways (determinism ↔ free will ↔ responsibility ↔ punishment).</div>
-            <div class="template-cell">determinism →(undermines)→ moral responsibility →(traditionally grounds)→ retribution</div>
+            <div class="template-cell"><strong>Concept map</strong>Concepts in boxes, relations on arrows. Best when key terms interact in complex ways.</div>
+            <div class="template-cell">concept A →(causes)→ concept B →(undermines)→ concept C</div>
           </div>
         </div>
 
@@ -1367,7 +1364,7 @@
           <div class="phrase-group">
             <h5>Citing &amp; referring</h5>
             <ul>
-              <li>As Pereboom (2014) argues, …</li>
+              <li>As [Author] ([year]) argues, …</li>
               <li>According to …, …</li>
               <li>This view is defended by …</li>
               <li>In a recent study, … shows that …</li>
@@ -1447,7 +1444,8 @@
         <div class="tip warn">
           <strong>Don't let the AI write</strong>
           You can use AI for <em>feedback in Session 3</em>, never to draft sentences or paragraphs.
-          Your referee will be confirming that the essay is your work; this matters.
+          The essay has to be in your own voice and your own words — that is what the Berlin Rahmenlehrplan
+          and academic integrity expect.
         </div>
       </div>
       </div>
@@ -1537,10 +1535,10 @@
         <button class="copy-btn" id="copyPrompt">Copy prompt</button>
 
         <div class="tip critical">
-          <strong>Critical · originality and the referee</strong>
+          <strong>Critical · how to use AI legitimately</strong>
           The AI must <strong>not rewrite your text</strong>. The prompt below instructs the model
           to give diagnostic feedback only: where to improve, why, and what to try — without producing
-          replacement sentences. This is what an academic referee can confirm as legitimate AI use.
+          replacement sentences. This is the only kind of AI use that keeps the writing yours.
         </div>
 
         <div class="tip warn">
@@ -1576,8 +1574,8 @@
         </p>
 
         <div class="writing-area">
-          <label for="aiFeedback">Paste the AI's feedback here (for your records and for the referee)</label>
-          <textarea id="aiFeedback" class="notes" placeholder="Paste the feedback you received. Keep this — your referee may want to see it."></textarea>
+          <label for="aiFeedback">Paste the AI's feedback here (for your records)</label>
+          <textarea id="aiFeedback" class="notes" placeholder="Paste the feedback you received. Keep this — it documents how you used the AI."></textarea>
         </div>
 
         <div class="writing-area">
@@ -1596,11 +1594,11 @@
       </div>
     </div>
 
-    <!-- STAGE 3.4 — REFERENCES & SUBMISSION -->
+    <!-- STAGE 3.4 — REFERENCES & FINAL FORMATTING -->
     <div class="stage" id="stage-3-4">
       <div class="stage-header">
         <span class="stage-num">3.4</span>
-        <span class="stage-title">References, word count &amp; submission cover note</span>
+        <span class="stage-title">References, word count &amp; formatting</span>
         <span class="stage-time">⏱ 15'</span>
         <button class="toggle-btn">Hide</button>
       </div>
@@ -1608,27 +1606,28 @@
       <div class="stage-body">
         <p>Final formal steps before submission:</p>
         <ol>
-          <li>Format every in-text citation consistently (one system only).</li>
+          <li>Format every in-text citation consistently (one system only — Chicago, MLA or APA).</li>
           <li>Compile your reference list at the end of the essay. Alphabetical order.</li>
-          <li>Run a word count. Check it against the competition limit (John Locke: 2,000 words excluding diagrams, footnotes &amp; references).</li>
-          <li>Add a title page if required: title, candidate name, competition category.</li>
-          <li>Write a short cover note to your academic referee (see template below).</li>
+          <li>Run a word count. Check it against the limit your task sets.</li>
+          <li>Add a title page if required: title, your name, course/class, date.</li>
+          <li>Write a short process reflection for yourself (see template below) — it helps you learn from this essay and is useful evidence if anyone ever asks how you worked.</li>
         </ol>
 
         <div class="writing-area">
           <label for="references">Your reference list (Chicago / MLA / APA — pick one and stick to it)</label>
-          <textarea id="references" class="notes" placeholder="Pereboom, Derk. Free Will, Agency, and Meaning in Life. Oxford: Oxford UP, 2014.&#10;Hart, H. L. A. Punishment and Responsibility. 2nd ed. Oxford: Oxford UP, 2008.&#10;…"></textarea>
+          <textarea id="references" class="notes" placeholder="Author, A. Title of work. Place: Publisher, year.&#10;Author, B. &quot;Title of article.&quot; Title of journal/newspaper, date, pages.&#10;…"></textarea>
         </div>
 
         <div class="writing-area">
-          <label for="refereeNote">Cover note for your academic referee (template — adapt it)</label>
-          <textarea id="refereeNote" class="notes" placeholder="Dear [Referee],&#10;&#10;Please find attached my essay for the John Locke Institute Global Essay Competition, category Law.&#10;Question: …&#10;Word count: …&#10;&#10;I worked on this essay independently across three sessions of research, drafting and revising. I used an AI tool only for diagnostic feedback on the finished draft (no rewriting); the feedback log is available on request. All sources are cited in the reference list.&#10;&#10;Thank you for confirming the originality of my submission.&#10;&#10;Best regards,&#10;[Your name]"></textarea>
+          <label for="refereeNote">Process reflection (for yourself — what worked, what was hard, what you'd do differently)</label>
+          <textarea id="refereeNote" class="notes" placeholder="Sources I used: …&#10;How I formed my thesis: …&#10;How I used AI (if at all): only for diagnostic feedback on the finished draft — see saved log.&#10;What I struggled with: …&#10;What I would do differently next time: …"></textarea>
         </div>
 
         <div class="tip critical">
-          <strong>What your referee needs to see (or have on request)</strong>
-          (1) Your final essay. (2) Your reference list. (3) A short statement of how you used AI.
-          (4) Optionally: drafts &amp; brainstorm notes that show your process. Keep all of these.
+          <strong>Keep your working files</strong>
+          (1) Your final essay. (2) Your reference list. (3) A short note on how you used AI.
+          (4) Your drafts &amp; brainstorm notes. These document your process — useful for self-review,
+          for teacher feedback, and as proof of originality if anyone ever asks.
         </div>
       </div>
       </div>
@@ -1648,14 +1647,14 @@
         <div class="checklist" style="margin-top: 8px;">
           <div class="checklist-section">
             <div class="checklist-section-title">SUBMISSION READY?</div>
-            <label><input type="checkbox" id="sub_final_1"><span>Word count within the competition limit.</span></label>
-            <label><input type="checkbox" id="sub_final_2"><span>Title, name and category on the front page.</span></label>
+            <label><input type="checkbox" id="sub_final_1"><span>Word count within the limit set by the task.</span></label>
+            <label><input type="checkbox" id="sub_final_2"><span>Title, your name and class/course on the front page.</span></label>
             <label><input type="checkbox" id="sub_final_3"><span>Every in-text citation has a matching entry in the reference list.</span></label>
             <label><input type="checkbox" id="sub_final_4"><span>Every entry in the reference list is cited somewhere in the text.</span></label>
             <label><input type="checkbox" id="sub_final_5"><span>No contractions, no slang, formal academic register throughout.</span></label>
             <label><input type="checkbox" id="sub_final_6"><span>Spell-check run; "favourite mistakes" list checked.</span></label>
-            <label><input type="checkbox" id="sub_final_7"><span>Cover note prepared for the referee.</span></label>
-            <label><input type="checkbox" id="sub_final_8"><span>Final file saved with a clear filename: <em>Surname_JohnLocke_Law_2026.pdf</em></span></label>
+            <label><input type="checkbox" id="sub_final_7"><span>Process reflection saved alongside the essay.</span></label>
+            <label><input type="checkbox" id="sub_final_8"><span>Final file saved with a clear filename: <em>Surname_TaskName_Year.pdf</em></span></label>
           </div>
         </div>
       </div>
@@ -1688,7 +1687,7 @@
         <li>Your level &amp; text-type choice</li>
         <li>Your task / research / thesis / argument notes</li>
         <li>Your draft &amp; final text</li>
-        <li>Your reference list and referee note</li>
+        <li>Your reference list and process reflection</li>
         <li>Saved in your browser only.</li>
       </ul>
     </div>
@@ -1707,7 +1706,7 @@
   </div>
   <div class="footer-meta">
     Source: Senatsverwaltung für Bildung, Jugend und Familie (Hg.), <em>Materialien zur Textproduktion (Sek II)</em>, Berlin 2021 ·
-    Pathway design adapted for self-paced Oberstufe use and for the John Locke Institute Global Essay Competition.
+    Pathway design adapted for self-paced Oberstufe use.
   </div>
 </footer>
 
@@ -1718,13 +1717,13 @@
    Levels:
      levelA = Foundation (B1+/B2 · Einführungsphase)  — German hints, English starters
      levelB = Advanced (B2/B2+ · Q-Phase Grundkurs)   — English throughout
-     levelC = Excellence (C1/C1+ · Leistungskurs / John Locke)  — Competition-grade
+     levelC = Excellence (C1/C1+ · Leistungskurs)  — Top-grade output
    ========================================================================= */
 
 const DATA = {
 
   /* =========================================================
-     COMMENT / DISCUSSION ESSAY  (Berlin handout §5.1) — RECOMMENDED for John Locke
+     COMMENT / DISCUSSION ESSAY  (Berlin handout §5.1)
      ========================================================= */
   comment: {
     label: 'Comment / Discussion essay',
@@ -1748,8 +1747,8 @@ const DATA = {
     levelC: {
       structure: [
         ['Introduction', 'Frame the question; clarify the key terms in 1–2 sentences; state a precise thesis.', ['The question whether … turns on a deeper philosophical commitment: …', 'I will argue that …, and that the implications for … are threefold.', 'This essay defends three theses: first, …; second, …; third, …']],
-        ['Conceptual groundwork', 'Define your central terms briefly and clearly. Without this, no argument can land.', ['By "determinism" I mean …', 'For the purposes of this essay, "criminal sentencing" refers to …', 'I will use "moral responsibility" in the sense developed by …']],
-        ['First main argument', 'Strongest argument first. Claim → evidence → analysis → significance.', ['A first reason to accept this view is …', 'As Pereboom (2014) argues, …', 'What this shows is that …', 'The implication for sentencing is …']],
+        ['Conceptual groundwork', 'Define your central terms briefly and clearly. Without this, no argument can land.', ['By "X" I mean …', 'For the purposes of this essay, "Y" refers to …', 'I will use the term "Z" in the sense developed by …']],
+        ['First main argument', 'Strongest argument first. Claim → evidence → analysis → significance.', ['A first reason to accept this view is …', 'As [Author] ([year]) argues, …', 'What this shows is that …', 'The implication of this is …']],
         ['Second main argument', 'Independent reason for the thesis.', ['A further consideration is …', 'This is reinforced by …', 'Consider the case of …']],
         ['Engaging the strongest counter-argument', 'Steelman the objection — make it as strong as you can — and then respond.', ['The most powerful objection to this position is …', 'On this view, …', 'There are, however, three problems with this objection. First, … Second, … Third, …']],
         ['Qualification / nuance', 'Acknowledge what your thesis does NOT show. This is what separates A* from B+.', ['It is important to note that this argument does not entail …', 'My claim is more modest: …', 'There remains a residual question about …']],
@@ -1802,10 +1801,10 @@ const DATA = {
     },
     levelC: {
       structure: [
-        ['Headline', 'Catchy and specific; signals stance without giving away the conclusion.', ['"Why determinism leaves room for the courtroom"']],
-        ['Lead', 'A vivid opening that orients the reader and signals the angle.', ['Consider a defendant who …', 'Few questions in legal philosophy are as old — or as urgent — as …']],
+        ['Headline', 'Catchy and specific; signals stance without giving away the conclusion.', ['"Why the case for X is stronger than it looks"']],
+        ['Lead', 'A vivid opening that orients the reader and signals the angle.', ['Consider a case in which …', 'Few questions in [field] are as old — or as urgent — as …']],
         ['Introduction', 'Define the topic precisely, name your angle, preview the argument.', ['This article argues that …', 'I will focus on three implications: …']],
-        ['Main part', 'Sustained argument with evidence, named sources, and engagement with counter-positions.', ['As legal philosopher H. L. A. Hart noted, …', 'A common counter-position holds that …', 'Yet this overlooks …']],
+        ['Main part', 'Sustained argument with evidence, named sources, and engagement with counter-positions.', ['As [scholar/expert] noted, …', 'A common counter-position holds that …', 'Yet this overlooks …']],
         ['Conclusion', 'Restate angle; outward-facing implication or call to action.', ['What follows from all this is …', 'If readers take only one idea from this piece, let it be …']]
       ]
     },
@@ -1858,7 +1857,7 @@ const DATA = {
     },
     levelC: {
       structure: [
-        ['Headline', 'Catchy AND specific; voice is recognisable.', ['"Determinism, the dock, and the strange comfort of giving up blame"']],
+        ['Headline', 'Catchy AND specific; voice is recognisable.', ['"Why I changed my mind about X — and what it cost me"']],
         ['Introduction', 'Personal/anecdotal hook that earns the topic; signal where the post is going.', ['I have been thinking about a question for weeks: …', 'This post argues that …']],
         ['Main part', 'Voice + argument. Use the form of a blog (paragraphs, occasional rhetorical questions, second-person address) but with substance.', ['What I want to suggest is that …', 'Consider this case: …', 'I can already hear the objection: …', 'Here is why that objection misses the point: …']],
         ['Conclusion', 'Restate the take-home idea; invite engagement.', ['If you take only one idea from this post, let it be …', 'I would love to hear where you disagree.']]
@@ -2025,10 +2024,10 @@ const DATA = {
     },
     levelC: {
       structure: [
-        ['Subject', 'Specific and informative; signals importance without shouting.', ['Subject: Request for academic referee — John Locke essay (Law)']],
-        ['Greeting', 'Formal; addressee\'s actual name and title where known.', ['Dear Professor …,', 'Dear Dr …,']],
-        ['Introduction', 'Identify yourself in one sentence and state the purpose in the next.', ['My name is … I am writing to ask whether you would be willing to act as my academic referee for …']],
-        ['Main part', 'Concise, courteous, complete. Anticipate the reader\'s questions and answer them in order.', ['By way of context, …', 'The essay focuses on …', 'I would be grateful if …']],
+        ['Subject', 'Specific and informative; signals importance without shouting.', ['Subject: Application for [position/programme] — [your name]', 'Subject: Inquiry regarding [topic]']],
+        ['Greeting', 'Formal; addressee\'s actual name and title where known.', ['Dear Professor …,', 'Dear Dr …,', 'Dear Ms/Mr …,']],
+        ['Introduction', 'Identify yourself in one sentence and state the purpose in the next.', ['My name is … I am writing to ask / enquire about / apply for …']],
+        ['Main part', 'Concise, courteous, complete. Anticipate the reader\'s questions and answer them in order.', ['By way of context, …', 'I would like to highlight that …', 'I would be grateful if …']],
         ['Closing', 'Express thanks; offer to send more information; polite formal sign-off.', ['Thank you in advance for your consideration.', 'Yours sincerely, [Full name]']]
       ]
     },
@@ -2309,7 +2308,7 @@ document.querySelectorAll('.phrase-group li').forEach(li => {
 });
 
 // Auto-save text areas + restore
-['taskNotes', 'researchNotes', 'thesis', 'argMap', 'draft', 'aiFeedback', 'finalDraft', 'references', 'refereeNote'].forEach(id => {
+['essayQuestion', 'taskNotes', 'researchNotes', 'thesis', 'argMap', 'draft', 'aiFeedback', 'finalDraft', 'references', 'refereeNote'].forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
   const saved = localStorage.getItem('wp_sek2_' + id);
