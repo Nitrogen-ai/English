@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing Pathway · Sek II English (Oberstufe)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14140f;
+    --paper: #f5f1e8;
+    --paper-soft: #ede7d7;
+    --accent: #2c4f6b;        /* shifted to a deeper academic blue */
+    --accent-soft: #7fa3c2;
+    --green: #4a6b3a;
+    --burgundy: #8b2c3a;       /* new accent for Sek II */
+    --gold: #c89b3c;
+    --line: #14140f;
+    --shadow: 4px 4px 0 var(--ink);
+    --shadow-lg: 6px 6px 0 var(--ink);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(20,20,15,0.08) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  @media print {
+    body { background: white; background-image: none; }
+    .nav, .level-picker, .topic-picker, .toggle-btn, .timer-display, .print-hide { display: none !important; }
+    .stage { page-break-inside: avoid; box-shadow: none; border: 2px solid #000; }
+    .checklist label { page-break-inside: avoid; }
+  }
+
+  /* HEADER */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--accent);
+  }
+  .nav-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+  .nav-title span { color: var(--accent-soft); }
+  .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+  .nav-links a {
+    color: var(--paper);
+    text-decoration: none;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { background: var(--accent); border-color: var(--paper); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 60px;
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 6px 14px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(44px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+    max-width: 1100px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 19px;
+    max-width: 760px;
+    color: var(--ink);
+    opacity: 0.85;
+    margin-bottom: 40px;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    margin-top: 40px;
+  }
+  .stat {
+    padding: 24px 20px;
+    border-right: 1px solid var(--ink);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 32px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .section-intro {
+    font-size: 17px;
+    max-width: 780px;
+    margin-bottom: 40px;
+    opacity: 0.85;
+  }
+
+  /* LEVEL PICKER */
+  .level-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .level-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 28px;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    box-shadow: var(--shadow);
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+  }
+  .level-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .level-card.active {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .level-card.active .level-tag { background: var(--accent); }
+  .level-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 10px;
+    margin-bottom: 16px;
+  }
+  .level-name {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .level-cefr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 16px;
+  }
+  .level-desc {
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  /* TOPIC PICKER */
+  .topic-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .topic-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 22px 20px;
+    cursor: pointer;
+    transition: all 0.18s;
+    box-shadow: var(--shadow);
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  .topic-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 40px; height: 40px;
+    background: var(--accent);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    opacity: 0.85;
+  }
+  .topic-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+  .topic-card.active {
+    background: var(--accent);
+    color: var(--paper);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+  .topic-card.active::before { background: var(--paper); }
+  .topic-icon {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .topic-name {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .topic-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+
+  /* RECOMMENDED BADGE */
+  .topic-card.recommended {
+    border-color: var(--burgundy);
+    border-width: 3px;
+  }
+  .topic-card .rec-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: var(--burgundy);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* SELECTION SUMMARY */
+  .selection-summary {
+    margin-top: 40px;
+    padding: 24px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+  }
+  .selection-summary strong {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .selection-summary .accent { color: var(--accent-soft); }
+  .selection-summary span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* SESSION HEADER */
+  .session-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 3px solid var(--ink);
+    flex-wrap: wrap;
+  }
+  .session-mark {
+    font-family: 'Fraunces', serif;
+    font-size: 100px;
+    font-weight: 900;
+    line-height: 0.85;
+    color: var(--accent);
+    letter-spacing: -0.05em;
+  }
+  .session-info h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .session-info p {
+    font-size: 16px;
+    opacity: 0.8;
+    max-width: 640px;
+  }
+  .session-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 6px 14px;
+    margin-top: 12px;
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  /* STAGES */
+  .stages { display: grid; gap: 28px; }
+  .stage {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .stage-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .stage-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 36px;
+    color: var(--accent-soft);
+    line-height: 1;
+  }
+  .stage-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    flex: 1;
+    min-width: 200px;
+  }
+  .stage-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--accent);
+    color: var(--paper);
+    padding: 5px 11px;
+    font-weight: 600;
+  }
+  .stage-body { padding: 28px 32px; }
+  .stage-body p { margin-bottom: 14px; }
+  .stage-body strong { font-weight: 700; }
+  .stage-body ul, .stage-body ol {
+    margin-left: 22px;
+    margin-bottom: 14px;
+  }
+  .stage-body li { margin-bottom: 6px; }
+
+  /* TIPP-BOX */
+  .tip {
+    background: var(--paper-soft);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    margin: 18px 0;
+    font-size: 14.5px;
+  }
+  .tip strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .warn { border-left-color: var(--gold); }
+  .warn strong { color: var(--gold); }
+  .info { border-left-color: var(--burgundy); }
+  .info strong { color: var(--burgundy); }
+  .critical { border-left-color: var(--burgundy); background: #fce8eb; }
+  .critical strong { color: var(--burgundy); }
+
+  /* TWO-COL TEMPLATE BOX */
+  .template-box {
+    border: 2px solid var(--ink);
+    margin: 20px 0;
+    background: white;
+  }
+  .template-row {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    border-bottom: 1px solid var(--ink);
+  }
+  .template-row:last-child { border-bottom: none; }
+  .template-cell {
+    padding: 16px 20px;
+    border-right: 1px solid var(--ink);
+    font-size: 14.5px;
+  }
+  .template-cell:last-child {
+    border-right: none;
+    background: var(--paper-soft);
+    font-style: italic;
+  }
+  .template-cell strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    margin-bottom: 6px;
+    font-style: normal;
+    font-weight: 700;
+  }
+  .template-cell ul {
+    margin-left: 16px;
+    margin-top: 4px;
+  }
+  .template-cell li { margin-bottom: 3px; }
+
+  /* CHECKLIST */
+  .checklist {
+    display: grid;
+    gap: 0;
+    border: 2px solid var(--ink);
+    background: white;
+    margin: 20px 0;
+  }
+  .checklist-section {
+    border-bottom: 2px solid var(--ink);
+  }
+  .checklist-section:last-child { border-bottom: none; }
+  .checklist-section-title {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+  .checklist label {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 18px;
+    border-bottom: 1px solid #e0d9c4;
+    cursor: pointer;
+    transition: background 0.12s;
+    font-size: 14.5px;
+  }
+  .checklist label:last-child { border-bottom: none; }
+  .checklist label:hover { background: var(--paper-soft); }
+  .checklist input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--ink);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    background: white;
+  }
+  .checklist input[type="checkbox"]:checked { background: var(--green); }
+  .checklist input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: -3px;
+    left: 2px;
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .checklist input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
+  /* WRITING WORKSPACE */
+  .writing-area { margin: 20px 0; }
+  .writing-area label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  textarea, input.text-input {
+    width: 100%;
+    border: 2px solid var(--ink);
+    background: white;
+    padding: 14px 16px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    resize: vertical;
+    color: var(--ink);
+  }
+  textarea:focus, input.text-input:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  textarea.draft { min-height: 360px; }
+  textarea.notes { min-height: 140px; }
+  textarea.small { min-height: 90px; }
+
+  .word-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    margin-top: 6px;
+    opacity: 0.7;
+  }
+
+  /* AI PROMPT BOXES */
+  .ai-prompt {
+    background: #14140f;
+    color: #f5f1e8;
+    padding: 22px 24px;
+    margin: 18px 0;
+    border-left: 6px solid var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.65;
+    position: relative;
+    white-space: pre-wrap;
+  }
+  .ai-prompt::before {
+    content: 'PROMPT FOR THE AI';
+    position: absolute;
+    top: -10px;
+    left: 18px;
+    background: var(--green);
+    color: var(--paper);
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+  .ai-prompt code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 6px;
+    color: var(--accent-soft);
+  }
+  .copy-btn {
+    background: var(--green);
+    color: var(--paper);
+    border: none;
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: var(--ink); border: 1px solid var(--green); }
+  .copy-btn.copied { background: var(--gold); color: var(--ink); }
+
+  /* PHASE PROCESS DIAGRAM */
+  .process-wheel {
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-lg);
+  }
+  .process-step {
+    padding: 24px 16px;
+    border-right: 2px solid var(--ink);
+    background: var(--paper);
+    text-align: center;
+    position: relative;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:nth-child(1) { background: #e8d4b8; }
+  .process-step:nth-child(2) { background: #d4e4b8; }
+  .process-step:nth-child(3) { background: #b8d4e4; }
+  .process-step:nth-child(4) { background: #e4b8d4; }
+  .process-step:nth-child(5) { background: #d4c4e8; }
+  .process-icon {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  .process-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .process-desc {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .process-wheel { grid-template-columns: 1fr 1fr; }
+    .process-step { border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+    .process-step:nth-child(2n) { border-right: none; }
+    .template-row { grid-template-columns: 1fr; }
+    .template-cell { border-right: none; border-bottom: 1px solid var(--ink); }
+    .template-cell:last-child { border-bottom: none; }
+  }
+
+  /* STAGE TOGGLE */
+  .toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-left: auto;
+  }
+  .toggle-btn:hover { background: var(--accent); }
+  .stage-content { display: block; }
+  .stage.collapsed .stage-content { display: none; }
+  .stage.collapsed .toggle-btn::after { content: '+'; }
+  .stage:not(.collapsed) .toggle-btn::after { content: '−'; }
+
+  /* PHRASE BANK */
+  .phrase-bank {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .phrase-group {
+    background: white;
+    border: 2px solid var(--ink);
+    padding: 14px 16px;
+  }
+  .phrase-group h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--burgundy);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .phrase-group ul {
+    list-style: none;
+    margin: 0;
+  }
+  .phrase-group li {
+    font-size: 13.5px;
+    font-style: italic;
+    padding: 3px 0;
+    cursor: copy;
+    border-bottom: 1px dashed #e0d9c4;
+  }
+  .phrase-group li:last-child { border-bottom: none; }
+  .phrase-group li:hover {
+    background: var(--paper-soft);
+    color: var(--accent);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 32px 30px;
+    margin-top: 80px;
+  }
+  .footer-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+  }
+  footer h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  footer h4 span { color: var(--accent-soft); }
+  footer p, footer li { font-size: 14px; line-height: 1.65; opacity: 0.85; }
+  footer ul { list-style: none; }
+  footer li { margin-bottom: 4px; }
+  .footer-meta {
+    max-width: 1280px;
+    margin: 40px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  /* HELPER */
+  [hidden] { display: none !important; }
+  .hide-on-pick { display: none; }
+  body.has-selection .show-on-pick { display: block; }
+  body.has-selection .hide-on-pick { display: none; }
+
+  /* sentence starter pills */
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 16px;
+  }
+  .pill {
+    display: inline-block;
+    background: var(--paper-soft);
+    border: 1px solid var(--ink);
+    padding: 4px 10px;
+    font-size: 13px;
+    font-style: italic;
+    cursor: copy;
+    transition: all 0.12s;
+  }
+  .pill:hover { background: var(--accent); color: var(--paper); }
+
+  /* INFO PANEL FOR ESSAY USE-CASE */
+  .essay-context {
+    background: linear-gradient(135deg, var(--paper) 0%, var(--paper-soft) 100%);
+    border: 3px solid var(--burgundy);
+    box-shadow: var(--shadow-lg);
+    padding: 32px;
+    margin: 32px 0;
+  }
+  .essay-context h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    color: var(--burgundy);
+  }
+  .essay-context .pre-tag {
+    display: inline-block;
+    background: var(--burgundy);
+    color: var(--paper);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .essay-context .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.45;
+    padding: 12px 0 12px 20px;
+    border-left: 4px solid var(--burgundy);
+    margin: 16px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-title">Writing <span>Pathway</span> · Sek II</div>
+  <div class="nav-links">
+    <a href="#start">Start</a>
+    <a href="#context">Your Essay</a>
+    <a href="#process">Process</a>
+    <a href="#picker">Level &amp; Genre</a>
+    <a href="#session1">Research &amp; Plan</a>
+    <a href="#session2">Drafting</a>
+    <a href="#session3">Revising</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="start">
+  <span class="hero-tag">English · Sekundarstufe II · Self-paced · Academic Essay</span>
+  <h1>Write a <em>persuasive</em>, academic essay<br>— one phase at a time.</h1>
+  <p class="hero-sub">
+    A five-phase writing pathway built on the Berlin handout
+    <em>Materialien zur Textproduktion in der gymnasialen Oberstufe</em>. You pick your level.
+    You pick your genre. You move from research and thesis-building through drafting and AI-supported
+    revising to a polished final text — with templates, phrase banks, checklists and a referee-ready submission.
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">3<span style="font-size:24px;">×90</span></div>
+      <div class="stat-label">Working sessions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Levels (B2 – C1+)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Sek II text types</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">~2000</div>
+      <div class="stat-label">Words target</div>
+    </div>
+  </div>
+</header>
+
+<!-- CONTEXT BLOCK: Personal essay context for the student -->
+<section id="context" style="padding-top: 30px; padding-bottom: 30px;">
+  <div class="essay-context">
+    <span class="pre-tag">Your project · John Locke Institute Global Essay Competition</span>
+    <h3>Your competition question · category Law</h3>
+    <div class="quote">
+      "If legislators and judges all accepted the philosophical theory of determinism,
+      what would be the effect on criminal sentencing?"
+    </div>
+    <p>
+      This pathway is set up so you can work through the John Locke essay independently. The competition
+      requires an <strong>original, argumentative essay of ~2,000 words</strong> — closest in the Berlin
+      Sek II handout to <em>"Discussing and commenting on an issue"</em> (chapter 5.1) combined with
+      <em>article writing</em> (chapter 5.2). At the recommended level you will produce a piece that
+      could be submitted with an academic referee's confirmation of legitimacy and originality.
+    </p>
+    <p>
+      The pathway also flags, at each step, what an <strong>academic referee</strong> will check —
+      so when you submit, both you and your referee can be confident the work is your own.
+    </p>
+    <div class="tip warn" style="margin-bottom: 0;">
+      <strong>Originality &amp; integrity</strong>
+      The John Locke Institute requires your essay to be your own writing. Use AI only the way this pathway
+      describes: <em>feedback on a finished draft, never as a writer.</em> Keep your brainstorms, notes
+      and drafts — your referee may want to see them.
+    </div>
+  </div>
+</section>
+
+<!-- THE WRITING PROCESS -->
+<section id="process">
+  <span class="section-num">01 / Foundation</span>
+  <h2 class="section-title">The five phases of writing an academic essay</h2>
+  <p class="section-intro">
+    An academic essay is not one big leap — it is five phases. Sek II writing adds <strong>research</strong>
+    and an explicit <strong>thesis-development</strong> step on top of the four phases you learned in Sek I.
+  </p>
+
+  <div class="process-wheel">
+    <div class="process-step">
+      <div class="process-icon">①</div>
+      <div class="process-name">Research</div>
+      <div class="process-desc">Read the question. Read around it. Note quotations, statistics, cases, authors.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-icon">②</div>
+      <div class="process-name">Plan</div>
+      <div class="process-desc">Form a thesis. Structure arguments &amp; counter-arguments. Use a graphic organizer.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-icon">③</div>
+      <div class="process-name">Draft</div>
+      <div class="process-desc">Use a genre template. Topic sentences. Linking words. Evidence + analysis.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-icon">④</div>
+      <div class="process-name">Revise</div>
+      <div class="process-desc">Self-check + AI feedback on content, structure, vocabulary, grammar.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-icon">⑤</div>
+      <div class="process-name">Submit</div>
+      <div class="process-desc">Final proofread. Reference list. Word count. Submission cover note.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEVEL PICKER -->
+<section id="picker">
+  <span class="section-num">02 / Choose your level</span>
+  <h2 class="section-title">Pick the level that fits your year — and your ambition.</h2>
+  <p class="section-intro">
+    The three levels match the steps of the Berlin Rahmenlehrplan for the Oberstufe. For a John Locke
+    competition submission, work at <strong>Level C</strong>. For early Q-phase practice in similar
+    discussion essays, Level B fits well.
+  </p>
+
+  <div class="level-picker" id="levelPicker">
+    <button class="level-card" data-level="levelA">
+      <span class="level-tag">Level A</span>
+      <div class="level-name">Foundation</div>
+      <div class="level-cefr">CEFR · B1+ → B2  ·  Einführungsphase</div>
+      <p class="level-desc">
+        A structured template with German hints on the left and English sentence starters on the right.
+        You build the whole essay yourself, with a guided scaffold and phrase bank close at hand.
+        Word count target: ~600–900 words.
+      </p>
+    </button>
+    <button class="level-card" data-level="levelB">
+      <span class="level-tag">Level B</span>
+      <div class="level-name">Advanced</div>
+      <div class="level-cefr">CEFR · B2 → B2+  ·  Qualifikationsphase / Grundkurs</div>
+      <p class="level-desc">
+        Full English templates. You handle every feature of the genre yourself: thesis statement,
+        well-founded arguments, counter-arguments and refutation, evidence, conclusion.
+        Word count target: ~1,000–1,400 words.
+      </p>
+    </button>
+    <button class="level-card" data-level="levelC">
+      <span class="level-tag">Level C</span>
+      <div class="level-name">Excellence</div>
+      <div class="level-cefr">CEFR · C1 → C1+  ·  Leistungskurs / Competition-level</div>
+      <p class="level-desc">
+        Competition-grade output: thesis with nuance, sustained engagement with counter-arguments,
+        evidence from primary sources, formal academic register, careful citation. Ideal for
+        John Locke essay submissions. Word count target: ~1,800–2,000 words.
+      </p>
+    </button>
+  </div>
+</section>
+
+<!-- TOPIC (GENRE) PICKER -->
+<section id="topic">
+  <span class="section-num">03 / Choose your text type</span>
+  <h2 class="section-title">Seven Sek II text types — pick the one your task asks for.</h2>
+  <p class="section-intro">
+    Each text type has its own structure, register and conventions. The card marked
+    <strong>recommended</strong> matches your John Locke essay; pick another for school tasks
+    in different genres.
+  </p>
+
+  <div class="topic-picker" id="topicPicker">
+    <button class="topic-card recommended" data-topic="comment">
+      <span class="topic-icon">§</span>
+      <div class="topic-name">Comment / Discussion essay</div>
+      <div class="topic-meta">Argumentative · academic</div>
+      <span class="rec-badge">For John Locke</span>
+    </button>
+    <button class="topic-card" data-topic="article">
+      <span class="topic-icon">▤</span>
+      <div class="topic-name">Article</div>
+      <div class="topic-meta">Magazine / website</div>
+    </button>
+    <button class="topic-card" data-topic="blog">
+      <span class="topic-icon">≡</span>
+      <div class="topic-name">Blog entry</div>
+      <div class="topic-meta">Opinion · interactive</div>
+    </button>
+    <button class="topic-card" data-topic="speech">
+      <span class="topic-icon">⌬</span>
+      <div class="topic-name">Speech</div>
+      <div class="topic-meta">Spoken · persuasive</div>
+    </button>
+    <button class="topic-card" data-topic="letterEditor">
+      <span class="topic-icon">✎</span>
+      <div class="topic-name">Letter to the editor</div>
+      <div class="topic-meta">Formal · response</div>
+    </button>
+    <button class="topic-card" data-topic="email">
+      <span class="topic-icon">@</span>
+      <div class="topic-name">E-mail</div>
+      <div class="topic-meta">Formal or informal</div>
+    </button>
+    <button class="topic-card" data-topic="analysis">
+      <span class="topic-icon">⌥</span>
+      <div class="topic-name">Text analysis</div>
+      <div class="topic-meta">Devices · effect</div>
+    </button>
+  </div>
+
+  <div class="selection-summary" id="summary" style="display:none;">
+    <strong>You are writing:</strong>
+    <strong class="accent" id="sumTopic">—</strong>
+    <span>at</span>
+    <strong class="accent" id="sumLevel">—</strong>
+    <span style="margin-left:auto;">↓ Scroll to Phase 1: Research</span>
+  </div>
+</section>
+
+<!-- SESSION 1 — RESEARCH & PLAN -->
+<section id="session1">
+  <div class="session-header">
+    <div class="session-mark">01</div>
+    <div class="session-info">
+      <h2>Session 1 · Research &amp; Plan</h2>
+      <p>For an academic essay you cannot just brainstorm and write. You first <strong>research</strong>
+      the question, then form a clear <strong>thesis</strong>, then plan your argument map. This is
+      the slow, careful work that makes a good essay possible.</p>
+      <span class="session-time">⏱ 90 minutes total</span>
+    </div>
+  </div>
+
+  <div class="stages">
+
+    <!-- STAGE 1.1 — DECODE THE QUESTION -->
+    <div class="stage" id="stage-1-1">
+      <div class="stage-header">
+        <span class="stage-num">1.1</span>
+        <span class="stage-title">Decode the question</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>Read your essay question slowly. Most Sek II tasks (and the John Locke prompt) bury at least
+          <strong>four</strong> things inside one sentence. Identify them before you do anything else:</p>
+        <div class="template-box">
+          <div class="template-row">
+            <div class="template-cell"><strong>① Operator(s)</strong>What is the verb of the task? (<em>discuss, comment on, analyze, evaluate, assess…</em>)</div>
+            <div class="template-cell">For John Locke: implicit "<em>discuss</em>" / "<em>evaluate the effect of</em>". See §8 of the handout for the operator definitions.</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>② Topic / domain</strong>Which field is this in? Law, ethics, philosophy, politics, economics?</div>
+            <div class="template-cell">For John Locke "Law": philosophy of law &amp; criminal justice; here also philosophy of mind / free will.</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>③ Key concepts</strong>Which terms must you define before you can argue?</div>
+            <div class="template-cell">determinism, criminal sentencing, retribution, deterrence, rehabilitation, moral responsibility…</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>④ Hidden assumptions</strong>What does the question take for granted? What could you challenge?</div>
+            <div class="template-cell">e.g. that "accepting determinism" entails a single set of sentencing consequences; that there is only one kind of determinism.</div>
+          </div>
+        </div>
+
+        <div class="writing-area">
+          <label for="taskNotes">Your question analysis</label>
+          <textarea id="taskNotes" class="notes" placeholder="Operator(s): …&#10;Topic / domain: …&#10;Key concepts to define: …&#10;Hidden assumptions: …"></textarea>
+        </div>
+
+        <div class="tip">
+          <strong>Tip · operators (§8 of the Berlin handout)</strong>
+          The operator tells you the <em>cognitive level</em> required.
+          <em>Discuss</em> means: arguments for AND against + well-founded conclusion.
+          <em>Comment on</em> means: reasoned personal position with evidence.
+          <em>Evaluate / assess</em> means: well-founded judgement on quality, success, or impact.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1.2 — RESEARCH -->
+    <div class="stage" id="stage-1-2">
+      <div class="stage-header">
+        <span class="stage-num">1.2</span>
+        <span class="stage-title">Research the question</span>
+        <span class="stage-time">⏱ 35'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Sek II essays — especially competition essays — must show that you have <strong>read around</strong>
+          the question. You do not need to read everything; you need to read <em>strategically</em>.
+        </p>
+        <p>For each key concept and each side of the argument, find:</p>
+        <ul>
+          <li>At least <strong>one primary source</strong> (a philosopher's own words, a statute, a court ruling, a peer-reviewed paper). For determinism: e.g. Pereboom, Strawson, Caruso. For criminal-law theory: e.g. Hart, Greene &amp; Cohen.</li>
+          <li>At least <strong>one good encyclopaedia entry</strong> (Stanford Encyclopedia of Philosophy is the gold standard for philosophy topics).</li>
+          <li>At least <strong>one current example</strong> (a case, a piece of recent legislation, a news story).</li>
+        </ul>
+
+        <div class="writing-area">
+          <label for="researchNotes">Research notes (sources + key claims + page numbers)</label>
+          <textarea id="researchNotes" class="notes" placeholder="Source 1: [author, title, year, where I found it]&#10;Key claim / quote: &quot;…&quot;&#10;Why it matters for my essay: …&#10;&#10;Source 2: …"></textarea>
+        </div>
+
+        <div class="tip info">
+          <strong>Quoting and referencing (§7.6 of the handout)</strong>
+          Always record <em>exact source, exact page, exact wording</em> in your notes. You can decide later
+          whether to quote directly or paraphrase, but you cannot reconstruct what you didn't record.
+          Use a citation system (Chicago humanities, MLA, or APA) and <strong>stick to one</strong>.
+        </div>
+
+        <div class="tip critical">
+          <strong>Originality (referee-relevant)</strong>
+          Never paste a passage from a source into your draft. Always read, then close the source,
+          then write the idea in your own words from your notes. This is the single most important habit
+          for keeping your essay honest.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1.3 — THESIS -->
+    <div class="stage" id="stage-1-3">
+      <div class="stage-header">
+        <span class="stage-num">1.3</span>
+        <span class="stage-title">Build your thesis statement</span>
+        <span class="stage-time">⏱ 15'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>A thesis is a <strong>one-sentence answer to the essay question</strong> that you will defend.
+          A good thesis is specific, arguable, and gives the shape of your argument.</p>
+
+        <div class="template-box">
+          <div class="template-row">
+            <div class="template-cell"><strong>Weak (description)</strong>States a fact or restates the question.</div>
+            <div class="template-cell">"Determinism is the view that all events are caused by prior events, and it has effects on criminal sentencing."</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>Stronger (claim)</strong>Takes a position.</div>
+            <div class="template-cell">"If determinism were accepted, criminal sentencing would shift from retribution to rehabilitation."</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>Best (specific + arguable + roadmap)</strong>Position + key reasons + nuance.</div>
+            <div class="template-cell">"A consistent acceptance of determinism by legislators and judges would not abolish criminal sentencing, but would force three changes: a collapse of retributive justification, a strengthening of consequentialist aims (deterrence and incapacitation), and a redirection of moral language from blame to public-health-style intervention."</div>
+          </div>
+        </div>
+
+        <div class="writing-area">
+          <label for="thesis">Your draft thesis statement (1–2 sentences)</label>
+          <textarea id="thesis" class="small" placeholder="My thesis: …"></textarea>
+        </div>
+
+        <div class="tip">
+          <strong>The thesis test</strong>
+          Could a reasonable, well-read person <em>disagree</em> with your thesis? If not, it's too obvious.
+          Sharpen it.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1.4 — ARGUMENT MAP -->
+    <div class="stage" id="stage-1-4">
+      <div class="stage-header">
+        <span class="stage-num">1.4</span>
+        <span class="stage-title">Map your argument (graphic organizer)</span>
+        <span class="stage-time">⏱ 20'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>Don't start drafting yet. First build a map of the case you will make. Choose the organizer that fits:</p>
+        <div class="template-box">
+          <div class="template-row">
+            <div class="template-cell"><strong>Table</strong>Two or three columns. Best for pro/contra, before/after, position/counter-position.</div>
+            <div class="template-cell">| Claim | Evidence | Counter-argument | Response |</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>Tree diagram</strong>Top: thesis. Branches: main arguments. Sub-branches: evidence + objections. Best for complex chains of reasoning.</div>
+            <div class="template-cell">Thesis → Arg 1 → (ev, obj, response) · Arg 2 → … · Arg 3 → …</div>
+          </div>
+          <div class="template-row">
+            <div class="template-cell"><strong>Concept map</strong>Concepts in boxes, relations on arrows. Best when key terms interact in complex ways (determinism ↔ free will ↔ responsibility ↔ punishment).</div>
+            <div class="template-cell">determinism →(undermines)→ moral responsibility →(traditionally grounds)→ retribution</div>
+          </div>
+        </div>
+
+        <div class="writing-area">
+          <label for="argMap">Your argument map (text version — sketch the structure)</label>
+          <textarea id="argMap" class="notes" placeholder="Thesis: …&#10;&#10;Argument 1: …&#10;  Evidence: …&#10;  Objection: …&#10;  Response: …&#10;&#10;Argument 2: …&#10;&#10;Argument 3: …&#10;&#10;Conclusion: …"></textarea>
+        </div>
+
+        <div class="tip">
+          <strong>The "so what?" check</strong>
+          For every argument on your map, ask: <em>so what?</em> Why does this matter for the thesis?
+          If you cannot answer in one sentence, the argument doesn't belong in this essay.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1.5 — END OF SESSION 1 -->
+    <div class="stage" id="stage-1-5">
+      <div class="stage-header">
+        <span class="stage-num">1.5</span>
+        <span class="stage-title">End of Session 1 — save your plan</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Before you stop: read your thesis and argument map back to yourself. Do they hang together?
+          Have you actually answered the question? Note any gaps now, before you start drafting.
+        </p>
+        <div class="tip warn">
+          <strong>Back up your work</strong>
+          Everything in this pathway is saved in your browser only. Copy your notes,
+          thesis and argument map into a cloud document or e-mail them to yourself.
+        </div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SESSION 2 — DRAFTING -->
+<section id="session2">
+  <div class="session-header">
+    <div class="session-mark">02</div>
+    <div class="session-info">
+      <h2>Session 2 · Draft your essay</h2>
+      <p>You now have a thesis, evidence and a structure. Today you turn them into prose —
+        following the genre template you chose. Don't aim for perfection; aim for a <strong>complete draft</strong> you can revise next session.</p>
+      <span class="session-time">⏱ 90 minutes total</span>
+    </div>
+  </div>
+
+  <div class="stages">
+
+    <!-- STAGE 2.1 — TEMPLATE -->
+    <div class="stage" id="stage-2-1">
+      <div class="stage-header">
+        <span class="stage-num">2.1</span>
+        <span class="stage-title">Use your genre template</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Below is the structure for your chosen text type at your chosen level.
+          The left column reminds you what each section should contain. The right column gives
+          sentence starters — click any one to copy it.
+        </p>
+        <div id="templateContainer"><em>Pick a level and a text type above to see your template.</em></div>
+
+        <div class="tip info">
+          <strong>How to use this</strong>
+          The starters are scaffolds, not handcuffs. Replace them, extend them, vary them.
+          A C1 essay never reads as if it were stitched together from templates — but a good draft
+          may well start that way.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2.2 — PHRASE BANK -->
+    <div class="stage" id="stage-2-2">
+      <div class="stage-header">
+        <span class="stage-num">2.2</span>
+        <span class="stage-title">Phrase bank: linking words &amp; academic register</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>Sek II essays use connectives consciously. Browse and copy what you need; you can return here
+          any time during drafting.</p>
+
+        <div class="phrase-bank">
+          <div class="phrase-group">
+            <h5>Adding an argument</h5>
+            <ul>
+              <li>Moreover, …</li>
+              <li>Furthermore, …</li>
+              <li>In addition, …</li>
+              <li>What is more, …</li>
+              <li>Beyond this, …</li>
+            </ul>
+          </div>
+          <div class="phrase-group">
+            <h5>Drawing contrasts</h5>
+            <ul>
+              <li>However, …</li>
+              <li>By contrast, …</li>
+              <li>On the other hand, …</li>
+              <li>Whereas X holds Y, …</li>
+              <li>Nevertheless, …</li>
+            </ul>
+          </div>
+          <div class="phrase-group">
+            <h5>Conceding &amp; refuting</h5>
+            <ul>
+              <li>It is true that …, but …</li>
+              <li>Granted that …, it does not follow that …</li>
+              <li>Critics object that … Yet …</li>
+              <li>A natural objection is …</li>
+              <li>This objection underestimates …</li>
+            </ul>
+          </div>
+          <div class="phrase-group">
+            <h5>Cause &amp; consequence</h5>
+            <ul>
+              <li>Consequently, …</li>
+              <li>It follows that …</li>
+              <li>This entails that …</li>
+              <li>As a result, …</li>
+              <li>For this reason, …</li>
+            </ul>
+          </div>
+          <div class="phrase-group">
+            <h5>Citing &amp; referring</h5>
+            <ul>
+              <li>As Pereboom (2014) argues, …</li>
+              <li>According to …, …</li>
+              <li>This view is defended by …</li>
+              <li>In a recent study, … shows that …</li>
+              <li>The Stanford Encyclopedia notes that …</li>
+            </ul>
+          </div>
+          <div class="phrase-group">
+            <h5>Hedging (avoiding overclaim)</h5>
+            <ul>
+              <li>This suggests that …</li>
+              <li>It seems plausible that …</li>
+              <li>There is reason to think that …</li>
+              <li>One could argue …</li>
+              <li>To some extent, …</li>
+            </ul>
+          </div>
+          <div class="phrase-group">
+            <h5>Concluding</h5>
+            <ul>
+              <li>In sum, …</li>
+              <li>To conclude, …</li>
+              <li>On balance, …</li>
+              <li>The upshot is that …</li>
+              <li>What follows from all this is …</li>
+            </ul>
+          </div>
+          <div class="phrase-group">
+            <h5>Avoid these (too informal)</h5>
+            <ul style="font-style:normal;">
+              <li>✗ a lot of  →  many / much / a great deal of</li>
+              <li>✗ stuff / things  →  factors / aspects / considerations</li>
+              <li>✗ I think  →  I argue / I contend</li>
+              <li>✗ kinda / sorta  →  in some sense / to some degree</li>
+              <li>✗ contractions (don't, isn't)  →  do not, is not</li>
+            </ul>
+          </div>
+        </div>
+
+        <p>Click any phrase above to copy it.</p>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2.3 — DRAFT -->
+    <div class="stage" id="stage-2-3">
+      <div class="stage-header">
+        <span class="stage-num">2.3</span>
+        <span class="stage-title">Write your first full draft</span>
+        <span class="stage-time">⏱ 60'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Now write. Keep your thesis, argument map and template open. Aim for a complete
+          first draft, paragraph by paragraph. Don't stop to polish — push through to the end.
+        </p>
+        <ul>
+          <li><strong>One paragraph = one idea.</strong> Begin every paragraph with a topic sentence.</li>
+          <li><strong>Evidence comes second, analysis comes third.</strong> Never let a quotation or fact stand alone — always explain what it shows.</li>
+          <li><strong>Address counter-arguments early.</strong> A strong essay anticipates objections rather than ignoring them.</li>
+          <li><strong>Cite as you go.</strong> Drop in <code>(Author, year, p. X)</code> markers while drafting; you can format properly later.</li>
+        </ul>
+
+        <div class="writing-area">
+          <label for="draft">Your first full draft</label>
+          <textarea id="draft" class="draft" placeholder="Start writing here. The textarea saves automatically as you type."></textarea>
+          <div class="word-count" id="wordCount">0 words</div>
+        </div>
+
+        <div class="tip">
+          <strong>Tip · pacing in 60 minutes</strong>
+          A useful pace for an ~1,800-word essay: <em>5 min introduction · 10 min per body paragraph
+          (assume 4–5) · 5 min conclusion</em>. If you fall behind, write tighter, not faster.
+        </div>
+
+        <div class="tip warn">
+          <strong>Don't let the AI write</strong>
+          You can use AI for <em>feedback in Session 3</em>, never to draft sentences or paragraphs.
+          Your referee will be confirming that the essay is your work; this matters.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2.4 — END OF SESSION 2 -->
+    <div class="stage" id="stage-2-4">
+      <div class="stage-header">
+        <span class="stage-num">2.4</span>
+        <span class="stage-title">End of Session 2 — let the draft rest</span>
+        <span class="stage-time">⏱ 10'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Read your draft once, slowly. <strong>Don't fix anything yet.</strong>
+          Distance is what makes revision possible. Save your draft, back it up,
+          and come back to it after at least one full night's sleep.
+        </p>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SESSION 3 — REVISE & SUBMIT -->
+<section id="session3">
+  <div class="session-header">
+    <div class="session-mark">03</div>
+    <div class="session-info">
+      <h2>Session 3 · Revise &amp; submit</h2>
+      <p>Today you self-check your draft against the Berlin criteria, then ask a
+        privacy-safe AI tool for structured feedback, then implement the feedback and finalise.</p>
+      <span class="session-time">⏱ 90 minutes total</span>
+    </div>
+  </div>
+
+  <div class="stages">
+
+    <!-- STAGE 3.1 — SELF-CHECK -->
+    <div class="stage" id="stage-3-1">
+      <div class="stage-header">
+        <span class="stage-num">3.1</span>
+        <span class="stage-title">Self-check against the genre checklist</span>
+        <span class="stage-time">⏱ 15'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Read your draft from yesterday. Tick what you have already done well.
+          Don't tick anything you're unsure about — leave it empty for now.
+          Anything still unticked after this round goes on your revision to-do list.
+        </p>
+
+        <div id="checklistContainer"><em>Pick a level and a text type above to see your checklist.</em></div>
+
+        <div class="tip">
+          <strong>Tip · proofreading (§7.7 of the handout)</strong>
+          Read your text aloud — slowly. Read it backwards (last sentence up) to catch spelling
+          mistakes. Cover the lines below the one you are reading. Check your "favourite mistakes" list.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 3.2 — AI FEEDBACK -->
+    <div class="stage" id="stage-3-2">
+      <div class="stage-header">
+        <span class="stage-num">3.2</span>
+        <span class="stage-title">Ask the AI for structured feedback (not rewriting)</span>
+        <span class="stage-time">⏱ 15'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Open your school's privacy-safe AI tool (e.g. <strong>fobizz Tools</strong>,
+          <strong>SchulKI</strong>, <strong>telli</strong>) and use the prompt below.
+          The prompt is built around the same checklist criteria you used above —
+          so the AI will check the four areas you need: <strong>content &amp; argument, structure, vocabulary &amp; register, grammar &amp; mechanics</strong>.
+        </p>
+
+        <div class="ai-prompt" id="aiPrompt">Pick your text type and level above to see the matching AI prompt.</div>
+        <button class="copy-btn" id="copyPrompt">Copy prompt</button>
+
+        <div class="tip critical">
+          <strong>Critical · originality and the referee</strong>
+          The AI must <strong>not rewrite your text</strong>. The prompt below instructs the model
+          to give diagnostic feedback only: where to improve, why, and what to try — without producing
+          replacement sentences. This is what an academic referee can confirm as legitimate AI use.
+        </div>
+
+        <div class="tip warn">
+          <strong>Privacy</strong>
+          Use only a privacy-safe AI tool. Don't paste names, addresses or anything personally
+          identifying. Replace with placeholders like <code>[my school]</code>.
+        </div>
+
+        <div class="tip info">
+          <strong>What you get back</strong>
+          Feedback in four diagnostic sections. <strong>Don't accept everything blindly.</strong>
+          The AI can be wrong — especially about subject-matter content. You decide what to change.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 3.3 — IMPLEMENT FEEDBACK -->
+    <div class="stage" id="stage-3-3">
+      <div class="stage-header">
+        <span class="stage-num">3.3</span>
+        <span class="stage-title">Implement the feedback</span>
+        <span class="stage-time">⏱ 40'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>
+          Work through the feedback systematically. Tackle big issues first
+          (argument, structure, missing counter-arguments), then language
+          (vocabulary, register, grammar). After each change, re-read the surrounding paragraph
+          to make sure it still flows.
+        </p>
+
+        <div class="writing-area">
+          <label for="aiFeedback">Paste the AI's feedback here (for your records and for the referee)</label>
+          <textarea id="aiFeedback" class="notes" placeholder="Paste the feedback you received. Keep this — your referee may want to see it."></textarea>
+        </div>
+
+        <div class="writing-area">
+          <label for="finalDraft">Your revised, final text</label>
+          <textarea id="finalDraft" class="draft" placeholder="Paste your final, revised text here."></textarea>
+          <div class="word-count" id="finalWordCount">0 words</div>
+        </div>
+
+        <div class="tip">
+          <strong>Tip · revise in passes, not all at once</strong>
+          Pass 1 = content &amp; argument. Pass 2 = structure &amp; paragraph order.
+          Pass 3 = vocabulary &amp; register. Pass 4 = grammar &amp; mechanics. Trying to do
+          everything at once costs you accuracy.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 3.4 — REFERENCES & SUBMISSION -->
+    <div class="stage" id="stage-3-4">
+      <div class="stage-header">
+        <span class="stage-num">3.4</span>
+        <span class="stage-title">References, word count &amp; submission cover note</span>
+        <span class="stage-time">⏱ 15'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>Final formal steps before submission:</p>
+        <ol>
+          <li>Format every in-text citation consistently (one system only).</li>
+          <li>Compile your reference list at the end of the essay. Alphabetical order.</li>
+          <li>Run a word count. Check it against the competition limit (John Locke: 2,000 words excluding diagrams, footnotes &amp; references).</li>
+          <li>Add a title page if required: title, candidate name, competition category.</li>
+          <li>Write a short cover note to your academic referee (see template below).</li>
+        </ol>
+
+        <div class="writing-area">
+          <label for="references">Your reference list (Chicago / MLA / APA — pick one and stick to it)</label>
+          <textarea id="references" class="notes" placeholder="Pereboom, Derk. Free Will, Agency, and Meaning in Life. Oxford: Oxford UP, 2014.&#10;Hart, H. L. A. Punishment and Responsibility. 2nd ed. Oxford: Oxford UP, 2008.&#10;…"></textarea>
+        </div>
+
+        <div class="writing-area">
+          <label for="refereeNote">Cover note for your academic referee (template — adapt it)</label>
+          <textarea id="refereeNote" class="notes" placeholder="Dear [Referee],&#10;&#10;Please find attached my essay for the John Locke Institute Global Essay Competition, category Law.&#10;Question: …&#10;Word count: …&#10;&#10;I worked on this essay independently across three sessions of research, drafting and revising. I used an AI tool only for diagnostic feedback on the finished draft (no rewriting); the feedback log is available on request. All sources are cited in the reference list.&#10;&#10;Thank you for confirming the originality of my submission.&#10;&#10;Best regards,&#10;[Your name]"></textarea>
+        </div>
+
+        <div class="tip critical">
+          <strong>What your referee needs to see (or have on request)</strong>
+          (1) Your final essay. (2) Your reference list. (3) A short statement of how you used AI.
+          (4) Optionally: drafts &amp; brainstorm notes that show your process. Keep all of these.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- STAGE 3.5 — FINAL PROOF -->
+    <div class="stage" id="stage-3-5">
+      <div class="stage-header">
+        <span class="stage-num">3.5</span>
+        <span class="stage-title">Final proof &amp; submit</span>
+        <span class="stage-time">⏱ 5'</span>
+        <button class="toggle-btn">Hide</button>
+      </div>
+      <div class="stage-content">
+      <div class="stage-body">
+        <p>One last read-through. If something still feels off, fix it now, not after submitting.</p>
+        <div class="checklist" style="margin-top: 8px;">
+          <div class="checklist-section">
+            <div class="checklist-section-title">SUBMISSION READY?</div>
+            <label><input type="checkbox" id="sub_final_1"><span>Word count within the competition limit.</span></label>
+            <label><input type="checkbox" id="sub_final_2"><span>Title, name and category on the front page.</span></label>
+            <label><input type="checkbox" id="sub_final_3"><span>Every in-text citation has a matching entry in the reference list.</span></label>
+            <label><input type="checkbox" id="sub_final_4"><span>Every entry in the reference list is cited somewhere in the text.</span></label>
+            <label><input type="checkbox" id="sub_final_5"><span>No contractions, no slang, formal academic register throughout.</span></label>
+            <label><input type="checkbox" id="sub_final_6"><span>Spell-check run; "favourite mistakes" list checked.</span></label>
+            <label><input type="checkbox" id="sub_final_7"><span>Cover note prepared for the referee.</span></label>
+            <label><input type="checkbox" id="sub_final_8"><span>Final file saved with a clear filename: <em>Surname_JohnLocke_Law_2026.pdf</em></span></label>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>Writing <span>Pathway</span></h4>
+      <p>Built for the Sek II English Oberstufe, based on the Berlin handout
+      <em>Materialien zum selbstständigen standardorientierten Lernen in der gymnasialen Oberstufe im Fach Englisch — Text production</em> (SenBJF, 2021).</p>
+    </div>
+    <div>
+      <h4>Privacy-safe AI tools</h4>
+      <ul>
+        <li>fobizz Tools (DSGVO-konform)</li>
+        <li>SchulKI</li>
+        <li>telli</li>
+        <li>Always check with your teacher first.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>What's saved</h4>
+      <ul>
+        <li>Your level &amp; text-type choice</li>
+        <li>Your task / research / thesis / argument notes</li>
+        <li>Your draft &amp; final text</li>
+        <li>Your reference list and referee note</li>
+        <li>Saved in your browser only.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help cards (§-references)</h4>
+      <ul>
+        <li>§5.1 Discussing &amp; commenting</li>
+        <li>§5.2 Article writing</li>
+        <li>§7.3 Graphic organizers</li>
+        <li>§7.5 Linking ideas and sentences</li>
+        <li>§7.6 Quoting and referencing</li>
+        <li>§7.7 Self-assessment grid: revising</li>
+        <li>§8 Operatoren der gymnasialen Oberstufe</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Source: Senatsverwaltung für Bildung, Jugend und Familie (Hg.), <em>Materialien zur Textproduktion (Sek II)</em>, Berlin 2021 ·
+    Pathway design adapted for self-paced Oberstufe use and for the John Locke Institute Global Essay Competition.
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   DATA · templates, sentence starters, checklists per text type & level
+   Adapted from the Berlin handout (SenBJF 2021, Sek. II).
+   Levels:
+     levelA = Foundation (B1+/B2 · Einführungsphase)  — German hints, English starters
+     levelB = Advanced (B2/B2+ · Q-Phase Grundkurs)   — English throughout
+     levelC = Excellence (C1/C1+ · Leistungskurs / John Locke)  — Competition-grade
+   ========================================================================= */
+
+const DATA = {
+
+  /* =========================================================
+     COMMENT / DISCUSSION ESSAY  (Berlin handout §5.1) — RECOMMENDED for John Locke
+     ========================================================= */
+  comment: {
+    label: 'Comment / Discussion essay',
+    levelA: {
+      structure: [
+        ['Einleitung', 'Thema / Problem nennen, eigene Position andeuten.', ['I would like to discuss the question whether …', 'In this essay I will examine …', 'The key question is whether …']],
+        ['Hauptteil — Argumente', 'Pro- und Contra-Argumente, jeweils mit Beispiel/Beleg.', ['On the one hand, …', 'On the other hand, …', 'One important argument in favour is …', 'A common objection is …']],
+        ['Hauptteil — Stellungnahme', 'Eigene Meinung mit Begründung.', ['In my opinion, …', 'I am convinced that …', 'This is because …', 'The main reason is that …']],
+        ['Schluss', 'Zusammenfassung + Ausblick.', ['To sum up, …', 'All in all, …', 'I would like to conclude by saying that …']]
+      ]
+    },
+    levelB: {
+      structure: [
+        ['Introduction', 'Set up the question, give context, signal your position.', ['The question of whether … raises serious issues for …', 'In what follows I will argue that …', 'This essay defends the position that …']],
+        ['Main part — Pro arguments', 'Present your arguments with evidence and examples. One idea per paragraph.', ['A first argument in support of this position is …', 'Furthermore, …', 'Moreover, this is supported by …', 'For example, …']],
+        ['Main part — Counter-arguments', 'Address the strongest objections; refute or qualify them.', ['Critics might object that …', 'It could be argued that …', 'However, this objection underestimates …', 'Nevertheless, …']],
+        ['Main part — Synthesis', 'Show how your position handles the objections.', ['Taking both sides into account, …', 'On balance, …', 'The stronger position therefore remains …']],
+        ['Conclusion', 'Restate the thesis with new weight; outlook.', ['To conclude, …', 'In sum, …', 'What follows from this discussion is …', 'Going forward, …']]
+      ]
+    },
+    levelC: {
+      structure: [
+        ['Introduction', 'Frame the question; clarify the key terms in 1–2 sentences; state a precise thesis.', ['The question whether … turns on a deeper philosophical commitment: …', 'I will argue that …, and that the implications for … are threefold.', 'This essay defends three theses: first, …; second, …; third, …']],
+        ['Conceptual groundwork', 'Define your central terms briefly and clearly. Without this, no argument can land.', ['By "determinism" I mean …', 'For the purposes of this essay, "criminal sentencing" refers to …', 'I will use "moral responsibility" in the sense developed by …']],
+        ['First main argument', 'Strongest argument first. Claim → evidence → analysis → significance.', ['A first reason to accept this view is …', 'As Pereboom (2014) argues, …', 'What this shows is that …', 'The implication for sentencing is …']],
+        ['Second main argument', 'Independent reason for the thesis.', ['A further consideration is …', 'This is reinforced by …', 'Consider the case of …']],
+        ['Engaging the strongest counter-argument', 'Steelman the objection — make it as strong as you can — and then respond.', ['The most powerful objection to this position is …', 'On this view, …', 'There are, however, three problems with this objection. First, … Second, … Third, …']],
+        ['Qualification / nuance', 'Acknowledge what your thesis does NOT show. This is what separates A* from B+.', ['It is important to note that this argument does not entail …', 'My claim is more modest: …', 'There remains a residual question about …']],
+        ['Conclusion', 'Restate thesis with the weight of the argument behind it; show why it matters.', ['I have argued that …', 'The upshot is that …', 'If correct, this conclusion has consequences far beyond the question of sentencing: …']]
+      ]
+    },
+    checklist: {
+      levelA: {
+        Introduction: ['Thema klar genannt', 'Eigene Position angedeutet'],
+        'Main part': ['Mindestens 2 Pro- und 2 Contra-Argumente', 'Jeweils mit Beispiel/Beleg', 'Eigene Meinung begründet'],
+        Conclusion: ['Argumente zusammengefasst', 'Schlussfolgerung gezogen'],
+        'Final check': ['Klare Absätze', 'Bindewörter', 'Wortschatz und Grammatik geprüft', 'Wörterbuch genutzt']
+      },
+      levelB: {
+        Introduction: ['Issue clearly stated', 'Position signalled', 'Roadmap of the argument given'],
+        'Main part': ['Each paragraph begins with a topic sentence', 'Arguments are supported by evidence/examples', 'Counter-arguments are addressed and refuted', 'Active verbs used where possible'],
+        Conclusion: ['Position restated with new weight', 'Final statement or outlook'],
+        'Final check': ['Paragraphs with logical links', 'Vocabulary varied (synonyms used)', 'No contractions', 'Grammar &amp; spelling checked with dictionary']
+      },
+      levelC: {
+        Introduction: ['Question framed precisely', 'Key terms acknowledged as needing definition', 'Thesis is specific, arguable, and shows the structure of the essay'],
+        'Conceptual groundwork': ['Central terms defined briefly but rigorously', 'No reliance on unstated assumptions'],
+        'Main part': ['Arguments ordered from strongest to less strong (or build cumulatively)', 'Claim → evidence → analysis → significance pattern in every paragraph', 'Primary sources cited where possible', 'The strongest counter-argument is engaged seriously, not strawmanned', 'Limits of the argument are openly acknowledged'],
+        Conclusion: ['Thesis restated with the weight of the argument behind it', 'Wider significance made explicit'],
+        'Final check': ['Word count within target', 'Citation system consistent throughout', 'Reference list complete', 'Academic register throughout (no contractions, no informal hedges)', 'Grammar &amp; mechanics checked', 'Originality: every idea is mine OR cited']
+      }
+    }
+  },
+
+  /* =========================================================
+     ARTICLE  (§5.2)
+     ========================================================= */
+  article: {
+    label: 'Article',
+    levelA: {
+      structure: [
+        ['Headline', 'Zum Thema, weckt Interesse.', ['Why we need to talk about …']],
+        ['Einleitung', 'Aufmerksamkeit, Thema, eigene Sicht.', ['Have you ever wondered …?', 'Recently I have noticed that …']],
+        ['Hauptteil', 'Argumente / Beobachtungen / Beispiele.', ['First, …', 'Another important point is …', 'For example, …']],
+        ['Schluss', 'Fazit oder Appell.', ['All in all, …', 'It is time to …']]
+      ]
+    },
+    levelB: {
+      structure: [
+        ['Headline', 'Catchy, informative; addresses the target group.', ['"The hidden cost of …"']],
+        ['Introduction', 'Hook the reader; define the topic and angle.', ['Imagine …', 'It may come as a surprise that …', 'In recent months, …']],
+        ['Main part', 'Arguments, examples, counter-arguments, evidence.', ['One reason this matters is …', 'For instance, …', 'Some readers might object that …', 'However, …']],
+        ['Conclusion', 'Signal the conclusion; final statement, call to action or outlook.', ['In conclusion, …', 'What this means for us is …', 'The next step is …']]
+      ]
+    },
+    levelC: {
+      structure: [
+        ['Headline', 'Catchy and specific; signals stance without giving away the conclusion.', ['"Why determinism leaves room for the courtroom"']],
+        ['Lead', 'A vivid opening that orients the reader and signals the angle.', ['Consider a defendant who …', 'Few questions in legal philosophy are as old — or as urgent — as …']],
+        ['Introduction', 'Define the topic precisely, name your angle, preview the argument.', ['This article argues that …', 'I will focus on three implications: …']],
+        ['Main part', 'Sustained argument with evidence, named sources, and engagement with counter-positions.', ['As legal philosopher H. L. A. Hart noted, …', 'A common counter-position holds that …', 'Yet this overlooks …']],
+        ['Conclusion', 'Restate angle; outward-facing implication or call to action.', ['What follows from all this is …', 'If readers take only one idea from this piece, let it be …']]
+      ]
+    },
+    checklist: {
+      levelA: {
+        Headline: ['Catchy, refers to topic'],
+        Introduction: ['Hook + topic'],
+        'Main part': ['Arguments with examples', 'Linking words', 'Paragraphs'],
+        Conclusion: ['Final statement or appeal'],
+        'Final check': ['Vocabulary fits target group', 'Grammar checked']
+      },
+      levelB: {
+        Headline: ['Catchy, fits target group'],
+        Introduction: ['Hook + clear topic + angle'],
+        'Main part': ['Topic sentences in each paragraph', 'Supporting evidence/examples', 'Counter-arguments addressed'],
+        Conclusion: ['Conclusion signalled', 'Final statement / call to action / outlook'],
+        'Final check': ['Style fits target group', 'No contractions in formal contexts', 'Linking words used', 'Dictionary used']
+      },
+      levelC: {
+        Headline: ['Catchy AND specific; signals stance'],
+        Lead: ['Concrete, vivid opening; orients the reader'],
+        Introduction: ['Topic defined precisely; angle named; argument previewed'],
+        'Main part': ['Each paragraph: claim → evidence → analysis → significance', 'Named sources where appropriate', 'Counter-positions engaged', 'Register suits an educated general audience'],
+        Conclusion: ['Restates angle with new weight', 'Outward-facing implication'],
+        'Final check': ['Reference list (if any) consistent', 'Word count appropriate', 'Academic register without becoming dry']
+      }
+    }
+  },
+
+  /* =========================================================
+     BLOG ENTRY  (§5.3)
+     ========================================================= */
+  blog: {
+    label: 'Blog entry',
+    levelA: {
+      structure: [
+        ['Headline', 'Persönlich, packend.', ['Why I changed my mind about …']],
+        ['Einleitung', 'Persönlicher Einstieg, Thema, Meinung.', ['Last week I read that …', 'I want to share …']],
+        ['Hauptteil', 'Argumente / Erlebnis / Beispiel.', ['First of all, …', 'For example, …', 'Personally, I think …']],
+        ['Schluss', 'Fazit + Aufforderung zum Kommentar.', ['What do you think?', 'Leave a comment below!']]
+      ]
+    },
+    levelB: {
+      structure: [
+        ['Headline', 'Catchy, personal, links to the topic.', ['"Why I no longer believe that …"']],
+        ['Introduction', 'Personal hook; topic; position.', ['Have you ever …?', 'A few weeks ago, something happened that …']],
+        ['Main part', 'Arguments / experience / examples; address readers directly.', ['Let me explain why …', 'For me, the strongest reason is …', 'But here is the thing: …']],
+        ['Conclusion', 'Wrap up; invite comments.', ['So, what do I take away from all this?', 'I would love to hear your thoughts.']]
+      ]
+    },
+    levelC: {
+      structure: [
+        ['Headline', 'Catchy AND specific; voice is recognisable.', ['"Determinism, the dock, and the strange comfort of giving up blame"']],
+        ['Introduction', 'Personal/anecdotal hook that earns the topic; signal where the post is going.', ['I have been thinking about a question for weeks: …', 'This post argues that …']],
+        ['Main part', 'Voice + argument. Use the form of a blog (paragraphs, occasional rhetorical questions, second-person address) but with substance.', ['What I want to suggest is that …', 'Consider this case: …', 'I can already hear the objection: …', 'Here is why that objection misses the point: …']],
+        ['Conclusion', 'Restate the take-home idea; invite engagement.', ['If you take only one idea from this post, let it be …', 'I would love to hear where you disagree.']]
+      ]
+    },
+    checklist: {
+      levelA: {
+        Headline: ['Catchy, personal'],
+        Introduction: ['Hook + topic + opinion'],
+        'Main part': ['Personal voice', 'Arguments with examples'],
+        Conclusion: ['Comment invitation'],
+        'Final check': ['Friendly but clear language', 'Grammar checked']
+      },
+      levelB: {
+        Headline: ['Catchy headline that hooks readers'],
+        Introduction: ['Personal hook + topic + position'],
+        'Main part': ['Readers directly addressed', 'Arguments with explanations + examples', 'Counter-arguments where possible'],
+        Conclusion: ['Summed up position', 'Invited readers to comment'],
+        'Final check': ['Style fits blog readership', 'Paragraphs and linking', 'Dictionary used']
+      },
+      levelC: {
+        Headline: ['Catchy AND specific; recognisable voice'],
+        Introduction: ['Anecdotal hook earns the topic', 'Roadmap signalled'],
+        'Main part': ['Voice + substance in equal measure', 'Counter-position engaged generously', 'Tone fits an educated online readership without becoming flippant'],
+        Conclusion: ['Single clear take-away', 'Genuine invitation to engage'],
+        'Final check': ['Length appropriate (blog: 500–1000 words)', 'Citation light but accurate where needed', 'No contractions only if register is formal']
+      }
+    }
+  },
+
+  /* =========================================================
+     SPEECH  (§5.7)
+     ========================================================= */
+  speech: {
+    label: 'Speech',
+    levelA: {
+      structure: [
+        ['Einleitung', 'Begrüßung, Aufmerksamkeit, Thema.', ['Ladies and gentlemen, …', 'Thank you for inviting me.', 'Today I want to talk about …']],
+        ['Hauptteil', 'Argumente mit Beispielen.', ['First, …', 'For example, …', 'Imagine …', 'Don\'t we all want …?']],
+        ['Schluss', 'Appell, Dank.', ['Let us …', 'Thank you for listening.']]
+      ]
+    },
+    levelB: {
+      structure: [
+        ['Opening', 'Greet, thank, hook the audience.', ['Distinguished guests, dear fellow students, …', 'Thank you for being here.', 'Let me start with a question: …']],
+        ['Introduction', 'Topic + position + roadmap.', ['Today I want to argue that …', 'I will make three points.']],
+        ['Main part', 'Arguments with rhetorical devices (repetition, contrast, rhetorical questions).', ['First, …', 'Second, …', 'Have we forgotten that …?', 'This is not just about X — it is about Y.']],
+        ['Conclusion', 'Memorable final statement + call to action + thanks.', ['Let me leave you with this thought: …', 'Together, we can …', 'Thank you.']]
+      ]
+    },
+    levelC: {
+      structure: [
+        ['Opening', 'Greet, thank, hook the audience with something concrete (story, statistic, image).', ['Members of the panel, ladies and gentlemen — …', 'I want to begin not with an argument, but with a case: …']],
+        ['Introduction', 'Frame the issue and signal where you stand and where you are going.', ['What I want to put to you tonight is this: …', 'I will argue three things.']],
+        ['Main part', 'Rhetorical sophistication: tricolon, contrast, anaphora, well-judged pauses. Substance carries the rhetoric.', ['Consider, first, …', 'Consider, second, …', 'And consider, finally, …', 'Some will say … Let me address that directly.']],
+        ['Peroration', 'Build to the conclusion — language tightens, sentences shorten, image returns.', ['So where does this leave us?', 'It leaves us with a choice — and with a duty.']],
+        ['Close', 'Memorable last line + thanks.', ['Thank you.']]
+      ]
+    },
+    checklist: {
+      levelA: {
+        Opening: ['Begrüßung', 'Aufmerksamkeit erregt'],
+        'Main part': ['Argumente mit Beispielen', 'Direkte Anrede des Publikums'],
+        Conclusion: ['Appell oder Aufforderung', 'Dank'],
+        'Final check': ['Klare, hörbare Sätze', 'Grammatik geprüft']
+      },
+      levelB: {
+        Opening: ['Greeting', 'Hook (question / anecdote / quote)', 'Topic signalled'],
+        'Main part': ['Topic sentences', 'Rhetorical devices used', 'Audience addressed directly', 'Counter-positions engaged'],
+        Conclusion: ['Memorable final line', 'Call to action', 'Thanks'],
+        'Final check': ['Spoken sentences, not over-long', 'No contractions if formal', 'Vocabulary fits the audience']
+      },
+      levelC: {
+        Opening: ['Greeting + thanks', 'Concrete, vivid hook that earns the topic'],
+        Introduction: ['Position signalled', 'Roadmap of three (or so) points'],
+        'Main part': ['Each point: claim → image/example → significance', 'Rhetorical devices serve the argument, never replace it', 'Strongest counter-position taken seriously and answered'],
+        Peroration: ['Sentences tighten', 'Imagery returns', 'Builds to the close'],
+        Close: ['Single memorable last line', 'Brief thanks'],
+        'Final check': ['Speakable at natural pace', 'Length appropriate for occasion', 'Final read-aloud check']
+      }
+    }
+  },
+
+  /* =========================================================
+     LETTER TO THE EDITOR  (§5.6)
+     ========================================================= */
+  letterEditor: {
+    label: 'Letter to the editor',
+    levelA: {
+      structure: [
+        ['Anschrift / Datum', 'Adresse rechts, Empfänger links, Datum.', ['[Your address]', '[Newspaper address]', '[Date]']],
+        ['Anrede', 'Formell, ohne "Dear".', ['Sir/Madam,']],
+        ['Einleitung', 'Worauf bezieht sich der Brief?', ['I am writing in response to your article "…" of …']],
+        ['Hauptteil', 'Hauptpunkt mit Argument.', ['I would like to point out that …', 'In my view, …']],
+        ['Schluss', 'Kurzer Schlusssatz.', ['Thank you for considering my view.']],
+        ['Unterschrift', 'Name, Ort.', ['[Your name], [Town]']]
+      ]
+    },
+    levelB: {
+      structure: [
+        ['Addresses + date', 'Your address top right; newspaper address left; date.', ['[Your address]', '[Letters, The Guardian, …]', '[Date]']],
+        ['Salutation', 'No "Dear" in a letter to the editor.', ['Sir/Madam,']],
+        ['Introduction', 'Reference the article; state your purpose.', ['I am writing in response to "…", published on … I would like to challenge / support …']],
+        ['Main part', 'One or two main points; supporting evidence; respectful tone.', ['The author overlooks the fact that …', 'It is important to note that …', 'May I draw your attention to …']],
+        ['Conclusion', 'Final statement; no "Yours sincerely" — sign with name + place only.', ['I hope the editorial team will consider this point in future coverage.', '[Name], [Town]']]
+      ]
+    },
+    levelC: {
+      structure: [
+        ['Addresses + date', 'Your address top right; newspaper address left; date.', ['[Your address]', '[Letters Editor, …]', '[Date]']],
+        ['Salutation', 'No "Dear"; "Sir/Madam,"', ['Sir/Madam,']],
+        ['Introduction', 'Reference the article precisely; signal your stance without histrionics.', ['Your article "…" (12 May) raises an important question, but advances it on a misleading premise.']],
+        ['Main part', 'One central point, very tightly argued. A letter is not an essay — choose your strongest move and develop only that.', ['The author argues that …', 'Yet this overlooks two considerations. First, … Second, …', 'It is also worth noting that …']],
+        ['Conclusion', 'Civil, brief, pointed. Name + town.', ['Readers — and the law itself — deserve a more careful treatment of this issue.', '[Name], [Town]']]
+      ]
+    },
+    checklist: {
+      levelA: {
+        'Form': ['Adressen und Datum vorhanden', '"Sir/Madam," (kein "Dear")'],
+        Introduction: ['Bezug zum Artikel', 'Zweck klar'],
+        'Main part': ['Argument mit Beispiel'],
+        'Final check': ['Höflich-formeller Ton', 'Mit Name + Ort unterschrieben']
+      },
+      levelB: {
+        Form: ['Addresses + date in correct positions', 'No "Dear"; "Sir/Madam,"'],
+        Introduction: ['Article referenced precisely', 'Purpose stated clearly'],
+        'Main part': ['Main point with evidence', 'Respectful but firm tone'],
+        Conclusion: ['No closing phrase', 'Name + place only'],
+        'Final check': ['Formal register', 'No contractions', 'Spell-check']
+      },
+      levelC: {
+        Form: ['Addresses + date impeccable', '"Sir/Madam,"'],
+        Introduction: ['Article cited precisely; stance signalled with restraint'],
+        'Main part': ['One central point, tightly argued', 'Evidence specific and accurate', 'No personal attack on the journalist'],
+        Conclusion: ['Civil, brief, pointed', 'Name + town only'],
+        'Final check': ['Word count short (200–300 words typical)', 'Every word earns its place', 'Tone fits a quality broadsheet']
+      }
+    }
+  },
+
+  /* =========================================================
+     EMAIL  (§5.4)
+     ========================================================= */
+  email: {
+    label: 'E-mail',
+    levelA: {
+      structure: [
+        ['Subject', 'Klar, kurz.', ['Subject: Question about your article']],
+        ['Anrede', 'Formell oder informell.', ['Dear Mr/Mrs/Ms …,', 'Hi …,']],
+        ['Einleitung', 'Vorstellen + Anlass.', ['My name is …', 'I am writing because …']],
+        ['Hauptteil', 'Punkte aufgelistet, Bindewörter.', ['First, …', 'Second, …', 'Could you please …?']],
+        ['Schluss', 'Höfliche Schlussformel.', ['I look forward to hearing from you.']],
+        ['Verabschiedung', 'Formell oder informell.', ['Yours sincerely, …', 'Best wishes, …']]
+      ]
+    },
+    levelB: {
+      structure: [
+        ['Subject', 'Specific, professional.', ['Subject: Follow-up on the workshop on …']],
+        ['Greeting', 'Match the addressee.', ['Dear Mr/Mrs/Ms …,', 'Dear Sir or Madam,', 'Hi …,']],
+        ['Introduction', 'Identify yourself; state your purpose in the first 1–2 sentences.', ['My name is … I am writing to …']],
+        ['Main part', 'Clearly structured points; one paragraph per topic.', ['First, I would like to ask …', 'I would also like to suggest …', 'Could you please confirm …']],
+        ['Closing', 'Polite final sentence + sign-off.', ['I look forward to your reply.', 'Yours sincerely, [Full name]', 'Best wishes, [First name]']]
+      ]
+    },
+    levelC: {
+      structure: [
+        ['Subject', 'Specific and informative; signals importance without shouting.', ['Subject: Request for academic referee — John Locke essay (Law)']],
+        ['Greeting', 'Formal; addressee\'s actual name and title where known.', ['Dear Professor …,', 'Dear Dr …,']],
+        ['Introduction', 'Identify yourself in one sentence and state the purpose in the next.', ['My name is … I am writing to ask whether you would be willing to act as my academic referee for …']],
+        ['Main part', 'Concise, courteous, complete. Anticipate the reader\'s questions and answer them in order.', ['By way of context, …', 'The essay focuses on …', 'I would be grateful if …']],
+        ['Closing', 'Express thanks; offer to send more information; polite formal sign-off.', ['Thank you in advance for your consideration.', 'Yours sincerely, [Full name]']]
+      ]
+    },
+    checklist: {
+      levelA: {
+        Beginning: ['Subject + Anrede passen zum Empfänger', 'Großbuchstabe am Anfang'],
+        'Main part': ['Alle Punkte abgehakt', 'Bindewörter'],
+        Ending: ['Schlussformel + Name'],
+        'Final check': ['Klare Sätze', 'Wörter geprüft']
+      },
+      levelB: {
+        Beginning: ['Specific subject', 'Greeting fits addressee'],
+        Introduction: ['Purpose clear in first 1–2 sentences'],
+        'Main part': ['One topic per paragraph', 'Polite, professional tone'],
+        Ending: ['Polite closing + appropriate sign-off + name'],
+        'Final check': ['No contractions in formal context', 'Spell-check', 'Re-read for tone']
+      },
+      levelC: {
+        Beginning: ['Subject line earns its place', 'Greeting uses correct title'],
+        Introduction: ['Identifies sender + states purpose in two sentences max'],
+        'Main part': ['Anticipates reader\'s questions; answers in order', 'Concise without being curt', 'Every paragraph has a purpose'],
+        Closing: ['Thanks + offer of further info + formal sign-off + full name'],
+        'Final check': ['Suitable for a senior academic / professional recipient', 'No typos in addressee\'s name or title']
+      }
+    }
+  },
+
+  /* =========================================================
+     TEXT ANALYSIS  (§3.1)
+     ========================================================= */
+  analysis: {
+    label: 'Text analysis',
+    levelA: {
+      structure: [
+        ['Einleitung', 'Genre, Autor, Titel, Quelle, Thema, Aufgabenstellung.', ['The article "…" by … published in … on … deals with …', 'In this analysis I will focus on …']],
+        ['Hauptteil — Mittel', 'Sprachliche, stilistische, strukturelle Mittel mit Beispielen.', ['The author uses … (e.g. l. 5) to …', 'This creates the impression that …']],
+        ['Hauptteil — Wirkung', 'Wirkung der Mittel auf den Leser.', ['As a result, the reader …', 'This emphasises that …']],
+        ['Schluss', 'Zusammenfassende Bewertung.', ['Overall, the author conveys …']]
+      ]
+    },
+    levelB: {
+      structure: [
+        ['Introduction', 'Central statement about the text in relation to the task.', ['In the [genre] "…" by …, the author conveys … through …']],
+        ['Main part', 'Stylistic / linguistic / structural devices with quoted evidence (line refs) and analysed effect.', ['The author employs … (ll. x–y "…") to show …', 'This is reinforced by …', 'The repetition of … emphasises …']],
+        ['Conclusion', 'Logical result of the analysis.', ['Through the combined use of …, the author …', 'The overall effect on the reader is …']]
+      ]
+    },
+    levelC: {
+      structure: [
+        ['Introduction', 'Central thesis about how meaning is constructed in the text.', ['In "…", X constructs his/her argument through a sustained interplay of …, …, and …']],
+        ['Main part — first cluster', 'Group devices by function (e.g. devices building authority; devices building emotion). Quote precisely; analyse subtly.', ['The author\'s authority is established through … (ll. x–y "…"). This is reinforced by …']],
+        ['Main part — second cluster', 'Second functional grouping.', ['Emotional engagement is secured through …']],
+        ['Main part — third cluster', 'Third functional grouping if relevant.', ['Structurally, the text … This positioning …']],
+        ['Conclusion', 'What the analysis shows about the author\'s strategy as a whole.', ['Taken together, these devices reveal a deliberate strategy: …']]
+      ]
+    },
+    checklist: {
+      levelA: {
+        Introduction: ['Genre, Autor, Titel, Quelle, Thema genannt'],
+        'Main part': ['Mittel benannt', 'Beispiele mit Zeilenangaben', 'Wirkung erklärt'],
+        Conclusion: ['Zusammenfassende Bewertung'],
+        'Final check': ['Absätze', 'Bindewörter', 'Grammatik geprüft']
+      },
+      levelB: {
+        Introduction: ['Central statement linked to the task'],
+        'Main part': ['Devices named with technical terms', 'Quoted evidence with line refs', 'Effect on reader explained', 'Logical order'],
+        Conclusion: ['Follows from the analysis'],
+        'Final check': ['Present tense throughout', 'Paragraphs with topic sentences', 'No interpretation that goes beyond the text']
+      },
+      levelC: {
+        Introduction: ['Single, precise thesis about how meaning is built'],
+        'Main part': ['Devices grouped by function, not listed mechanically', 'Every quotation precisely cited (l. / ll.)', 'Analysis goes beyond identification to effect AND function in the whole', 'Combinations of devices noticed (not just isolated devices)'],
+        Conclusion: ['Synthesises into a claim about strategy'],
+        'Final check': ['Word count appropriate', 'Quotations integrated grammatically', 'Register: formal, present tense, no contractions']
+      }
+    }
+  }
+};
+
+const LEVEL_LABELS = {
+  levelA: 'Level A · Foundation (B1+/B2)',
+  levelB: 'Level B · Advanced (B2/B2+)',
+  levelC: 'Level C · Excellence (C1/C1+)'
+};
+
+const TOPIC_LABELS = {};
+Object.keys(DATA).forEach(k => TOPIC_LABELS[k] = DATA[k].label);
+
+/* =========================================================================
+   STATE
+   ========================================================================= */
+
+const state = {
+  level: localStorage.getItem('wp_sek2_level') || null,
+  topic: localStorage.getItem('wp_sek2_topic') || null
+};
+
+/* =========================================================================
+   RENDER
+   ========================================================================= */
+
+function renderTemplate() {
+  const container = document.getElementById('templateContainer');
+  if (!state.level || !state.topic) {
+    container.innerHTML = '<em>Pick a level and a text type above to see your template.</em>';
+    return;
+  }
+  const t = DATA[state.topic][state.level];
+  let html = '<div class="template-box">';
+  t.structure.forEach(([part, hint, starters]) => {
+    html += `<div class="template-row">
+      <div class="template-cell"><strong>${escapeHtml(part)}</strong>${escapeHtml(hint)}</div>
+      <div class="template-cell">
+        <div class="pills">
+          ${starters.map(s => `<span class="pill" data-copy="${escapeAttr(s)}">${escapeHtml(s)}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+
+  container.querySelectorAll('.pill').forEach(el => {
+    el.addEventListener('click', () => {
+      navigator.clipboard.writeText(el.dataset.copy).catch(()=>{});
+      const original = el.textContent;
+      el.textContent = '✓ copied';
+      setTimeout(() => { el.textContent = original; }, 900);
+    });
+  });
+}
+
+function renderChecklist() {
+  const container = document.getElementById('checklistContainer');
+  if (!state.level || !state.topic) {
+    container.innerHTML = '<em>Pick a level and a text type above to see your checklist.</em>';
+    return;
+  }
+  const cl = DATA[state.topic].checklist[state.level];
+  let html = '<div class="checklist">';
+  Object.keys(cl).forEach(section => {
+    html += `<div class="checklist-section">
+      <div class="checklist-section-title">${escapeHtml(section)}</div>`;
+    cl[section].forEach((item, idx) => {
+      const id = `cl_sek2_${state.topic}_${state.level}_${section}_${idx}`.replace(/\W/g, '_');
+      html += `<label><input type="checkbox" id="${id}"><span>${item}</span></label>`;
+    });
+    html += `</div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+
+  container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    const saved = localStorage.getItem('wp_sek2_' + cb.id);
+    if (saved === '1') cb.checked = true;
+    cb.addEventListener('change', () => {
+      localStorage.setItem('wp_sek2_' + cb.id, cb.checked ? '1' : '0');
+    });
+  });
+}
+
+function renderAIPrompt() {
+  const target = document.getElementById('aiPrompt');
+  if (!state.level || !state.topic) {
+    target.textContent = 'Pick your text type and level above to see the matching AI prompt.';
+    return;
+  }
+
+  const topicLabel = TOPIC_LABELS[state.topic];
+  const levelLabel = LEVEL_LABELS[state.level];
+
+  const cl = DATA[state.topic].checklist[state.level];
+  const criteriaList = [];
+  Object.keys(cl).forEach(section => {
+    cl[section].forEach(item => criteriaList.push(`${section} – ${stripHtml(item)}`));
+  });
+
+  const promptText = `You are acting as a structured-feedback tutor for a Sek-II (German upper-secondary) English student writing a ${topicLabel.toLowerCase()} at ${levelLabel}.
+
+IMPORTANT: Do NOT rewrite my text. Do NOT produce replacement sentences or paragraphs. Your job is diagnostic feedback only — point me to what to improve and explain WHY, so I can do the rewriting myself.
+
+I will paste my draft. Please give me feedback in EXACTLY four sections, in this order:
+
+1. CONTENT & ARGUMENT
+   - Does my thesis answer the question?
+   - Are my arguments well-founded? Where is reasoning weak or missing?
+   - Are counter-arguments addressed?
+   - Is anything important missing or off-topic?
+
+2. STRUCTURE
+   - Does the text follow the conventions of a ${topicLabel.toLowerCase()}?
+   - Are paragraphs well-built (topic sentence → evidence → analysis → significance)?
+   - Are linking words used effectively?
+   - Is the order of arguments persuasive?
+
+3. VOCABULARY & REGISTER
+   - Where is the register too informal / too formal for this genre?
+   - Where is vocabulary repetitive or imprecise? Suggest 3–5 more precise alternatives, but do NOT rewrite my sentences.
+   - Are technical / academic terms used correctly?
+
+4. GRAMMAR & MECHANICS
+   - List up to 8 of the most important grammar/syntax/punctuation issues with a short explanation each. Do NOT correct them for me — flag them and explain the rule.
+   - Note any citation/reference inconsistencies.
+
+For each section: first say what works WELL (2–3 sentences), then what to IMPROVE (3–5 concrete points). End each section with ONE concrete next action I can take myself.
+
+Use these criteria from my Sek-II checklist when giving feedback:
+- ${criteriaList.slice(0, 14).join('\n- ')}
+
+Reply in English. Be honest but constructive. Remember: no rewriting.
+
+Here is my draft:
+[PASTE YOUR DRAFT HERE]`;
+
+  target.textContent = promptText;
+  target.dataset.prompt = promptText;
+}
+
+function updateSelectionSummary() {
+  const summary = document.getElementById('summary');
+  if (state.level && state.topic) {
+    summary.style.display = 'flex';
+    document.getElementById('sumTopic').textContent = TOPIC_LABELS[state.topic];
+    document.getElementById('sumLevel').textContent = LEVEL_LABELS[state.level];
+    document.body.classList.add('has-selection');
+  } else {
+    summary.style.display = 'none';
+    document.body.classList.remove('has-selection');
+  }
+}
+
+function highlightSelection() {
+  document.querySelectorAll('#levelPicker .level-card').forEach(b => {
+    b.classList.toggle('active', b.dataset.level === state.level);
+  });
+  document.querySelectorAll('#topicPicker .topic-card').forEach(b => {
+    b.classList.toggle('active', b.dataset.topic === state.topic);
+  });
+}
+
+function rerenderAll() {
+  renderTemplate();
+  renderChecklist();
+  renderAIPrompt();
+  updateSelectionSummary();
+  highlightSelection();
+}
+
+/* =========================================================================
+   EVENTS
+   ========================================================================= */
+
+document.querySelectorAll('#levelPicker .level-card').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.level = btn.dataset.level;
+    localStorage.setItem('wp_sek2_level', state.level);
+    rerenderAll();
+  });
+});
+
+document.querySelectorAll('#topicPicker .topic-card').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.topic = btn.dataset.topic;
+    localStorage.setItem('wp_sek2_topic', state.topic);
+    rerenderAll();
+  });
+});
+
+// Phrase-bank: clicking a phrase copies it
+document.querySelectorAll('.phrase-group li').forEach(li => {
+  li.addEventListener('click', () => {
+    const txt = li.textContent.trim();
+    navigator.clipboard.writeText(txt).catch(()=>{});
+    const original = li.textContent;
+    li.textContent = '✓ copied';
+    setTimeout(() => { li.textContent = original; }, 900);
+  });
+});
+
+// Auto-save text areas + restore
+['taskNotes', 'researchNotes', 'thesis', 'argMap', 'draft', 'aiFeedback', 'finalDraft', 'references', 'refereeNote'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const saved = localStorage.getItem('wp_sek2_' + id);
+  if (saved) el.value = saved;
+  el.addEventListener('input', () => {
+    localStorage.setItem('wp_sek2_' + id, el.value);
+    if (id === 'draft') updateWordCount('draft', 'wordCount');
+    if (id === 'finalDraft') updateWordCount('finalDraft', 'finalWordCount');
+  });
+});
+
+// Submission-checklist persistence
+['sub_final_1','sub_final_2','sub_final_3','sub_final_4','sub_final_5','sub_final_6','sub_final_7','sub_final_8'].forEach(id => {
+  const cb = document.getElementById(id);
+  if (!cb) return;
+  if (localStorage.getItem('wp_sek2_' + id) === '1') cb.checked = true;
+  cb.addEventListener('change', () => {
+    localStorage.setItem('wp_sek2_' + id, cb.checked ? '1' : '0');
+  });
+});
+
+function updateWordCount(textareaId, counterId) {
+  const t = document.getElementById(textareaId).value.trim();
+  const wc = t.length === 0 ? 0 : t.split(/\s+/).length;
+  document.getElementById(counterId).textContent = wc + ' words';
+}
+updateWordCount('draft', 'wordCount');
+updateWordCount('finalDraft', 'finalWordCount');
+
+// Stage toggling
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.stage').classList.toggle('collapsed');
+  });
+});
+
+// Copy AI prompt
+document.getElementById('copyPrompt').addEventListener('click', () => {
+  const text = document.getElementById('aiPrompt').dataset.prompt;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyPrompt');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy prompt';
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+});
+
+/* =========================================================================
+   HELPERS
+   ========================================================================= */
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+function stripHtml(s) {
+  return String(s).replace(/<[^>]*>/g, '').replace(/&amp;/g, '&');
+}
+
+// Initial render
+rerenderAll();
+</script>
+
+</body>
+</html>
