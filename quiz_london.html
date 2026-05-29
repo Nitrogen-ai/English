@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Quiz Collection – Year 7</title>
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; font-family: 'Georgia', serif; }
+body { background: #f0f4f8; color: #1f2937; line-height: 1.5; }
+button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+
+/* ============================================================
+   LANGUAGE TOGGLE  — fixed top-right on every screen
+   ============================================================ */
+#lang-toggle {
+  position: fixed;
+  top: 14px; right: 14px;
+  z-index: 20000;
+  background: rgba(255,255,255,0.92);
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 30px;
+  padding: 5px 6px;
+  display: flex;
+  gap: 4px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+}
+#lang-toggle button {
+  padding: 5px 13px;
+  border-radius: 24px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: all 0.18s;
+  background: transparent;
+  color: #374151;
+}
+#lang-toggle button.active {
+  background: #b91c1c;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(185,28,28,0.4);
+}
+#lang-toggle button:hover:not(.active) { background: rgba(185,28,28,0.1); }
+
+/* ============================================================
+   BACK BUTTON — fixed top-left on quiz / sub-menu screens
+   ============================================================ */
+#back-btn {
+  position: fixed;
+  top: 14px; left: 14px;
+  background: rgba(0,0,0,0.52);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 0.88rem;
+  z-index: 19000;
+  backdrop-filter: blur(4px);
+  display: none;
+  transition: background 0.15s;
+}
+#back-btn:hover { background: rgba(0,0,0,0.82); }
+
+/* ============================================================
+   SCREENS — one active at a time
+   ============================================================ */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+
+/* ============================================================
+   MAIN MENU — 4 big category buttons
+   ============================================================ */
+#screen-main {
+  background: linear-gradient(135deg, #b91c1c 0%, #1e3a8a 55%, #7c2d12 100%);
+  padding: 60px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#screen-main h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 2.4rem;
+  margin-bottom: 8px;
+  text-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  letter-spacing: 1px;
+}
+#screen-main .subtitle {
+  text-align: center;
+  color: #fde68a;
+  font-size: 1.05rem;
+  margin-bottom: 48px;
+  font-style: italic;
+}
+.big-topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+  max-width: 1000px;
+  width: 100%;
+}
+.big-topic-btn {
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
+  padding: 32px 26px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  text-align: center;
+  border: none;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.big-topic-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(185,28,28,0.07) 0%, rgba(30,58,138,0.07) 100%);
+  border-radius: 20px;
+}
+.big-topic-btn:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.32); }
+.big-topic-btn .topic-icon { font-size: 3rem; margin-bottom: 12px; display: block; }
+.big-topic-btn h2 { font-size: 1.3rem; color: #111827; margin-bottom: 6px; }
+.big-topic-btn .topic-desc { font-size: 0.88rem; color: #6b7280; font-style: italic; }
+.big-topic-btn .quiz-count {
+  display: inline-block;
+  margin-top: 14px;
+  background: #b91c1c;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ============================================================
+   SUB-MENU — quiz list for a chosen topic
+   ============================================================ */
+#screen-submenu {
+  background: linear-gradient(135deg, #b91c1c 0%, #1e3a8a 55%, #7c2d12 100%);
+  padding: 80px 20px 60px;
+}
+#screen-submenu .submenu-header {
+  text-align: center;
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 8px;
+  text-shadow: 0 3px 14px rgba(0,0,0,0.35);
+}
+#screen-submenu .submenu-sub {
+  text-align: center;
+  color: #fde68a;
+  font-size: 0.95rem;
+  margin-bottom: 36px;
+  font-style: italic;
+}
+.quiz-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.quiz-card {
+  background: rgba(255,255,255,0.97);
+  border-radius: 16px;
+  padding: 22px 20px;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  border: none;
+  text-align: left;
+  width: 100%;
+}
+.quiz-card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(0,0,0,0.28); }
+.quiz-card.coming-soon { opacity: 0.62; cursor: not-allowed; }
+.quiz-card.coming-soon:hover { transform: none; box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+.quiz-card .qc-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #b91c1c; color: #fff;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-weight: 700; font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+.quiz-card h3 { font-size: 1.05rem; color: #111827; margin-bottom: 5px; }
+.quiz-card .qc-desc { color: #4b5563; font-size: 0.87rem; margin-bottom: 6px; }
+.quiz-card .qc-authors { color: #9ca3af; font-size: 0.77rem; font-style: italic; }
+.quiz-card .soon-tag {
+  display: inline-block;
+  background: #fef3c7; color: #92400e;
+  font-size: 0.74rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 8px;
+  margin-top: 8px;
+}
+
+/* ============================================================
+   QUIZ SCREENS — generic wrappers
+   ============================================================ */
+.quiz-screen { display: none; min-height: 100vh; }
+.quiz-screen.active { display: block; }
+
+/* ============================================================
+   QUIZ A1 — City Hunter  (cartoon / summer)
+   ============================================================ */
+#quiz-a1 {
+  background: linear-gradient(180deg, #87ceeb 0%, #b6f0a0 60%, #6ec94a 100%);
+  min-height: 100vh; overflow: hidden; position: relative;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+}
+#quiz-a1 .sun {
+  position: fixed; top: 20px; right: 120px;
+  font-size: 3.8rem;
+  animation: spinSun 14s linear infinite;
+  z-index: 1; pointer-events: none;
+}
+@keyframes spinSun { to { transform: rotate(360deg); } }
+#quiz-a1 .cloud-bg { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+#quiz-a1 .cloud-float {
+  position: absolute; font-size: 3rem; opacity: 0.72;
+  animation: floatCld 28s linear infinite;
+}
+@keyframes floatCld { 0%{transform:translateX(-200px)} 100%{transform:translateX(calc(100vw+200px))} }
+#quiz-a1 .content-wrap {
+  position: relative; z-index: 3;
+  max-width: 700px; margin: 0 auto; padding: 30px 18px 70px;
+}
+#quiz-a1 .game-title {
+  text-align: center; font-size: 2rem; color: #1e3a8a;
+  text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0,0,0,0.1);
+  margin-bottom: 4px;
+}
+#quiz-a1 .coin-bar {
+  display: flex; justify-content: center; align-items: center; gap: 10px;
+  margin-bottom: 20px; font-size: 1.2rem; font-weight: 700; color: #92400e;
+  background: rgba(255,255,255,0.85); border-radius: 30px;
+  padding: 8px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+#quiz-a1 .card {
+  background: rgba(255,255,255,0.97); border-radius: 20px;
+  padding: 24px 26px; box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  border: 3px solid #fbbf24;
+}
+#quiz-a1 .building-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+#quiz-a1 .building-icon { font-size: 2.5rem; }
+#quiz-a1 .building-name { font-size: 1.3rem; color: #b91c1c; font-weight: 700; }
+#quiz-a1 .q-count { font-size: 0.88rem; color: #6b7280; margin-bottom: 10px; }
+#quiz-a1 .question-text { font-size: 1.1rem; color: #111827; margin-bottom: 14px; line-height: 1.5; }
+#quiz-a1 .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+#quiz-a1 .opt-btn {
+  background: #dbeafe; color: #1e40af; padding: 12px 16px; border-radius: 12px;
+  font-size: 0.98rem; font-family: inherit; border: 2px solid transparent;
+  text-align: left; transition: all 0.15s;
+}
+#quiz-a1 .opt-btn:hover:not(:disabled) { background: #93c5fd; border-color: #2563eb; }
+#quiz-a1 .opt-btn.correct { background: #bbf7d0; border-color: #16a34a; }
+#quiz-a1 .opt-btn.wrong   { background: #fecaca; border-color: #dc2626; }
+#quiz-a1 .opt-btn:disabled { cursor: not-allowed; }
+#quiz-a1 .feedback-box { border-radius: 12px; padding: 12px 16px; font-size: 0.97rem; display: none; margin-bottom: 12px; }
+#quiz-a1 .feedback-box.show { display: block; }
+#quiz-a1 .feedback-box.correct { background: #f0fdf4; border-left: 4px solid #16a34a; color: #15803d; }
+#quiz-a1 .feedback-box.wrong   { background: #fef2f2; border-left: 4px solid #dc2626; color: #991b1b; }
+#quiz-a1 .nav-btn { background: #1e40af; color: #fff; padding: 10px 24px; border-radius: 10px; font-size: 0.98rem; font-family: inherit; }
+#quiz-a1 .nav-btn:hover { background: #1e3a8a; }
+#quiz-a1 .shop-btn { background: #f59e0b; color: #fff; padding: 8px 16px; border-radius: 10px; font-size: 0.88rem; font-family: inherit; }
+#quiz-a1 .loser-popup {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  display: none; align-items: center; justify-content: center;
+  z-index: 18000; flex-direction: column;
+}
+#quiz-a1 .loser-popup.show { display: flex; }
+#quiz-a1 .loser-face { font-size: 5.5rem; animation: bLoser 0.4s ease infinite alternate; margin-bottom: 8px; }
+@keyframes bLoser { from{transform:scale(1)} to{transform:scale(1.15)} }
+#quiz-a1 .loser-text { font-size: 2.2rem; color: #fbbf24; font-weight: 900; text-shadow: 2px 2px 0 #000; margin-bottom: 18px; }
+#quiz-a1 .loser-close { background: #b91c1c; color: #fff; padding: 10px 28px; border-radius: 12px; font-size: 1rem; font-family: inherit; }
+#quiz-a1 .shop-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  z-index: 18500; display: none; align-items: flex-start;
+  justify-content: center; overflow-y: auto; padding: 30px 18px;
+}
+#quiz-a1 .shop-overlay.show { display: flex; }
+#quiz-a1 .shop-panel { background: #fffbeb; border-radius: 20px; padding: 24px; max-width: 680px; width: 100%; border: 3px solid #fbbf24; }
+#quiz-a1 .shop-panel h2 { text-align: center; color: #92400e; margin-bottom: 16px; font-size: 1.5rem; }
+#quiz-a1 .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px,1fr)); gap: 12px; }
+#quiz-a1 .shop-item {
+  background: #fff; border-radius: 12px; padding: 12px 8px; text-align: center;
+  border: 2px solid #fde68a; font-family: inherit; cursor: pointer; transition: all 0.15s;
+}
+#quiz-a1 .shop-item:hover { border-color: #f59e0b; transform: scale(1.04); }
+#quiz-a1 .shop-item.owned { background: #f0fdf4; border-color: #16a34a; }
+#quiz-a1 .shop-item .si-icon { font-size: 2rem; margin-bottom: 4px; }
+#quiz-a1 .shop-item .si-name { font-size: 0.78rem; color: #374151; font-weight: 600; }
+#quiz-a1 .shop-item .si-price { font-size: 0.75rem; color: #f59e0b; margin-top: 2px; }
+#quiz-a1 .close-shop { display: block; margin: 14px auto 0; background: #b91c1c; color: #fff; padding: 9px 26px; border-radius: 10px; font-size: 0.95rem; font-family: inherit; }
+#quiz-a1 .start-card { background: rgba(255,255,255,0.97); border-radius: 24px; padding: 36px 28px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 3px solid #fbbf24; text-align: center; }
+#quiz-a1 .start-card h2 { font-size: 1.9rem; color: #b91c1c; margin-bottom: 12px; }
+#quiz-a1 .start-card p { color: #374151; font-size: 0.98rem; margin-bottom: 6px; }
+#quiz-a1 .start-btn { background: linear-gradient(135deg,#f59e0b,#b91c1c); color:#fff; padding:13px 34px; border-radius:14px; font-size:1.1rem; font-family:inherit; margin-top:18px; box-shadow:0 4px 14px rgba(185,28,28,0.4); }
+#quiz-a1 .start-btn:hover { transform: scale(1.04); }
+#quiz-a1 .char-display { font-size: 3.2rem; text-align: center; margin-bottom: 10px; }
+
+/* ============================================================
+   QUIZ A2 — Super London  (white / red / gold)
+   ============================================================ */
+#quiz-a2 { min-height: 100vh; position: relative; overflow: hidden; background: #fff; }
+#quiz-a2 .gold-top { position:fixed; top:0; left:0; right:0; height:6px; background:linear-gradient(90deg,#b91c1c,#d97706,#b91c1c); z-index:100; }
+#quiz-a2 .gold-bot { position:fixed; bottom:0; left:0; right:0; height:6px; background:linear-gradient(90deg,#b91c1c,#d97706,#b91c1c); z-index:100; }
+#quiz-a2 .bg-pattern {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: repeating-linear-gradient(-45deg, rgba(185,28,28,0.035) 0,rgba(185,28,28,0.035) 18px, transparent 18px, transparent 36px);
+}
+#quiz-a2 .content-wrap { position:relative; z-index:2; max-width:800px; margin:0 auto; padding:50px 20px 70px; }
+#quiz-a2 .game-title { text-align:center; font-size:2.1rem; color:#b91c1c; margin-bottom:6px; font-family:'Georgia',serif; letter-spacing:1px; text-shadow:1px 1px 0 #d97706; }
+#quiz-a2 .prog-wrap { background:#f3f4f6; border-radius:10px; height:10px; margin-bottom:22px; overflow:hidden; border:1px solid #e5e7eb; }
+#quiz-a2 .prog-fill { height:100%; background:linear-gradient(90deg,#b91c1c,#d97706); border-radius:10px; transition:width 0.5s; }
+#quiz-a2 .question-card { background:rgba(255,255,255,0.98); border-radius:18px; padding:24px; box-shadow:0 8px 30px rgba(185,28,28,0.12); border:2px solid #fde68a; display:flex; gap:20px; align-items:flex-start; }
+#quiz-a2 .q-img-col { flex:0 0 190px; text-align:center; }
+#quiz-a2 .q-img-emoji { font-size:4.5rem; display:flex; align-items:center; justify-content:center; width:180px; height:150px; border-radius:12px; background:#fef3c7; box-shadow:0 4px 14px rgba(0,0,0,0.1); }
+#quiz-a2 .q-body { flex:1; }
+#quiz-a2 .q-num { color:#9ca3af; font-size:0.84rem; margin-bottom:5px; }
+#quiz-a2 .q-text { font-size:1.08rem; color:#111827; margin-bottom:14px; font-weight:600; }
+#quiz-a2 .tf-btns { display:flex; gap:12px; }
+#quiz-a2 .tf-btn { flex:1; padding:12px; border-radius:12px; font-size:0.97rem; font-weight:700; border:2px solid transparent; font-family:inherit; transition:all 0.15s; }
+#quiz-a2 .tf-btn.t-btn { background:#dbeafe; color:#1e40af; }
+#quiz-a2 .tf-btn.f-btn { background:#fce7f3; color:#9d174d; }
+#quiz-a2 .tf-btn:hover:not(:disabled) { transform:scale(1.04); }
+#quiz-a2 .tf-btn.correct { background:#bbf7d0; border-color:#16a34a; color:#15803d; }
+#quiz-a2 .tf-btn.wrong   { background:#fecaca; border-color:#dc2626; color:#991b1b; }
+#quiz-a2 .tf-btn:disabled { cursor:not-allowed; }
+#quiz-a2 .mc-opts { display:flex; flex-direction:column; gap:8px; }
+#quiz-a2 .mc-opt { background:#f3f4f6; color:#374151; padding:10px 14px; border-radius:10px; text-align:left; font-size:0.95rem; border:2px solid transparent; font-family:inherit; transition:all 0.15s; }
+#quiz-a2 .mc-opt:hover:not(:disabled) { background:#e5e7eb; border-color:#9ca3af; }
+#quiz-a2 .mc-opt.correct { background:#bbf7d0; border-color:#16a34a; color:#15803d; }
+#quiz-a2 .mc-opt.wrong   { background:#fecaca; border-color:#dc2626; color:#991b1b; }
+#quiz-a2 .mc-opt:disabled { cursor:not-allowed; }
+#quiz-a2 .tip-box { margin-top:12px; padding:10px 14px; background:#fffbeb; border-radius:10px; border-left:4px solid #d97706; font-size:0.88rem; color:#92400e; display:none; }
+#quiz-a2 .tip-box.show { display:block; }
+#quiz-a2 .next-btn { background:linear-gradient(135deg,#b91c1c,#d97706); color:#fff; padding:10px 24px; border-radius:10px; font-size:0.95rem; font-family:inherit; margin-top:14px; display:none; }
+#quiz-a2 .next-btn.show { display:inline-block; }
+#quiz-a2 .score-disp { text-align:center; font-size:0.96rem; color:#6b7280; margin-bottom:14px; }
+#quiz-a2 .animal-pop { position:fixed; z-index:17000; font-size:3.8rem; animation:animalPop 1.8s ease forwards; pointer-events:none; }
+@keyframes animalPop { 0%{opacity:0;transform:translateX(-120px) scale(0.5)} 20%{opacity:1;transform:translateX(0) translateY(-18px) scale(1.1)} 60%{opacity:1;transform:translateX(0) translateY(-18px)} 100%{opacity:0;transform:translateX(0) translateY(50px) scale(0.8)} }
+.cf-piece { position:fixed; top:-20px; width:10px; height:14px; pointer-events:none; animation:cfFall linear forwards; z-index:16000; }
+@keyframes cfFall { to { transform:translateY(110vh) rotate(720deg); } }
+
+/* ============================================================
+   QUIZ A3 — All about London  (England flag bg)
+   ============================================================ */
+#quiz-a3 { min-height:100vh; position:relative; overflow:hidden; background:#fff; }
+#quiz-a3 .flag-bg { position:fixed; inset:0; z-index:0; pointer-events:none; }
+#quiz-a3 .flag-bg::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(90deg,transparent calc(50% - 5px),#dc2626 calc(50% - 5px),#dc2626 calc(50% + 5px),transparent calc(50% + 5px)),
+              linear-gradient(180deg,transparent calc(50% - 5px),#dc2626 calc(50% - 5px),#dc2626 calc(50% + 5px),transparent calc(50% + 5px));
+  opacity:0.1;
+}
+#quiz-a3 .flag-bg::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,0.62); }
+#quiz-a3 .pts-badge { position:fixed; top:14px; right:135px; background:#b91c1c; color:#fff; font-size:1rem; font-weight:700; padding:7px 16px; border-radius:28px; z-index:150; box-shadow:0 2px 10px rgba(185,28,28,0.4); display:none; }
+#quiz-a3 .buzz-flash { position:fixed; inset:0; background:rgba(220,38,38,0.18); pointer-events:none; z-index:400; opacity:0; transition:opacity 0.1s; }
+#quiz-a3 .buzz-flash.on { opacity:1; }
+#quiz-a3 .content-wrap { position:relative; z-index:2; max-width:700px; margin:0 auto; padding:40px 18px 60px; }
+#quiz-a3 .game-title { text-align:center; font-size:1.9rem; color:#b91c1c; margin-bottom:4px; font-weight:900; }
+#quiz-a3 .q-box { background:rgba(255,255,255,0.98); border-radius:16px; padding:26px; box-shadow:0 8px 28px rgba(0,0,0,0.14); border:2px solid #e5e7eb; margin-bottom:16px; }
+#quiz-a3 .q-text { font-size:1.15rem; color:#111827; margin-bottom:18px; font-weight:700; line-height:1.4; }
+#quiz-a3 .answers-row { display:flex; flex-direction:column; gap:10px; }
+#quiz-a3 .ans-btn { background:#f9fafb; color:#374151; padding:12px 16px; border-radius:10px; text-align:left; font-size:0.97rem; font-family:inherit; border:2px solid #e5e7eb; transition:all 0.15s; }
+#quiz-a3 .ans-btn:hover:not(:disabled) { background:#f3f4f6; border-color:#9ca3af; }
+#quiz-a3 .ans-btn.correct { background:#bbf7d0; border-color:#16a34a; color:#166534; }
+#quiz-a3 .ans-btn.wrong   { background:#fecaca; border-color:#dc2626; color:#991b1b; }
+#quiz-a3 .ans-btn:disabled { cursor:not-allowed; }
+#quiz-a3 .tip-btn-a3 { background:#fef3c7; color:#92400e; padding:7px 14px; border-radius:8px; font-size:0.85rem; font-family:inherit; border:1px solid #fde68a; margin-bottom:10px; }
+#quiz-a3 .tip-text { background:#fffbeb; border-left:4px solid #d97706; padding:10px; border-radius:6px; font-size:0.88rem; color:#92400e; margin-bottom:10px; display:none; }
+#quiz-a3 .tip-text.show { display:block; }
+#quiz-a3 .fb-a3 { padding:10px 14px; border-radius:8px; font-size:0.97rem; margin-bottom:10px; display:none; }
+#quiz-a3 .fb-a3.show { display:block; }
+#quiz-a3 .fb-a3.correct { background:#f0fdf4; border-left:4px solid #16a34a; color:#15803d; }
+#quiz-a3 .fb-a3.wrong   { background:#fef2f2; border-left:4px solid #dc2626; color:#991b1b; }
+#quiz-a3 .nav-a3 { background:#b91c1c; color:#fff; padding:10px 22px; border-radius:8px; font-size:0.97rem; font-family:inherit; display:none; }
+#quiz-a3 .nav-a3.show { display:inline-block; }
+
+/* ============================================================
+   QUIZ A4 — Quiz of London  (hearts / 6 subtopics)
+   ============================================================ */
+#quiz-a4 { min-height:100vh; background:linear-gradient(135deg,#1e3a8a 0%,#b91c1c 100%); padding:30px 20px 60px; font-family:'Georgia',serif; }
+#quiz-a4 .a4-start { text-align:center; max-width:700px; margin:0 auto; }
+#quiz-a4 .a4-start h1 { color:#fff; font-size:2.4rem; margin-bottom:8px; text-shadow:0 4px 16px rgba(0,0,0,0.3); }
+#quiz-a4 .a4-start .sub { color:#fde68a; font-size:1rem; margin-bottom:30px; }
+#quiz-a4 .st-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); gap:14px; margin-bottom:20px; }
+#quiz-a4 .st-btn { background:rgba(255,255,255,0.14); border:2px solid rgba(255,255,255,0.35); color:#fff; border-radius:14px; padding:18px 12px; font-size:0.97rem; font-family:inherit; cursor:pointer; transition:all 0.18s; }
+#quiz-a4 .st-btn:hover { background:rgba(255,255,255,0.26); transform:scale(1.03); }
+#quiz-a4 .st-btn .st-ic { font-size:2rem; display:block; margin-bottom:8px; }
+#quiz-a4 .st-btn.done { background:rgba(34,197,94,0.3); border-color:#22c55e; }
+#quiz-a4 .a4-play { max-width:720px; margin:0 auto; }
+#quiz-a4 .prog-track { display:flex; gap:6px; margin-bottom:18px; flex-wrap:wrap; }
+#quiz-a4 .pd { flex:1; height:13px; border-radius:7px; background:rgba(255,255,255,0.22); transition:background 0.3s; min-width:20px; }
+#quiz-a4 .pd.right { background:#22c55e; } #quiz-a4 .pd.wrong { background:#ef4444; } #quiz-a4 .pd.cur { background:#fbbf24; }
+#quiz-a4 .hearts-row { text-align:center; font-size:1.5rem; margin-bottom:16px; letter-spacing:4px; }
+#quiz-a4 .q-card { background:rgba(255,255,255,0.97); border-radius:18px; padding:24px; box-shadow:0 8px 28px rgba(0,0,0,0.25); margin-bottom:16px; }
+#quiz-a4 .q-card .qt { font-size:1.1rem; color:#111827; font-weight:700; margin-bottom:18px; }
+#quiz-a4 .q-card .opts { display:flex; flex-direction:column; gap:10px; }
+#quiz-a4 .q-card .ob { background:#f3f4f6; color:#374151; padding:12px 16px; border-radius:10px; text-align:left; font-size:0.97rem; font-family:inherit; border:2px solid transparent; transition:all 0.15s; }
+#quiz-a4 .q-card .ob:hover:not(:disabled) { background:#e5e7eb; border-color:#9ca3af; }
+#quiz-a4 .q-card .ob.correct { background:#bbf7d0; border-color:#16a34a; }
+#quiz-a4 .q-card .ob.wrong   { background:#fecaca; border-color:#dc2626; }
+#quiz-a4 .q-card .ob:disabled { cursor:not-allowed; }
+#quiz-a4 .nxt-a4 { background:#fbbf24; color:#111827; padding:10px 22px; border-radius:10px; font-size:0.97rem; font-family:inherit; margin-top:10px; display:none; }
+#quiz-a4 .nxt-a4.show { display:inline-block; }
+#quiz-a4 .cf-a4 { position:fixed; top:-20px; width:10px; height:14px; pointer-events:none; animation:cfFall linear forwards; z-index:16000; }
+
+/* ============================================================
+   QUIZ B1 — Greg's Diary Birthday Edition  (lined diary)
+   ============================================================ */
+#quiz-b1 { min-height:100vh; background:#f5f0e8; font-family:'Comic Sans MS','Chalkboard SE',cursive; position:relative; overflow:hidden; }
+#quiz-b1::before {
+  content:''; position:fixed; inset:0;
+  background:repeating-linear-gradient(transparent,transparent 31px,#bfdbfe 31px,#bfdbfe 32px);
+  opacity:0.32; pointer-events:none; z-index:0;
+}
+#quiz-b1 .content-wrap { position:relative; z-index:2; max-width:720px; margin:0 auto; padding:36px 18px 80px; }
+#quiz-b1 .diary-title { text-align:center; font-size:2rem; color:#1e3a8a; margin-bottom:4px; text-decoration:underline; text-decoration-color:#93c5fd; }
+#quiz-b1 .diary-sub { text-align:center; color:#6b7280; font-size:0.9rem; margin-bottom:18px; }
+#quiz-b1 .greg-wrap { text-align:center; margin-bottom:16px; }
+#quiz-b1 .greg-fig { font-size:5rem; display:inline-block; }
+#quiz-b1 .greg-fig.dance { animation:bdance 0.28s steps(2) infinite; }
+@keyframes bdance { 0%{transform:rotate(-15deg) translateX(-4px)} 50%{transform:rotate(15deg) translateX(4px) scaleX(-1)} 100%{transform:rotate(-15deg) translateX(-4px)} }
+#quiz-b1 .greg-fig.jetpack { animation:fjet 3s ease-in-out infinite; }
+@keyframes fjet { 0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-28px) rotate(5deg)} }
+#quiz-b1 .score-bar-b1 { text-align:center; font-size:1.05rem; color:#1e3a8a; font-weight:700; margin-bottom:14px; }
+#quiz-b1 .card { background:rgba(255,255,255,0.95); border-radius:6px; padding:22px; box-shadow:4px 4px 0 #93c5fd,8px 8px 0 rgba(147,197,253,0.28); border:2px solid #93c5fd; margin-bottom:14px; }
+#quiz-b1 .q-text-b1 { font-size:1.05rem; color:#111827; margin-bottom:14px; line-height:1.5; }
+#quiz-b1 .opts-b1 { display:flex; flex-direction:column; gap:10px; margin-bottom:10px; }
+#quiz-b1 .opt-b1 { background:#eff6ff; color:#1e40af; padding:11px 14px; border-radius:10px; font-size:0.97rem; font-family:inherit; border:2px solid #bfdbfe; text-align:left; transition:all 0.15s; }
+#quiz-b1 .opt-b1:hover:not(:disabled) { background:#dbeafe; border-color:#3b82f6; }
+#quiz-b1 .opt-b1.correct { background:#bbf7d0; border-color:#16a34a; color:#15803d; }
+#quiz-b1 .opt-b1.wrong   { background:#fecaca; border-color:#dc2626; color:#991b1b; }
+#quiz-b1 .opt-b1:disabled { cursor:not-allowed; }
+#quiz-b1 .hint-btn-b1 { background:#fef3c7; color:#92400e; padding:7px 14px; border-radius:8px; font-size:0.83rem; font-family:inherit; border:1px solid #fde68a; margin-bottom:8px; }
+#quiz-b1 .hint-text-b1 { background:#fffbeb; border-left:4px solid #d97706; padding:10px; border-radius:6px; font-size:0.88rem; color:#92400e; margin-bottom:10px; display:none; }
+#quiz-b1 .hint-text-b1.show { display:block; }
+#quiz-b1 .fb-b1 { padding:10px 14px; border-radius:8px; font-size:0.97rem; margin-bottom:10px; display:none; }
+#quiz-b1 .fb-b1.show { display:block; }
+#quiz-b1 .fb-b1.correct { background:#f0fdf4; border-left:4px solid #16a34a; color:#15803d; }
+#quiz-b1 .fb-b1.wrong   { background:#fef2f2; border-left:4px solid #dc2626; color:#991b1b; }
+#quiz-b1 .nav-b1 { background:#1e40af; color:#fff; padding:10px 22px; border-radius:8px; font-size:0.97rem; font-family:inherit; display:none; }
+#quiz-b1 .nav-b1.show { display:inline-block; }
+#quiz-b1 .scatter-wrap { background:rgba(255,255,255,0.9); border:2px solid #93c5fd; border-radius:8px; padding:16px; margin-bottom:14px; }
+#quiz-b1 .scatter-title { font-size:0.97rem; color:#1e3a8a; font-weight:700; margin-bottom:10px; text-align:center; }
+#quiz-b1 .sbar-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+#quiz-b1 .sbar-label { font-size:0.8rem; color:#374151; width:90px; text-align:right; flex-shrink:0; }
+#quiz-b1 .sbar { height:18px; border-radius:4px; min-width:4px; transition:width 1s; }
+#quiz-b1 .sbar-val { font-size:0.8rem; color:#1e3a8a; font-weight:700; }
+#quiz-b1 .cf-b1 { position:fixed; top:-20px; width:10px; height:14px; pointer-events:none; animation:cfFall linear forwards; z-index:16000; }
+
+/* ============================================================
+   PLACEHOLDER SCREENS  (coming soon)
+   ============================================================ */
+.placeholder-screen {
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,#065f46 0%,#1e3a8a 100%);
+}
+.placeholder-screen.manchester { background:linear-gradient(135deg,#1c1917 0%,#3b0764 100%); }
+.placeholder-card { background:rgba(255,255,255,0.12); border:2px solid rgba(255,255,255,0.3); border-radius:20px; padding:40px; text-align:center; max-width:420px; }
+.placeholder-card h2 { color:#fff; font-size:1.5rem; margin-bottom:10px; }
+.placeholder-card p { color:rgba(255,255,255,0.75); font-size:0.97rem; }
+.placeholder-card .ph-icon { font-size:4rem; margin-bottom:10px; }
+.placeholder-card .ph-icon.float { animation:floatIco 3s ease-in-out infinite alternate; }
+@keyframes floatIco { from{transform:translateY(0)} to{transform:translateY(-14px)} }
+.placeholder-card .ph-icon.buzz { animation:buzzIco 0.5s ease-in-out infinite alternate; }
+@keyframes buzzIco { from{transform:translateX(-5deg) rotate(-4deg)} to{transform:translateX(5px) rotate(4deg)} }
+
+/* ============================================================
+   SHARED UTILITY
+   ============================================================ */
+.end-card { background:rgba(255,255,255,0.97); border-radius:18px; padding:28px; box-shadow:0 8px 28px rgba(0,0,0,0.15); text-align:center; }
+.end-card h3 { font-size:1.45rem; margin-bottom:8px; color:#1e3a8a; }
+.end-card p { color:#374151; margin-bottom:8px; }
+.restart-btn { background:#1e40af; color:#fff; padding:10px 24px; border-radius:10px; font-size:0.97rem; font-family:inherit; margin-top:10px; }
+.restart-btn:hover { background:#1e3a8a; }
+.sec-btn { background:#6b7280; color:#fff; padding:10px 20px; border-radius:10px; font-size:0.97rem; font-family:inherit; margin-top:10px; margin-left:8px; }
+
+@media (max-width:580px) {
+  #quiz-a2 .question-card { flex-direction:column; }
+  #quiz-a2 .q-img-col { flex:none; width:100%; }
+  #quiz-a2 .q-img-emoji { width:100%; }
+  #screen-main h1 { font-size:1.7rem; }
+  .big-topic-btn h2 { font-size:1.1rem; }
+  #lang-toggle { top:8px; right:8px; }
+  #back-btn { top:8px; left:8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     LANGUAGE TOGGLE  (always visible)
+     ============================================================ -->
+<div id="lang-toggle">
+  <button id="btn-en" class="active" onclick="setLang('en')">🇬🇧 EN</button>
+  <button id="btn-de" onclick="setLang('de')">🇩🇪 DE</button>
+</div>
+
+<!-- Back button -->
+<button id="back-btn" onclick="goBack()">← <span data-i="back">Back</span></button>
+
+<!-- ============================================================
+     SCREEN 1 — MAIN MENU  (4 big category buttons)
+     ============================================================ -->
+<div id="screen-main" class="screen active">
+  <h1>🇬🇧 <span data-i="mainTitle">English Quiz Collection – Year 7</span></h1>
+  <p class="subtitle" data-i="mainSub">Choose a topic to explore!</p>
+  <div class="big-topic-grid">
+    <button class="big-topic-btn" onclick="openTopic('london')">
+      <span class="topic-icon">🏙️</span>
+      <h2>London – City of Wonders</h2>
+      <div class="topic-desc" data-i="londDesc">Landmarks, history &amp; city life</div>
+      <span class="quiz-count" data-i="londCount">5 Quizzes</span>
+    </button>
+    <button class="big-topic-btn" onclick="openTopic('gregs')">
+      <span class="topic-icon">📔</span>
+      <h2>Greg's Diary</h2>
+      <div class="topic-desc" data-i="gregsDesc">Wimpy Kid adventures</div>
+      <span class="quiz-count" data-i="gregsCount">1 Quiz</span>
+    </button>
+    <button class="big-topic-btn" onclick="openTopic('scotland')">
+      <span class="topic-icon">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
+      <h2>From Edinburgh to Orkney</h2>
+      <div class="topic-desc" data-i="scotDesc">Scotland's cities &amp; islands</div>
+      <span class="quiz-count" data-i="scotCount">1 Quiz – Coming soon</span>
+    </button>
+    <button class="big-topic-btn" onclick="openTopic('manchester')">
+      <span class="topic-icon">🐝</span>
+      <h2>Marvelous Manchester</h2>
+      <div class="topic-desc" data-i="manchDesc">The city of bees &amp; football</div>
+      <span class="quiz-count" data-i="manchCount">1 Quiz – Coming soon</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCREEN 2 — SUB-MENU  (quiz list for chosen topic)
+     ============================================================ -->
+<div id="screen-submenu" class="screen">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div class="submenu-header" id="sub-title">London – City of Wonders</div>
+    <div class="submenu-sub" id="sub-subtitle">Select a quiz</div>
+    <div class="quiz-cards-grid" id="sub-cards"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     QUIZ SCREENS
+     ============================================================ -->
+
+<!-- A1: City Hunter -->
+<div id="quiz-a1" class="screen">
+  <div class="sun">☀️</div>
+  <div class="cloud-bg" id="a1-clouds"></div>
+  <div class="content-wrap" id="a1-wrap"></div>
+  <div class="loser-popup" id="a1-loser">
+    <div class="loser-face">😂</div>
+    <div class="loser-text" data-i="loserText">LOSER! –1 🪙</div>
+    <button class="loser-close" onclick="closeLoser()">OK...</button>
+  </div>
+  <div class="shop-overlay" id="a1-shop">
+    <div class="shop-panel">
+      <h2>🛍️ <span data-i="shopTitle">Character Shop</span></h2>
+      <div class="shop-grid" id="a1-shop-grid"></div>
+      <button class="close-shop" onclick="document.getElementById('a1-shop').classList.remove('show')" data-i="closeShop">Close Shop</button>
+    </div>
+  </div>
+</div>
+
+<!-- A2: Super London -->
+<div id="quiz-a2" class="screen">
+  <div class="gold-top"></div><div class="gold-bot"></div>
+  <div class="bg-pattern"></div>
+  <div class="content-wrap" id="a2-wrap"></div>
+</div>
+
+<!-- A3: All about London -->
+<div id="quiz-a3" class="screen">
+  <div class="flag-bg"></div>
+  <div class="pts-badge" id="a3-pts">🏆 100 pts</div>
+  <div class="buzz-flash" id="a3-buzz"></div>
+  <div class="content-wrap" id="a3-wrap"></div>
+</div>
+
+<!-- A4: Quiz of London -->
+<div id="quiz-a4" class="screen">
+  <div id="a4-wrap"></div>
+</div>
+
+<!-- A5: Quiz about London (coming Monday) -->
+<div id="quiz-a5" class="screen placeholder-screen" style="background:linear-gradient(135deg,#1e3a8a,#374151);">
+  <div class="placeholder-card">
+    <div class="ph-icon float">⏰</div>
+    <h2 data-i="a5Title">Quiz about London</h2>
+    <p data-i="a5Msg">Hanno, Alex, Moritz &amp; Marius are working on this quiz. Check back on Monday! 🗓️</p>
+  </div>
+</div>
+
+<!-- B1: Greg's Diary Birthday Edition -->
+<div id="quiz-b1" class="screen">
+  <div class="content-wrap" id="b1-wrap"></div>
+</div>
+
+<!-- C1: Scotland – coming soon -->
+<div id="quiz-c1" class="screen placeholder-screen">
+  <div class="placeholder-card">
+    <div class="ph-icon float">🏰</div>
+    <h2 data-i="c1Title">The Scotland Topics</h2>
+    <p data-i="c1Msg">Elena, Ivy &amp; Marlena are preparing this quiz. Coming soon! 🏴󠁧󠁢󠁳󠁣󠁴󠁿</p>
+  </div>
+</div>
+
+<!-- D1: Manchester – coming soon -->
+<div id="quiz-d1" class="screen placeholder-screen manchester">
+  <div class="placeholder-card">
+    <div class="ph-icon buzz">🐝</div>
+    <h2 data-i="d1Title">Quiz about Manchester</h2>
+    <p data-i="d1Msg">Jonas, Hugo, Leo &amp; Tristan are working on this quiz. Coming soon! ⚽</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* =====================================================================
+   TRANSLATIONS
+   ===================================================================== */
+const T = {
+  en: {
+    back: 'Back',
+    mainTitle: 'English Quiz Collection – Year 7',
+    mainSub: 'Choose a topic to explore!',
+    londDesc: 'Landmarks, history & city life',
+    londCount: '5 Quizzes',
+    gregsDesc: 'Wimpy Kid adventures',
+    gregsCount: '1 Quiz',
+    scotDesc: "Scotland's cities & islands",
+    scotCount: '1 Quiz – Coming soon',
+    manchDesc: 'The city of bees & football',
+    manchCount: '1 Quiz – Coming soon',
+    selectQuiz: 'Select a quiz',
+    loserText: 'LOSER! –1 🪙',
+    shopTitle: 'Character Shop',
+    closeShop: 'Close Shop',
+    a5Title: 'Quiz about London',
+    a5Msg: 'Hanno, Alex, Moritz & Marius are working on this quiz. Check back on Monday! 🗓️',
+    c1Title: 'The Scotland Topics',
+    c1Msg: 'Elena, Ivy & Marlena are preparing this quiz. Coming soon! 🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    d1Title: 'Quiz about Manchester',
+    d1Msg: 'Jonas, Hugo, Leo & Tristan are working on this quiz. Coming soon! ⚽',
+    // sub-menu topic headers
+    londonHeader: 'London – City of Wonders',
+    gregsHeader: "Greg's Diary",
+    scotlandHeader: 'From Edinburgh to Orkney',
+    manchesterHeader: 'Marvelous Manchester',
+    comingSoon: '⏰ Coming soon',
+    comingMonday: '⏰ Coming Monday',
+    // quiz card labels
+    qA1name:'City Hunter', qA1desc:'Walk through London & quiz at famous landmarks!', qA1authors:'Valerie · Ava · Ada · Enna',
+    qA2name:'Super London', qA2desc:'True/False + multiple choice with London pictures', qA2authors:'Malo · Annika · Güzel · Hannah',
+    qA3name:'All about London', qA3desc:'Football stadiums, buildings & city knowledge', qA3authors:'Kalle · Joko · Mats · Oskar',
+    qA4name:'Quiz of London', qA4desc:'6 subtopics – buildings & history, 3 hearts system', qA4authors:'Nizar · Aaron · Darius',
+    qA5name:'Quiz about London', qA5desc:'Content coming Monday', qA5authors:'Hanno · Alex · Moritz · Marius',
+    qB1name:"Greg's Diary – Birthday Edition", qB1desc:'Quiz about the last chapter – breakdance & jetpack!', qB1authors:'Jolanda · Elli · Lina · Agathe',
+    qC1name:'The Scotland Topics', qC1desc:'Content coming soon', qC1authors:'Elena · Ivy · Marlena',
+    qD1name:'Quiz about Manchester', qD1desc:'Content coming soon', qD1authors:'Jonas · Hugo · Leo · Tristan',
+    // A1 City Hunter
+    a1GameTitle:'🗺️ City Hunter',
+    a1StartH:'🗺️ City Hunter',
+    a1StartP1:'Walk through London and answer questions at famous buildings!',
+    a1StartP2:'🪙 Earn coins for correct answers · Spend coins in the shop',
+    a1StartP3:'😂 Wrong answers cost 1 coin – watch out!',
+    a1StartP4:'☀️ It\'s a sunny summer day in London!',
+    a1StartBtn:'🚶 Start Walking!',
+    a1QOf:'Question {a} of {b}',
+    a1CoinBar:'{n} coins',
+    a1ShopBtn:'🛍️ Shop',
+    a1Correct:'✅ Correct! +1 🪙',
+    a1Wrong:'❌ Wrong! The answer was: {ans} (–1 🪙)',
+    a1Tip:'💡 Tip: {t}',
+    a1Next:'Next ➡️',
+    a1BldComplete:'Building complete!',
+    a1BldCompleteP:'You answered all questions here.',
+    a1NextStop:'Next stop: {b}',
+    a1KeepWalking:'🚶 Keep Walking!',
+    a1ShopBuy:'Bought: {name}!',
+    a1ShopOwned:'✅ Owned',
+    a1ShopCoin:'🪙 {n}',
+    a1ShopNoCoin:'Not enough coins! You need {n} 🪙',
+    a1ShopEquip:'Equipped: {name}!',
+    // A2 Super London
+    a2Title:'🔴 Super London',
+    a2Score:'Question {a} of {b} | Score: {s}',
+    a2True:'✅ TRUE', a2False:'❌ FALSE',
+    a2Tip:'💡 {t}',
+    a2Next:'Next ➡️',
+    a2EndTitle:'Quiz complete!',
+    a2EndScore:'You scored {s} / {t}',
+    a2EndGreat:'🌟 Amazing! You really know London!',
+    a2EndGood:'👍 Good job! Keep learning!',
+    a2EndOk:'📚 Keep studying – you\'ll get better!',
+    a2Replay:'🔁 Play again',
+    // A3
+    a3Title:'🏟️ All about London',
+    a3QOf:'Question {a} of {b}',
+    a3Tip:'💡 {t}',
+    a3TipBtn:'💡 Tip (1 available)',
+    a3TipUsed:'💡 Tip already used',
+    a3Correct:'✅ Correct!',
+    a3Wrong:'❌ Wrong! –10 points. Correct: {ans}',
+    a3Next:'Next ➡️',
+    a3EndTitle:'Quiz complete!',
+    a3EndScore:'Final score: {n} points',
+    a3Perfect:'🌟 Excellent! No mistakes!',
+    a3Good:'👍 Well done!',
+    a3Practice:'📚 Keep practising!',
+    a3Replay:'🔁 Play again',
+    // A4
+    a4Title:'🏛️ Quiz of London 🏛️',
+    a4Sub:'Choose a subtopic and test your knowledge!',
+    a4TopicDoneP:'You answered {c} / {t} correctly.',
+    a4Perfect:'Perfect score! 🌟', a4Great:'Great job! 👍', a4Keep:'Keep practising! 📚',
+    a4BackTopics:'← Back to Topics', a4TryAgain:'🔁 Try again',
+    a4GameOver:'Out of Hearts!', a4GameOverP:'You ran out of hearts. Try this topic again!',
+    a4Retry:'🔁 Try again', a4Topics:'← Topics',
+    a4Next:'Next ➡️',
+    a4Hearts: '❤️',
+    // B1
+    b1DiaryTitle:"📔 Greg's Diary – Birthday Edition",
+    b1DiarySub:'Quiz about the last chapter',
+    b1Score:'Score: {s} pts | Question {a} of {b}',
+    b1HintBtn:'💡 Hint',
+    b1HintUsed:'💡 Hint already shown',
+    b1Next:'Next ➡️',
+    b1EndTitle:'Quiz Complete!',
+    b1EndScore:'Total Score: {s} / {max} points',
+    b1EndGreat:'🌟 Amazing reader – you know Greg\'s diary really well!',
+    b1EndGood:'📚 Good job! Read it again for the full picture.',
+    b1EndPract:'📖 Time to re-read the last chapter!',
+    b1ScatterTitle:'Your Results',
+    b1Bar1:'2 pts (1st try)', b1Bar2:'1 pt (2nd try)', b1Bar3:'Wrong',
+    b1Replay:'🔁 Play again',
+  },
+  de: {
+    back: 'Zurück',
+    mainTitle: 'Englisch – Quizsammlung Klasse 7',
+    mainSub: 'Wähle ein Thema!',
+    londDesc: 'Sehenswürdigkeiten, Geschichte & Stadtleben',
+    londCount: '5 Quizze',
+    gregsDesc: 'Abenteuer mit dem Loser-Tagebuch',
+    gregsCount: '1 Quiz',
+    scotDesc: 'Schottlands Städte & Inseln',
+    scotCount: '1 Quiz – Demnächst',
+    manchDesc: 'Die Stadt der Bienen & des Fußballs',
+    manchCount: '1 Quiz – Demnächst',
+    selectQuiz: 'Quiz auswählen',
+    loserText: 'VERLIERER! –1 🪙',
+    shopTitle: 'Charakter-Shop',
+    closeShop: 'Shop schließen',
+    a5Title: 'Quiz über London',
+    a5Msg: 'Hanno, Alex, Moritz & Marius arbeiten noch an diesem Quiz. Schau am Montag nochmal rein! 🗓️',
+    c1Title: 'Schottland-Themen',
+    c1Msg: 'Elena, Ivy & Marlena bereiten dieses Quiz vor. Bald verfügbar! 🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    d1Title: 'Quiz über Manchester',
+    d1Msg: 'Jonas, Hugo, Leo & Tristan arbeiten an diesem Quiz. Bald verfügbar! ⚽',
+    londonHeader: 'London – Stadt der Wunder',
+    gregsHeader: 'Gregs Tagebuch',
+    scotlandHeader: 'Von Edinburgh bis Orkney',
+    manchesterHeader: 'Fantastisches Manchester',
+    comingSoon: '⏰ Demnächst',
+    comingMonday: '⏰ Ab Montag',
+    qA1name:'City Hunter', qA1desc:'Laufe durch London und beantworte Fragen an Sehenswürdigkeiten!', qA1authors:'Valerie · Ava · Ada · Enna',
+    qA2name:'Super London', qA2desc:'Richtig/Falsch + Multiple Choice mit London-Bildern', qA2authors:'Malo · Annika · Güzel · Hannah',
+    qA3name:'Alles über London', qA3desc:'Fußballstadien, Gebäude & Stadtwissen', qA3authors:'Kalle · Joko · Mats · Oskar',
+    qA4name:'Quiz über London', qA4desc:'6 Unterthemen – Gebäude & Geschichte, 3 Leben', qA4authors:'Nizar · Aaron · Darius',
+    qA5name:'Quiz über London', qA5desc:'Inhalt folgt am Montag', qA5authors:'Hanno · Alex · Moritz · Marius',
+    qB1name:'Gregs Tagebuch – Geburtstags-Edition', qB1desc:'Quiz über das letzte Kapitel – Breakdance & Jetpack!', qB1authors:'Jolanda · Elli · Lina · Agathe',
+    qC1name:'Schottland-Themen', qC1desc:'Inhalt folgt bald', qC1authors:'Elena · Ivy · Marlena',
+    qD1name:'Quiz über Manchester', qD1desc:'Inhalt folgt bald', qD1authors:'Jonas · Hugo · Leo · Tristan',
+    a1GameTitle:'🗺️ City Hunter',
+    a1StartH:'🗺️ City Hunter',
+    a1StartP1:'Laufe durch London und beantworte Fragen an berühmten Gebäuden!',
+    a1StartP2:'🪙 Richtige Antworten bringen Münzen · Münzen im Shop ausgeben',
+    a1StartP3:'😂 Falsche Antworten kosten 1 Münze – Vorsicht!',
+    a1StartP4:'☀️ Es ist ein sonniger Sommertag in London!',
+    a1StartBtn:'🚶 Losgehen!',
+    a1QOf:'Frage {a} von {b}',
+    a1CoinBar:'{n} Münzen',
+    a1ShopBtn:'🛍️ Shop',
+    a1Correct:'✅ Richtig! +1 🪙',
+    a1Wrong:'❌ Falsch! Die Antwort war: {ans} (–1 🪙)',
+    a1Tip:'💡 Tipp: {t}',
+    a1Next:'Weiter ➡️',
+    a1BldComplete:'Gebäude abgeschlossen!',
+    a1BldCompleteP:'Du hast alle Fragen hier beantwortet.',
+    a1NextStop:'Nächster Halt: {b}',
+    a1KeepWalking:'🚶 Weiterlaufen!',
+    a1ShopBuy:'Gekauft: {name}!',
+    a1ShopOwned:'✅ Besitzt',
+    a1ShopCoin:'🪙 {n}',
+    a1ShopNoCoin:'Nicht genug Münzen! Du brauchst {n} 🪙',
+    a1ShopEquip:'Ausgerüstet: {name}!',
+    a2Title:'🔴 Super London',
+    a2Score:'Frage {a} von {b} | Punkte: {s}',
+    a2True:'✅ RICHTIG', a2False:'❌ FALSCH',
+    a2Tip:'💡 {t}',
+    a2Next:'Weiter ➡️',
+    a2EndTitle:'Quiz abgeschlossen!',
+    a2EndScore:'Du hast {s} / {t} Punkte',
+    a2EndGreat:'🌟 Fantastisch! Du kennst London wirklich gut!',
+    a2EndGood:'👍 Gut gemacht! Weiter lernen!',
+    a2EndOk:'📚 Weiterstudieren – du wirst besser!',
+    a2Replay:'🔁 Nochmal spielen',
+    a3Title:'🏟️ Alles über London',
+    a3QOf:'Frage {a} von {b}',
+    a3Tip:'💡 {t}',
+    a3TipBtn:'💡 Tipp (1 verfügbar)',
+    a3TipUsed:'💡 Tipp bereits verwendet',
+    a3Correct:'✅ Richtig!',
+    a3Wrong:'❌ Falsch! –10 Punkte. Richtig war: {ans}',
+    a3Next:'Weiter ➡️',
+    a3EndTitle:'Quiz abgeschlossen!',
+    a3EndScore:'Endpunktzahl: {n} Punkte',
+    a3Perfect:'🌟 Ausgezeichnet! Keine Fehler!',
+    a3Good:'👍 Gut gemacht!',
+    a3Practice:'📚 Weiter üben!',
+    a3Replay:'🔁 Nochmal spielen',
+    a4Title:'🏛️ Quiz über London 🏛️',
+    a4Sub:'Wähle ein Unterthema und teste dein Wissen!',
+    a4TopicDoneP:'Du hast {c} / {t} Fragen richtig beantwortet.',
+    a4Perfect:'Perfekte Punktzahl! 🌟', a4Great:'Super gemacht! 👍', a4Keep:'Weiter üben! 📚',
+    a4BackTopics:'← Zurück zu den Themen', a4TryAgain:'🔁 Nochmal versuchen',
+    a4GameOver:'Alle Leben verloren!', a4GameOverP:'Du hast alle Herzen verloren. Versuche es nochmal!',
+    a4Retry:'🔁 Nochmal versuchen', a4Topics:'← Themen',
+    a4Next:'Weiter ➡️',
+    a4Hearts: '❤️',
+    b1DiaryTitle:'📔 Gregs Tagebuch – Geburtstags-Edition',
+    b1DiarySub:'Quiz über das letzte Kapitel',
+    b1Score:'Punkte: {s} | Frage {a} von {b}',
+    b1HintBtn:'💡 Tipp',
+    b1HintUsed:'💡 Tipp bereits angezeigt',
+    b1Next:'Weiter ➡️',
+    b1EndTitle:'Quiz abgeschlossen!',
+    b1EndScore:'Gesamtpunkte: {s} / {max}',
+    b1EndGreat:'🌟 Toller Leser – du kennst Gregs Tagebuch wirklich gut!',
+    b1EndGood:'📚 Gut gemacht! Lies es nochmal für das ganze Bild.',
+    b1EndPract:'📖 Zeit, das letzte Kapitel nochmal zu lesen!',
+    b1ScatterTitle:'Deine Ergebnisse',
+    b1Bar1:'2 Pkt. (1. Versuch)', b1Bar2:'1 Pkt. (2. Versuch)', b1Bar3:'Falsch',
+    b1Replay:'🔁 Nochmal spielen',
+  }
+};
+
+let lang = 'en';
+
+function t(key, vars) {
+  let s = (T[lang][key] !== undefined ? T[lang][key] : T['en'][key]) || key;
+  if (vars) Object.entries(vars).forEach(([k,v]) => { s = s.replace('{'+k+'}', v); });
+  return s;
+}
+
+function setLang(l) {
+  lang = l;
+  document.getElementById('btn-en').classList.toggle('active', l==='en');
+  document.getElementById('btn-de').classList.toggle('active', l==='de');
+  // Update all data-i elements visible right now
+  document.querySelectorAll('[data-i]').forEach(el => {
+    const k = el.getAttribute('data-i');
+    if (T[l][k] !== undefined) el.textContent = T[l][k];
+  });
+  // Re-render active quiz content if needed
+  const active = document.querySelector('.screen.active');
+  if (active && active.id !== 'screen-main' && active.id !== 'screen-submenu') {
+    rerenderActive(active.id);
+  }
+  if (active && active.id === 'screen-submenu') {
+    rerenderSubmenu();
+  }
+}
+
+function rerenderActive(id) {
+  switch(id) {
+    case 'quiz-a1': renderA1Quiz && typeof renderA1Quiz === 'function' && renderA1QuizIfActive(); break;
+    case 'quiz-a2': if(typeof a2State!=='undefined') renderA2(); break;
+    case 'quiz-a3': if(typeof a3State!=='undefined') renderA3(); break;
+    case 'quiz-a4': if(typeof a4State!=='undefined') { if(a4State.screen==='start') renderA4Start(); else renderA4Quiz(); } break;
+    case 'quiz-b1': if(typeof b1State!=='undefined') renderB1(); break;
+  }
+}
+function renderA1QuizIfActive() {
+  if(typeof a1State !== 'undefined' && a1State.started) renderA1Quiz();
+}
+
+/* =====================================================================
+   NAVIGATION
+   ===================================================================== */
+let navHistory = []; // stack of screen ids
+let currentTopic = null;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  const isMain = id === 'screen-main';
+  document.getElementById('back-btn').style.display = isMain ? 'none' : 'block';
+}
+
+function openTopic(topic) {
+  currentTopic = topic;
+  navHistory = ['screen-main'];
+  buildSubmenu(topic);
+  showScreen('screen-submenu');
+}
+
+function goBack() {
+  if (navHistory.length === 0) { showScreen('screen-main'); return; }
+  const prev = navHistory.pop();
+  if (prev === 'screen-submenu') {
+    rerenderSubmenu();
+    showScreen('screen-submenu');
+  } else {
+    showScreen(prev || 'screen-main');
+  }
+}
+
+function launchQuiz(qid, initFn) {
+  navHistory.push('screen-submenu');
+  showScreen(qid);
+  if (initFn) initFn();
+}
+
+/* =====================================================================
+   SUB-MENU builder
+   ===================================================================== */
+const topicConfig = {
+  london: {
+    titleKey: 'londonHeader',
+    quizzes: [
+      { id:'quiz-a1', nameKey:'qA1name', descKey:'qA1desc', authKey:'qA1authors', badge:'A', init:'initQuizA1', coming:false },
+      { id:'quiz-a2', nameKey:'qA2name', descKey:'qA2desc', authKey:'qA2authors', badge:'B', init:'initQuizA2', coming:false },
+      { id:'quiz-a3', nameKey:'qA3name', descKey:'qA3desc', authKey:'qA3authors', badge:'C', init:'initQuizA3', coming:false },
+      { id:'quiz-a4', nameKey:'qA4name', descKey:'qA4desc', authKey:'qA4authors', badge:'D', init:'initQuizA4', coming:false },
+      { id:'quiz-a5', nameKey:'qA5name', descKey:'qA5desc', authKey:'qA5authors', badge:'E', init:null, coming:'monday' },
+    ]
+  },
+  gregs: {
+    titleKey: 'gregsHeader',
+    quizzes: [
+      { id:'quiz-b1', nameKey:'qB1name', descKey:'qB1desc', authKey:'qB1authors', badge:'A', init:'initQuizB1', coming:false },
+    ]
+  },
+  scotland: {
+    titleKey: 'scotlandHeader',
+    quizzes: [
+      { id:'quiz-c1', nameKey:'qC1name', descKey:'qC1desc', authKey:'qC1authors', badge:'A', init:null, coming:'soon' },
+    ]
+  },
+  manchester: {
+    titleKey: 'manchesterHeader',
+    quizzes: [
+      { id:'quiz-d1', nameKey:'qD1name', descKey:'qD1desc', authKey:'qD1authors', badge:'A', init:null, coming:'soon' },
+    ]
+  }
+};
+
+function buildSubmenu(topic) {
+  const cfg = topicConfig[topic];
+  document.getElementById('sub-title').textContent = t(cfg.titleKey);
+  document.getElementById('sub-subtitle').textContent = t('selectQuiz');
+  const grid = document.getElementById('sub-cards');
+  grid.innerHTML = cfg.quizzes.map((q) => {
+    const cs = q.coming ? ` coming-soon` : '';
+    const soonTag = q.coming ? `<div class="soon-tag">${q.coming==='monday'?t('comingMonday'):t('comingSoon')}</div>` : '';
+    const onclick = q.coming ? `onclick="alert('${q.coming==='monday'?t('comingMonday'):t('comingSoon')}')"` : `onclick="launchQuiz('${q.id}', ${q.init})"`;
+    return `<button class="quiz-card${cs}" ${onclick}>
+      <div class="qc-badge">${q.badge}</div>
+      <h3>${t(q.nameKey)}</h3>
+      <div class="qc-desc">${t(q.descKey)}</div>
+      <div class="qc-authors">${t(q.authKey)}</div>
+      ${soonTag}
+    </button>`;
+  }).join('');
+}
+
+function rerenderSubmenu() {
+  if (currentTopic) buildSubmenu(currentTopic);
+}
+
+/* =====================================================================
+   QUIZ A1 — City Hunter
+   ===================================================================== */
+const a1Buildings = [
+  { name:'Big Ben', icon:'🕰️', questions:[
+    {q:'How tall is the Elizabeth Tower (Big Ben)?', opts:['96 metres','120 metres','60 metres','150 metres'], ans:0, tip:'Think about a skyscraper of 20 floors.'},
+    {q:'In which year did the Great Bell of Big Ben first ring?', opts:['1859','1900','1812','1950'], ans:0, tip:'It was during the reign of Queen Victoria.'},
+    {q:'What is the official name of the tower that houses Big Ben?', opts:['Elizabeth Tower','Victoria Tower','Westminster Tower','Bell Tower'], ans:0, tip:'It was renamed in 2012 for a royal jubilee.'}
+  ]},
+  { name:'Tower Bridge', icon:'🌉', questions:[
+    {q:'In which year was Tower Bridge opened?', opts:['1894','1850','1920','1910'], ans:0, tip:'It was in the late 19th century.'},
+    {q:'What type of bridge is Tower Bridge?', opts:['Bascule (drawbridge) bridge','Suspension bridge','Arch bridge','Cable-stayed bridge'], ans:0, tip:'Its middle section can be raised to let ships through.'},
+    {q:'The two towers of Tower Bridge are made of…?', opts:['Steel and stone cladding','Pure marble','Wood and brick','Solid gold'], ans:0, tip:'There is a hidden steel frame inside.'}
+  ]},
+  { name:'Buckingham Palace', icon:'🏰', questions:[
+    {q:'How many rooms does Buckingham Palace have?', opts:['775 rooms','200 rooms','100 rooms','1500 rooms'], ans:0, tip:'It includes 19 state rooms and 52 royal bedrooms.'},
+    {q:'What famous ceremony happens outside Buckingham Palace?', opts:['Changing of the Guard','Trooping the Colour','The Lord Mayor\'s Show','Bonfire Night'], ans:0, tip:'Soldiers in red uniforms march and swap duties.'},
+    {q:'Buckingham Palace became the main royal residence in which century?', opts:['19th century','17th century','20th century','18th century'], ans:0, tip:'Queen Victoria was the first monarch to live there permanently.'}
+  ]},
+  { name:'The Shard', icon:'🔺', questions:[
+    {q:'How tall is The Shard?', opts:['310 metres','200 metres','150 metres','450 metres'], ans:0, tip:'It is the tallest building in the UK.'},
+    {q:'On which side of the River Thames is The Shard?', opts:['South bank (Southwark)','North bank (City)','West bank','East bank'], ans:0, tip:'It is near London Bridge station.'},
+    {q:'How many floors does The Shard have?', opts:['95 floors','50 floors','120 floors','75 floors'], ans:0, tip:'The viewing platform is at floor 72.'}
+  ]},
+  { name:'The London Eye', icon:'🎡', questions:[
+    {q:'How tall is the London Eye?', opts:['135 metres','90 metres','200 metres','60 metres'], ans:0, tip:'It is one of the largest Ferris wheels in the world.'},
+    {q:'How long does one full rotation of the London Eye take?', opts:['30 minutes','5 minutes','1 hour','15 minutes'], ans:0, tip:'It moves slowly so passengers can enjoy the view.'},
+    {q:'In which year did the London Eye open to the public?', opts:['2000','1995','2010','1985'], ans:0, tip:'It opened at the start of the new millennium.'}
+  ]}
+];
+const a1ShopItems = [
+  {icon:'👒',name:'Summer Hat',price:3,type:'outfit'},{icon:'🕶️',name:'Sunglasses',price:3,type:'outfit'},
+  {icon:'🌺',name:'Flower Dress',price:5,type:'outfit'},{icon:'🧢',name:'Cap',price:2,type:'outfit'},
+  {icon:'👟',name:'Trainers',price:4,type:'outfit'},{icon:'🎨',name:'Artist Smock',price:5,type:'outfit'},
+  {icon:'👩‍🔬',name:'Lab Coat',price:6,type:'outfit'},{icon:'🥋',name:'Karate Gi',price:5,type:'outfit'},
+  {icon:'🧁',name:'Baker Hat',price:4,type:'outfit'},{icon:'🚀',name:'Astronaut',price:8,type:'outfit'},
+  {icon:'🏴‍☠️',name:'Pirate',price:6,type:'outfit'},{icon:'🧜',name:'Mermaid',price:7,type:'outfit'},
+  {icon:'🎸',name:'Rock Star',price:7,type:'outfit'},{icon:'🏄',name:'Surfer',price:5,type:'outfit'},
+  {icon:'🧙',name:'Wizard',price:8,type:'outfit'},{icon:'🦸',name:'Superhero',price:9,type:'outfit'},
+  {icon:'🚲',name:'Bicycle',price:10,type:'vehicle'},{icon:'🛴',name:'Inline Skates',price:8,type:'vehicle'},
+  {icon:'🚗',name:'Mini Car',price:12,type:'vehicle'},{icon:'🛵',name:'Scooter',price:10,type:'vehicle'}
+];
+let a1State = {};
+
+function initQuizA1() {
+  const cb = document.getElementById('a1-clouds');
+  cb.innerHTML = '';
+  for(let i=0;i<5;i++){
+    const c=document.createElement('div'); c.className='cloud-float'; c.textContent='☁️';
+    c.style.top=(5+Math.random()*28)+'%';
+    c.style.animationDuration=(20+Math.random()*20)+'s';
+    c.style.animationDelay=(-Math.random()*28)+'s';
+    cb.appendChild(c);
+  }
+  a1State={coins:0,buildingIdx:0,qIdx:0,owned:[],character:'🧍',started:false};
+  renderA1Start();
+}
+
+function renderA1Start() {
+  a1State.started=false;
+  document.getElementById('a1-wrap').innerHTML=`
+    <div class="start-card">
+      <h2>${t('a1StartH')}</h2>
+      <div class="char-display">🧍</div>
+      <p>${t('a1StartP1')}</p>
+      <p>${t('a1StartP2')}</p>
+      <p>${t('a1StartP3')}</p>
+      <p>${t('a1StartP4')}</p>
+      <button class="start-btn" onclick="a1State.started=true;renderA1Quiz()">${t('a1StartBtn')}</button>
+    </div>`;
+}
+
+function renderA1Quiz() {
+  const b=a1Buildings[a1State.buildingIdx%a1Buildings.length];
+  const q=b.questions[a1State.qIdx];
+  const optsHtml=q.opts.map((o,i)=>
+    `<button class="opt-btn" data-idx="${i}" onclick="answerA1(${i})">${String.fromCharCode(65+i)}) ${o}</button>`
+  ).join('');
+  document.getElementById('a1-wrap').innerHTML=`
+    <div class="game-title">${t('a1GameTitle')}</div>
+    <div class="coin-bar">
+      <span style="font-size:2rem;">${a1State.character}</span>
+      🪙 ${t('a1CoinBar',{n:a1State.coins})}
+      <button class="shop-btn" onclick="openA1Shop()">${t('a1ShopBtn')}</button>
+    </div>
+    <div class="card">
+      <div class="building-header">
+        <div class="building-icon">${b.icon}</div>
+        <div class="building-name">${b.name}</div>
+      </div>
+      <div class="q-count">${t('a1QOf',{a:a1State.qIdx+1,b:b.questions.length})}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options" id="a1-opts">${optsHtml}</div>
+      <div class="feedback-box" id="a1-fb"></div>
+      <div style="text-align:center;">
+        <button class="nav-btn" id="a1-next" style="display:none;" onclick="nextA1()">${t('a1Next')}</button>
+      </div>
+    </div>`;
+}
+
+function answerA1(idx) {
+  const b=a1Buildings[a1State.buildingIdx%a1Buildings.length];
+  const q=b.questions[a1State.qIdx];
+  document.querySelectorAll('#a1-opts .opt-btn').forEach(btn=>btn.disabled=true);
+  const fb=document.getElementById('a1-fb');
+  if(idx===q.ans){
+    a1State.coins++;
+    document.querySelector(`#a1-opts .opt-btn[data-idx="${idx}"]`).classList.add('correct');
+    fb.className='feedback-box show correct'; fb.innerHTML=t('a1Correct');
+  } else {
+    document.querySelector(`#a1-opts .opt-btn[data-idx="${idx}"]`).classList.add('wrong');
+    document.querySelector(`#a1-opts .opt-btn[data-idx="${q.ans}"]`).classList.add('correct');
+    a1State.coins=Math.max(0,a1State.coins-1);
+    fb.className='feedback-box show wrong';
+    fb.innerHTML=t('a1Wrong',{ans:q.opts[q.ans]})+'<br><small>'+t('a1Tip',{t:q.tip})+'</small>';
+    setTimeout(()=>showLoser(),400);
+  }
+  document.getElementById('a1-next').style.display='inline-block';
+}
+
+function showLoser(){
+  const faces=['😂','😜','🤪','😝','😹'];
+  document.querySelector('#a1-loser .loser-face').textContent=faces[Math.floor(Math.random()*faces.length)];
+  document.querySelector('#a1-loser .loser-text').textContent=t('loserText');
+  document.getElementById('a1-loser').classList.add('show');
+}
+function closeLoser(){ document.getElementById('a1-loser').classList.remove('show'); }
+
+function nextA1(){
+  const b=a1Buildings[a1State.buildingIdx%a1Buildings.length];
+  a1State.qIdx++;
+  if(a1State.qIdx>=b.questions.length){ a1State.buildingIdx++; a1State.qIdx=0; renderA1Done(); }
+  else renderA1Quiz();
+}
+
+function renderA1Done(){
+  const nextB=a1Buildings[a1State.buildingIdx%a1Buildings.length];
+  document.getElementById('a1-wrap').innerHTML=`
+    <div class="coin-bar">
+      <span style="font-size:2rem;">${a1State.character}</span>
+      🪙 ${t('a1CoinBar',{n:a1State.coins})}
+      <button class="shop-btn" onclick="openA1Shop()">${t('a1ShopBtn')}</button>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:3rem;">🎉</div>
+      <h2 style="color:#1e3a8a;margin:10px 0;">${t('a1BldComplete')}</h2>
+      <p style="color:#374151;margin-bottom:16px;">${t('a1BldCompleteP')}<br>${t('a1NextStop',{b:nextB.icon+' '+nextB.name})}</p>
+      <button class="nav-btn" onclick="renderA1Quiz()">${t('a1KeepWalking')}</button>
+    </div>`;
+}
+
+function openA1Shop(){
+  const grid=document.getElementById('a1-shop-grid');
+  grid.innerHTML=a1ShopItems.map((item,i)=>{
+    const owned=a1State.owned.includes(i);
+    return `<div class="shop-item${owned?' owned':''}" onclick="buyA1Item(${i})">
+      <div class="si-icon">${item.icon}</div>
+      <div class="si-name">${item.name}</div>
+      <div class="si-price">${owned?t('a1ShopOwned'):t('a1ShopCoin',{n:item.price})}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('a1-shop').classList.add('show');
+}
+
+function buyA1Item(idx){
+  if(a1State.owned.includes(idx)){
+    a1State.character=a1ShopItems[idx].icon;
+    alert(t('a1ShopEquip',{name:a1ShopItems[idx].name})); openA1Shop(); return;
+  }
+  const item=a1ShopItems[idx];
+  if(a1State.coins<item.price){ alert(t('a1ShopNoCoin',{n:item.price})); return; }
+  a1State.coins-=item.price; a1State.owned.push(idx);
+  a1State.character=item.icon;
+  alert(t('a1ShopBuy',{name:item.name})); openA1Shop();
+}
+
+/* =====================================================================
+   QUIZ A2 — Super London
+   ===================================================================== */
+const a2Questions=[
+  {type:'tf',q:'London is the capital city of England.',ans:true,img:'🇬🇧',tip:'England\'s capital is also the capital of the UK.'},
+  {type:'tf',q:'The River Thames flows through London.',ans:true,img:'🌊',tip:'It is the longest river in England.'},
+  {type:'tf',q:'Big Ben is the name of the bell inside the Elizabeth Tower.',ans:true,img:'🕰️',tip:'Most people think Big Ben is the tower, but it\'s actually the bell.'},
+  {type:'tf',q:'Tower Bridge is a suspension bridge.',ans:false,img:'🌉',tip:'It is a bascule bridge – the middle section can be raised.'},
+  {type:'tf',q:'Buckingham Palace has more than 700 rooms.',ans:true,img:'🏰',tip:'It has 775 rooms in total.'},
+  {type:'tf',q:'The London Eye is located on the north side of the Thames.',ans:false,img:'🎡',tip:'It is on the South Bank in Lambeth.'},
+  {type:'tf',q:'The Shard is the tallest building in the European Union.',ans:false,img:'🔺',tip:'It is the tallest in the UK, but not in the EU.'},
+  {type:'tf',q:'London was founded by the Romans around 2000 years ago.',ans:true,img:'🏛️',tip:'The Romans called it Londinium.'},
+  {type:'tf',q:'The Great Fire of London happened in 1666.',ans:true,img:'🔥',tip:'It started in a bakery on Pudding Lane.'},
+  {type:'tf',q:'The Tube (London Underground) is the oldest metro system in the world.',ans:true,img:'🚇',tip:'It opened in 1863.'},
+  {type:'tf',q:'There are 32 London boroughs plus the City of London.',ans:true,img:'🗺️',tip:'The City of London is sometimes called the "Square Mile".'},
+  {type:'tf',q:'London hosted the Olympic Games only once, in 1948.',ans:false,img:'🏅',tip:'London hosted the Olympics in 1908, 1948 and 2012 – three times!'},
+  {type:'tf',q:'Black cabs in London are always painted black.',ans:false,img:'🚕',tip:'They come in many colours now, though black is most common.'},
+  {type:'tf',q:'The Crown Jewels are kept at the Tower of London.',ans:true,img:'💎',tip:'They have been there for centuries.'},
+  {type:'mc',q:'Which of these is the name of London\'s main international airport?',img:'✈️',
+    opts:['Heathrow Airport','Thames Airport','Royal London Airport','Victoria Airport'],ans:0,
+    tip:'It is one of the busiest airports in the world.'}
+];
+const a2Animals=['🐶','🐱','🐰','🐼','🐨','🦊','🐸','🐮','🦁','🐯'];
+let a2State={};
+
+function initQuizA2(){ a2State={idx:0,score:0}; renderA2(); }
+
+function renderA2(){
+  const wrap=document.getElementById('a2-wrap');
+  if(a2State.idx>=a2Questions.length){ renderA2End(); return; }
+  const q=a2Questions[a2State.idx];
+  const pct=(a2State.idx/a2Questions.length*100).toFixed(0);
+  let answersHtml;
+  if(q.type==='tf'){
+    answersHtml=`<div class="tf-btns">
+      <button class="tf-btn t-btn" onclick="answerA2(true)">${t('a2True')}</button>
+      <button class="tf-btn f-btn" onclick="answerA2(false)">${t('a2False')}</button>
+    </div>`;
+  } else {
+    answersHtml=`<div class="mc-opts">${q.opts.map((o,i)=>`<button class="mc-opt" data-idx="${i}" onclick="answerA2(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}</div>`;
+  }
+  wrap.innerHTML=`
+    <div class="game-title">${t('a2Title')}</div>
+    <div class="score-disp">${t('a2Score',{a:a2State.idx+1,b:a2Questions.length,s:a2State.score})}</div>
+    <div class="prog-wrap"><div class="prog-fill" style="width:${pct}%"></div></div>
+    <div class="question-card">
+      <div class="q-img-col"><div class="q-img-emoji">${q.img}</div></div>
+      <div class="q-body">
+        <div class="q-num">Q${a2State.idx+1}</div>
+        <div class="q-text">${q.q}</div>
+        ${answersHtml}
+        <div class="tip-box" id="a2-tip">${t('a2Tip',{t:q.tip})}</div>
+        <button class="next-btn" id="a2-next" onclick="nextA2()">${t('a2Next')}</button>
+      </div>
+    </div>`;
+}
+
+function answerA2(choice){
+  const q=a2Questions[a2State.idx];
+  const correct=(q.type==='tf')?choice===q.ans:choice===q.ans;
+  if(q.type==='tf'){
+    document.querySelectorAll('#a2-wrap .tf-btn').forEach(b=>{
+      b.disabled=true;
+      if((b.classList.contains('t-btn')&&q.ans===true)||(b.classList.contains('f-btn')&&q.ans===false)) b.classList.add('correct');
+      if((b.classList.contains('t-btn')&&choice===true&&!correct)||(b.classList.contains('f-btn')&&choice===false&&!correct)) b.classList.add('wrong');
+    });
+  } else {
+    document.querySelectorAll('#a2-wrap .mc-opt').forEach(b=>{
+      b.disabled=true;
+      if(parseInt(b.dataset.idx)===q.ans) b.classList.add('correct');
+      if(parseInt(b.dataset.idx)===choice&&!correct) b.classList.add('wrong');
+    });
+  }
+  if(correct){ a2State.score++; launchCf('quiz-a2','cf-piece'); }
+  else { spawnA2Animal(); document.getElementById('a2-tip').classList.add('show'); }
+  document.getElementById('a2-next').classList.add('show');
+}
+
+function spawnA2Animal(){
+  const animal=a2Animals[Math.floor(Math.random()*a2Animals.length)];
+  const el=document.createElement('div'); el.className='animal-pop';
+  el.textContent=animal+'😢';
+  el.style.left=(10+Math.random()*60)+'vw'; el.style.top=(30+Math.random()*30)+'vh';
+  document.getElementById('quiz-a2').appendChild(el);
+  setTimeout(()=>el.remove(),1900);
+}
+function nextA2(){ a2State.idx++; renderA2(); }
+
+function renderA2End(){
+  document.getElementById('a2-wrap').innerHTML=`
+    <div class="game-title">${t('a2Title')}</div>
+    <div class="end-card">
+      <div style="font-size:3rem;">🏆</div>
+      <h3>${t('a2EndTitle')}</h3>
+      <p>${t('a2EndScore',{s:a2State.score,t:a2Questions.length})}</p>
+      <p>${a2State.score>=12?t('a2EndGreat'):a2State.score>=8?t('a2EndGood'):t('a2EndOk')}</p>
+      <button class="restart-btn" onclick="initQuizA2()">${t('a2Replay')}</button>
+    </div>`;
+  launchCf('quiz-a2','cf-piece');
+}
+
+/* =====================================================================
+   QUIZ A3 — All about London
+   ===================================================================== */
+const a3Questions=[
+  {q:'What is the name of the biggest football stadium in London?',opts:['Wembley Stadium','Stamford Bridge','Emirates Stadium','London Stadium'],ans:0,tip:'It is also used for the England national team.'},
+  {q:'Which club mainly plays at Wembley Stadium for England home matches?',opts:['England national team','Arsenal','Chelsea','West Ham United'],ans:0,tip:'Wembley is the national stadium, not a club stadium.'},
+  {q:'What is the highest building in London?',opts:['The Shard','Canary Wharf Tower','22 Bishopsgate','The Gherkin'],ans:0,tip:'It opened in 2013 and looks like a glass shard of ice.'},
+  {q:'How tall is The Shard exactly?',opts:['309.6 metres','250 metres','400 metres','175 metres'],ans:0,tip:'It has 95 floors.'},
+  {q:'On which river is London located?',opts:['River Thames','River Severn','River Avon','River Tyne'],ans:0,tip:'It is the longest river in England.'},
+  {q:'What is the name of the famous clock tower in Westminster?',opts:['Elizabeth Tower (Big Ben)','Nelson\'s Column','Canary Wharf','Crystal Palace'],ans:0,tip:'The bell inside is called Big Ben.'},
+  {q:'Which famous market is located in Notting Hill?',opts:['Portobello Road Market','Borough Market','Covent Garden Market','Columbia Road Market'],ans:0,tip:'It is famous for its antiques on Saturdays.'},
+  {q:'What is the Underground train system in London called?',opts:['The Tube','The Metro','The Rail','The Loop'],ans:0,tip:'It opened in 1863.'}
+];
+let a3State={};
+
+function initQuizA3(){ a3State={idx:0,points:100,tipUsed:false}; updateA3Pts(); document.getElementById('a3-pts').style.display='block'; renderA3(); }
+function updateA3Pts(){ document.getElementById('a3-pts').textContent='🏆 '+a3State.points+' pts'; }
+
+function renderA3(){
+  const wrap=document.getElementById('a3-wrap');
+  if(a3State.idx>=a3Questions.length){ renderA3End(); return; }
+  const q=a3Questions[a3State.idx];
+  const tipBtnHtml=a3State.tipUsed?'':`<button class="tip-btn-a3" id="a3-tip-btn" onclick="showA3Tip()">${t('a3TipBtn')}</button>`;
+  wrap.innerHTML=`
+    <h2 class="game-title">${t('a3Title')}</h2>
+    <p style="text-align:center;color:#6b7280;margin-bottom:18px;">${t('a3QOf',{a:a3State.idx+1,b:a3Questions.length})}</p>
+    <div class="q-box">
+      <div class="q-text">${q.q}</div>
+      ${tipBtnHtml}
+      <div class="tip-text" id="a3-tip">${t('a3Tip',{t:q.tip})}</div>
+      <div class="answers-row" id="a3-opts">
+        ${q.opts.map((o,i)=>`<button class="ans-btn" data-idx="${i}" onclick="answerA3(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}
+      </div>
+      <div class="fb-a3" id="a3-fb"></div>
+      <button class="nav-a3" id="a3-nav" onclick="nextA3()">${t('a3Next')}</button>
+    </div>`;
+}
+
+function showA3Tip(){
+  if(a3State.tipUsed) return; a3State.tipUsed=true;
+  document.getElementById('a3-tip').classList.add('show');
+  const btn=document.getElementById('a3-tip-btn'); if(btn) btn.style.display='none';
+}
+
+function answerA3(idx){
+  const q=a3Questions[a3State.idx];
+  document.querySelectorAll('#a3-opts .ans-btn').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('a3-fb');
+  if(idx===q.ans){
+    document.querySelector(`#a3-opts .ans-btn[data-idx="${idx}"]`).classList.add('correct');
+    fb.className='fb-a3 show correct'; fb.textContent=t('a3Correct');
+  } else {
+    document.querySelector(`#a3-opts .ans-btn[data-idx="${idx}"]`).classList.add('wrong');
+    document.querySelector(`#a3-opts .ans-btn[data-idx="${q.ans}"]`).classList.add('correct');
+    a3State.points=Math.max(0,a3State.points-10); updateA3Pts();
+    fb.className='fb-a3 show wrong'; fb.textContent=t('a3Wrong',{ans:q.opts[q.ans]});
+    const buzz=document.getElementById('a3-buzz'); buzz.classList.add('on'); setTimeout(()=>buzz.classList.remove('on'),300);
+    try{
+      const ctx=new(window.AudioContext||window.webkitAudioContext)();
+      const osc=ctx.createOscillator(),gain=ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value=110; osc.type='sawtooth';
+      gain.gain.setValueAtTime(0.3,ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4);
+      osc.start(); osc.stop(ctx.currentTime+0.4);
+    }catch(e){}
+  }
+  document.getElementById('a3-nav').classList.add('show');
+}
+
+function nextA3(){ a3State.tipUsed=false; a3State.idx++; renderA3(); }
+
+function renderA3End(){
+  document.getElementById('a3-pts').style.display='none';
+  document.getElementById('a3-wrap').innerHTML=`
+    <div class="end-card">
+      <div style="font-size:3rem;">🏟️</div>
+      <h3>${t('a3EndTitle')}</h3>
+      <p>${t('a3EndScore',{n:a3State.points})}</p>
+      <p>${a3State.points>=90?t('a3Perfect'):a3State.points>=60?t('a3Good'):t('a3Practice')}</p>
+      <button class="restart-btn" onclick="initQuizA3()">${t('a3Replay')}</button>
+    </div>`;
+}
+
+/* =====================================================================
+   QUIZ A4 — Quiz of London (6 subtopics, hearts)
+   ===================================================================== */
+const a4Data=[
+  {icon:'🏛️',name:'Historic Buildings',questions:[
+    {q:'In which year was the Tower of London founded?',opts:['1066','1215','1350','1485'],ans:0},
+    {q:'Who built the Tower of London?',opts:['William the Conqueror','Henry VIII','Queen Victoria','Julius Caesar'],ans:0},
+    {q:'Westminster Abbey is used for which official occasion?',opts:['Royal coronations','Football finals','School proms','Film premieres'],ans:0},
+    {q:'What style of architecture is St Paul\'s Cathedral?',opts:['Baroque','Gothic','Art Deco','Modernist'],ans:0},
+    {q:'The Gherkin in London is officially called?',opts:['30 St Mary Axe','The Pickle Tower','Cucumber House','Round Tower'],ans:0},
+    {q:'What is the oldest part of the Palace of Westminster?',opts:['Westminster Hall','Big Ben','The House of Lords','The Chapel'],ans:0},
+    {q:'Where are the Crown Jewels stored?',opts:['Tower of London','Buckingham Palace','Windsor Castle','The Shard'],ans:0}
+  ]},
+  {icon:'📜',name:'London History',questions:[
+    {q:'In which year did the Great Fire of London occur?',opts:['1666','1588','1715','1800'],ans:0},
+    {q:'Where did the Great Fire of London start?',opts:['A bakery on Pudding Lane','A pub in Southwark','The Royal Palace','The Tower of London'],ans:0},
+    {q:'Which Roman name was given to London?',opts:['Londinium','Britannia','Camulodunum','Eboracum'],ans:0},
+    {q:'In which year was the London Underground opened?',opts:['1863','1900','1850','1920'],ans:0},
+    {q:'Which famous plague hit London in 1665?',opts:['The Great Plague (Black Death)','The Spanish Flu','The Sweating Sickness','The Pox'],ans:0},
+    {q:'Which king signed the Magna Carta near London in 1215?',opts:['King John','King Henry II','King Richard I','King Edward I'],ans:0},
+    {q:'In which year did London first host the modern Olympic Games?',opts:['1908','1896','1948','1924'],ans:0}
+  ]},
+  {icon:'🗺️',name:'London Geography',questions:[
+    {q:'How many boroughs does Greater London have (plus the City)?',opts:['32 boroughs + City of London','25 boroughs','40 boroughs','20 boroughs'],ans:0},
+    {q:'Which river runs through London?',opts:['River Thames','River Severn','River Avon','River Tyne'],ans:0},
+    {q:'Greenwich is famous for the Prime Meridian (0°). What does that mean?',opts:['It is where world time zones begin','It is the highest point in London','It is where the Thames starts','It is the centre of the City'],ans:0},
+    {q:'Which London district is famous for its music and alternative culture?',opts:['Camden','Mayfair','Canary Wharf','Docklands'],ans:0},
+    {q:'What is the financial district of London called?',opts:['The City of London','West End','East End','South Bank'],ans:0},
+    {q:'Which park is directly next to Buckingham Palace?',opts:['St James\'s Park','Hyde Park','Regent\'s Park','Green Park'],ans:0},
+    {q:'Canary Wharf is in which part of London?',opts:['East (Docklands)','North','West','South'],ans:0}
+  ]},
+  {icon:'👑',name:'Royal London',questions:[
+    {q:'Where does the British monarch officially reside in London?',opts:['Buckingham Palace','Kensington Palace','Tower of London','Windsor Castle'],ans:0},
+    {q:'What is the famous royal ceremony at Buckingham Palace called?',opts:['Changing of the Guard','Trooping the Colour','State Opening of Parliament','The Royal Muster'],ans:0},
+    {q:'Which queen made Buckingham Palace the main royal residence?',opts:['Queen Victoria','Queen Elizabeth II','Queen Anne','Queen Mary I'],ans:0},
+    {q:'Where are British monarchs crowned?',opts:['Westminster Abbey','St Paul\'s Cathedral','Windsor Castle','Tower of London'],ans:0},
+    {q:'Which famous London street leads to Buckingham Palace?',opts:['The Mall','Oxford Street','Whitehall','Pall Mall'],ans:0},
+    {q:'Which royal park is in front of Buckingham Palace gates?',opts:['St James\'s Park','Hyde Park','Green Park','Regent\'s Park'],ans:0},
+    {q:'Which famous queen was held prisoner in the Tower of London?',opts:['Anne Boleyn','Queen Victoria','Mary Queen of Scots','Elizabeth I'],ans:0}
+  ]},
+  {icon:'🚌',name:'London Life & Transport',questions:[
+    {q:'What colour are traditional London double-decker buses?',opts:['Red','Blue','Green','Yellow'],ans:0},
+    {q:'What is the London Underground also called?',opts:['The Tube','The Metro','The Rail','The Loop'],ans:0},
+    {q:'What card do Londoners use to pay for public transport?',opts:['Oyster card','London Pass','Travelcard','Smart card'],ans:0},
+    {q:'London\'s famous traditional taxis are called?',opts:['Black cabs','Hackney carriages','London pods','Night riders'],ans:0},
+    {q:'Heathrow Airport is in which direction from central London?',opts:['West','East','North','South'],ans:0},
+    {q:'Portobello Road in Notting Hill is famous for its…?',opts:['Antique market','Football stadium','Science museum','Technology hub'],ans:0},
+    {q:'Which bridge can be raised to let tall ships through?',opts:['Tower Bridge','London Bridge','Westminster Bridge','Waterloo Bridge'],ans:0}
+  ]},
+  {icon:'🎭',name:'Arts & Culture',questions:[
+    {q:'Where can you see Shakespeare\'s plays in a reconstructed Globe Theatre?',opts:['South Bank','Covent Garden','Soho','The West End'],ans:0},
+    {q:'The British Museum holds which famous ancient artefact?',opts:['The Rosetta Stone','The Mona Lisa','The Sistine Chapel ceiling','The Statue of Liberty'],ans:0},
+    {q:'Which art gallery is on Trafalgar Square?',opts:['The National Gallery','Tate Modern','The V&A Museum','The Saatchi Gallery'],ans:0},
+    {q:'Covent Garden is famous for its…?',opts:['Street performers (buskers)','Royal gardens','Cricket ground','Car racing track'],ans:0},
+    {q:'Where is the Tate Modern art gallery located?',opts:['A former power station on the South Bank','An old railway station at King\'s Cross','A Victorian warehouse in Canary Wharf','A converted castle in Southwark'],ans:0},
+    {q:'Which area of London is famous for West End musicals?',opts:['The West End / Theatre District','The City','The East End','Kensington'],ans:0},
+    {q:'The Natural History Museum is famous for its giant model of which animal?',opts:['A blue whale','A T-Rex skeleton','A mammoth','A giraffe'],ans:0}
+  ]}
+];
+let a4State={};
+
+function initQuizA4(){ a4State={screen:'start',topic:null,qIdx:0,hearts:3,results:[],done:[]}; renderA4Start(); }
+
+function renderA4Start(){
+  document.getElementById('a4-wrap').innerHTML=`
+    <div style="padding:30px 18px 60px;max-width:800px;margin:0 auto;">
+      <div class="a4-start">
+        <h1>${t('a4Title')}</h1>
+        <p class="sub">${t('a4Sub')}</p>
+        <div class="st-grid">
+          ${a4Data.map((tp,i)=>`<button class="st-btn${a4State.done.includes(i)?' done':''}" onclick="startA4Topic(${i})">
+            <span class="st-ic">${tp.icon}</span>${tp.name}${a4State.done.includes(i)?'<br>✅':''}
+          </button>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+function startA4Topic(idx){ a4State.topic=idx; a4State.qIdx=0; a4State.hearts=3; a4State.results=[]; renderA4Quiz(); }
+
+function renderA4Quiz(){
+  if(a4State.hearts<=0){ renderA4GameOver(); return; }
+  const tp=a4Data[a4State.topic];
+  if(a4State.qIdx>=tp.questions.length){ renderA4Done(); return; }
+  const q=tp.questions[a4State.qIdx];
+  const hearts='❤️'.repeat(a4State.hearts)+'🖤'.repeat(3-a4State.hearts);
+  const dots=tp.questions.map((_,i)=>{
+    if(i<a4State.qIdx) return `<div class="pd ${a4State.results[i]?'right':'wrong'}"></div>`;
+    if(i===a4State.qIdx) return `<div class="pd cur"></div>`;
+    return `<div class="pd"></div>`;
+  }).join('');
+  document.getElementById('a4-wrap').innerHTML=`
+    <div style="padding:30px 18px 60px;max-width:720px;margin:0 auto;">
+      <h2 style="color:#fff;text-align:center;margin-bottom:14px;">${tp.icon} ${tp.name}</h2>
+      <div class="hearts-row">${hearts}</div>
+      <div class="prog-track">${dots}</div>
+      <div class="q-card">
+        <div class="qt">${q.q}</div>
+        <div class="opts" id="a4-opts">
+          ${q.opts.map((o,i)=>`<button class="ob" data-idx="${i}" onclick="answerA4(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}
+        </div>
+        <button class="nxt-a4" id="a4-nxt" onclick="nextA4()">${t('a4Next')}</button>
+      </div>
+    </div>`;
+}
+
+function answerA4(idx){
+  const q=a4Data[a4State.topic].questions[a4State.qIdx];
+  document.querySelectorAll('#a4-opts .ob').forEach(b=>b.disabled=true);
+  const correct=idx===q.ans;
+  document.querySelectorAll('#a4-opts .ob').forEach(b=>{
+    if(parseInt(b.dataset.idx)===q.ans) b.classList.add('correct');
+    if(parseInt(b.dataset.idx)===idx&&!correct) b.classList.add('wrong');
+  });
+  a4State.results.push(correct);
+  if(!correct) a4State.hearts--;
+  document.getElementById('a4-nxt').classList.add('show');
+}
+
+function nextA4(){ if(a4State.hearts<=0){ renderA4GameOver(); return; } a4State.qIdx++; renderA4Quiz(); }
+
+function renderA4Done(){
+  const tp=a4Data[a4State.topic];
+  const correct=a4State.results.filter(Boolean).length;
+  if(!a4State.done.includes(a4State.topic)) a4State.done.push(a4State.topic);
+  launchCf('quiz-a4','cf-a4');
+  document.getElementById('a4-wrap').innerHTML=`
+    <div style="padding:50px 18px;max-width:600px;margin:0 auto;text-align:center;">
+      <div class="q-card">
+        <div style="font-size:3rem;">🎉</div>
+        <h2 style="color:#1e3a8a;margin:12px 0;">${tp.icon} ${tp.name}</h2>
+        <p style="font-size:1.05rem;color:#374151;">${t('a4TopicDoneP',{c:correct,t:tp.questions.length})}</p>
+        <p style="color:#6b7280;margin-top:6px;">${correct===tp.questions.length?t('a4Perfect'):correct>=5?t('a4Great'):t('a4Keep')}</p>
+        <button class="restart-btn" onclick="renderA4Start()">${t('a4BackTopics')}</button>
+        <button class="sec-btn" onclick="startA4Topic(${a4State.topic})">${t('a4TryAgain')}</button>
+      </div>
+    </div>`;
+}
+
+function renderA4GameOver(){
+  document.getElementById('a4-wrap').innerHTML=`
+    <div style="padding:50px 18px;max-width:500px;margin:0 auto;text-align:center;">
+      <div class="q-card">
+        <div style="font-size:3.5rem;">💔</div>
+        <h2 style="color:#b91c1c;margin:12px 0;">${t('a4GameOver')}</h2>
+        <p style="color:#374151;">${t('a4GameOverP')}</p>
+        <button class="restart-btn" onclick="startA4Topic(${a4State.topic})">${t('a4Retry')}</button>
+        <button class="sec-btn" onclick="renderA4Start()">${t('a4Topics')}</button>
+      </div>
+    </div>`;
+}
+
+/* =====================================================================
+   QUIZ B1 — Greg's Diary Birthday Edition
+   ===================================================================== */
+const b1Questions=[
+  {q:"At the start of the last chapter, what happens to Greg on his birthday?",opts:["His party gets cancelled because of bad weather","He gets a huge surprise party","He forgets it is his birthday","His mum forgets to buy a cake"],ans:0,hint:"Think about what typically goes wrong for Greg in Wimpy Kid stories.",expl:"Greg's plans go sideways – that's the classic Wimpy Kid situation!"},
+  {q:"Who gives Greg the most embarrassing present in the chapter?",opts:["His grandmother (Manny's idea)","His best friend Rowley","His dad","His teacher"],ans:0,hint:"Think about who always gives Greg something weird or babyish.",expl:"Family members love giving Greg presents he definitely does not want!"},
+  {q:"What does Greg wish for when he blows out his birthday candles?",opts:["To finally be popular at school","To get the latest video game","For Rodrick to leave him alone","For Manny to stop embarrassing him"],ans:0,hint:"Greg's biggest dream is always about his social standing.",expl:"Popularity is always on Greg's mind."},
+  {q:"How does Greg's diary entry end at the close of the chapter?",opts:["He decides next year will be better","He throws away his diary","He goes to sleep angry","He calls Rowley to complain"],ans:0,hint:"Greg always ends on a hopeful or resigned note.",expl:"Greg is an eternal optimist – he always thinks next time will be better!"}
+];
+let b1State={};
+
+function initQuizB1(){ b1State={idx:0,score:0,firstTry:[],answers:[]}; renderB1(); }
+
+function renderB1(){
+  const wrap=document.getElementById('b1-wrap');
+  if(b1State.idx>=b1Questions.length){ renderB1End(); return; }
+  const q=b1Questions[b1State.idx];
+  const optsHtml=q.opts.map((o,i)=>`<button class="opt-b1" data-idx="${i}" onclick="answerB1(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('');
+  wrap.innerHTML=`
+    <div class="diary-title">${t('b1DiaryTitle')}</div>
+    <div class="diary-sub">${t('b1DiarySub')}</div>
+    <div class="greg-wrap"><div class="greg-fig" id="b1-greg">🧒</div></div>
+    <div class="score-bar-b1">${t('b1Score',{s:b1State.score,a:b1State.idx+1,b:b1Questions.length})}</div>
+    <div class="card">
+      <div class="q-text-b1">${q.q}</div>
+      <div class="opts-b1" id="b1-opts">${optsHtml}</div>
+      <button class="hint-btn-b1" id="b1-hint-btn" onclick="showB1Hint()">${t('b1HintBtn')}</button>
+      <div class="hint-text-b1" id="b1-hint">${q.hint}</div>
+      <div class="fb-b1" id="b1-fb"></div>
+      <button class="nav-b1" id="b1-nav" onclick="nextB1()">${t('b1Next')}</button>
+    </div>`;
+  b1State._attempt=0; b1State._hintUsed=false;
+}
+
+function showB1Hint(){
+  if(b1State._hintUsed) return; b1State._hintUsed=true;
+  document.getElementById('b1-hint').classList.add('show');
+  document.getElementById('b1-hint-btn').style.display='none';
+}
+
+function answerB1(idx){
+  const q=b1Questions[b1State.idx]; b1State._attempt++;
+  if(idx===q.ans){
+    document.querySelectorAll('#b1-opts .opt-b1').forEach(b=>b.disabled=true);
+    document.querySelector(`#b1-opts .opt-b1[data-idx="${idx}"]`).classList.add('correct');
+    const pts=b1State._attempt===1?2:1; b1State.score+=pts;
+    b1State.firstTry.push(b1State._attempt===1);
+    b1State.answers.push({correct:true,pts});
+    const fb=document.getElementById('b1-fb'); fb.className='fb-b1 show correct';
+    fb.innerHTML=`✅ ${lang==='de'?'Richtig':'Correct'}! +${pts} ${lang==='de'?'Punkt':'point'}${pts>1?'s':''}. ${q.expl}`;
+    if(b1State._attempt===1){
+      const g=document.getElementById('b1-greg'); g.classList.add('dance'); g.textContent='🕺';
+      setTimeout(()=>{g.classList.remove('dance');g.textContent='🧒';},5000);
+    }
+    document.getElementById('b1-nav').classList.add('show');
+  } else {
+    document.querySelector(`#b1-opts .opt-b1[data-idx="${idx}"]`).classList.add('wrong');
+    const fb=document.getElementById('b1-fb');
+    if(b1State._attempt===1){
+      fb.className='fb-b1 show wrong'; fb.innerHTML=lang==='de'?'❌ Nicht ganz! Versuche es nochmal.':'❌ Not quite! Try again.';
+      document.querySelector(`#b1-opts .opt-b1[data-idx="${idx}"]`).disabled=true;
+    } else {
+      document.querySelectorAll('#b1-opts .opt-b1').forEach(b=>b.disabled=true);
+      document.querySelector(`#b1-opts .opt-b1[data-idx="${q.ans}"]`).classList.remove('wrong');
+      document.querySelector(`#b1-opts .opt-b1[data-idx="${q.ans}"]`).classList.add('correct');
+      b1State.firstTry.push(false); b1State.answers.push({correct:false,pts:0});
+      fb.className='fb-b1 show wrong';
+      fb.innerHTML=`❌ ${lang==='de'?'Die Antwort war':'The answer was'}: ${q.opts[q.ans]}. ${q.expl}`;
+      document.getElementById('b1-nav').classList.add('show');
+    }
+  }
+}
+
+function nextB1(){ b1State.idx++; renderB1(); }
+
+function renderB1End(){
+  const wrap=document.getElementById('b1-wrap');
+  const barData=[
+    {label:t('b1Bar1'),val:b1State.firstTry.filter(Boolean).length,color:'#16a34a'},
+    {label:t('b1Bar2'),val:b1State.answers.filter(a=>a.correct&&a.pts===1).length,color:'#d97706'},
+    {label:t('b1Bar3'),val:b1State.answers.filter(a=>!a.correct).length,color:'#dc2626'}
+  ];
+  const maxV=Math.max(...barData.map(d=>d.val),1);
+  const barsHtml=barData.map(d=>`
+    <div class="sbar-row">
+      <div class="sbar-label">${d.label}</div>
+      <div class="sbar" style="width:${(d.val/maxV)*160}px;background:${d.color};"></div>
+      <div class="sbar-val">${d.val}</div>
+    </div>`).join('');
+  wrap.innerHTML=`
+    <div class="diary-title">${t('b1DiaryTitle')}</div>
+    <div class="greg-wrap"><div class="greg-fig jetpack">🧒🚀</div></div>
+    <div class="end-card" style="font-family:inherit;">
+      <div style="font-size:2.5rem;">🎂🎉</div>
+      <h3>${t('b1EndTitle')}</h3>
+      <p>${t('b1EndScore',{s:b1State.score,max:b1Questions.length*2})}</p>
+      <p>${b1State.score>=7?t('b1EndGreat'):b1State.score>=4?t('b1EndGood'):t('b1EndPract')}</p>
+      <div class="scatter-wrap" style="margin-top:14px;">
+        <div class="scatter-title">${t('b1ScatterTitle')}</div>${barsHtml}
+      </div>
+      <button class="restart-btn" onclick="initQuizB1()">${t('b1Replay')}</button>
+    </div>`;
+  const cfColors=['#facc15','#ec4899','#3b82f6'];
+  launchCf('quiz-b1','cf-b1',cfColors);
+}
+
+/* =====================================================================
+   SHARED HELPERS
+   ===================================================================== */
+function launchCf(parentId,cls,colors){
+  const cols=colors||['#b91c1c','#d97706','#1e40af','#16a34a','#9333ea'];
+  for(let i=0;i<36;i++){
+    setTimeout(()=>{
+      const f=document.createElement('div'); f.className=cls;
+      f.style.background=cols[Math.floor(Math.random()*cols.length)];
+      f.style.left=(Math.random()*90)+'vw';
+      f.style.animationDuration=(1.2+Math.random()*0.9)+'s';
+      const parent=document.getElementById(parentId);
+      if(parent){ parent.appendChild(f); setTimeout(()=>f.remove(),2500); }
+    },i*65);
+  }
+}
+
+/* Initial state */
+document.getElementById('back-btn').style.display='none';
+</script>
+</body>
+</html>
