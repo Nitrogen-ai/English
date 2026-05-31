@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sylt Expedition App - Class 8.1</title>
+    <style>
+        :root {
+            --primary: #2b6cb0;
+            --secondary: #4299e1;
+            --bg-sand: #f7fafc;
+            --island-yellow: #f6ad55;
+            --dark: #2d3748;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-sand);
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--island-yellow);
+            color: var(--dark);
+            border: none;
+            padding: 8px 15px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        /* Welcome Page Views */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* Category Grid Buttons */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .cat-btn {
+            background-color: var(--card-bg);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+
+        .cat-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Module List Styles */
+        .back-btn {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .module-card {
+            background: white;
+            border-left: 5px solid var(--island-yellow);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn-lock {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        /* Workspace Template Area */
+        .workspace-box {
+            background: #edf2f7;
+            border: 2px dashed #cbd5e0;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .locked-msg {
+            color: #e53e3e;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="toggle-btn" onclick="toggleLanguage()">EN / DE</button>
+        <h1 id="main-title">🌊 Unsere Digitale Sylt-Expedition</h1>
+        <p id="sub-title">Made by the class 8.1</p>
+    </header>
+
+    <div class="container">
+
+        <div id="view-home" class="view active">
+            <p id="home-intro" style="text-align: center;">Wähle ein Thema aus, um die interaktiven Stationen und Mini-Games unserer App zu entdecken!</p>
+            <div class="grid">
+                <button class="cat-btn" onclick="openCategory('A')"><span>🌱 A) Ecology & Geo</span> <span>➔</span></button>
+                <button class="cat-btn" onclick="openCategory('B')"><span>📜 B) Literature & History</span> <span>➔</span></button>
+                <button class="cat-btn" onclick="openCategory('C')"><span>🤝 C) Social Challenges</span> <span>➔</span></button>
+                <button class="cat-btn" onclick="openCategory('D')"><span>🎮 D) Smartphone Mini-Games</span> <span>➔</span></button>
+            </div>
+        </div>
+
+        <div id="view-category" class="view">
+            <button class="back-btn" onclick="goHome()" id="btn-back">⬅ Zurück zur Übersicht</button>
+            <h2 id="category-title">Kategorie</h2>
+            
+            <div id="modules-container"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Class 8.1 | Powered by Vibe Coding 🚀</p>
+    </footer>
+
+    <script>
+        // Language state
+        let currentLang = 'de';
+        let currentCat = '';
+
+        // Text Dictionary for translation
+        const langPack = {
+            de: {
+                mainTitle: "🌊 Unsere Digitale Sylt-Expedition",
+                subTitle: "Präsentiert von der Klasse 8.1 für die Klasse 8.2",
+                homeIntro: "Wähle ein Thema aus, um die interaktiven Stationen und Mini-Games unserer App zu entdecken!",
+                backBtn: "⬅ Zurück zur Übersicht",
+                titleA: "🌱 Ecology & Geography",
+                titleB: "📜 Literature, Culture & History",
+                titleC: "🤝 Social Challenges",
+                titleD: "🎮 Smartphone Mini-Games",
+                createdBy: "Erstellt von",
+                lockMsg: "🔒 Inhalt gesperrt. (Für Klasse 8.2 morgen nach dem Vibe-Coding freigeschaltet!)",
+                btnUnlock: "🔒 Code eingeben (Für Gruppe)",
+                promptPlaceholder: "Hier wird morgen per Vibe Coding die fertige Teil-App eingefügt..."
+            },
+            en: {
+                mainTitle: "🌊 Our Digital Sylt Expedition",
+                subTitle: "Presented by Class 8.1 for Class 8.2",
+                homeIntro: "Choose a topic to discover the interactive tracks and mini-games of our app!",
+                backBtn: "⬅ Back to Overview",
+                titleA: "🌱 Ecology & Geography",
+                titleB: "📜 Literature, Culture & History",
+                titleC: "🤝 Social Challenges",
+                titleD: "🎮 Smartphone Mini-Games",
+                createdBy: "Created by",
+                lockMsg: "🔒 Content locked. (Will be unlocked for Class 8.2 tomorrow after Vibe Coding!)",
+                btnUnlock: "🔒 Enter PIN (For Team)",
+                promptPlaceholder: "Tomorrow, the finished sub-app will be implemented here via Vibe Coding..."
+            }
+        };
+
+        // Student Project Templates Data Structure
+        const studentProjects = {
+            'A': [
+                { id: 'A811', title: 'Wadden Sea Explorer', authors: 'Person 1, Person 2, Person 3' },
+                { id: 'A812', title: 'The Coastal Erosion Check', authors: 'Person 4, Person 5' },
+                { id: 'A813', title: 'Lugworm Quiz', authors: 'Person 6, Person 7, Person 8' },
+                { id: 'A814', title: 'Beaches & Dunes Info-Drive', authors: 'Person 9, Person 10' },
+                { id: 'A815', title: 'Climate Change on Sylt', authors: 'Person 11, Person 12' }
+            ],
+            'B': [
+                { id: 'B811', title: 'Local Ghosts & Sagas', authors: 'Person 1, Person 2' },
+                { id: 'B812', title: 'Sylt Frisian Language Game', authors: 'Person 3, Person 4, Person 5' },
+                { id: 'B813', title: 'Historical Lighthouses', authors: 'Person 6, Person 7' },
+                { id: 'B814', title: 'The Whaling Era History', authors: 'Person 8, Person 9' },
+                { id: 'B815', title: 'Traditional Architecture', authors: 'Person 10, Person 11' }
+            ],
+            'C': [
+                { id: 'C811', title: 'The Great Team Challenge', authors: 'Person 1, Person 2, Person 3' },
+                { id: 'C812', title: 'Mass Tourism vs. Nature', authors: 'Person 4, Person 5' },
+                { id: 'C813', title: 'Island Living Cost Crisis', authors: 'Person 6, Person 7' },
+                { id: 'C814', title: 'Eco-Friendly Travel Quiz', authors: 'Person 8, Person 9, Person 10' },
+                { id: 'C815', title: 'Protecting the Seals Quest', authors: 'Person 11, Person 12' }
+            ],
+            'D': [
+                { id: 'D811', title: 'Save the Sandcastle!', authors: 'Person 1, Person 2' },
+                { id: 'D812', title: 'Catch the Seagull', authors: 'Person 3, Person 4, Person 5' },
+                { id: 'D813', title: 'Dune Jumper Mini-Game', authors: 'Person 6, Person 7' },
+                { id: 'D814', title: 'Sylt Map Puzzle', authors: 'Person 8, Person 9' },
+                { id: 'D815', title: 'Crab Race Clicker', authors: 'Person 10, Person 11' }
+            ]
+        };
+
+        // Switch App Language
+        function toggleLanguage() {
+            currentLang = currentLang === 'de' ? 'en' : 'de';
+            updateStaticTexts();
+            if (currentCat) openCategory(currentCat);
+        }
+
+        function updateStaticTexts() {
+            document.getElementById('main-title').innerText = langPack[currentLang].mainTitle;
+            document.getElementById('sub-title').innerText = langPack[currentLang].subTitle;
+            document.getElementById('home-intro').innerText = langPack[currentLang].homeIntro;
+            document.getElementById('btn-back').innerText = langPack[currentLang].backBtn;
+        }
+
+        // Navigation
+        function openCategory(catCode) {
+            currentCat = catCode;
+            document.getElementById('view-home').classList.remove('active');
+            document.getElementById('view-category').classList.add('active');
+            
+            // Set category header title
+            document.getElementById('category-title').innerText = langPack[currentLang]['title' + catCode];
+            
+            // Render the 5 Modules
+            const container = document.getElementById('modules-container');
+            container.innerHTML = '';
+            
+            studentProjects[catCode].forEach((proj, index) => {
+                const card = document.createElement('div');
+                card.className = 'module-card';
+                card.innerHTML = `
+                    <h3>📌 ${proj.title}</h3>
+                    <p style="font-size:0.9rem; color:#4a5568;"><strong>${langPack[currentLang].createdBy}:</strong> ${proj.authors}</p>
+                    <div id="content-${proj.id}">
+                        <p class="locked-msg">${langPack[currentLang].lockMsg}</p>
+                        <button class="btn-lock" onclick="unlockSlot('${proj.id}')">${langPack[currentLang].btnUnlock}</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function goHome() {
+            currentCat = '';
+            document.getElementById('view-category').classList.remove('active');
+            document.getElementById('view-home').classList.add('active');
+        }
+
+        // PIN-Verifikation & Freischaltung für das morgige Vibe Coding
+        function unlockSlot(slotId) {
+            const userPin = prompt(currentLang === 'de' ? "Bitte gib die 4-stellige Gruppen-PIN ein:" : "Please enter your 4-digit team PIN:");
+            
+            if (userPin === slotId) {
+                const contentBox = document.getElementById(`content-${slotId}`);
+                contentBox.innerHTML = `
+                    <div class="workspace-box">
+                        <h4 style="color:#2b6cb0; margin-top:0;">🛠️ Vibe Coding Sandbox (Team Area)</h4>
+                        <p style="font-size:0.85rem; margin-bottom:10px;">
+                            ${currentLang === 'de' ? 'Hier könnt ihr euren generierten Code hineinkopieren:' : 'You can insert your generated code snippet here:'}
+                        </p>
+                        <textarea style="width:100%; height:120px; border-radius:5px; border:1px solid #cbd5e0; padding:5px;" placeholder="${langPack[currentLang].promptPlaceholder}"></textarea>
+                        <button class="btn-lock" style="background-color:#48bb78; margin-top:5px;" onclick="alert('Änderungen temporär gespeichert! (Morgen bindet ihr hier das fertige HTML ein)')">Speichern / Save</button>
+                    </div>
+                `;
+            } else {
+                alert(currentLang === 'de' ? "Falsche PIN! Zugriff verweigert." : "Wrong PIN! Access denied.");
+            }
+        }
+    </script>
+</body>
+</html>
