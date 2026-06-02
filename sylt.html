@@ -23,9 +23,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
 
-        /* Header & Navigation */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -35,6 +35,8 @@
             position: relative;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+        header h1 { margin: 0.2rem 0; }
+        header p { margin: 0.2rem 0; opacity: 0.95; }
 
         .toggle-btn {
             position: absolute;
@@ -49,33 +51,14 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+        .toggle-btn:hover { transform: scale(1.05); }
 
-        .toggle-btn:hover {
-            transform: scale(1.05);
-        }
+        .container { width: 90%; max-width: 640px; margin: 2rem auto; }
 
-        .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 2rem auto;
-        }
+        .view { display: none; }
+        .view.active { display: block; }
 
-        /* Welcome Page Views */
-        .view {
-            display: none;
-        }
-
-        .view.active {
-            display: block;
-        }
-
-        /* Category Grid Buttons */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 1.5rem;
-        }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 1.5rem; }
 
         .cat-btn {
             background-color: var(--card-bg);
@@ -91,14 +74,9 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: all 0.2s;
         }
+        .cat-btn:hover { background-color: var(--secondary); color: white; transform: translateY(-2px); }
+        .cat-btn .count { font-size: 0.8rem; font-weight: normal; opacity: 0.7; }
 
-        .cat-btn:hover {
-            background-color: var(--secondary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Module List Styles */
         .back-btn {
             background-color: #718096;
             color: white;
@@ -112,44 +90,57 @@
         .module-card {
             background: white;
             border-left: 5px solid var(--island-yellow);
-            padding: 15px;
+            padding: 15px 18px;
             margin-bottom: 15px;
             border-radius: 0 8px 8px 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
+        .module-card h3 { margin: 0 0 4px; }
+        .module-card .authors { font-size: 0.9rem; color: #4a5568; margin: 0 0 12px; }
 
-        .btn-lock {
-            background-color: var(--primary);
+        .btn-play {
+            background-color: #38a169;
             color: white;
             border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
+            padding: 10px 18px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.2s;
         }
+        .btn-play:hover { background-color: #2f855a; transform: translateY(-1px); }
 
-        /* Workspace Template Area */
-        .workspace-box {
-            background: #edf2f7;
+        .empty-note {
+            background: #fff;
             border: 2px dashed #cbd5e0;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 6px;
-        }
-
-        .locked-msg {
-            color: #e53e3e;
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            color: #718096;
             font-style: italic;
         }
 
-        /* Footer */
-        footer {
-            margin-top: auto;
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
-            color: #a0aec0;
+        footer { margin-top: auto; text-align: center; padding: 1rem; font-size: 0.9rem; color: #a0aec0; }
+
+        /* Game overlay */
+        #game-overlay {
+            position: fixed; inset: 0; background: #000;
+            display: none; flex-direction: column; z-index: 9999;
         }
+        #game-overlay.open { display: flex; }
+        #game-overlay .bar {
+            background: #1a202c; color: #fff; display: flex;
+            align-items: center; justify-content: space-between;
+            padding: 8px 14px; flex: 0 0 auto;
+        }
+        #game-overlay .bar span { font-weight: bold; font-size: 0.95rem; }
+        #game-overlay .bar button {
+            background: #e53e3e; color: #fff; border: none;
+            width: 38px; height: 38px; border-radius: 8px;
+            font-size: 1.1rem; cursor: pointer;
+        }
+        #game-frame { flex: 1 1 auto; width: 100%; border: 0; background: #fff; }
     </style>
 </head>
 <body>
@@ -157,40 +148,42 @@
     <header>
         <button class="toggle-btn" onclick="toggleLanguage()">EN / DE</button>
         <h1 id="main-title">🌊 Unsere Digitale Sylt-Expedition</h1>
-        <p id="sub-title">Made by the class 8.1</p>
+        <p id="sub-title">Präsentiert von der Klasse 8.1 für die Klasse 8.2</p>
     </header>
 
     <div class="container">
-
         <div id="view-home" class="view active">
             <p id="home-intro" style="text-align: center;">Wähle ein Thema aus, um die interaktiven Stationen und Mini-Games unserer App zu entdecken!</p>
             <div class="grid">
-                <button class="cat-btn" onclick="openCategory('A')"><span>🌱 A) Ecology & Geo</span> <span>➔</span></button>
-                <button class="cat-btn" onclick="openCategory('B')"><span>📜 B) Literature & History</span> <span>➔</span></button>
-                <button class="cat-btn" onclick="openCategory('C')"><span>🤝 C) Social Challenges</span> <span>➔</span></button>
-                <button class="cat-btn" onclick="openCategory('D')"><span>🎮 D) Eco Mini-Games</span> <span>➔</span></button>
+                <button class="cat-btn" onclick="openCategory('A')"><span>🌱 A) Ecology &amp; Geo</span> <span class="count" id="cnt-A"></span></button>
+                <button class="cat-btn" onclick="openCategory('B')"><span>📜 B) Literature &amp; History</span> <span class="count" id="cnt-B"></span></button>
+                <button class="cat-btn" onclick="openCategory('C')"><span>🤝 C) Social Challenges</span> <span class="count" id="cnt-C"></span></button>
+                <button class="cat-btn" onclick="openCategory('D')"><span>🎮 D) Eco Mini-Games</span> <span class="count" id="cnt-D"></span></button>
             </div>
         </div>
 
         <div id="view-category" class="view">
             <button class="back-btn" onclick="goHome()" id="btn-back">⬅ Zurück zur Übersicht</button>
             <h2 id="category-title">Kategorie</h2>
-            
             <div id="modules-container"></div>
         </div>
-
     </div>
 
-    <footer>
-        <p>&copy; 2026 Class 8.1 | Powered by Vibe Coding 🚀</p>
-    </footer>
+    <footer><p>&copy; 2026 Class 8.1 | Powered by Vibe Coding 🚀</p></footer>
+
+    <!-- Fullscreen game overlay -->
+    <div id="game-overlay">
+        <div class="bar">
+            <span id="game-overlay-title">Game</span>
+            <button onclick="closeGame()" aria-label="Close">&times;</button>
+        </div>
+        <iframe id="game-frame" title="Mini-Game" allow="autoplay; fullscreen"></iframe>
+    </div>
 
     <script>
-        // Language state
         let currentLang = 'de';
         let currentCat = '';
 
-        // Text Dictionary for translation
         const langPack = {
             de: {
                 mainTitle: "🌊 Unsere Digitale Sylt-Expedition",
@@ -202,9 +195,9 @@
                 titleC: "🤝 Social Challenges",
                 titleD: "🎮 Eco Mini-Games",
                 createdBy: "Erstellt von",
-                lockMsg: "🔒 Inhalt gesperrt. (Für Klasse 8.2 morgen nach dem Vibe-Coding freigeschaltet!)",
-                btnUnlock: "🔒 Code eingeben (Für Gruppe)",
-                promptPlaceholder: "Hier wird morgen per Vibe Coding die fertige Teil-App eingefügt..."
+                play: "▶ Spielen / Öffnen",
+                empty: "Für diese Kategorie wurde noch kein Modul abgegeben.",
+                games: "Spiele"
             },
             en: {
                 mainTitle: "🌊 Our Digital Sylt Expedition",
@@ -216,48 +209,34 @@
                 titleC: "🤝 Social Challenges",
                 titleD: "🎮 Eco Mini-Games",
                 createdBy: "Created by",
-                lockMsg: "🔒 Content locked. (Will be unlocked for Class 8.2 tomorrow after Vibe Coding!)",
-                btnUnlock: "🔒 Enter PIN (For Team)",
-                promptPlaceholder: "Tomorrow, the finished sub-app will be implemented here via Vibe Coding..."
+                play: "▶ Play / Open",
+                empty: "No module has been submitted for this category yet.",
+                games: "games"
             }
         };
 
-        // Student Project Templates Data Structure
         const studentProjects = {
             'A': [
-                { id: 'A811', title: 'Wadden Sea Explorer', authors: 'Person 1, Person 2, Person 3' },
-                { id: 'A812', title: 'The Coastal Erosion Check', authors: 'Person 4, Person 5' },
-                { id: 'A813', title: 'Lugworm Quiz', authors: 'Person 6, Person 7, Person 8' },
-                { id: 'A814', title: 'Beaches & Dunes Info-Drive', authors: 'Person 9, Person 10' },
-                { id: 'A815', title: 'Climate Change on Sylt', authors: 'Person 11, Person 12' }
+                { id: 'A1', title: 'Defender Rainforest', authors: 'Milo, Felix L., Mathis, Matthäus' }
             ],
-            'B': [
-                { id: 'B811', title: 'Local Ghosts & Sagas', authors: 'Person 1, Person 2' },
-                { id: 'B812', title: 'Sylt Frisian Language Game', authors: 'Person 3, Person 4, Person 5' },
-                { id: 'B813', title: 'Historical Lighthouses', authors: 'Person 6, Person 7' },
-                { id: 'B814', title: 'The Whaling Era History', authors: 'Person 8, Person 9' },
-                { id: 'B815', title: 'Traditional Architecture', authors: 'Person 10, Person 11' }
-            ],
+            'B': [],
             'C': [
-                { id: 'C811', title: 'The Great Team Challenge', authors: 'Person 1, Person 2, Person 3' },
-                { id: 'C812', title: 'Mass Tourism vs. Nature', authors: 'Person 4, Person 5' },
-                { id: 'C813', title: 'Island Living Cost Crisis', authors: 'Person 6, Person 7' },
-                { id: 'C814', title: 'Eco-Friendly Travel Quiz', authors: 'Person 8, Person 9, Person 10' },
-                { id: 'C815', title: 'Protecting the Seals Quest', authors: 'Person 11, Person 12' }
+                { id: 'C1', title: 'Human Memory', authors: 'Ayumi, Charlotte, Laura' },
+                { id: 'C2', title: 'Guess the Song', authors: 'Caroline, Alexandra, Laurenzia, Weiyang' },
+                { id: 'C3', title: 'Listar-Team (Star Hunt)', authors: 'Levis, Leandra, Juna, Emma, Ada' },
+                { id: 'C4', title: 'Make a Compliment', authors: 'Leah, Clara' }
             ],
             'D': [
-                { id: 'D811', title: 'Save the Sandcastle!', authors: 'Person 1, Person 2' },
-                { id: 'D812', title: 'Catch the Seagull', authors: 'Person 3, Person 4, Person 5' },
-                { id: 'D813', title: 'Dune Jumper Mini-Game', authors: 'Person 6, Person 7' },
-                { id: 'D814', title: 'Sylt Map Puzzle', authors: 'Person 8, Person 9' },
-                { id: 'D815', title: 'Crab Race Clicker', authors: 'Person 10, Person 11' }
+                { id: 'D1', title: 'Attack on Seals', authors: 'Julian, Severin, Noah, Jonathan, Rio' },
+                { id: 'D2', title: 'Leaky Bucket Challenge', authors: 'Franz, Dominik, Marinus, Felix G.' },
+                { id: 'D3', title: 'Tilt It', authors: 'Oswald, Paul, Jakob' }
             ]
         };
 
-        // Switch App Language
         function toggleLanguage() {
             currentLang = currentLang === 'de' ? 'en' : 'de';
             updateStaticTexts();
+            updateCounts();
             if (currentCat) openCategory(currentCat);
         }
 
@@ -268,30 +247,39 @@
             document.getElementById('btn-back').innerText = langPack[currentLang].backBtn;
         }
 
-        // Navigation
+        function updateCounts() {
+            ['A','B','C','D'].forEach(c => {
+                const n = studentProjects[c].length;
+                document.getElementById('cnt-' + c).innerText = n + ' ' + langPack[currentLang].games;
+            });
+        }
+
         function openCategory(catCode) {
             currentCat = catCode;
             document.getElementById('view-home').classList.remove('active');
             document.getElementById('view-category').classList.add('active');
-            
-            // Set category header title
             document.getElementById('category-title').innerText = langPack[currentLang]['title' + catCode];
-            
-            // Render the 5 Modules
+
             const container = document.getElementById('modules-container');
             container.innerHTML = '';
-            
-            studentProjects[catCode].forEach((proj, index) => {
+
+            const list = studentProjects[catCode];
+            if (list.length === 0) {
+                const note = document.createElement('div');
+                note.className = 'empty-note';
+                note.innerText = langPack[currentLang].empty;
+                container.appendChild(note);
+                return;
+            }
+
+            list.forEach((proj) => {
                 const card = document.createElement('div');
                 card.className = 'module-card';
-                card.innerHTML = `
-                    <h3>📌 ${proj.title}</h3>
-                    <p style="font-size:0.9rem; color:#4a5568;"><strong>${langPack[currentLang].createdBy}:</strong> ${proj.authors}</p>
-                    <div id="content-${proj.id}">
-                        <p class="locked-msg">${langPack[currentLang].lockMsg}</p>
-                        <button class="btn-lock" onclick="unlockSlot('${proj.id}')">${langPack[currentLang].btnUnlock}</button>
-                    </div>
-                `;
+                card.innerHTML =
+                    '<h3>📌 ' + proj.title + '</h3>' +
+                    '<p class="authors"><strong>' + langPack[currentLang].createdBy + ':</strong> ' + proj.authors + '</p>' +
+                    '<button class="btn-play">' + langPack[currentLang].play + '</button>';
+                card.querySelector('.btn-play').addEventListener('click', function(){ openGame(proj.id, proj.title); });
                 container.appendChild(card);
             });
         }
@@ -302,26 +290,1344 @@
             document.getElementById('view-home').classList.add('active');
         }
 
-        // PIN-Verifikation & Freischaltung für das morgige Vibe Coding
-        function unlockSlot(slotId) {
-            const userPin = prompt(currentLang === 'de' ? "Bitte gib die 4-stellige Gruppen-PIN ein:" : "Please enter your 4-digit team PIN:");
-            
-            if (userPin === slotId) {
-                const contentBox = document.getElementById(`content-${slotId}`);
-                contentBox.innerHTML = `
-                    <div class="workspace-box">
-                        <h4 style="color:#2b6cb0; margin-top:0;">🛠️ Vibe Coding Sandbox (Team Area)</h4>
-                        <p style="font-size:0.85rem; margin-bottom:10px;">
-                            ${currentLang === 'de' ? 'Hier könnt ihr euren generierten Code hineinkopieren:' : 'You can insert your generated code snippet here:'}
-                        </p>
-                        <textarea style="width:100%; height:120px; border-radius:5px; border:1px solid #cbd5e0; padding:5px;" placeholder="${langPack[currentLang].promptPlaceholder}"></textarea>
-                        <button class="btn-lock" style="background-color:#48bb78; margin-top:5px;" onclick="alert('Änderungen temporär gespeichert! (Morgen bindet ihr hier das fertige HTML ein)')">Speichern / Save</button>
-                    </div>
-                `;
-            } else {
-                alert(currentLang === 'de' ? "Falsche PIN! Zugriff verweigert." : "Wrong PIN! Access denied.");
-            }
+        function openGame(id, title) {
+            const tpl = document.getElementById('game-' + id);
+            if (!tpl) { alert('Game not found.'); return; }
+            const wrapper =
+                '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
+                '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' +
+                '</head><body style="margin:0;padding:0;">' + tpl.innerHTML + '</body></html>';
+            const frame = document.getElementById('game-frame');
+            frame.srcdoc = wrapper;
+            document.getElementById('game-overlay-title').innerText = title || 'Game';
+            document.getElementById('game-overlay').classList.add('open');
         }
+
+        function closeGame() {
+            document.getElementById('game-overlay').classList.remove('open');
+            document.getElementById('game-frame').srcdoc = '';
+        }
+
+        updateStaticTexts();
+        updateCounts();
     </script>
+
+    <!-- ====================== GAME MODULES (rendered inside isolated frames) ====================== -->
+    <template id="game-A1"><style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{font-family:'Trebuchet MS',Verdana,sans-serif;background:#0f2417;color:#e8f5e9;overflow:hidden;}
+  #wrap{position:relative;width:100%;height:100vh;display:flex;flex-direction:column;}
+  /* Start screen */
+  #start{position:absolute;inset:0;background:#0f2417;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;}
+  #start h1{font-size:2.4rem;letter-spacing:2px;margin:0 0 6px;color:#a7f3a0;font-weight:800;text-transform:uppercase;}
+  #start .tag{color:#7fbf86;margin:0 0 28px;font-size:.95rem;letter-spacing:3px;}
+  .poly-forest{width:min(90vw,420px);height:200px;}
+  #playBtn{margin-top:30px;background:#2f9e44;color:#fff;border:none;padding:16px 54px;border-radius:6px;font-size:1.3rem;font-weight:700;letter-spacing:2px;cursor:pointer;transition:.15s;}
+  #playBtn:hover{background:#37b24d;transform:translateY(-2px);}
+  /* HUD */
+  #hud{display:flex;justify-content:space-between;padding:10px 14px;font-weight:700;background:#0a1c11;border-bottom:1px solid #1d4429;}
+  #hud .coins{color:#ffd43b;font-size:1.1rem;}
+  #hud .threat{color:#ff8787;font-size:.95rem;text-align:right;}
+  #field{flex:1;position:relative;overflow:hidden;background:linear-gradient(#10391f,#0c2616);}
+  .tree{position:absolute;bottom:48px;width:0;height:0;transition:transform .3s;}
+  .ground{position:absolute;left:0;right:0;bottom:0;height:48px;background:#3b2412;border-top:6px solid #5a3a1d;}
+  .lumber{position:absolute;bottom:48px;width:26px;height:46px;background:#c0392b;border-radius:4px 4px 2px 2px;transition:left .15s linear;}
+  .lumber:after{content:"";position:absolute;top:-10px;left:7px;width:12px;height:12px;border-radius:50%;background:#e8c39e;}
+  .ranger{position:absolute;bottom:48px;width:24px;height:44px;background:#1971c2;border-radius:4px;}
+  .ranger:after{content:"";position:absolute;top:-9px;left:6px;width:12px;height:12px;border-radius:50%;background:#e8c39e;}
+  .animal{position:absolute;font-size:.7rem;color:#ffe066;}
+  #bars{padding:8px 14px;background:#0a1c11;}
+  #healthBar{height:14px;background:#3a1212;border-radius:8px;overflow:hidden;}
+  #healthFill{height:100%;width:100%;background:linear-gradient(90deg,#37b24d,#a7f3a0);transition:width .3s;}
+  #shop{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 14px 16px;background:#0a1c11;}
+  .shopBtn{background:#14532d;border:1px solid #2f9e44;color:#e8f5e9;border-radius:8px;padding:10px 6px;font-size:.82rem;font-weight:700;cursor:pointer;line-height:1.2;min-height:56px;}
+  .shopBtn:active{transform:scale(.96);}
+  .shopBtn .price{display:block;color:#ffd43b;font-size:.78rem;margin-top:3px;}
+  .shopBtn:disabled{opacity:.45;}
+  #over{position:absolute;inset:0;background:rgba(8,20,12,.95);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:20;text-align:center;padding:20px;}
+  #over h2{color:#ff8787;font-size:2rem;margin:0 0 10px;}
+  #over button{margin-top:18px;background:#2f9e44;color:#fff;border:none;padding:12px 34px;border-radius:6px;font-size:1.1rem;font-weight:700;cursor:pointer;}
+  .float{position:absolute;color:#ffd43b;font-weight:700;font-size:.85rem;pointer-events:none;animation:fl 1s ease-out forwards;}
+  @keyframes fl{to{transform:translateY(-28px);opacity:0;}}
+</style>
+
+<div id="wrap">
+  <div id="start">
+    <h1>Defender Rainforest</h1>
+    <p class="tag">PROTECT THE LAST GREEN</p>
+    <svg class="poly-forest" viewBox="0 0 420 200">
+      <rect x="0" y="160" width="420" height="40" fill="#1c3a24"/>
+      <polygon points="60,160 90,70 120,160" fill="#2f9e44"/>
+      <polygon points="80,160 110,40 140,160" fill="#37b24d"/>
+      <polygon points="150,160 185,90 220,160" fill="#268a3a"/>
+      <polygon points="180,160 215,55 250,160" fill="#40c057"/>
+      <polygon points="250,160 285,80 320,160" fill="#2f9e44"/>
+      <polygon points="290,160 325,45 360,160" fill="#37b24d"/>
+      <polygon points="100,160 110,110 120,160" fill="#5a3a1d"/>
+      <polygon points="205,160 215,110 225,160" fill="#5a3a1d"/>
+      <polygon points="315,160 325,110 335,160" fill="#5a3a1d"/>
+    </svg>
+    <button id="playBtn">PLAY</button>
+  </div>
+
+  <div id="hud" style="display:none">
+    <div class="coins">Coins: <span id="coins">50</span></div>
+    <div class="threat">Next lumberjack in <span id="threat">8</span>s</div>
+  </div>
+  <div id="field" style="display:none"><div class="ground"></div></div>
+  <div id="bars" style="display:none"><div id="healthBar"><div id="healthFill"></div></div></div>
+  <div id="shop" style="display:none">
+    <button class="shopBtn" data-act="seed">Plant Seed<span class="price">10</span></button>
+    <button class="shopBtn" data-act="animal">Add Animal<span class="price">20</span></button>
+    <button class="shopBtn" data-act="barrier">Upgrade Barrier<span class="price">15</span></button>
+    <button class="shopBtn" data-act="ranger">Hire Ranger<span class="price">10</span></button>
+    <button class="shopBtn" data-act="expand">Expand Territory<span class="price">100</span></button>
+    <button class="shopBtn" data-act="drone">Patrol Drone<span class="price">25</span></button>
+  </div>
+
+  <div id="over">
+    <h2 id="overTitle">The forest fell</h2>
+    <p id="overMsg"></p>
+    <button onclick="location.reload()">Play again</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const field=document.getElementById('field');
+  const coinsEl=document.getElementById('coins');
+  const threatEl=document.getElementById('threat');
+  const healthFill=document.getElementById('healthFill');
+  let state, loop, spawnTimer, running=false;
+
+  const PRICES={seed:10,animal:20,barrier:15,ranger:10,expand:100,drone:25};
+
+  function start(){
+    document.getElementById('start').style.display='none';
+    ['hud','field','bars','shop'].forEach(id=>document.getElementById(id).style.display='');
+    document.getElementById('shop').style.display='grid';
+    state={coins:50,trees:[],lumbers:[],rangers:[],health:100,maxHealth:100,growSpeed:1,
+           barrier:0,nextSpawn:8,width:field.clientWidth,territory:.6,rangerCount:0,drone:false};
+    seedTree(true);seedTree(true);seedTree(true);
+    running=true;
+    loop=setInterval(tick,1000);
+    requestAnimationFrame(move);
+    spawnLoop();
+    render();
+  }
+
+  function seedTree(initial){
+    const min=field.clientWidth*(1-state.territory)/2;
+    const x=min+Math.random()*(field.clientWidth-2*min);
+    const t={x:x,size:initial?(20+Math.random()*20):8,el:document.createElement('div')};
+    t.el.className='tree';field.appendChild(t.el);state.trees.push(t);
+    drawTree(t);
+  }
+  function drawTree(t){
+    t.el.style.left=(t.x-t.size)+'px';
+    t.el.style.borderLeft=t.size+'px solid transparent';
+    t.el.style.borderRight=t.size+'px solid transparent';
+    t.el.style.borderBottom=(t.size*2.4)+'px solid #'+(t.size>18?'37b24d':'40c057');
+  }
+
+  function spawnLoop(){
+    spawnTimer=setTimeout(function(){
+      if(!running)return;
+      spawnLumber();
+      state.nextSpawn=Math.max(3,7-Math.floor((100-state.health)/25));
+      spawnLoop();
+    }, state.nextSpawn*1000);
+  }
+
+  function spawnLumber(){
+    const fromLeft=Math.random()<.5;
+    const l={x:fromLeft?-30:field.clientWidth+10,dir:fromLeft?1:-1,
+             speed:.35+Math.random()*.25,el:document.createElement('div'),cut:0};
+    l.el.className='lumber';field.appendChild(l.el);state.lumbers.push(l);
+  }
+
+  function addRanger(){
+    const r={x:Math.random()*field.clientWidth,el:document.createElement('div'),cool:0};
+    r.el.className='ranger';field.appendChild(r.el);state.rangers.push(r);
+    r.el.style.left=r.x+'px';
+  }
+
+  function move(){
+    if(!running)return;
+    const cx=field.clientWidth/2;
+    state.lumbers.forEach(l=>{
+      // target nearest tree center
+      l.x+=l.dir*l.speed*(2-state.barrier*0.15);
+      l.el.style.left=l.x+'px';
+      // reached middle area -> chop
+      if(Math.abs(l.x-cx)<60 && state.trees.length){
+        l.cut+=1;
+        if(l.cut>120){ chopTree(); l.cut=0; }
+      }
+      // ranger catches lumberjack
+      state.rangers.forEach(r=>{
+        if(Math.abs(r.x-l.x)<28){ l.dead=true; floatText(l.x,'caught!','#74c0fc'); }
+      });
+      if(state.drone && Math.random()<0.004){ l.dead=true; floatText(l.x,'drone!','#74c0fc'); }
+    });
+    // remove dead/offscreen
+    state.lumbers=state.lumbers.filter(l=>{
+      if(l.dead||l.x<-60||l.x>field.clientWidth+60){l.el.remove();return false;}
+      return true;
+    });
+    // rangers drift toward lumbers
+    state.rangers.forEach(r=>{
+      if(state.lumbers.length){
+        let near=state.lumbers.reduce((a,b)=>Math.abs(b.x-r.x)<Math.abs(a.x-r.x)?b:a);
+        r.x+=Math.sign(near.x-r.x)*1.1; r.el.style.left=r.x+'px';
+      }
+    });
+    requestAnimationFrame(move);
+  }
+
+  function chopTree(){
+    if(!state.trees.length)return;
+    const t=state.trees.pop();t.el.remove();
+    state.health=Math.max(0,state.health-10);
+    floatText(field.clientWidth/2,'-10','#ff8787');
+    render();
+    if(state.health<=0||state.trees.length===0) gameOver();
+  }
+
+  function tick(){
+    if(!running)return;
+    // income from trees + territory
+    const income=Math.round(state.trees.length*state.territory*2)+1;
+    state.coins+=income;
+    // grow seeds
+    state.trees.forEach(t=>{ if(t.size<34){ t.size+=0.8*state.growSpeed; drawTree(t);} });
+    // regen a little health if many trees
+    if(state.trees.length>6) state.health=Math.min(state.maxHealth,state.health+1);
+    state.nextSpawn=Math.max(0,state.nextSpawn-1);
+    render();
+  }
+
+  function render(){
+    coinsEl.textContent=state.coins;
+    threatEl.textContent=Math.max(0,state.nextSpawn);
+    healthFill.style.width=(state.health/state.maxHealth*100)+'%';
+    document.querySelectorAll('.shopBtn').forEach(b=>{
+      b.disabled=state.coins<PRICES[b.dataset.act];
+    });
+  }
+
+  function floatText(x,txt,color){
+    const f=document.createElement('div');f.className='float';f.textContent=txt;
+    f.style.left=x+'px';f.style.bottom='90px';f.style.color=color;
+    field.appendChild(f);setTimeout(()=>f.remove(),1000);
+  }
+
+  function buy(act){
+    if(state.coins<PRICES[act])return;
+    state.coins-=PRICES[act];
+    if(act==='seed'){ seedTree(false);seedTree(false); state.growSpeed+=0.05; }
+    if(act==='animal'){
+      const animals=['fox','toucan','sloth','jaguar','parrot','frog'];
+      const a=animals[Math.floor(Math.random()*animals.length)];
+      const el=document.createElement('div');el.className='animal';
+      el.textContent=a;el.style.left=(Math.random()*field.clientWidth)+'px';el.style.bottom='52px';
+      field.appendChild(el);
+      state.maxHealth=Math.min(150,state.maxHealth+5);state.health=Math.min(state.maxHealth,state.health+8);
+      floatText(field.clientWidth/2,'ecosystem +','#a7f3a0');
+    }
+    if(act==='barrier'){ state.barrier=Math.min(6,state.barrier+1); }
+    if(act==='ranger'){ addRanger();state.rangerCount++; }
+    if(act==='expand'){ state.territory=Math.min(1,state.territory+0.2); seedTree(false); }
+    if(act==='drone'){ state.drone=true; }
+    render();
+  }
+
+  function gameOver(){
+    running=false;clearInterval(loop);clearTimeout(spawnTimer);
+    document.getElementById('overMsg').textContent=
+      'You protected the forest for a while. Real rainforests need defenders too \u2014 keep planting!';
+    document.getElementById('over').style.display='flex';
+  }
+
+  document.getElementById('playBtn').addEventListener('click',start);
+  document.querySelectorAll('.shopBtn').forEach(b=>b.addEventListener('click',()=>buy(b.dataset.act)));
+})();
+</script></template>
+    <template id="game-C1"><style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:Georgia,'Times New Roman',serif;margin:0;min-height:100vh;color:#e7f6ff;
+       background:linear-gradient(180deg,#7fb7d4 0%,#3f87a6 45%,#1f5673 100%);}
+  .page{display:none;min-height:100vh;padding:22px 18px 40px;}
+  .page.active{display:block;}
+  h1{font-size:2.6rem;margin:.4rem 0 0;letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.25);}
+  .subtitle{font-style:italic;font-size:1.05rem;color:#d6eefb;margin:2px 0 0;letter-spacing:2px;}
+  .factbox{position:absolute;top:14px;right:14px;max-width:46%;background:rgba(255,255,255,.92);
+           color:#1f5673;border-radius:14px;padding:10px 12px;font-family:Georgia,serif;font-size:.74rem;
+           line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.2);transform:rotate(1.5deg);}
+  .factbox b{display:block;font-size:.7rem;letter-spacing:1px;color:#3f87a6;text-transform:uppercase;margin-bottom:3px;}
+  .menu-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:78vh;gap:22px;}
+  .pinbtn{width:min(82vw,360px);background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.55);
+          backdrop-filter:blur(4px);color:#fff;border-radius:18px;padding:26px;font-family:Georgia,serif;
+          font-size:1.4rem;cursor:pointer;transition:.2s;box-shadow:0 8px 24px rgba(0,0,0,.18);}
+  .pinbtn:hover{background:rgba(255,255,255,.3);transform:translateY(-3px);}
+  .pinbtn small{display:block;font-size:.85rem;font-style:italic;opacity:.85;margin-top:6px;}
+  .card{max-width:560px;margin:10px auto;background:rgba(255,255,255,.94);color:#234b5e;
+        border-radius:18px;padding:22px 24px;line-height:1.6;box-shadow:0 10px 30px rgba(0,0,0,.2);}
+  .card h2{font-size:1.7rem;margin:.2rem 0 12px;color:#1f5673;}
+  .card h3{color:#3f87a6;margin:18px 0 6px;}
+  .back{background:transparent;border:2px solid #fff;color:#fff;border-radius:20px;padding:8px 18px;
+        cursor:pointer;font-family:Georgia,serif;font-size:.95rem;margin-bottom:6px;}
+  ul{padding-left:20px;} li{margin:4px 0;}
+  .names{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+  .name-chip{background:#e7f6ff;border-radius:30px;padding:6px 16px;color:#1f5673;font-weight:bold;}
+  a{color:#2f7da6;}
+</style>
+
+<!-- MENU -->
+<div id="m-menu" class="page active" style="position:relative;">
+  <div class="factbox">
+    <b>Did you know? &middot; Sylt</b>
+    Sylt has <strong>no road bridge</strong>. To bring a car to the island you must load it onto a train, the
+    "Sylt Shuttle", which crosses the 11&nbsp;km Hindenburgdamm causeway &mdash; the only land link since 1927.
+  </div>
+  <div style="text-align:center;">
+    <h1>Menu</h1>
+    <p class="subtitle">Social Challenge</p>
+  </div>
+  <div class="menu-wrap">
+    <button class="pinbtn" onclick="go('m-expl')">Explanation<small>How "Human Memory" works</small></button>
+    <button class="pinbtn" onclick="go('m-cred')">Credits<small>The team &amp; our sources</small></button>
+  </div>
+</div>
+
+<!-- EXPLANATION -->
+<div id="m-expl" class="page">
+  <button class="back" onclick="go('m-menu')">&larr; Menu</button>
+  <div class="card">
+    <h2>Human Memory</h2>
+    <p><em>It is not the card game you think of.</em> In a normal "Memory" game you flip cards and search
+    for two pictures that match. In <strong>Human Memory</strong>, the cards are <strong>people</strong>.</p>
+    <h3>How it works</h3>
+    <p>Everyone secretly writes down a few personal features &mdash; a hobby, a personality trait, a favourite
+    thing. Then the whole group mingles and talks. Your goal is to find your <strong>"pair"</strong>: the person
+    who shares the same feature as you (for example, two people who both love drawing, or two people who describe
+    themselves as "calm").</p>
+    <h3>The twist</h3>
+    <p>You don't know in advance who your match is, and some features are shared by more than one person &mdash;
+    so you have to <strong>actually talk and listen</strong> to find the right partner. The faster the class finds
+    all the pairs, the better the team works together. That is why it lives under <strong>Social Challenge</strong>:
+    it is a memory of <em>each other</em>, not of cards.</p>
+  </div>
+</div>
+
+<!-- CREDITS -->
+<div id="m-cred" class="page">
+  <button class="back" onclick="go('m-menu')">&larr; Menu</button>
+  <div class="card">
+    <h2>Credits</h2>
+    <h3>Created by</h3>
+    <div class="names">
+      <span class="name-chip">Charlotte</span>
+      <span class="name-chip">Ayumi</span>
+      <span class="name-chip">Laura</span>
+    </div>
+    <h3>Built with the help of</h3>
+    <p>Claude (AI assistant by Anthropic).</p>
+    <h3>Sources used</h3>
+    <ul>
+      <li><a href="https://www.insel-sylt.de/nachhaltig/trinkwasser/" target="_blank" rel="noopener">insel-sylt.de</a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Sylt" target="_blank" rel="noopener">en.wikipedia.org/wiki/Sylt</a></li>
+      <li><a href="https://www.britannica.com/place/Sylt" target="_blank" rel="noopener">britannica.com/place/Sylt</a></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  function go(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+</script></template>
+    <template id="game-C2"><style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Trebuchet MS',Verdana,sans-serif;margin:0;min-height:100vh;color:#fff;overflow-x:hidden;
+       background:radial-gradient(circle at 50% -10%,#7b2ff7 0%,#3a0ca3 45%,#160224 100%);}
+  .disco{position:fixed;top:-40px;left:50%;transform:translateX(-50%);width:90px;height:90px;border-radius:50%;
+         background:conic-gradient(#ff6ec4,#7873f5,#4ade80,#facc15,#ff6ec4);filter:blur(1px);
+         box-shadow:0 0 40px #b76eff,0 0 80px #7b2ff7;animation:spin 4s linear infinite;opacity:.85;}
+  @keyframes spin{to{transform:translateX(-50%) rotate(360deg);}}
+  .page{display:none;padding:90px 18px 40px;max-width:600px;margin:0 auto;}
+  .page.active{display:block;}
+  h1{text-align:center;font-size:2.3rem;margin:0 0 4px;text-shadow:0 0 18px #ff6ec4;letter-spacing:2px;}
+  .sub{text-align:center;color:#e0c3fc;margin:0 0 22px;letter-spacing:3px;font-size:.85rem;}
+  label{display:block;margin:14px 0 6px;color:#e0c3fc;font-size:.9rem;}
+  input{width:100%;padding:12px;border-radius:10px;border:2px solid #7b2ff7;background:#1a0a2e;color:#fff;font-size:1rem;}
+  .btn{display:block;width:100%;margin-top:16px;background:linear-gradient(90deg,#ff6ec4,#7873f5);color:#fff;
+       border:none;padding:15px;border-radius:12px;font-size:1.1rem;font-weight:bold;cursor:pointer;
+       box-shadow:0 6px 20px rgba(123,47,247,.5);min-height:48px;}
+  .btn:active{transform:scale(.98);}
+  .btn.ghost{background:transparent;border:2px solid #b76eff;box-shadow:none;}
+  .scoreboard{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;}
+  .team{background:rgba(255,255,255,.1);border:1px solid #b76eff;border-radius:14px;padding:8px 14px;text-align:center;min-width:90px;}
+  .team .nm{font-weight:bold;color:#facc15;}
+  .team .pts{font-size:1.6rem;}
+  .cluecard{background:rgba(255,255,255,.08);border:1px solid #7b2ff7;border-radius:16px;padding:20px;margin:18px 0;}
+  .clue{background:#1a0a2e;border-left:4px solid #ff6ec4;border-radius:8px;padding:12px 14px;margin:8px 0;animation:pop .3s;}
+  @keyframes pop{from{opacity:0;transform:translateY(8px);}}
+  .answer{text-align:center;font-size:1.5rem;color:#4ade80;margin:12px 0;font-weight:bold;}
+  .award{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+  .award button{background:#7b2ff7;border:none;color:#fff;border-radius:20px;padding:10px 16px;cursor:pointer;font-weight:bold;}
+  .round-info{text-align:center;color:#e0c3fc;margin-bottom:6px;}
+</style>
+<div class="disco"></div>
+
+<!-- SETUP -->
+<div id="s-setup" class="page active">
+  <h1>Guess the Song</h1>
+  <p class="sub">DISCO QUIZ NIGHT</p>
+  <label>How many teams? (2&ndash;4)</label>
+  <input id="numTeams" type="number" min="2" max="4" value="2">
+  <div id="teamNames"></div>
+  <button class="btn" onclick="buildNames()">Set team names</button>
+  <button class="btn ghost" id="startBtn" style="display:none" onclick="startGame()">Start the quiz!</button>
+</div>
+
+<!-- GAME -->
+<div id="s-game" class="page">
+  <div class="round-info">Song <span id="roundNum">1</span> of <span id="roundTot">8</span></div>
+  <div class="scoreboard" id="scoreboard"></div>
+  <div class="cluecard">
+    <div id="clues"></div>
+    <div id="answerWrap"></div>
+  </div>
+  <button class="btn" id="nextClue" onclick="nextClue()">Reveal next clue</button>
+  <button class="btn ghost" id="revealBtn" onclick="revealAnswer()">Reveal answer</button>
+  <div class="award" id="awardWrap" style="display:none"></div>
+  <button class="btn" id="nextSong" style="display:none" onclick="nextSong()">Next song &rarr;</button>
+</div>
+
+<!-- END -->
+<div id="s-end" class="page">
+  <h1>Final Score</h1>
+  <div class="scoreboard" id="finalBoard"></div>
+  <div class="answer" id="winner"></div>
+  <button class="btn" onclick="location.reload()">Play again</button>
+</div>
+
+<script>
+(function(){
+  // Clues describe facts about each song (artist, year, theme, trend) - no lyrics.
+  const SONGS=[
+    {a:'Espresso \u2014 Sabrina Carpenter',clues:['A massive summer hit from 2024.','The singer\u2019s first name is Sabrina.','The title is a type of strong Italian coffee.','It topped charts worldwide and was everywhere on TikTok.']},
+    {a:'Flowers \u2014 Miley Cyrus',clues:['Released in early 2023, a huge comeback single.','The artist was once a Disney Channel star.','The title is a kind of plant you give as a gift.','Its message is about loving yourself after a breakup.']},
+    {a:'As It Was \u2014 Harry Styles',clues:['By a former member of a famous British boy band.','Came out in 2022 with a colourful music video.','The singer\u2019s last name is Styles.','One of the most streamed songs of the decade.']},
+    {a:'Calm Down \u2014 Rema & Selena Gomez',clues:['An Afrobeats hit that became a global smash.','A Nigerian artist teamed up with an American pop star.','The title is two words telling someone to relax.','It was inescapable on TikTok in 2022\u20132023.']},
+    {a:'Cruel Summer \u2014 Taylor Swift',clues:['From an album released back in 2019 but a hit years later.','By the most famous pop songwriter of her generation.','The title pairs a harsh word with a warm season.','It exploded again during her record-breaking tour.']},
+    {a:'Beautiful Things \u2014 Benson Boone',clues:['A 2024 breakout hit with a big jump in the music video.','The male singer is known for a backflip on stage.','The title describes good things you are grateful for.','It went viral worldwide on social media.']},
+    {a:'Greedy \u2014 Tate McRae',clues:['A dance-pop hit from late 2023.','By a Canadian singer who is also a trained dancer.','The one-word title means wanting more and more.','It sparked a popular dance trend online.']},
+    {a:'Murder on the Dancefloor \u2014 Sophie Ellis-Bextor',clues:['Originally from 2001 but went viral again in 2024.','It returned to fame thanks to the film "Saltburn".','The title sounds like a crime but happens on a disco floor.','A glamorous British dance-pop classic.']}
+  ];
+
+  let teams=[], idx=0, clueShown=0, order=[];
+
+  document.getElementById('numTeams').addEventListener('change',()=>{document.getElementById('startBtn').style.display='none';});
+
+  window.buildNames=function(){
+    let n=Math.min(4,Math.max(2,parseInt(document.getElementById('numTeams').value)||2));
+    let html='';
+    for(let i=0;i<n;i++) html+='<label>Team '+(i+1)+' name</label><input class="tname" placeholder="e.g. The Seagulls">';
+    document.getElementById('teamNames').innerHTML=html;
+    document.getElementById('startBtn').style.display='block';
+  };
+
+  window.startGame=function(){
+    const inputs=document.querySelectorAll('.tname');
+    teams=[];
+    inputs.forEach((inp,i)=>teams.push({name:inp.value.trim()||('Team '+(i+1)),pts:0}));
+    order=SONGS.map((_,i)=>i).sort(()=>Math.random()-0.5);
+    document.getElementById('roundTot').textContent=order.length;
+    idx=0;showSong();
+    document.getElementById('s-setup').classList.remove('active');
+    document.getElementById('s-game').classList.add('active');
+  };
+
+  function drawScore(el){
+    el.innerHTML=teams.map(t=>'<div class="team"><div class="nm">'+t.name+'</div><div class="pts">'+t.pts+'</div></div>').join('');
+  }
+
+  function showSong(){
+    clueShown=0;
+    document.getElementById('roundNum').textContent=idx+1;
+    document.getElementById('clues').innerHTML='';
+    document.getElementById('answerWrap').innerHTML='';
+    document.getElementById('awardWrap').style.display='none';
+    document.getElementById('nextSong').style.display='none';
+    document.getElementById('nextClue').style.display='block';
+    document.getElementById('revealBtn').style.display='block';
+    drawScore(document.getElementById('scoreboard'));
+    nextClue();
+  }
+
+  window.nextClue=function(){
+    const song=SONGS[order[idx]];
+    if(clueShown<song.clues.length){
+      const d=document.createElement('div');d.className='clue';
+      d.textContent='Clue '+(clueShown+1)+': '+song.clues[clueShown];
+      document.getElementById('clues').appendChild(d);
+      clueShown++;
+    }
+    if(clueShown>=song.clues.length) document.getElementById('nextClue').style.display='none';
+  };
+
+  window.revealAnswer=function(){
+    const song=SONGS[order[idx]];
+    document.getElementById('answerWrap').innerHTML='<div class="answer">'+song.a+'</div>';
+    document.getElementById('nextClue').style.display='none';
+    document.getElementById('revealBtn').style.display='none';
+    // award: more points if fewer clues used
+    const pts=Math.max(1,5-(clueShown-1));
+    const aw=document.getElementById('awardWrap');
+    aw.style.display='flex';
+    aw.innerHTML='<div style="width:100%;text-align:center;color:#e0c3fc">Who guessed it? (+'+pts+' pts)</div>'+
+      teams.map((t,i)=>'<button onclick="award('+i+','+pts+')">'+t.name+'</button>').join('')+
+      '<button style="background:#444" onclick="award(-1,0)">Nobody</button>';
+  };
+
+  window.award=function(i,pts){
+    if(i>=0) teams[i].pts+=pts;
+    drawScore(document.getElementById('scoreboard'));
+    document.getElementById('awardWrap').style.display='none';
+    document.getElementById('nextSong').style.display='block';
+  };
+
+  window.nextSong=function(){
+    idx++;
+    if(idx>=order.length){endGame();return;}
+    showSong();
+  };
+
+  function endGame(){
+    document.getElementById('s-game').classList.remove('active');
+    document.getElementById('s-end').classList.add('active');
+    drawScore(document.getElementById('finalBoard'));
+    const max=Math.max(...teams.map(t=>t.pts));
+    const winners=teams.filter(t=>t.pts===max).map(t=>t.name);
+    document.getElementById('winner').textContent=(winners.length>1?'Tie! ':'Winner: ')+winners.join(' & ')+' \uD83C\uDF89';
+  }
+})();
+</script></template>
+    <template id="game-C3"><style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Trebuchet MS',Verdana,sans-serif;margin:0;min-height:100vh;color:#073b4c;
+       background:linear-gradient(180deg,#caf0f8,#90e0ef 50%,#48cae4);text-align:center;padding-bottom:40px;}
+  h1{margin:22px 0 4px;color:#0077b6;}
+  .phase{display:none;padding:16px 18px;max-width:560px;margin:0 auto;}
+  .phase.active{display:block;}
+  /* seashell */
+  .shell{width:150px;height:150px;margin:18px auto;cursor:pointer;transition:transform .15s;filter:drop-shadow(0 6px 10px rgba(0,0,0,.2));}
+  .shell:active{transform:scale(.92) rotate(-4deg);}
+  .counts{display:flex;justify-content:center;gap:18px;margin:14px 0;font-size:1.1rem;font-weight:bold;}
+  .counts div{background:#fff;border-radius:14px;padding:8px 16px;color:#0077b6;}
+  .result{font-size:3rem;min-height:60px;animation:pop .3s;}
+  @keyframes pop{from{transform:scale(.3);opacity:0;}}
+  .big{font-size:2.2rem;font-weight:800;color:#d00000;margin:18px 0;animation:pop .4s;}
+  .fishbtn{position:relative;background:#0096c7;color:#fff;border:none;font-size:1.3rem;font-weight:bold;
+           padding:22px 50px;border-radius:50% 8px 50% 8px / 50% 80% 50% 80%;cursor:pointer;margin:18px auto;
+           box-shadow:0 8px 18px rgba(0,0,0,.2);}
+  .fishbtn:after{content:"";position:absolute;left:-18px;top:50%;transform:translateY(-50%);
+                 border:14px solid transparent;border-right-color:#0096c7;}
+  .btn{background:#0077b6;color:#fff;border:none;padding:14px 22px;border-radius:12px;font-size:1.05rem;
+       font-weight:bold;cursor:pointer;margin:8px;min-height:48px;}
+  .task{background:#fff;border-radius:16px;padding:18px;margin:14px 0;font-size:1.15rem;color:#073b4c;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+  .star{color:#d00000;}
+  .uploadLabel{display:inline-block;background:#d00000;color:#fff;padding:16px 26px;border-radius:14px;
+               font-weight:bold;cursor:pointer;font-size:1.05rem;min-height:48px;}
+  #file{display:none;}
+  .progress{background:#fff;border-radius:20px;height:26px;margin:16px auto;max-width:400px;overflow:hidden;border:2px solid #0077b6;}
+  .progress div{height:100%;background:linear-gradient(90deg,#ffba08,#d00000);width:0;transition:width .3s;
+                color:#fff;font-weight:bold;font-size:.85rem;line-height:26px;}
+  .gallery{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px;}
+  .gallery img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:2px solid #fff;}
+  .final{font-size:2.4rem;font-weight:900;color:#d00000;line-height:1.2;margin-top:24px;animation:pop .5s;}
+</style>
+
+<!-- PHASE 1: team draw -->
+<div id="p1" class="phase active">
+  <h1>Listar-Team</h1>
+  <p>Tap the seashell to get your team animal. Each animal fits 10 players.</p>
+  <svg class="shell" viewBox="0 0 100 100" onclick="drawAnimal()">
+    <path d="M50 92 C8 70 6 30 30 12 C40 6 48 18 50 30 C52 18 60 6 70 12 C94 30 92 70 50 92Z" fill="#ffd6a5" stroke="#f4978e" stroke-width="2"/>
+    <path d="M50 90 L40 20 M50 90 L50 14 M50 90 L60 20 M50 90 L30 28 M50 90 L70 28" stroke="#f4978e" stroke-width="1.5" fill="none"/>
+  </svg>
+  <div class="result" id="animalResult">&nbsp;</div>
+  <div class="counts">
+    <div>\uD83D\uDC36 <span id="cDog">10</span></div>
+    <div>\uD83D\uDC31 <span id="cCat">10</span></div>
+    <div>\uD83D\uDC0E <span id="cHorse">10</span></div>
+  </div>
+  <div id="teamsMsg"></div>
+</div>
+
+<!-- PHASE 2: task -->
+<div id="p2" class="phase">
+  <h1>Teams are ready!</h1>
+  <p>Tap the fish to reveal your mission.</p>
+  <button class="fishbtn" onclick="showTask()">Your task</button>
+  <div id="taskBox"></div>
+</div>
+
+<!-- PHASE 3: star hunt -->
+<div id="p3" class="phase">
+  <h1>Star Hunt</h1>
+  <div class="task">Find the <span class="star">red stars</span> around the terrain. There are <strong>33</strong> in total!</div>
+  <p>Take a picture of your star <em>with the location you found it</em>.</p>
+  <label class="uploadLabel" for="file">\uD83D\uDCF7 Upload a star photo</label>
+  <input id="file" type="file" accept="image/*" capture="environment" onchange="addPhoto(event)">
+  <div class="progress"><div id="bar">0 / 33</div></div>
+  <div class="gallery" id="gallery"></div>
+  <div id="done"></div>
+</div>
+
+<script>
+(function(){
+  let stock={dog:10,cat:10,horse:10};
+  const emoji={dog:'\uD83D\uDC36',cat:'\uD83D\uDC31',horse:'\uD83D\uDC0E'};
+  let found=0;
+
+  window.drawAnimal=function(){
+    const left=Object.keys(stock).filter(k=>stock[k]>0);
+    if(left.length===0)return;
+    const pick=left[Math.floor(Math.random()*left.length)];
+    stock[pick]--;
+    document.getElementById('animalResult').textContent=emoji[pick];
+    document.getElementById('cDog').textContent=stock.dog;
+    document.getElementById('cCat').textContent=stock.cat;
+    document.getElementById('cHorse').textContent=stock.horse;
+    if(stock.dog+stock.cat+stock.horse===0){
+      document.getElementById('teamsMsg').innerHTML='<div class="big">Find teams!</div>'+
+        '<button class="btn" onclick="next2()">Continue &rarr;</button>';
+    }
+  };
+  // allow continuing earlier too
+  window.next2=function(){
+    document.getElementById('p1').classList.remove('active');
+    document.getElementById('p2').classList.add('active');
+  };
+
+  window.showTask=function(){
+    document.getElementById('taskBox').innerHTML=
+      '<div class="task">Find the <span class="star">red stars</span> around the terrain.</div>'+
+      '<button class="btn" onclick="next3()">Start hunting &rarr;</button>';
+  };
+  window.next3=function(){
+    document.getElementById('p2').classList.remove('active');
+    document.getElementById('p3').classList.add('active');
+  };
+
+  window.addPhoto=function(e){
+    const file=e.target.files[0];
+    if(!file)return;
+    const reader=new FileReader();
+    reader.onload=function(ev){
+      const img=document.createElement('img');img.src=ev.target.result;
+      document.getElementById('gallery').appendChild(img);
+      found=Math.min(33,found+1);
+      const bar=document.getElementById('bar');
+      bar.style.width=(found/33*100)+'%';
+      bar.textContent=found+' / 33';
+      if(found>=33){
+        document.getElementById('done').innerHTML='<div class="final">GET BACK TO THE<br>COLLECTION POINT!</div>';
+      }
+    };
+    reader.readAsDataURL(file);
+    e.target.value='';
+  };
+})();
+</script></template>
+    <template id="game-C4"><style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Trebuchet MS',Verdana,sans-serif;margin:0;height:100vh;overflow:hidden;color:#fff;
+       background:linear-gradient(180deg,#48cae4 0%,#0096c7 60%,#0077b6 100%);}
+  /* seagulls */
+  .gull{position:absolute;font-size:28px;color:#f8f9fa;text-shadow:0 1px 2px rgba(0,0,0,.2);
+        left:-40px;animation:flyR linear infinite;}
+  @keyframes flyR{from{transform:translateX(0);}to{transform:translateX(110vw);}}
+  /* top bar */
+  .profile{position:absolute;top:14px;left:14px;width:48px;height:48px;border-radius:50%;
+           background:#fff;color:#0077b6;border:3px solid #ffd166;font-size:1.5rem;cursor:pointer;z-index:5;
+           display:flex;align-items:center;justify-content:center;}
+  .badge{position:absolute;top:8px;left:44px;background:#e63946;color:#fff;border-radius:50%;
+         min-width:20px;height:20px;font-size:.75rem;line-height:20px;text-align:center;z-index:6;display:none;}
+  .points{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.92);color:#0077b6;
+          border-radius:20px;padding:8px 16px;font-weight:bold;z-index:5;}
+  /* wheel view */
+  #wheelView{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .arrow{width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;
+         border-top:28px solid #003049;margin-bottom:-6px;z-index:4;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));}
+  #wheel{background:#fff;border-radius:50%;box-shadow:0 8px 30px rgba(0,0,0,.3);}
+  #turnBtn{margin-top:24px;background:#003049;color:#fff;border:none;padding:16px 60px;border-radius:30px;
+           font-size:1.4rem;font-weight:bold;letter-spacing:2px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.3);}
+  #turnBtn:disabled{opacity:.6;}
+  /* compliment view */
+  #compView,#inboxView{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+  .closeX{position:absolute;top:70px;right:20px;background:#e63946;color:#fff;border:none;width:44px;height:44px;
+          border-radius:10px;font-size:1.4rem;cursor:pointer;z-index:8;}
+  .msg{font-size:1.25rem;text-align:center;max-width:420px;margin-bottom:18px;text-shadow:0 1px 3px rgba(0,0,0,.25);}
+  .whitebox{background:#fff;border-radius:18px;padding:18px;width:min(88vw,420px);box-shadow:0 10px 30px rgba(0,0,0,.25);}
+  .whitebox textarea{width:100%;height:110px;border:2px solid #90e0ef;border-radius:10px;padding:10px;font-size:1rem;resize:none;color:#073b4c;}
+  .sendBtn{margin-top:12px;width:100%;background:#0096c7;color:#fff;border:none;padding:14px;border-radius:12px;font-size:1.1rem;font-weight:bold;cursor:pointer;min-height:48px;}
+  .inboxList{background:rgba(255,255,255,.95);border-radius:16px;padding:14px;width:min(90vw,440px);max-height:60vh;overflow-y:auto;color:#073b4c;}
+  .inboxItem{border-bottom:1px solid #dee2e6;padding:10px 4px;text-align:left;}
+  .inboxItem b{color:#0077b6;}
+  .empty{color:#6c757d;font-style:italic;text-align:center;padding:16px;}
+  .toast{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);background:#003049;color:#fff;
+         padding:12px 22px;border-radius:24px;opacity:0;transition:.3s;z-index:9;}
+  .toast.show{opacity:1;}
+</style>
+
+<div class="profile" onclick="openInbox()">&#9993;</div>
+<div class="badge" id="badge">0</div>
+<div class="points">Points: <span id="pts">0</span></div>
+
+<div id="wheelView">
+  <div class="arrow"></div>
+  <canvas id="wheel" width="300" height="300"></canvas>
+  <button id="turnBtn" onclick="spin()">TURN</button>
+</div>
+
+<div id="compView">
+  <button class="closeX" onclick="toWheel()">&times;</button>
+  <div class="msg" id="compMsg"></div>
+  <div class="whitebox">
+    <textarea id="compText" placeholder="Write your compliment here..."></textarea>
+    <button class="sendBtn" onclick="sendCompliment()">Send compliment</button>
+  </div>
+</div>
+
+<div id="inboxView">
+  <button class="closeX" onclick="toWheel()">&times;</button>
+  <h2>Your messages</h2>
+  <div class="inboxList" id="inboxList"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  // Class names for the wheel - the team can edit this list.
+  const NAMES=['Anna','Ben','Clara','David','Emma','Finn','Greta','Hannes','Ida','Jonas','Lina','Max'];
+  const COLORS=['#e63946','#ffffff'];
+  const canvas=document.getElementById('wheel');
+  const ctx=canvas.getContext('2d');
+  const R=150, cx=150, cy=150;
+  let angle=0, spinning=false, points=0;
+  let inbox=[]; // {from, text}
+  let chosen=null;
+
+  function draw(){
+    ctx.clearRect(0,0,300,300);
+    const seg=(Math.PI*2)/NAMES.length;
+    for(let i=0;i<NAMES.length;i++){
+      const a0=angle+i*seg, a1=a0+seg;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,a0,a1);ctx.closePath();
+      ctx.fillStyle=COLORS[i%2];ctx.fill();
+      ctx.strokeStyle='#003049';ctx.lineWidth=1;ctx.stroke();
+      // label
+      ctx.save();ctx.translate(cx,cy);ctx.rotate(a0+seg/2);
+      ctx.fillStyle=(i%2===0)?'#fff':'#e63946';
+      ctx.font='bold 14px Trebuchet MS';ctx.textAlign='right';
+      ctx.fillText(NAMES[i],R-12,5);ctx.restore();
+    }
+    ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);ctx.fillStyle='#003049';ctx.fill();
+  }
+
+  window.spin=function(){
+    if(spinning)return;
+    spinning=true;document.getElementById('turnBtn').disabled=true;
+    const target=angle+Math.PI*8+Math.random()*Math.PI*2;
+    const start=angle, dur=3200, t0=performance.now();
+    function step(now){
+      const p=Math.min(1,(now-t0)/dur);
+      const ease=1-Math.pow(1-p,3);
+      angle=start+(target-start)*ease;
+      draw();
+      if(p<1){requestAnimationFrame(step);}
+      else{spinning=false;document.getElementById('turnBtn').disabled=false;pickWinner();}
+    }
+    requestAnimationFrame(step);
+  };
+
+  function pickWinner(){
+    // pointer is at top (-90deg = -PI/2). Determine segment under pointer.
+    const seg=(Math.PI*2)/NAMES.length;
+    let pointer=(-Math.PI/2 - angle);
+    pointer=((pointer % (Math.PI*2))+Math.PI*2)%(Math.PI*2);
+    const i=Math.floor(pointer/seg)%NAMES.length;
+    chosen=NAMES[i];
+    document.getElementById('compMsg').innerHTML=
+      'You have to give <b>'+chosen+'</b> a compliment.<br>Don\u2019t be mean.';
+    document.getElementById('compText').value='';
+    show('compView');
+  }
+
+  window.sendCompliment=function(){
+    const text=document.getElementById('compText').value.trim();
+    if(!text){toast('Write something kind first!');return;}
+    inbox.push({from:'You',to:chosen,text:text});
+    points++;
+    document.getElementById('pts').textContent=points;
+    const b=document.getElementById('badge');
+    b.style.display='flex';b.textContent=inbox.length;
+    toast('Compliment sent to '+chosen+'! \uD83D\uDC9B');
+    toWheel();
+  };
+
+  window.openInbox=function(){
+    const list=document.getElementById('inboxList');
+    if(inbox.length===0){list.innerHTML='<div class="empty">No compliments yet. Spin and send one!</div>';}
+    else{
+      list.innerHTML=inbox.map(m=>'<div class="inboxItem">To <b>'+m.to+'</b>: '+escapeHtml(m.text)+'</div>').join('');
+    }
+    show('inboxView');
+  };
+
+  window.toWheel=function(){show('wheelView');};
+
+  function show(id){
+    ['wheelView','compView','inboxView'].forEach(v=>{
+      document.getElementById(v).style.display=(v===id)?'flex':'none';
+    });
+  }
+
+  function toast(msg){
+    const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),1800);
+  }
+  function escapeHtml(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+  // seagulls
+  for(let i=0;i<5;i++){
+    const g=document.createElement('div');g.className='gull';g.textContent='\u3030';
+    g.style.top=(8+Math.random()*45)+'%';
+    g.style.animationDuration=(9+Math.random()*7)+'s';
+    g.style.animationDelay=(-Math.random()*10)+'s';
+    g.style.fontSize=(20+Math.random()*16)+'px';
+    document.body.appendChild(g);
+  }
+
+  draw();
+})();
+</script></template>
+    <template id="game-D1"><style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;}
+  html,body{height:100%;background:#001a33;overflow:hidden;font-family:'Courier New',monospace;}
+  #c{display:block;width:100vw;height:100vh;image-rendering:pixelated;touch-action:none;}
+  #start,#end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+              color:#cdeeff;text-align:center;padding:24px;z-index:5;}
+  #start{background:#012a4a;}
+  #start h1{font-size:2rem;letter-spacing:2px;color:#ade8f4;margin-bottom:6px;}
+  #start p{max-width:380px;line-height:1.5;color:#90c2d9;font-size:.9rem;}
+  button{margin-top:20px;background:#0077b6;color:#fff;border:3px solid #ade8f4;padding:14px 40px;
+         font-family:'Courier New',monospace;font-size:1.2rem;font-weight:bold;cursor:pointer;}
+  button:active{transform:translateY(2px);}
+  #end{background:#0a0a12;display:none;}
+  #end h2{font-size:1.8rem;color:#e0e0e0;letter-spacing:1px;}
+  #end .stat{font-size:1.4rem;color:#ff6b6b;margin:18px 0;font-weight:bold;}
+  #end .credit{color:#888;font-size:.85rem;margin-top:14px;}
+  #music{position:absolute;bottom:8px;left:8px;color:#456;font-size:.7rem;z-index:6;}
+</style>
+
+<canvas id="c"></canvas>
+<div id="start">
+  <h1>ATTACK ON SEALS</h1>
+  <p>You are a seal. Eat fish to keep your HUNGER up. Swim to the surface to refill your AIR.
+     Dodge the fishing NETS (they catch you), and avoid surfboards &amp; trash that slow you down.
+     Grab a can of energy for wings: 10 seconds of flight and safety.</p>
+  <p style="color:#5a7a8a">Move: drag your finger, or use the arrow keys.</p>
+  <button onclick="startGame()">DIVE IN</button>
+</div>
+<div id="end">
+  <h2 id="endTitle"></h2>
+  <p id="endText" style="max-width:420px;line-height:1.6;color:#bbb"></p>
+  <div class="stat" id="endStat"></div>
+  <div class="credit">A Sylt awareness game by Julian, Severin, Noah, Jonathan &amp; Rio</div>
+  <button onclick="location.reload()" style="border-color:#555;background:#222">Play again</button>
+</div>
+<div id="music">music: add "rickroll.mp3" to enable (left out for copyright)</div>
+<!-- Team: drop your own audio file and uncomment:
+<audio id="bgm" src="rickroll.mp3" loop></audio> -->
+
+<script>
+(function(){
+  const cv=document.getElementById('c'), x=cv.getContext('2d');
+  let W,H,surfaceY;
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;surfaceY=Math.max(70,H*0.16);}
+  addEventListener('resize',resize);resize();
+
+  let running=false,raf;
+  let seal,fishes,obstacles,cans,bubbles;
+  let hunger,air,score,startTime,invincTime,slowTime;
+  const GAME_MS=5*60*1000;
+
+  function reset(){
+    seal={x:W*0.3,y:H*0.5,vx:0,vy:0,w:46,h:26,target:null,flying:false};
+    fishes=[];obstacles=[];cans=[];bubbles=[];
+    hunger=100;air=100;score=0;invincTime=0;slowTime=0;
+    startTime=performance.now();
+    for(let i=0;i<5;i++) spawnFish();
+  }
+
+  function spawnFish(){fishes.push({x:W+Math.random()*W*0.5,y:surfaceY+20+Math.random()*(H-surfaceY-60),
+      vx:-(1.2+Math.random()*1.5),w:22,h:12,col:['#ffb703','#fb8500','#e85d04'][Math.floor(Math.random()*3)]});}
+  function spawnObstacle(){
+    const type=['net','surf','trash'][Math.floor(Math.random()*3)];
+    let o={x:W+30,vx:-(1.6+Math.random()*1.8),type:type};
+    if(type==='net'){o.y=surfaceY+20+Math.random()*(H-surfaceY-120);o.w=46;o.h=70;}
+    else if(type==='surf'){o.y=surfaceY-6;o.w=70;o.h=14;o.vx=-(2+Math.random()*1.5);}
+    else{o.y=surfaceY+30+Math.random()*(H-surfaceY-80);o.w=24;o.h=24;}
+    obstacles.push(o);
+  }
+  function spawnCan(){cans.push({x:W+20,y:surfaceY+30+Math.random()*(H-surfaceY-90),vx:-2,w:18,h:26});}
+
+  // input
+  function setTarget(px,py){seal.target={x:px,y:py};}
+  cv.addEventListener('pointerdown',e=>{setTarget(e.clientX,e.clientY);});
+  cv.addEventListener('pointermove',e=>{if(e.buttons)setTarget(e.clientX,e.clientY);});
+  cv.addEventListener('pointerup',()=>{seal.target=null;});
+  const keys={};
+  addEventListener('keydown',e=>{keys[e.key]=true;});
+  addEventListener('keyup',e=>{keys[e.key]=false;});
+
+  function pixel(px,py,pw,ph,col){x.fillStyle=col;x.fillRect(px|0,py|0,pw,ph);}
+
+  function drawSeal(){
+    const sx=seal.x-seal.w/2, sy=seal.y-seal.h/2;
+    if(invincTime>0){
+      // wings
+      pixel(sx-10,sy-6,14,8,'#fff');pixel(sx+seal.w-4,sy-6,14,8,'#fff');
+      x.globalAlpha=0.6+0.4*Math.sin(performance.now()/80);
+    }
+    pixel(sx,sy,seal.w,seal.h,'#6b7785');        // body
+    pixel(sx+2,sy+seal.h-8,seal.w-4,8,'#8a97a6'); // belly
+    pixel(sx+seal.w-10,sy-6,10,8,'#6b7785');      // head top
+    pixel(sx+seal.w-6,sy-3,3,3,'#111');           // eye
+    pixel(sx-12,sy+4,12,seal.h-8,'#56616e');      // tail
+    x.globalAlpha=1;
+  }
+
+  function loop(now){
+    if(!running)return;
+    const elapsed=now-startTime;
+    if(elapsed>=GAME_MS){return endGame('time');}
+    // background water
+    const g=x.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#48cae4');g.addColorStop(surfaceY/H,'#0096c7');g.addColorStop(1,'#012a4a');
+    x.fillStyle=g;x.fillRect(0,0,W,H);
+    // surface line
+    pixel(0,surfaceY,W,3,'#ade8f4');
+    pixel(0,0,W,surfaceY,'rgba(173,232,244,0.25)');
+
+    // movement
+    const speed=(slowTime>0?2.2:4.4);
+    if(seal.target){
+      seal.x+=(seal.target.x-seal.x)*0.12;
+      seal.y+=(seal.target.y-seal.y)*0.12;
+    }
+    if(keys.ArrowLeft)seal.x-=speed;if(keys.ArrowRight)seal.x+=speed;
+    if(keys.ArrowUp)seal.y-=speed;if(keys.ArrowDown)seal.y+=speed;
+    seal.x=Math.max(20,Math.min(W-20,seal.x));
+    const minY=invincTime>0?-10:surfaceY-6; // can fly above surface only when powered
+    seal.y=Math.max(minY,Math.min(H-20,seal.y));
+
+    // bars logic
+    const dt=16/1000;
+    hunger-=dt*3.2;
+    if(seal.y<surfaceY+18){air=Math.min(100,air+dt*40);}
+    else{air-=dt*5.5;}
+    if(invincTime>0){invincTime-=16;air=Math.min(100,air+dt*20);}
+    if(slowTime>0)slowTime-=16;
+    if(hunger<=0)return endGame('hunger');
+    if(air<=0)return endGame('air');
+
+    // spawns
+    if(Math.random()<0.02)spawnFish();
+    if(Math.random()<0.018)spawnObstacle();
+    if(Math.random()<0.0025)spawnCan();
+
+    // fishes
+    for(let i=fishes.length-1;i>=0;i--){const f=fishes[i];f.x+=f.vx;
+      pixel(f.x-f.w/2,f.y-f.h/2,f.w,f.h,f.col);pixel(f.x+f.w/2-2,f.y-f.h/2-2,6,f.h+4,f.col);
+      if(hit(seal,f)){hunger=Math.min(100,hunger+14);score+=10;fishes.splice(i,1);continue;}
+      if(f.x<-30)fishes.splice(i,1);
+    }
+    // cans
+    for(let i=cans.length-1;i>=0;i--){const ccan=cans[i];ccan.x+=ccan.vx;
+      pixel(ccan.x-9,ccan.y-13,18,26,'#1f3a93');pixel(ccan.x-9,ccan.y-13,18,6,'#c0c0c0');pixel(ccan.x-6,ccan.y-4,12,10,'#f1c40f');
+      if(hit(seal,{x:ccan.x,y:ccan.y,w:ccan.w,h:ccan.h})){invincTime=10000;cans.splice(i,1);continue;}
+      if(ccan.x<-30)cans.splice(i,1);
+    }
+    // obstacles
+    for(let i=obstacles.length-1;i>=0;i--){const o=obstacles[i];o.x+=o.vx;
+      if(o.type==='net'){
+        x.strokeStyle='rgba(230,230,230,0.85)';x.lineWidth=2;
+        for(let gx=0;gx<=o.w;gx+=10){x.beginPath();x.moveTo(o.x+gx,o.y);x.lineTo(o.x+gx,o.y+o.h);x.stroke();}
+        for(let gy=0;gy<=o.h;gy+=10){x.beginPath();x.moveTo(o.x,o.y+gy);x.lineTo(o.x+o.w,o.y+gy);x.stroke();}
+      } else if(o.type==='surf'){pixel(o.x,o.y,o.w,o.h,'#e76f51');pixel(o.x+o.w/2-2,o.y,4,o.h,'#fff');}
+      else{pixel(o.x,o.y,o.w,o.h,'#555');pixel(o.x+4,o.y+4,8,8,'#7a7a7a');}
+      if(hit(seal,{x:o.x+o.w/2,y:o.y+o.h/2,w:o.w,h:o.h}) && invincTime<=0){
+        if(o.type==='net')return endGame('net');
+        else{slowTime=1500;hunger-=8;obstacles.splice(i,1);continue;}
+      }
+      if(o.x<-80)obstacles.splice(i,1);
+    }
+
+    drawSeal();
+    drawHUD(elapsed);
+    raf=requestAnimationFrame(loop);
+  }
+
+  function hit(a,b){return Math.abs(a.x-b.x)<(a.w/2+b.w/2)*0.7 && Math.abs(a.y-b.y)<(a.h/2+b.h/2)*0.7;}
+
+  function drawHUD(elapsed){
+    // hunger
+    bar(12,12,'HUNGER',hunger,'#e85d04');
+    bar(12,40,'AIR',air,'#48cae4');
+    x.fillStyle='#fff';x.font='bold 16px Courier New';x.textAlign='right';
+    x.fillText('Score '+score,W-12,26);
+    const left=Math.max(0,GAME_MS-elapsed);
+    const m=Math.floor(left/60000),s=Math.floor((left%60000)/1000);
+    x.fillText(m+':'+(s<10?'0':'')+s,W-12,48);
+    x.textAlign='left';
+    if(invincTime>0){x.fillStyle='#f1c40f';x.fillText('WINGS! '+Math.ceil(invincTime/1000)+'s',W/2-40,26);}
+  }
+  function bar(bx,by,label,val,col){
+    x.fillStyle='rgba(0,0,0,0.4)';x.fillRect(bx,by,160,18);
+    x.fillStyle=col;x.fillRect(bx,by,160*Math.max(0,val)/100,18);
+    x.fillStyle='#fff';x.font='bold 11px Courier New';x.textAlign='left';x.fillText(label,bx+5,by+13);
+  }
+
+  function endGame(reason){
+    running=false;cancelAnimationFrame(raf);
+    const reasons={
+      net:'You were caught in a fishing net.',
+      hunger:'You ran out of food.',
+      air:'You ran out of air.',
+      time:'You survived all five minutes...'
+    };
+    const e=document.getElementById('end');e.style.display='flex';
+    document.getElementById('endTitle').textContent=(reason==='time')?'THE TWIST':'GAME OVER';
+    if(reason==='time'){
+      document.getElementById('endText').innerHTML=
+        'You survived the open sea \u2014 but it was never the open sea.<br><br>'+
+        'In reality this seal lived inside a breeding facility the whole time. '+
+        'Wild instincts mean nothing behind walls.';
+    } else {
+      document.getElementById('endText').innerHTML=reasons[reason]+
+        '<br><br>Out in the real ocean, seals face nets, traffic and pollution every single day.';
+    }
+    document.getElementById('endStat').textContent='Around 2,000 seals die every day.';
+  }
+
+  window.startGame=function(){
+    document.getElementById('start').style.display='none';
+    reset();running=true;
+    // const bgm=document.getElementById('bgm'); if(bgm) bgm.play().catch(()=>{});
+    raf=requestAnimationFrame(loop);
+  };
+})();
+</script></template>
+    <template id="game-D2"><style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;}
+  body{font-family:'Trebuchet MS',Verdana,sans-serif;background:#F5E6C8;color:#0f3a52;min-height:100vh;
+       padding:16px;text-align:center;}
+  h1{color:#1A6B9A;margin:8px 0 2px;}
+  .sub{color:#7a6a4a;margin:0 0 14px;font-size:.95rem;}
+  .stats{display:flex;justify-content:space-around;font-weight:bold;font-size:1.1rem;margin:10px 0;}
+  .stats .time{color:#1A6B9A;}
+  .barWrap{background:#e6d3a8;border:3px solid #1A6B9A;border-radius:16px;height:46px;margin:14px auto;
+           max-width:460px;overflow:hidden;position:relative;}
+  .barFill{height:100%;width:0;background:linear-gradient(90deg,#1A6B9A,#5cb3d9);transition:width .15s;}
+  .barWrap .label{position:absolute;inset:0;line-height:46px;font-weight:bold;color:#0f3a52;}
+  #scoop{background:#1A6B9A;color:#fff;border:none;border-radius:18px;padding:26px;font-size:1.4rem;font-weight:bold;
+         cursor:pointer;width:min(90vw,460px);min-height:90px;margin:10px auto;box-shadow:0 6px 0 #0f4a6b;}
+  #scoop:active{transform:translateY(4px);box-shadow:0 2px 0 #0f4a6b;}
+  #scoop:disabled{opacity:.5;}
+  .drop{position:absolute;font-size:1.4rem;pointer-events:none;animation:dropf .7s ease-in forwards;}
+  @keyframes dropf{from{transform:translateY(0);opacity:1;}to{transform:translateY(70px);opacity:0;}}
+  .result{font-size:1.2rem;font-weight:bold;margin:14px auto;max-width:460px;padding:14px;border-radius:14px;display:none;}
+  .win{background:#d3f9d8;color:#1b6b2a;}
+  .lose{background:#ffe3e3;color:#a01b1b;}
+  .infoBox{background:#fff;border:2px solid #1A6B9A;border-radius:14px;padding:14px;margin:18px auto;max-width:460px;
+           font-size:.85rem;text-align:left;line-height:1.45;color:#0f3a52;}
+  .infoBox b{color:#1A6B9A;}
+  .sources{max-width:460px;margin:10px auto 30px;text-align:left;font-size:.78rem;color:#5a6a78;}
+  .sources h4{margin:0 0 4px;color:#1A6B9A;}
+  .sources a{color:#1A6B9A;}
+  #playAgain{background:#1A6B9A;color:#fff;border:none;border-radius:14px;padding:14px 30px;font-weight:bold;
+             font-size:1.05rem;cursor:pointer;display:none;margin:6px auto;min-height:48px;}
+</style>
+
+<h1>\uD83C\uDFD6\uFE0F Leaky Bucket Challenge</h1>
+<p class="sub">Scoop water from the Nordsee \uD83C\uDF0A into your leaky cup and fill the bucket!</p>
+
+<div class="stats">
+  <div>Time: <span class="time" id="time">20</span>s</div>
+  <div>Goal: fill the bucket \uD83E\uDEA3</div>
+</div>
+
+<div class="barWrap"><div class="barFill" id="fill"></div><div class="label" id="pct">0%</div></div>
+
+<button id="scoop">\uD83D\uDCA7 SCOOP WATER \uD83D\uDCA7</button>
+
+<div class="result win" id="winMsg">Great teamwork! Coastal communities on Sylt protect every drop of fresh water!</div>
+<div class="result lose" id="loseMsg">Sylt fact! The Wadden Sea loses millions of litres of water daily to evaporation. Every drop counts!</div>
+<button id="playAgain">Play again</button>
+
+<div class="infoBox">
+  <b>\uD83D\uDCA1 Real Sylt water fact:</b> Although Sylt sits in the middle of the sea, its tap water is
+  <b>not</b> made from seawater. It is pumped from a rain-fed freshwater "lens" (Süßwasserlinse) up to about
+  100&nbsp;m deep under the island\u2019s centre. Around 2.5&nbsp;million m³ are drawn each year, and pumping
+  too hard would let salt water seep in \u2014 so wells are kept shallow and the area is a protected water zone.
+</div>
+
+<div class="sources">
+  <h4>Sources</h4>
+  <div><a href="https://www.energieversorgung-sylt.de/netze/wasser" target="_blank" rel="noopener">Energieversorgung Sylt (EVS) &ndash; Wasser</a></div>
+  <div><a href="https://www.ven-sylt.de/wasser" target="_blank" rel="noopener">VEN Sylt &ndash; Wasser</a></div>
+  <div><a href="https://www.insel-sylt.de/nachhaltig/trinkwasser/" target="_blank" rel="noopener">insel-sylt.de &ndash; Trinkwasser</a></div>
+</div>
+
+<script>
+(function(){
+  const FILL_PER_TAP=4, LEAK_PER_SEC=6, TIME=20;
+  let bucket=0, time=TIME, timer, running=false, started=false;
+  const fill=document.getElementById('fill'), pct=document.getElementById('pct'),
+        timeEl=document.getElementById('time'), scoop=document.getElementById('scoop');
+
+  function render(){
+    fill.style.width=bucket+'%';pct.textContent=Math.floor(bucket)+'%';timeEl.textContent=Math.ceil(time);
+  }
+  function startTimer(){
+    started=true;running=true;
+    timer=setInterval(()=>{
+      time-=0.1;
+      bucket=Math.max(0,bucket-LEAK_PER_SEC*0.1);
+      if(time<=0){time=0;render();finish(false);return;}
+      render();
+    },100);
+  }
+  scoop.addEventListener('click',e=>{
+    if(!running && started)return;
+    if(!started)startTimer();
+    bucket=Math.min(100,bucket+FILL_PER_TAP);
+    // animated drop
+    const d=document.createElement('span');d.className='drop';d.textContent='\uD83D\uDCA7';
+    d.style.left=(e.clientX-10)+'px';d.style.top=(e.clientY-20)+'px';
+    document.body.appendChild(d);setTimeout(()=>d.remove(),700);
+    render();
+    if(bucket>=100)finish(true);
+  });
+  function finish(won){
+    running=false;clearInterval(timer);scoop.disabled=true;
+    document.getElementById(won?'winMsg':'loseMsg').style.display='block';
+    document.getElementById('playAgain').style.display='block';
+  }
+  document.getElementById('playAgain').addEventListener('click',()=>{
+    bucket=0;time=TIME;started=false;running=false;scoop.disabled=false;
+    document.getElementById('winMsg').style.display='none';
+    document.getElementById('loseMsg').style.display='none';
+    document.getElementById('playAgain').style.display='none';
+    render();
+  });
+  render();
+})();
+</script></template>
+    <template id="game-D3"><style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;}
+  html,body{height:100%;overflow:hidden;font-family:'Trebuchet MS',Verdana,sans-serif;background:#012a4a;}
+  #c{display:block;width:100vw;height:100vh;touch-action:none;}
+  .panel{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;
+         color:#fff;font-weight:bold;pointer-events:none;z-index:3;text-shadow:0 1px 2px #000;}
+  .energyWrap{background:rgba(0,0,0,.35);border-radius:10px;width:180px;height:20px;overflow:hidden;}
+  .energyFill{height:100%;background:linear-gradient(90deg,#ffd60a,#ffb703);width:100%;transition:width .15s;}
+  #shopBtn{position:absolute;bottom:14px;right:14px;background:#0096c7;color:#fff;border:2px solid #ade8f4;
+           border-radius:12px;padding:12px 18px;font-weight:bold;cursor:pointer;z-index:4;min-height:48px;}
+  #hint{position:absolute;bottom:14px;left:14px;color:#cdeeff;font-size:.8rem;z-index:4;}
+  #shop,#over,#start{position:absolute;inset:0;background:rgba(1,20,34,.92);display:none;flex-direction:column;
+        align-items:center;justify-content:center;color:#cdeeff;z-index:6;text-align:center;padding:20px;}
+  #start{display:flex;}
+  #shop h2,#over h2,#start h1{color:#ade8f4;}
+  .upg{background:#013a63;border:2px solid #2c7da0;border-radius:12px;padding:12px 16px;margin:7px;width:min(86vw,360px);
+       cursor:pointer;color:#fff;text-align:left;}
+  .upg:active{transform:scale(.98);}
+  .upg .cost{float:right;color:#ffd60a;font-weight:bold;}
+  .upg small{color:#9fc3d6;}
+  .closeShop,#start button,#over button{background:#0096c7;color:#fff;border:none;border-radius:12px;
+       padding:12px 30px;font-weight:bold;font-size:1.05rem;cursor:pointer;margin-top:14px;min-height:48px;}
+  #start p{max-width:380px;line-height:1.5;color:#9fc3d6;}
+</style>
+
+<canvas id="c"></canvas>
+<div class="panel">
+  <div>Energy<div class="energyWrap"><div class="energyFill" id="energyFill"></div></div></div>
+  <div style="text-align:right;font-size:1.1rem;">Sand: <span id="sand">0</span></div>
+</div>
+<button id="shopBtn" onclick="openShop()">\u2699 Shop</button>
+<div id="hint">Tap the water to drop the anchor</div>
+
+<div id="start">
+  <h1>TILT IT</h1>
+  <p>Your boat drifts side to side on its own. Tap to drop your anchor and snag the junk floating below.
+     Each throw costs energy &mdash; but salvaging junk gives you back <b>more</b> energy, plus sand.
+     Spend sand in the shop on better gear. If your energy hits zero, you\u2019re done!</p>
+  <button onclick="startGame()">Set sail</button>
+</div>
+
+<div id="shop">
+  <h2>\u2699 Shop</h2>
+  <div id="upgrades"></div>
+  <button class="closeShop" onclick="closeShop()">Back to the sea</button>
+</div>
+
+<div id="over">
+  <h2>Out of energy!</h2>
+  <p>You salvaged <span id="finalSand">0</span> sand from the sea.</p>
+  <button onclick="location.reload()">Sail again</button>
+</div>
+
+<script>
+(function(){
+  const cv=document.getElementById('c'),x=cv.getContext('2d');
+  let W,H,waterY;
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;waterY=70;}
+  addEventListener('resize',resize);resize();
+
+  let boat,anchor,junks,energy,sand,running=false,raf;
+  let up={reach:0.55,speed:5,grab:26,refund:14,cost:8};
+  const shopDef=[
+    {key:'reach',name:'Longer rope',desc:'Anchor reaches deeper',cost:30,apply:()=>{up.reach=Math.min(0.95,up.reach+0.12);}},
+    {key:'speed',name:'Faster winch',desc:'Anchor moves faster',cost:25,apply:()=>{up.speed+=1.6;}},
+    {key:'grab',name:'Wider hook',desc:'Bigger grab radius',cost:35,apply:()=>{up.grab+=8;}},
+    {key:'refund',name:'Efficient motor',desc:'More energy back per junk',cost:40,apply:()=>{up.refund+=6;}}
+  ];
+
+  function reset(){
+    boat={x:W/2,dir:1,speed:1.6,w:70};
+    anchor=null;energy=100;sand=0;junks=[];
+    for(let i=0;i<7;i++)spawnJunk();
+  }
+  function spawnJunk(){
+    junks.push({x:30+Math.random()*(W-60),y:waterY+60+Math.random()*(H-waterY-90),
+      vx:(Math.random()-0.5)*0.5,r:10+Math.random()*8,
+      type:['can','tire','bottle','crate'][Math.floor(Math.random()*4)]});
+  }
+
+  function throwAnchor(tx){
+    if(anchor||!running)return;
+    if(energy<up.cost){return;}
+    energy-=up.cost;
+    const maxDepth=waterY+(H-waterY)*up.reach;
+    anchor={x:boat.x,y:waterY+30,phase:'down',maxDepth:maxDepth,got:false};
+  }
+  cv.addEventListener('pointerdown',e=>throwAnchor(e.clientX));
+  addEventListener('keydown',e=>{if(e.key===' ')throwAnchor(boat.x);});
+
+  function loop(){
+    if(!running)return;
+    // bg
+    const g=x.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#90e0ef');g.addColorStop(waterY/H,'#0096c7');g.addColorStop(1,'#012a4a');
+    x.fillStyle=g;x.fillRect(0,0,W,H);
+    // sky strip + waves
+    x.fillStyle='#caf0f8';x.fillRect(0,0,W,waterY-10);
+    x.fillStyle='#48cae4';x.fillRect(0,waterY-10,W,12);
+
+    // boat movement
+    boat.x+=boat.dir*boat.speed;
+    if(boat.x<boat.w/2){boat.x=boat.w/2;boat.dir=1;}
+    if(boat.x>W-boat.w/2){boat.x=W-boat.w/2;boat.dir=-1;}
+    drawBoat();
+
+    // anchor
+    if(anchor){
+      if(anchor.phase==='down'){anchor.y+=up.speed;if(anchor.y>=anchor.maxDepth)anchor.phase='up';}
+      else{anchor.y-=up.speed;anchor.x+=(boat.x-anchor.x)*0.05;if(anchor.y<=waterY+20)anchor=null;}
+      if(anchor){
+        // rope
+        x.strokeStyle='#333';x.lineWidth=2;x.beginPath();x.moveTo(boat.x,waterY+18);x.lineTo(anchor.x,anchor.y);x.stroke();
+        drawAnchor(anchor.x,anchor.y);
+        // collisions
+        for(let i=junks.length-1;i>=0;i--){const j=junks[i];
+          if(Math.hypot(j.x-anchor.x,j.y-anchor.y)<up.grab+j.r){
+            sand+=Math.ceil(j.r/2);energy=Math.min(100,energy+up.refund);
+            junks.splice(i,1);spawnJunk();
+          }
+        }
+      }
+    }
+
+    // junks
+    junks.forEach(j=>{j.x+=j.vx;if(j.x<20||j.x>W-20)j.vx*=-1;drawJunk(j);});
+
+    document.getElementById('energyFill').style.width=Math.max(0,energy)+'%';
+    document.getElementById('sand').textContent=sand;
+    if(energy<=0)return gameOver();
+    raf=requestAnimationFrame(loop);
+  }
+
+  function drawBoat(){
+    const bx=boat.x;
+    x.fillStyle='#6d3b1f';x.beginPath();
+    x.moveTo(bx-35,waterY+6);x.lineTo(bx+35,waterY+6);x.lineTo(bx+22,waterY+24);x.lineTo(bx-22,waterY+24);x.closePath();x.fill();
+    // person
+    x.fillStyle='#ffcc99';x.fillRect(bx-4,waterY-14,8,8);
+    x.fillStyle='#e63946';x.fillRect(bx-5,waterY-6,10,12);
+    // mast
+    x.strokeStyle='#3a2412';x.lineWidth=3;x.beginPath();x.moveTo(bx-14,waterY+4);x.lineTo(bx-14,waterY-26);x.stroke();
+    x.fillStyle='#f1faee';x.beginPath();x.moveTo(bx-12,waterY-24);x.lineTo(bx+10,waterY-8);x.lineTo(bx-12,waterY-2);x.closePath();x.fill();
+  }
+  function drawAnchor(ax,ay){
+    x.fillStyle='#cbd5e0';x.fillRect(ax-2,ay-10,4,14);
+    x.strokeStyle='#cbd5e0';x.lineWidth=3;
+    x.beginPath();x.arc(ax,ay+6,8,0.1*Math.PI,0.9*Math.PI);x.stroke();
+    x.beginPath();x.moveTo(ax-9,ay+2);x.lineTo(ax+9,ay+2);x.stroke();
+  }
+  function drawJunk(j){
+    const cols={can:'#9aa0a6',tire:'#222',bottle:'#3a7d44',crate:'#a06a32'};
+    x.fillStyle=cols[j.type];
+    if(j.type==='tire'){x.beginPath();x.arc(j.x,j.y,j.r,0,7);x.fill();x.fillStyle='#012a4a';x.beginPath();x.arc(j.x,j.y,j.r*0.5,0,7);x.fill();}
+    else{x.fillRect(j.x-j.r,j.y-j.r,j.r*2,j.r*2);}
+  }
+
+  window.openShop=function(){
+    if(!running)return;
+    running=false;
+    const wrap=document.getElementById('upgrades');
+    wrap.innerHTML=shopDef.map((u,i)=>'<div class="upg" data-i="'+i+'"><span class="cost">'+u.cost+' sand</span><b>'+u.name+'</b><br><small>'+u.desc+'</small></div>').join('');
+    wrap.querySelectorAll('.upg').forEach(el=>el.addEventListener('click',()=>buy(parseInt(el.dataset.i))));
+    document.getElementById('shop').style.display='flex';
+  };
+  function buy(i){
+    const u=shopDef[i];
+    if(sand>=u.cost){sand-=u.cost;u.apply();u.cost=Math.round(u.cost*1.6);openShop();}
+  }
+  window.closeShop=function(){
+    document.getElementById('shop').style.display='none';
+    running=true;raf=requestAnimationFrame(loop);
+  };
+  function gameOver(){
+    running=false;cancelAnimationFrame(raf);
+    document.getElementById('finalSand').textContent=sand;
+    document.getElementById('over').style.display='flex';
+  }
+  window.startGame=function(){
+    document.getElementById('start').style.display='none';
+    reset();running=true;raf=requestAnimationFrame(loop);
+  };
+})();
+</script></template>
+
 </body>
 </html>
