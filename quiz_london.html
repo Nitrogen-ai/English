@@ -454,7 +454,120 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 #quiz-b1 .cf-b1 { position:fixed; top:-20px; width:10px; height:14px; pointer-events:none; animation:cfFall linear forwards; z-index:16000; }
 
 /* ============================================================
-   PLACEHOLDER SCREENS  (coming soon)
+   QUIZ A5 — Nonchalant London  (red/blue/white + 🥅🇬🇧)
+   ============================================================ */
+#quiz-a5 { min-height:100vh; position:relative; overflow:hidden; background:#fff; font-family:'Georgia',serif; }
+#quiz-a5 .flag-stripe-r { position:fixed; top:0; left:0; width:100%; height:6px; background:#dc2626; z-index:100; }
+#quiz-a5 .flag-stripe-b { position:fixed; bottom:0; left:0; width:100%; height:6px; background:#1e3a8a; z-index:100; }
+#quiz-a5 .bg-cross { position:fixed; inset:0; pointer-events:none; z-index:0; }
+#quiz-a5 .bg-cross::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,transparent calc(50% - 3px),#dc2626 calc(50% - 3px),#dc2626 calc(50% + 3px),transparent calc(50% + 3px)),
+              linear-gradient(180deg,transparent calc(50% - 3px),#1e3a8a calc(50% - 3px),#1e3a8a calc(50% + 3px),transparent calc(50% + 3px));
+  opacity:0.06;
+}
+#quiz-a5 .content-wrap { position:relative; z-index:2; max-width:700px; margin:0 auto; padding:50px 18px 70px; }
+#quiz-a5 .game-title { text-align:center; font-size:2rem; color:#1e3a8a; margin-bottom:4px; }
+#quiz-a5 .game-sub { text-align:center; font-size:1rem; color:#6b7280; margin-bottom:18px; }
+#quiz-a5 .score-bar-a5 { text-align:center; font-size:1.05rem; color:#b91c1c; font-weight:700; margin-bottom:18px; background:rgba(255,255,255,0.9); padding:8px 20px; border-radius:30px; display:inline-block; }
+#quiz-a5 .q-card-a5 { background:#fff; border-radius:16px; padding:26px; box-shadow:0 8px 28px rgba(0,0,0,0.12); border:2px solid #e5e7eb; margin-bottom:16px; }
+#quiz-a5 .q-text-a5 { font-size:1.12rem; color:#111827; font-weight:700; margin-bottom:16px; line-height:1.5; }
+#quiz-a5 .tf-row-a5 { display:flex; gap:12px; margin-bottom:14px; }
+#quiz-a5 .tf-a5 { flex:1; padding:13px; border-radius:12px; font-size:1rem; font-weight:700; border:2px solid transparent; font-family:inherit; transition:all 0.15s; cursor:pointer; }
+#quiz-a5 .tf-a5.sel { outline:3px solid #1e3a8a; outline-offset:2px; }
+#quiz-a5 .tf-a5.t-btn { background:#dbeafe; color:#1e40af; }
+#quiz-a5 .tf-a5.f-btn { background:#fce7f3; color:#9d174d; }
+#quiz-a5 .tf-a5:hover:not(:disabled) { transform:scale(1.03); }
+#quiz-a5 .tf-a5.correct { background:#bbf7d0!important; border-color:#16a34a!important; color:#15803d!important; }
+#quiz-a5 .tf-a5.wrong   { background:#fecaca!important; border-color:#dc2626!important; color:#991b1b!important; }
+#quiz-a5 .tf-a5:disabled { cursor:not-allowed; opacity:0.85; }
+#quiz-a5 .expl-area { width:100%; min-height:70px; border:2px solid #d1d5db; border-radius:10px; padding:10px 14px; font-family:inherit; font-size:0.95rem; resize:vertical; margin-bottom:14px; }
+#quiz-a5 .expl-area:focus { border-color:#1e3a8a; outline:none; }
+#quiz-a5 .submit-a5 { background:#1e3a8a; color:#fff; padding:10px 24px; border-radius:10px; font-size:0.97rem; font-family:inherit; }
+#quiz-a5 .submit-a5:disabled { background:#9ca3af; cursor:not-allowed; }
+#quiz-a5 .submit-a5:hover:not(:disabled) { background:#1e40af; }
+#quiz-a5 .fb-a5 { padding:10px 14px; border-radius:8px; font-size:0.97rem; margin:10px 0; display:none; }
+#quiz-a5 .fb-a5.show { display:block; }
+#quiz-a5 .fb-a5.correct { background:#f0fdf4; border-left:4px solid #16a34a; color:#15803d; }
+#quiz-a5 .fb-a5.wrong   { background:#fef2f2; border-left:4px solid #dc2626; color:#991b1b; }
+#quiz-a5 .nav-a5 { background:#b91c1c; color:#fff; padding:10px 22px; border-radius:10px; font-size:0.97rem; font-family:inherit; display:none; margin-top:6px; }
+#quiz-a5 .nav-a5.show { display:inline-block; }
+
+/* ============================================================
+   QUIZ C1 — Scotland Topics (minimalist / nature)
+   ============================================================ */
+#quiz-c1 { min-height:100vh; position:relative; overflow:hidden; background:#f8faf8; font-family:'Georgia',serif; }
+#quiz-c1 .scot-bg-img {
+  position:fixed; inset:0; z-index:0; background-size:cover; background-position:center;
+  opacity:0.18; transition:background-image 0.8s ease;
+}
+#quiz-c1 .content-wrap { position:relative; z-index:2; max-width:720px; margin:0 auto; padding:40px 18px 70px; }
+#quiz-c1 .game-title-c1 { text-align:center; font-size:2rem; color:#1e3a8a; margin-bottom:4px; }
+#quiz-c1 .game-sub-c1 { text-align:center; color:#6b7280; font-size:0.95rem; margin-bottom:18px; }
+#quiz-c1 .score-c1 { text-align:center; font-size:1rem; font-weight:700; color:#065f46; margin-bottom:14px; }
+#quiz-c1 .img-frame {
+  width:100%; max-height:260px; border-radius:14px; overflow:hidden; margin-bottom:18px;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,#065f46 0%,#1e3a8a 100%);
+  font-size:5rem; min-height:160px;
+}
+#quiz-c1 .q-card-c1 { background:rgba(255,255,255,0.95); border-radius:16px; padding:24px; box-shadow:0 6px 22px rgba(0,0,0,0.1); border:1px solid #d1d5db; }
+#quiz-c1 .q-text-c1 { font-size:1.08rem; color:#111827; font-weight:700; margin-bottom:16px; text-align:center; }
+#quiz-c1 .opts-c1 { display:flex; flex-direction:column; gap:10px; }
+#quiz-c1 .opt-c1 { background:#f0fdf4; color:#065f46; padding:12px 16px; border-radius:10px; text-align:left; font-size:0.97rem; font-family:inherit; border:2px solid #bbf7d0; transition:all 0.15s; cursor:pointer; }
+#quiz-c1 .opt-c1:hover:not(:disabled) { background:#dcfce7; border-color:#16a34a; }
+#quiz-c1 .opt-c1.correct { background:#bbf7d0; border-color:#16a34a; color:#166534; font-weight:700; }
+#quiz-c1 .opt-c1.wrong   { background:#fecaca; border-color:#dc2626; color:#991b1b; }
+#quiz-c1 .opt-c1:disabled { cursor:not-allowed; }
+#quiz-c1 .fb-c1 { padding:10px 14px; border-radius:8px; font-size:1rem; font-weight:700; margin:12px 0; display:none; text-align:center; }
+#quiz-c1 .fb-c1.show { display:block; }
+#quiz-c1 .fb-c1.correct { background:#f0fdf4; border:2px solid #16a34a; color:#15803d; }
+#quiz-c1 .fb-c1.wrong   { background:#fef2f2; border:2px solid #dc2626; color:#991b1b; }
+#quiz-c1 .nav-c1 { background:#065f46; color:#fff; padding:10px 22px; border-radius:10px; font-size:0.97rem; font-family:inherit; display:none; margin-top:8px; }
+#quiz-c1 .nav-c1.show { display:inline-block; }
+#quiz-c1 .stars-row { font-size:2.5rem; letter-spacing:8px; margin:14px 0; }
+
+/* ============================================================
+   QUIZ D1 — Manchester Quiz App (stadium bg)
+   ============================================================ */
+#quiz-d1 { min-height:100vh; position:relative; overflow:hidden; background:#1a1a2e; font-family:'Georgia',serif; }
+#quiz-d1 .stadium-bg {
+  position:fixed; inset:0; z-index:0;
+  background:radial-gradient(ellipse at 50% 80%,#16a34a 0%,#065f46 40%,#1a1a2e 70%);
+  opacity:0.5;
+}
+#quiz-d1 .stadium-lines {
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent calc(50% - 1px),rgba(255,255,255,0.12) calc(50% - 1px),rgba(255,255,255,0.12) calc(50% + 1px),transparent calc(50% + 1px)),
+    linear-gradient(180deg,transparent calc(50% - 1px),rgba(255,255,255,0.12) calc(50% - 1px),rgba(255,255,255,0.12) calc(50% + 1px),transparent calc(50% + 1px));
+}
+#quiz-d1 .content-wrap { position:relative; z-index:2; max-width:700px; margin:0 auto; padding:50px 18px 70px; }
+#quiz-d1 .game-title-d1 { text-align:center; font-size:2rem; color:#fff; margin-bottom:4px; text-shadow:0 3px 12px rgba(0,0,0,0.4); }
+#quiz-d1 .game-sub-d1 { text-align:center; color:rgba(255,255,255,0.65); font-size:0.95rem; margin-bottom:18px; }
+#quiz-d1 .score-d1 { text-align:center; font-size:1.05rem; font-weight:700; color:#fbbf24; margin-bottom:16px; }
+#quiz-d1 .q-card-d1 { background:rgba(255,255,255,0.95); border-radius:16px; padding:26px; box-shadow:0 8px 30px rgba(0,0,0,0.3); margin-bottom:16px; }
+#quiz-d1 .q-text-d1 { font-size:1.12rem; color:#111827; font-weight:700; margin-bottom:16px; line-height:1.5; }
+#quiz-d1 .opts-d1 { display:flex; flex-direction:column; gap:10px; margin-bottom:12px; }
+#quiz-d1 .opt-d1 { background:#eff6ff; color:#1e40af; padding:12px 16px; border-radius:10px; text-align:left; font-size:0.97rem; font-family:inherit; border:2px solid #bfdbfe; transition:all 0.15s; cursor:pointer; }
+#quiz-d1 .opt-d1:hover:not(:disabled) { background:#dbeafe; border-color:#3b82f6; }
+#quiz-d1 .opt-d1.correct { background:#bbf7d0; border-color:#16a34a; color:#166534; }
+#quiz-d1 .opt-d1.wrong   { background:#fecaca; border-color:#dc2626; color:#991b1b; }
+#quiz-d1 .opt-d1:disabled { cursor:not-allowed; }
+#quiz-d1 .hint-btn-d1 { background:#fef3c7; color:#92400e; padding:7px 14px; border-radius:8px; font-size:0.85rem; font-family:inherit; border:1px solid #fde68a; margin-bottom:10px; }
+#quiz-d1 .hint-text-d1 { background:#fffbeb; border-left:4px solid #d97706; padding:10px; border-radius:6px; font-size:0.88rem; color:#92400e; margin-bottom:10px; display:none; }
+#quiz-d1 .hint-text-d1.show { display:block; }
+#quiz-d1 .fb-d1 { padding:10px 14px; border-radius:8px; font-size:0.97rem; margin:10px 0; display:none; }
+#quiz-d1 .fb-d1.show { display:block; }
+#quiz-d1 .fb-d1.correct { background:#f0fdf4; border-left:4px solid #16a34a; color:#15803d; }
+#quiz-d1 .fb-d1.wrong   { background:#fef2f2; border-left:4px solid #dc2626; color:#991b1b; }
+#quiz-d1 .fun-fact-d1 { background:#eff6ff; border-left:4px solid #3b82f6; padding:10px 14px; border-radius:8px; font-size:0.9rem; color:#1e40af; margin:10px 0; display:none; }
+#quiz-d1 .fun-fact-d1.show { display:block; }
+#quiz-d1 .nav-d1 { background:#fbbf24; color:#111827; padding:10px 22px; border-radius:10px; font-size:0.97rem; font-family:inherit; font-weight:700; display:none; margin-top:6px; }
+#quiz-d1 .nav-d1.show { display:inline-block; }
+
+/* ============================================================
+   PLACEHOLDER SCREENS  (coming soon — kept for any future use)
    ============================================================ */
 .placeholder-screen {
   min-height:100vh; display:flex; align-items:center; justify-content:center;
@@ -527,13 +640,13 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
       <span class="topic-icon">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
       <h2>From Edinburgh to Orkney</h2>
       <div class="topic-desc" data-i="scotDesc">Scotland's cities &amp; islands</div>
-      <span class="quiz-count" data-i="scotCount">1 Quiz – Coming soon</span>
+      <span class="quiz-count" data-i="scotCount">1 Quiz</span>
     </button>
     <button class="big-topic-btn" onclick="openTopic('manchester')">
       <span class="topic-icon">🐝</span>
       <h2>Marvelous Manchester</h2>
       <div class="topic-desc" data-i="manchDesc">The city of bees &amp; football</div>
-      <span class="quiz-count" data-i="manchCount">1 Quiz – Coming soon</span>
+      <span class="quiz-count" data-i="manchCount">1 Quiz</span>
     </button>
   </div>
 </div>
@@ -592,13 +705,12 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
   <div id="a4-wrap"></div>
 </div>
 
-<!-- A5: Quiz about London (coming Monday) -->
-<div id="quiz-a5" class="screen placeholder-screen" style="background:linear-gradient(135deg,#1e3a8a,#374151);">
-  <div class="placeholder-card">
-    <div class="ph-icon float">⏰</div>
-    <h2 data-i="a5Title">Quiz about London</h2>
-    <p data-i="a5Msg">Hanno, Alex, Moritz &amp; Marius are working on this quiz. Check back on Monday! 🗓️</p>
-  </div>
+<!-- A5: Nonchalant London -->
+<div id="quiz-a5" class="screen">
+  <div class="flag-stripe-r"></div>
+  <div class="flag-stripe-b"></div>
+  <div class="bg-cross"></div>
+  <div class="content-wrap" id="a5-wrap"></div>
 </div>
 
 <!-- B1: Greg's Diary Birthday Edition -->
@@ -606,22 +718,17 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
   <div class="content-wrap" id="b1-wrap"></div>
 </div>
 
-<!-- C1: Scotland – coming soon -->
-<div id="quiz-c1" class="screen placeholder-screen">
-  <div class="placeholder-card">
-    <div class="ph-icon float">🏰</div>
-    <h2 data-i="c1Title">The Scotland Topics</h2>
-    <p data-i="c1Msg">Elena, Ivy &amp; Marlena are preparing this quiz. Coming soon! 🏴󠁧󠁢󠁳󠁣󠁴󠁿</p>
-  </div>
+<!-- C1: Scotland Topics -->
+<div id="quiz-c1" class="screen">
+  <div class="scot-bg-img" id="c1-bg"></div>
+  <div class="content-wrap" id="c1-wrap"></div>
 </div>
 
-<!-- D1: Manchester – coming soon -->
-<div id="quiz-d1" class="screen placeholder-screen manchester">
-  <div class="placeholder-card">
-    <div class="ph-icon buzz">🐝</div>
-    <h2 data-i="d1Title">Quiz about Manchester</h2>
-    <p data-i="d1Msg">Jonas, Hugo, Leo &amp; Tristan are working on this quiz. Coming soon! ⚽</p>
-  </div>
+<!-- D1: Manchester Quiz App -->
+<div id="quiz-d1" class="screen">
+  <div class="stadium-bg"></div>
+  <div class="stadium-lines"></div>
+  <div class="content-wrap" id="d1-wrap"></div>
 </div>
 
 <!-- ============================================================
@@ -641,19 +748,19 @@ const T = {
     gregsDesc: 'Wimpy Kid adventures',
     gregsCount: '1 Quiz',
     scotDesc: "Scotland's cities & islands",
-    scotCount: '1 Quiz – Coming soon',
+    scotCount: '1 Quiz',
     manchDesc: 'The city of bees & football',
-    manchCount: '1 Quiz – Coming soon',
+    manchCount: '1 Quiz',
     selectQuiz: 'Select a quiz',
     loserText: 'LOSER! –1 🪙',
     shopTitle: 'Character Shop',
     closeShop: 'Close Shop',
-    a5Title: 'Quiz about London',
-    a5Msg: 'Hanno, Alex, Moritz & Marius are working on this quiz. Check back on Monday! 🗓️',
+    a5Title: 'Nonchalant London',
+    a5Msg: '',
     c1Title: 'The Scotland Topics',
-    c1Msg: 'Elena, Ivy & Marlena are preparing this quiz. Coming soon! 🏴󠁧󠁢󠁳󠁣󠁴󠁿',
-    d1Title: 'Quiz about Manchester',
-    d1Msg: 'Jonas, Hugo, Leo & Tristan are working on this quiz. Coming soon! ⚽',
+    c1Msg: '',
+    d1Title: 'Manchester Quiz App',
+    d1Msg: '',
     // sub-menu topic headers
     londonHeader: 'London – City of Wonders',
     gregsHeader: "Greg's Diary",
@@ -666,10 +773,10 @@ const T = {
     qA2name:'Super London', qA2desc:'True/False + multiple choice with London pictures', qA2authors:'Malo · Annika · Güzel · Hannah',
     qA3name:'All about London', qA3desc:'Football stadiums, buildings & city knowledge', qA3authors:'Kalle · Joko · Mats · Oskar',
     qA4name:'Quiz of London', qA4desc:'6 subtopics – buildings & history, 3 hearts system', qA4authors:'Nizar · Aaron · Darius',
-    qA5name:'Quiz about London', qA5desc:'Content coming Monday', qA5authors:'Hanno · Alex · Moritz · Marius',
+    qA5name:'Nonchalant London', qA5desc:'True or False – explain your answer! 🥅🇬🇧', qA5authors:'Hanno · Alex · Moritz · Marius',
     qB1name:"Greg's Diary – Birthday Edition", qB1desc:'Quiz about the last chapter – breakdance & jetpack!', qB1authors:'Jolanda · Elli · Lina · Agathe',
-    qC1name:'The Scotland Topics', qC1desc:'Content coming soon', qC1authors:'Elena · Ivy · Marlena',
-    qD1name:'Quiz about Manchester', qD1desc:'Content coming soon', qD1authors:'Jonas · Hugo · Leo · Tristan',
+    qC1name:'The Scotland Topics', qC1desc:'Scotland\'s nature & lore – 16 questions, star rating!', qC1authors:'Elena · Ivy · Marlena',
+    qD1name:'Manchester Quiz App', qD1desc:'6 questions about Manchester – hints cost a point! ⚽', qD1authors:'Leo · Tristan · Jonas · Hugo',
     // A1 City Hunter
     a1GameTitle:'🗺️ City Hunter',
     a1StartH:'🗺️ City Hunter',
@@ -746,6 +853,51 @@ const T = {
     b1ScatterTitle:'Your Results',
     b1Bar1:'2 pts (1st try)', b1Bar2:'1 pt (2nd try)', b1Bar3:'Wrong',
     b1Replay:'🔁 Play again',
+    // A5 Nonchalant London
+    a5GameTitle:'🥅 Nonchalant London 🇬🇧',
+    a5Score:'Score: {s} | Question {a} of {b}',
+    a5SelectTF:'Select True or False:',
+    a5ExplLabel:'Explain your choice:',
+    a5ExplPlaceholder:'Write why you chose this answer…',
+    a5Submit:'Submit Answer',
+    a5NeedBoth:'Please select True or False AND write an explanation!',
+    a5Correct:'✅ Correct! Well explained!',
+    a5Wrong:'❌ Wrong! The correct answer is: {ans}. –1 point',
+    a5Next:'Next ➡️',
+    a5EndTitle:'Quiz Complete!',
+    a5EndScore:'Final score: {s} / {t}',
+    a5EndGreat:'🌟 London expert! Brilliant explanations!',
+    a5EndGood:'👍 Good job! Keep learning about London!',
+    a5EndOk:'📚 Read up on London – you\'ll get better!',
+    a5Replay:'🔁 Play again',
+    a5True:'✅ TRUE',a5False:'❌ FALSE',
+    // C1 Scotland Topics
+    c1GameTitle:'🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland: Nature & Lore',
+    c1Score:'Score: {s} / 16',
+    c1QOf:'Question {a} of {b}',
+    c1Correct:'Of course! +1 point',
+    c1Wrong:'Wrong answer!',
+    c1RetryNote:'(This question will come back later)',
+    c1Next:'Next ➡️',
+    c1EndTitle:'Quiz Complete!',
+    c1EndScore:'You scored {s} / 16 points',
+    c1Stars:'{n} out of 5 Stars',
+    c1Replay:'🔁 Play again',
+    // D1 Manchester Quiz App
+    d1GameTitle:'⚽ Manchester Quiz App',
+    d1Score:'Score: {s} | Question {a} of {b}',
+    d1HintBtn:'💡 Hint (costs 1 point)',
+    d1HintUsed:'💡 Hint used',
+    d1Correct:'✅ Correct! +1 point',
+    d1Wrong:'❌ Wrong! The answer was: {ans}',
+    d1FunFact:'ℹ️ Fun fact: {f}',
+    d1Next:'Next ➡️',
+    d1EndTitle:'Quiz Complete!',
+    d1EndScore:'Final score: {s} / {t}',
+    d1EndGreat:'🌟 Manchester expert!',
+    d1EndGood:'👍 Good knowledge!',
+    d1EndOk:'📚 Learn more about Manchester!',
+    d1Replay:'🔁 Play again',
   },
   de: {
     back: 'Zurück',
@@ -756,19 +908,19 @@ const T = {
     gregsDesc: 'Abenteuer mit dem Loser-Tagebuch',
     gregsCount: '1 Quiz',
     scotDesc: 'Schottlands Städte & Inseln',
-    scotCount: '1 Quiz – Demnächst',
+    scotCount: '1 Quiz',
     manchDesc: 'Die Stadt der Bienen & des Fußballs',
-    manchCount: '1 Quiz – Demnächst',
+    manchCount: '1 Quiz',
     selectQuiz: 'Quiz auswählen',
     loserText: 'VERLIERER! –1 🪙',
     shopTitle: 'Charakter-Shop',
     closeShop: 'Shop schließen',
-    a5Title: 'Quiz über London',
-    a5Msg: 'Hanno, Alex, Moritz & Marius arbeiten noch an diesem Quiz. Schau am Montag nochmal rein! 🗓️',
+    a5Title: 'Nonchalant London',
+    a5Msg: '',
     c1Title: 'Schottland-Themen',
-    c1Msg: 'Elena, Ivy & Marlena bereiten dieses Quiz vor. Bald verfügbar! 🏴󠁧󠁢󠁳󠁣󠁴󠁿',
-    d1Title: 'Quiz über Manchester',
-    d1Msg: 'Jonas, Hugo, Leo & Tristan arbeiten an diesem Quiz. Bald verfügbar! ⚽',
+    c1Msg: '',
+    d1Title: 'Manchester Quiz App',
+    d1Msg: '',
     londonHeader: 'London – Stadt der Wunder',
     gregsHeader: 'Gregs Tagebuch',
     scotlandHeader: 'Von Edinburgh bis Orkney',
@@ -779,10 +931,10 @@ const T = {
     qA2name:'Super London', qA2desc:'Richtig/Falsch + Multiple Choice mit London-Bildern', qA2authors:'Malo · Annika · Güzel · Hannah',
     qA3name:'Alles über London', qA3desc:'Fußballstadien, Gebäude & Stadtwissen', qA3authors:'Kalle · Joko · Mats · Oskar',
     qA4name:'Quiz über London', qA4desc:'6 Unterthemen – Gebäude & Geschichte, 3 Leben', qA4authors:'Nizar · Aaron · Darius',
-    qA5name:'Quiz über London', qA5desc:'Inhalt folgt am Montag', qA5authors:'Hanno · Alex · Moritz · Marius',
+    qA5name:'Nonchalant London', qA5desc:'Richtig oder Falsch – erkläre deine Antwort! 🥅🇬🇧', qA5authors:'Hanno · Alex · Moritz · Marius',
     qB1name:'Gregs Tagebuch – Geburtstags-Edition', qB1desc:'Quiz über das letzte Kapitel – Breakdance & Jetpack!', qB1authors:'Jolanda · Elli · Lina · Agathe',
-    qC1name:'Schottland-Themen', qC1desc:'Inhalt folgt bald', qC1authors:'Elena · Ivy · Marlena',
-    qD1name:'Quiz über Manchester', qD1desc:'Inhalt folgt bald', qD1authors:'Jonas · Hugo · Leo · Tristan',
+    qC1name:'Schottland-Themen', qC1desc:'Schottlands Natur & Sagen – 16 Fragen, Sternebewertung!', qC1authors:'Elena · Ivy · Marlena',
+    qD1name:'Manchester Quiz App', qD1desc:'6 Fragen über Manchester – Tipps kosten einen Punkt! ⚽', qD1authors:'Leo · Tristan · Jonas · Hugo',
     a1GameTitle:'🗺️ City Hunter',
     a1StartH:'🗺️ City Hunter',
     a1StartP1:'Laufe durch London und beantworte Fragen an berühmten Gebäuden!',
@@ -854,6 +1006,51 @@ const T = {
     b1ScatterTitle:'Deine Ergebnisse',
     b1Bar1:'2 Pkt. (1. Versuch)', b1Bar2:'1 Pkt. (2. Versuch)', b1Bar3:'Falsch',
     b1Replay:'🔁 Nochmal spielen',
+    // A5
+    a5GameTitle:'🥅 Nonchalant London 🇬🇧',
+    a5Score:'Punkte: {s} | Frage {a} von {b}',
+    a5SelectTF:'Wähle Richtig oder Falsch:',
+    a5ExplLabel:'Erkläre deine Wahl:',
+    a5ExplPlaceholder:'Schreibe, warum du diese Antwort gewählt hast…',
+    a5Submit:'Antwort abgeben',
+    a5NeedBoth:'Bitte wähle Richtig oder Falsch UND schreibe eine Erklärung!',
+    a5Correct:'✅ Richtig! Gut erklärt!',
+    a5Wrong:'❌ Falsch! Die richtige Antwort ist: {ans}. –1 Punkt',
+    a5Next:'Weiter ➡️',
+    a5EndTitle:'Quiz abgeschlossen!',
+    a5EndScore:'Endpunktzahl: {s} / {t}',
+    a5EndGreat:'🌟 London-Experte! Brillante Erklärungen!',
+    a5EndGood:'👍 Gut gemacht! Lerne weiter über London!',
+    a5EndOk:'📚 Lies mehr über London – du wirst besser!',
+    a5Replay:'🔁 Nochmal spielen',
+    a5True:'✅ RICHTIG',a5False:'❌ FALSCH',
+    // C1
+    c1GameTitle:'🏴󠁧󠁢󠁳󠁣󠁴󠁿 Schottland: Natur & Sagen',
+    c1Score:'Punkte: {s} / 16',
+    c1QOf:'Frage {a} von {b}',
+    c1Correct:'Natürlich! +1 Punkt',
+    c1Wrong:'Falsche Antwort!',
+    c1RetryNote:'(Diese Frage kommt später nochmal)',
+    c1Next:'Weiter ➡️',
+    c1EndTitle:'Quiz abgeschlossen!',
+    c1EndScore:'Du hast {s} / 16 Punkte',
+    c1Stars:'{n} von 5 Sternen',
+    c1Replay:'🔁 Nochmal spielen',
+    // D1
+    d1GameTitle:'⚽ Manchester Quiz App',
+    d1Score:'Punkte: {s} | Frage {a} von {b}',
+    d1HintBtn:'💡 Tipp (kostet 1 Punkt)',
+    d1HintUsed:'💡 Tipp verwendet',
+    d1Correct:'✅ Richtig! +1 Punkt',
+    d1Wrong:'❌ Falsch! Die Antwort war: {ans}',
+    d1FunFact:'ℹ️ Wusstest du: {f}',
+    d1Next:'Weiter ➡️',
+    d1EndTitle:'Quiz abgeschlossen!',
+    d1EndScore:'Endpunktzahl: {s} / {t}',
+    d1EndGreat:'🌟 Manchester-Experte!',
+    d1EndGood:'👍 Gutes Wissen!',
+    d1EndOk:'📚 Lerne mehr über Manchester!',
+    d1Replay:'🔁 Nochmal spielen',
   }
 };
 
@@ -890,7 +1087,10 @@ function rerenderActive(id) {
     case 'quiz-a2': if(typeof a2State!=='undefined') renderA2(); break;
     case 'quiz-a3': if(typeof a3State!=='undefined') renderA3(); break;
     case 'quiz-a4': if(typeof a4State!=='undefined') { if(a4State.screen==='start') renderA4Start(); else renderA4Quiz(); } break;
+    case 'quiz-a5': if(typeof a5State!=='undefined') renderA5(); break;
     case 'quiz-b1': if(typeof b1State!=='undefined') renderB1(); break;
+    case 'quiz-c1': if(typeof c1State!=='undefined') renderC1(); break;
+    case 'quiz-d1': if(typeof d1State!=='undefined') renderD1(); break;
   }
 }
 function renderA1QuizIfActive() {
@@ -946,7 +1146,7 @@ const topicConfig = {
       { id:'quiz-a2', nameKey:'qA2name', descKey:'qA2desc', authKey:'qA2authors', badge:'B', init:'initQuizA2', coming:false },
       { id:'quiz-a3', nameKey:'qA3name', descKey:'qA3desc', authKey:'qA3authors', badge:'C', init:'initQuizA3', coming:false },
       { id:'quiz-a4', nameKey:'qA4name', descKey:'qA4desc', authKey:'qA4authors', badge:'D', init:'initQuizA4', coming:false },
-      { id:'quiz-a5', nameKey:'qA5name', descKey:'qA5desc', authKey:'qA5authors', badge:'E', init:null, coming:'monday' },
+      { id:'quiz-a5', nameKey:'qA5name', descKey:'qA5desc', authKey:'qA5authors', badge:'E', init:'initQuizA5', coming:false },
     ]
   },
   gregs: {
@@ -958,13 +1158,13 @@ const topicConfig = {
   scotland: {
     titleKey: 'scotlandHeader',
     quizzes: [
-      { id:'quiz-c1', nameKey:'qC1name', descKey:'qC1desc', authKey:'qC1authors', badge:'A', init:null, coming:'soon' },
+      { id:'quiz-c1', nameKey:'qC1name', descKey:'qC1desc', authKey:'qC1authors', badge:'A', init:'initQuizC1', coming:false },
     ]
   },
   manchester: {
     titleKey: 'manchesterHeader',
     quizzes: [
-      { id:'quiz-d1', nameKey:'qD1name', descKey:'qD1desc', authKey:'qD1authors', badge:'A', init:null, coming:'soon' },
+      { id:'quiz-d1', nameKey:'qD1name', descKey:'qD1desc', authKey:'qD1authors', badge:'A', init:'initQuizD1', coming:false },
     ]
   }
 };
@@ -1609,6 +1809,291 @@ function renderB1End(){
     </div>`;
   const cfColors=['#facc15','#ec4899','#3b82f6'];
   launchCf('quiz-b1','cf-b1',cfColors);
+}
+
+/* =====================================================================
+   QUIZ A5 — Nonchalant London (True/False + explanation)
+   ===================================================================== */
+const a5Questions=[
+  {q:'The River Thames is the longest river in England.',ans:true},
+  {q:'Big Ben is the name of the tower itself, not the bell.',ans:false},
+  {q:'London has hosted the Olympic Games three times.',ans:true},
+  {q:'The London Underground opened in 1863, making it the oldest metro system in the world.',ans:true},
+  {q:'Buckingham Palace has fewer than 200 rooms.',ans:false},
+  {q:'The Shard is the tallest building in the United Kingdom.',ans:true},
+  {q:'Tower Bridge is a suspension bridge that cannot be opened.',ans:false}
+];
+let a5State={};
+
+function initQuizA5(){ a5State={idx:0,score:0,selected:null}; renderA5(); }
+
+function renderA5(){
+  const wrap=document.getElementById('a5-wrap');
+  if(a5State.idx>=a5Questions.length){ renderA5End(); return; }
+  const q=a5Questions[a5State.idx];
+  wrap.innerHTML=`
+    <div style="text-align:center;">
+      <div class="game-title">${t('a5GameTitle')}</div>
+      <div class="game-sub">${t('a5Score',{s:a5State.score,a:a5State.idx+1,b:a5Questions.length})}</div>
+    </div>
+    <div class="q-card-a5">
+      <div class="q-text-a5">${q.q}</div>
+      <p style="color:#6b7280;font-size:0.88rem;margin-bottom:8px;">${t('a5SelectTF')}</p>
+      <div class="tf-row-a5">
+        <button class="tf-a5 t-btn" id="a5-true" onclick="a5Select(true)">${t('a5True')}</button>
+        <button class="tf-a5 f-btn" id="a5-false" onclick="a5Select(false)">${t('a5False')}</button>
+      </div>
+      <p style="color:#6b7280;font-size:0.88rem;margin-bottom:6px;">${t('a5ExplLabel')}</p>
+      <textarea class="expl-area" id="a5-expl" placeholder="${t('a5ExplPlaceholder')}"></textarea>
+      <div style="text-align:center;">
+        <button class="submit-a5" id="a5-submit" onclick="submitA5()">${t('a5Submit')}</button>
+      </div>
+      <div class="fb-a5" id="a5-fb"></div>
+      <div style="text-align:center;">
+        <button class="nav-a5" id="a5-nav" onclick="nextA5()">${t('a5Next')}</button>
+      </div>
+    </div>`;
+  a5State.selected=null;
+}
+
+function a5Select(val){
+  a5State.selected=val;
+  document.getElementById('a5-true').classList.toggle('sel',val===true);
+  document.getElementById('a5-false').classList.toggle('sel',val===false);
+}
+
+function submitA5(){
+  const expl=document.getElementById('a5-expl').value.trim();
+  if(a5State.selected===null||expl.length<3){ alert(t('a5NeedBoth')); return; }
+  const q=a5Questions[a5State.idx];
+  const correct=a5State.selected===q.ans;
+  document.getElementById('a5-true').disabled=true;
+  document.getElementById('a5-false').disabled=true;
+  document.getElementById('a5-submit').disabled=true;
+  document.getElementById('a5-expl').disabled=true;
+  if(q.ans===true) document.getElementById('a5-true').classList.add('correct');
+  else document.getElementById('a5-false').classList.add('correct');
+  if(!correct){
+    if(a5State.selected===true) document.getElementById('a5-true').classList.add('wrong');
+    else document.getElementById('a5-false').classList.add('wrong');
+  }
+  const fb=document.getElementById('a5-fb');
+  if(correct){ a5State.score++; fb.className='fb-a5 show correct'; fb.textContent=t('a5Correct'); }
+  else { a5State.score=Math.max(0,a5State.score-1); fb.className='fb-a5 show wrong'; fb.textContent=t('a5Wrong',{ans:q.ans?'True':'False'}); }
+  document.getElementById('a5-nav').classList.add('show');
+}
+
+function nextA5(){ a5State.idx++; renderA5(); }
+
+function renderA5End(){
+  document.getElementById('a5-wrap').innerHTML=`
+    <div style="text-align:center;">
+      <div class="game-title">${t('a5GameTitle')}</div>
+    </div>
+    <div class="end-card" style="margin-top:30px;">
+      <div style="font-size:3rem;">🥅🇬🇧</div>
+      <h3>${t('a5EndTitle')}</h3>
+      <p>${t('a5EndScore',{s:a5State.score,t:a5Questions.length})}</p>
+      <p>${a5State.score>=6?t('a5EndGreat'):a5State.score>=4?t('a5EndGood'):t('a5EndOk')}</p>
+      <button class="restart-btn" onclick="initQuizA5()">${t('a5Replay')}</button>
+    </div>`;
+  launchCf('quiz-a5','cf-piece');
+}
+
+/* =====================================================================
+   QUIZ C1 — Scotland Topics (16 questions, retry missed, star rating)
+   ===================================================================== */
+const c1AllQuestions=[
+  // 8 Multiple-Choice
+  {type:'mc',q:'How many islands does Scotland have?',opts:['215','920','800'],ans:2,img:'🏝️'},
+  {type:'mc',q:'What are the four main groups of the Scottish Isles?',opts:['Shetland Islands, Outer Hebrides, Inner Hebrides, Orkney Islands','Ben Wyvis, Orkney Islands, Oslo, Edinburgh','Shetland Island, Outer Hebrides, Inner Hebrides, Edinburgh'],ans:0,img:'🗺️'},
+  {type:'mc',q:'What is the highest mountain in Scotland?',opts:['Ben Nevis','Ben Wyvis','Ben Macdui'],ans:0,img:'🏔️'},
+  {type:'mc',q:'How many of Scotland\'s islands are inhabited?',opts:['~800','~100','~500'],ans:1,img:'🏘️'},
+  {type:'mc',q:'Why do Selkies leave the sea according to mythology?',opts:['They are looking for love','They are looking for a party','They are looking for their babies'],ans:0,img:'🦭'},
+  {type:'mc',q:'What are Kelpies in Scottish folklore?',opts:['Water horses','Water people','Water spirits'],ans:0,img:'🐴'},
+  {type:'mc',q:'Which traditional music instrument is widely associated with Scotland?',opts:['Bagpipes','Pop Music','Harp'],ans:0,img:'🎵'},
+  {type:'mc',q:'What is the national animal of Scotland?',opts:['Unicorn','Red deer','Highland cow'],ans:0,img:'🦄'},
+  // 8 Yes/No
+  {type:'yn',q:'Is the population density of Scotland one of the least dense in Europe?',ans:0,img:'👥',opts:['Yes','No']},
+  {type:'yn',q:'Is the Puffin a native bird commonly found on Scottish islands?',ans:0,img:'🐧',opts:['Yes','No']},
+  {type:'yn',q:'Does Scotland have more than 30,000 freshwater lochs?',ans:0,img:'🌊',opts:['Yes','No']},
+  {type:'yn',q:'Is Loch Ness the largest freshwater lake in Scotland by volume?',ans:0,img:'🐉',opts:['Yes','No']},
+  {type:'yn',q:'Are the Northern Lights sometimes visible from Scotland?',ans:0,img:'🌌',opts:['Yes','No']},
+  {type:'yn',q:'Is the Scottish Highlands home to wild red deer?',ans:0,img:'🦌',opts:['Yes','No']},
+  {type:'yn',q:'Is Edinburgh the capital city of Scotland?',ans:0,img:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',opts:['Yes','No']},
+  {type:'yn',q:'Does Scotland have its own national football team?',ans:0,img:'⚽',opts:['Yes','No']}
+];
+let c1State={};
+
+function initQuizC1(){
+  const shuffled=[...c1AllQuestions].sort(()=>Math.random()-0.5);
+  c1State={queue:[...shuffled],retry:[],idx:0,score:0,total:c1AllQuestions.length,phase:'main'};
+  renderC1();
+}
+
+function renderC1(){
+  const wrap=document.getElementById('c1-wrap');
+  // Check if current queue is done
+  if(c1State.idx>=c1State.queue.length){
+    if(c1State.retry.length>0){
+      c1State.queue=c1State.retry.sort(()=>Math.random()-0.5);
+      c1State.retry=[];
+      c1State.idx=0;
+      c1State.phase='retry';
+    } else {
+      renderC1End(); return;
+    }
+  }
+  const q=c1State.queue[c1State.idx];
+  // Shuffle options
+  const indices=[...q.opts.keys()].sort(()=>Math.random()-0.5);
+  const globalNum=c1State.total-c1State.queue.length+c1State.idx+1-(c1State.phase==='retry'?0:0);
+  // Update bg emoji
+  document.getElementById('c1-bg').style.background='none';
+  wrap.innerHTML=`
+    <div style="text-align:center;">
+      <div class="game-title-c1">${t('c1GameTitle')}</div>
+      <div class="score-c1">${t('c1Score',{s:c1State.score})}</div>
+    </div>
+    <div class="img-frame">${q.img}</div>
+    <div class="q-card-c1">
+      <div class="q-text-c1">${q.q}</div>
+      <div class="opts-c1" id="c1-opts">
+        ${indices.map(i=>`<button class="opt-c1" data-idx="${i}" onclick="answerC1(${i})">${q.opts[i]}</button>`).join('')}
+      </div>
+      <div class="fb-c1" id="c1-fb"></div>
+      <div style="text-align:center;">
+        <button class="nav-c1" id="c1-nav" onclick="nextC1()">${t('c1Next')}</button>
+      </div>
+    </div>`;
+}
+
+function answerC1(idx){
+  const q=c1State.queue[c1State.idx];
+  const correct=idx===q.ans;
+  document.querySelectorAll('#c1-opts .opt-c1').forEach(b=>b.disabled=true);
+  document.querySelector(`#c1-opts .opt-c1[data-idx="${q.ans}"]`).classList.add('correct');
+  if(!correct) document.querySelector(`#c1-opts .opt-c1[data-idx="${idx}"]`).classList.add('wrong');
+  const fb=document.getElementById('c1-fb');
+  if(correct){
+    c1State.score++;
+    fb.className='fb-c1 show correct';
+    fb.textContent=t('c1Correct');
+  } else {
+    fb.className='fb-c1 show wrong';
+    fb.innerHTML=t('c1Wrong')+'<br><small>'+t('c1RetryNote')+'</small>';
+    c1State.retry.push(q);
+  }
+  document.getElementById('c1-nav').classList.add('show');
+}
+
+function nextC1(){ c1State.idx++; renderC1(); }
+
+function renderC1End(){
+  const s=c1State.score;
+  let stars=s>=14?5:s>=11?4:s>=8?3:s>=5?2:1;
+  const starStr='⭐'.repeat(stars)+'☆'.repeat(5-stars);
+  document.getElementById('c1-wrap').innerHTML=`
+    <div style="text-align:center;">
+      <div class="game-title-c1">${t('c1GameTitle')}</div>
+    </div>
+    <div class="end-card" style="margin-top:30px;">
+      <div style="font-size:3rem;">🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>
+      <h3>${t('c1EndTitle')}</h3>
+      <p>${t('c1EndScore',{s:c1State.score})}</p>
+      <div class="stars-row">${starStr}</div>
+      <p>${t('c1Stars',{n:stars})}</p>
+      <button class="restart-btn" onclick="initQuizC1()">${t('c1Replay')}</button>
+    </div>`;
+  launchCf('quiz-c1','cf-piece');
+}
+
+/* =====================================================================
+   QUIZ D1 — Manchester Quiz App (stadium, hints cost points)
+   ===================================================================== */
+const d1Questions=[
+  {q:'What is the name of Manchester\'s most famous football stadium?',opts:['Old Trafford','Etihad Stadium','Anfield','Wembley'],ans:0,hint:'It is called the "Theatre of Dreams".',fact:'Old Trafford can hold over 74,000 fans and was built in 1910.'},
+  {q:'Which Manchester club plays at the Etihad Stadium?',opts:['Manchester City','Manchester United','Bolton Wanderers','Stockport County'],ans:0,hint:'Their nickname is "The Citizens".',fact:'The Etihad Stadium was originally built for the 2002 Commonwealth Games.'},
+  {q:'What is Manchester\'s official symbol?',opts:['A worker bee','A red rose','A lion','A football'],ans:0,hint:'It represents the city\'s hard-working spirit.',fact:'The worker bee became a symbol of Manchester during the Industrial Revolution.'},
+  {q:'Which famous music band came from Manchester?',opts:['Oasis','The Beatles','Coldplay','The Rolling Stones'],ans:0,hint:'The Gallagher brothers were in this band.',fact:'Oasis formed in Manchester in 1991 and became one of the biggest bands of the 1990s.'},
+  {q:'What is the name of the tram system in Manchester?',opts:['Metrolink','Manchester Line','CityRail','TransManc'],ans:0,hint:'It is the largest light rail network in the UK.',fact:'Metrolink opened in 1992 and now has over 99 stops across Greater Manchester.'},
+  {q:'Which river flows through Manchester?',opts:['River Irwell','River Thames','River Mersey','River Trent'],ans:0,hint:'It forms the boundary between Manchester and Salford.',fact:'The River Irwell was once one of the most polluted rivers in England, but has been cleaned up significantly.'}
+];
+let d1State={};
+
+function initQuizD1(){ d1State={idx:0,score:0,hintUsed:false}; renderD1(); }
+
+function renderD1(){
+  const wrap=document.getElementById('d1-wrap');
+  if(d1State.idx>=d1Questions.length){ renderD1End(); return; }
+  const q=d1Questions[d1State.idx];
+  const hintBtnHtml=d1State.hintUsed?'':`<button class="hint-btn-d1" id="d1-hint-btn" onclick="showD1Hint()">${t('d1HintBtn')}</button>`;
+  wrap.innerHTML=`
+    <div style="text-align:center;">
+      <div class="game-title-d1">${t('d1GameTitle')}</div>
+      <div class="score-d1">${t('d1Score',{s:d1State.score,a:d1State.idx+1,b:d1Questions.length})}</div>
+    </div>
+    <div class="q-card-d1">
+      <div class="q-text-d1">${q.q}</div>
+      ${hintBtnHtml}
+      <div class="hint-text-d1" id="d1-hint">${q.hint}</div>
+      <div class="opts-d1" id="d1-opts">
+        ${q.opts.map((o,i)=>`<button class="opt-d1" data-idx="${i}" onclick="answerD1(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}
+      </div>
+      <div class="fb-d1" id="d1-fb"></div>
+      <div class="fun-fact-d1" id="d1-fact">${t('d1FunFact',{f:q.fact})}</div>
+      <div style="text-align:center;">
+        <button class="nav-d1" id="d1-nav" onclick="nextD1()">${t('d1Next')}</button>
+      </div>
+    </div>`;
+  d1State.hintUsed=false;
+}
+
+function showD1Hint(){
+  if(d1State.hintUsed) return;
+  d1State.hintUsed=true;
+  d1State.score=Math.max(0,d1State.score-1);
+  document.getElementById('d1-hint').classList.add('show');
+  const btn=document.getElementById('d1-hint-btn'); if(btn) btn.textContent=t('d1HintUsed');
+  // update score display
+  const scoreEl=document.querySelector('#quiz-d1 .score-d1');
+  if(scoreEl) scoreEl.textContent=t('d1Score',{s:d1State.score,a:d1State.idx+1,b:d1Questions.length});
+}
+
+function answerD1(idx){
+  const q=d1Questions[d1State.idx];
+  const correct=idx===q.ans;
+  document.querySelectorAll('#d1-opts .opt-d1').forEach(b=>b.disabled=true);
+  document.querySelector(`#d1-opts .opt-d1[data-idx="${q.ans}"]`).classList.add('correct');
+  if(!correct) document.querySelector(`#d1-opts .opt-d1[data-idx="${idx}"]`).classList.add('wrong');
+  const fb=document.getElementById('d1-fb');
+  if(correct){
+    d1State.score++;
+    fb.className='fb-d1 show correct'; fb.textContent=t('d1Correct');
+  } else {
+    fb.className='fb-d1 show wrong'; fb.textContent=t('d1Wrong',{ans:q.opts[q.ans]});
+  }
+  document.getElementById('d1-fact').classList.add('show');
+  document.getElementById('d1-nav').classList.add('show');
+  const hintBtn=document.getElementById('d1-hint-btn'); if(hintBtn) hintBtn.style.display='none';
+}
+
+function nextD1(){ d1State.idx++; d1State.hintUsed=false; renderD1(); }
+
+function renderD1End(){
+  const max=d1Questions.length;
+  document.getElementById('d1-wrap').innerHTML=`
+    <div style="text-align:center;">
+      <div class="game-title-d1">${t('d1GameTitle')}</div>
+    </div>
+    <div class="end-card" style="margin-top:30px;">
+      <div style="font-size:3rem;">⚽🏆</div>
+      <h3>${t('d1EndTitle')}</h3>
+      <p>${t('d1EndScore',{s:d1State.score,t:max})}</p>
+      <p>${d1State.score>=5?t('d1EndGreat'):d1State.score>=3?t('d1EndGood'):t('d1EndOk')}</p>
+      <button class="restart-btn" onclick="initQuizD1()">${t('d1Replay')}</button>
+    </div>`;
+  launchCf('quiz-d1','cf-piece');
 }
 
 /* =====================================================================
