@@ -203,103 +203,181 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 .quiz-screen.active { display: block; }
 
 /* ============================================================
-   QUIZ A1 — City Hunter  (cartoon / summer)
+   QUIZ A1 — City Hunter  (walking simulator / cartoon)
    ============================================================ */
 #quiz-a1 {
-  background: linear-gradient(180deg, #87ceeb 0%, #b6f0a0 60%, #6ec94a 100%);
-  min-height: 100vh; overflow: hidden; position: relative;
-  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  min-height:100vh; overflow:hidden; position:relative;
+  font-family:'Fredoka','Comic Sans MS','Chalkboard SE',cursive;
+  background:#87ceeb;
 }
-#quiz-a1 .sun {
-  position: fixed; top: 20px; right: 120px;
-  font-size: 3.8rem;
-  animation: spinSun 14s linear infinite;
-  z-index: 1; pointer-events: none;
+/* Walking Scene */
+#quiz-a1 .walk-scene {
+  position:relative; width:100%; height:100vh; overflow:hidden;
 }
-@keyframes spinSun { to { transform: rotate(360deg); } }
-#quiz-a1 .cloud-bg { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
-#quiz-a1 .cloud-float {
-  position: absolute; font-size: 3rem; opacity: 0.72;
-  animation: floatCld 28s linear infinite;
+#quiz-a1 .sky-layer {
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,#4fc3f7 0%,#81d4fa 40%,#b3e5fc 60%,#e1f5fe 80%);
 }
+#quiz-a1 .sun { position:fixed; top:20px; right:120px; font-size:3.8rem; animation:spinSun 14s linear infinite; z-index:2; pointer-events:none; }
+@keyframes spinSun { to { transform:rotate(360deg); } }
+#quiz-a1 .cloud-layer { position:absolute; top:0; width:100%; height:40%; z-index:2; pointer-events:none; }
+#quiz-a1 .cloud-float { position:absolute; font-size:3rem; opacity:0.7; animation:floatCld 30s linear infinite; }
 @keyframes floatCld { 0%{transform:translateX(-200px)} 100%{transform:translateX(calc(100vw+200px))} }
-#quiz-a1 .content-wrap {
-  position: relative; z-index: 3;
-  max-width: 700px; margin: 0 auto; padding: 30px 18px 70px;
+#quiz-a1 .buildings-layer {
+  position:absolute; bottom:30%; width:300%; height:40%; z-index:3;
+  animation:scrollBld var(--walk-dur,10s) linear forwards;
+  animation-play-state:var(--walk-play,paused);
 }
-#quiz-a1 .game-title {
-  text-align: center; font-size: 2rem; color: #1e3a8a;
-  text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0,0,0,0.1);
-  margin-bottom: 4px;
+@keyframes scrollBld { from{transform:translateX(0)} to{transform:translateX(-33.33%)} }
+#quiz-a1 .bld-strip { display:flex; align-items:flex-end; height:100%; }
+#quiz-a1 .bld {
+  flex-shrink:0; margin:0 3px; border-radius:4px 4px 0 0; position:relative;
 }
-#quiz-a1 .coin-bar {
-  display: flex; justify-content: center; align-items: center; gap: 10px;
-  margin-bottom: 20px; font-size: 1.2rem; font-weight: 700; color: #92400e;
-  background: rgba(255,255,255,0.85); border-radius: 30px;
-  padding: 8px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+#quiz-a1 .bld .win {
+  width:8px; height:8px; background:rgba(255,255,200,0.7); border-radius:1px;
+  position:absolute;
 }
-#quiz-a1 .card {
-  background: rgba(255,255,255,0.97); border-radius: 20px;
-  padding: 24px 26px; box-shadow: 0 8px 28px rgba(0,0,0,0.18);
-  border: 3px solid #fbbf24;
+#quiz-a1 .road-layer {
+  position:absolute; bottom:0; width:100%; height:30%; z-index:4;
+  background:linear-gradient(180deg,#666 0%,#555 10%,#444 100%);
 }
-#quiz-a1 .building-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-#quiz-a1 .building-icon { font-size: 2.5rem; }
-#quiz-a1 .building-name { font-size: 1.3rem; color: #b91c1c; font-weight: 700; }
-#quiz-a1 .q-count { font-size: 0.88rem; color: #6b7280; margin-bottom: 10px; }
-#quiz-a1 .question-text { font-size: 1.1rem; color: #111827; margin-bottom: 14px; line-height: 1.5; }
-#quiz-a1 .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+#quiz-a1 .road-line {
+  position:absolute; top:45%; height:4px; width:300%;
+  background:repeating-linear-gradient(90deg,#fbbf24 0,#fbbf24 40px,transparent 40px,transparent 80px);
+  animation:scrollRoad var(--walk-dur,10s) linear forwards;
+  animation-play-state:var(--walk-play,paused);
+}
+@keyframes scrollRoad { from{transform:translateX(0)} to{transform:translateX(-33.33%)} }
+#quiz-a1 .sidewalk {
+  position:absolute; top:0; width:100%; height:18%;
+  background:repeating-linear-gradient(90deg,#d1d5db 0,#d1d5db 30px,#e5e7eb 30px,#e5e7eb 60px);
+}
+/* Car */
+#quiz-a1 .car-anim {
+  position:absolute; bottom:34%; z-index:6; font-size:2.2rem;
+  animation:carPass 4s linear forwards;
+}
+@keyframes carPass { from{left:-80px} to{left:calc(100vw+80px)} }
+/* Character SVG */
+#quiz-a1 .char-wrap {
+  position:absolute; bottom:30%; left:50%; transform:translateX(-50%);
+  z-index:10; width:60px;
+}
+#quiz-a1 .char-wrap.walking .char-leg-l { animation:legWalk 0.35s steps(2) infinite; }
+#quiz-a1 .char-wrap.walking .char-leg-r { animation:legWalk 0.35s steps(2) infinite 0.175s; }
+@keyframes legWalk { 0%{transform:rotate(-15deg)} 50%{transform:rotate(15deg)} 100%{transform:rotate(-15deg)} }
+/* Walk HUD */
+#quiz-a1 .walk-hud {
+  position:absolute; top:0; left:0; right:0; z-index:15;
+  padding:56px 18px 10px; display:flex; justify-content:space-between; align-items:flex-start;
+}
+#quiz-a1 .hud-coins {
+  background:rgba(255,255,255,0.9); border-radius:24px; padding:6px 16px;
+  font-size:1rem; font-weight:700; color:#92400e; box-shadow:0 2px 8px rgba(0,0,0,0.15);
+  display:flex; align-items:center; gap:6px;
+}
+#quiz-a1 .hud-info {
+  background:rgba(0,0,0,0.5); color:#fff; border-radius:16px; padding:6px 16px;
+  font-size:0.88rem; text-align:center; backdrop-filter:blur(4px);
+}
+#quiz-a1 .walk-dest {
+  position:absolute; bottom:32%; left:50%; transform:translateX(-50%);
+  z-index:12; text-align:center;
+  background:rgba(255,255,255,0.92); border-radius:16px; padding:10px 24px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.2); font-size:1rem; font-weight:700; color:#1e3a8a;
+}
+#quiz-a1 .walk-timer {
+  position:absolute; bottom:12%; left:50%; transform:translateX(-50%);
+  z-index:12; width:200px; text-align:center;
+}
+#quiz-a1 .timer-bar { background:rgba(255,255,255,0.4); border-radius:10px; height:10px; overflow:hidden; }
+#quiz-a1 .timer-fill { height:100%; background:linear-gradient(90deg,#f59e0b,#b91c1c); border-radius:10px; transition:width 1s linear; }
+#quiz-a1 .timer-text { font-size:0.8rem; color:#fff; margin-top:4px; text-shadow:0 1px 3px rgba(0,0,0,0.5); }
+/* Sight arrival */
+#quiz-a1 .sight-card {
+  position:absolute; inset:0; z-index:20;
+  background:rgba(0,0,0,0.55); display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(3px);
+}
+#quiz-a1 .sight-inner {
+  background:rgba(255,255,255,0.97); border-radius:22px; padding:28px 26px;
+  max-width:680px; width:90%; box-shadow:0 12px 40px rgba(0,0,0,0.3);
+  border:3px solid #fbbf24; max-height:90vh; overflow-y:auto;
+}
+#quiz-a1 .sight-header { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+#quiz-a1 .sight-icon { font-size:2.5rem; }
+#quiz-a1 .sight-name { font-size:1.4rem; color:#b91c1c; font-weight:700; }
+#quiz-a1 .q-count { font-size:0.86rem; color:#6b7280; margin-bottom:10px; }
+#quiz-a1 .question-text { font-size:1.08rem; color:#111827; margin-bottom:14px; line-height:1.5; }
+#quiz-a1 .options { display:flex; flex-direction:column; gap:10px; margin-bottom:12px; }
 #quiz-a1 .opt-btn {
-  background: #dbeafe; color: #1e40af; padding: 12px 16px; border-radius: 12px;
-  font-size: 0.98rem; font-family: inherit; border: 2px solid transparent;
-  text-align: left; transition: all 0.15s;
+  background:#dbeafe; color:#1e40af; padding:12px 16px; border-radius:12px;
+  font-size:0.98rem; font-family:inherit; border:2px solid transparent;
+  text-align:left; transition:all 0.15s;
 }
-#quiz-a1 .opt-btn:hover:not(:disabled) { background: #93c5fd; border-color: #2563eb; }
-#quiz-a1 .opt-btn.correct { background: #bbf7d0; border-color: #16a34a; }
-#quiz-a1 .opt-btn.wrong   { background: #fecaca; border-color: #dc2626; }
-#quiz-a1 .opt-btn:disabled { cursor: not-allowed; }
-#quiz-a1 .feedback-box { border-radius: 12px; padding: 12px 16px; font-size: 0.97rem; display: none; margin-bottom: 12px; }
-#quiz-a1 .feedback-box.show { display: block; }
-#quiz-a1 .feedback-box.correct { background: #f0fdf4; border-left: 4px solid #16a34a; color: #15803d; }
-#quiz-a1 .feedback-box.wrong   { background: #fef2f2; border-left: 4px solid #dc2626; color: #991b1b; }
-#quiz-a1 .nav-btn { background: #1e40af; color: #fff; padding: 10px 24px; border-radius: 10px; font-size: 0.98rem; font-family: inherit; }
-#quiz-a1 .nav-btn:hover { background: #1e3a8a; }
-#quiz-a1 .shop-btn { background: #f59e0b; color: #fff; padding: 8px 16px; border-radius: 10px; font-size: 0.88rem; font-family: inherit; }
+#quiz-a1 .opt-btn:hover:not(:disabled) { background:#93c5fd; border-color:#2563eb; }
+#quiz-a1 .opt-btn.correct { background:#bbf7d0; border-color:#16a34a; }
+#quiz-a1 .opt-btn.wrong   { background:#fecaca; border-color:#dc2626; }
+#quiz-a1 .opt-btn:disabled { cursor:not-allowed; }
+#quiz-a1 .feedback-box { border-radius:12px; padding:12px 16px; font-size:0.97rem; display:none; margin-bottom:12px; }
+#quiz-a1 .feedback-box.show { display:block; }
+#quiz-a1 .feedback-box.correct { background:#f0fdf4; border-left:4px solid #16a34a; color:#15803d; }
+#quiz-a1 .feedback-box.wrong   { background:#fef2f2; border-left:4px solid #dc2626; color:#991b1b; }
+#quiz-a1 .nav-btn { background:#1e40af; color:#fff; padding:10px 24px; border-radius:10px; font-size:0.98rem; font-family:inherit; }
+#quiz-a1 .nav-btn:hover { background:#1e3a8a; }
+#quiz-a1 .shop-btn { background:#f59e0b; color:#fff; padding:8px 16px; border-radius:10px; font-size:0.88rem; font-family:inherit; }
+/* Loser popup */
 #quiz-a1 .loser-popup {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-  display: none; align-items: center; justify-content: center;
-  z-index: 18000; flex-direction: column;
+  position:fixed; inset:0; background:rgba(0,0,0,0.6);
+  display:none; align-items:center; justify-content:center;
+  z-index:18000; flex-direction:column;
 }
-#quiz-a1 .loser-popup.show { display: flex; }
-#quiz-a1 .loser-face { font-size: 5.5rem; animation: bLoser 0.4s ease infinite alternate; margin-bottom: 8px; }
+#quiz-a1 .loser-popup.show { display:flex; }
+#quiz-a1 .loser-face { font-size:5.5rem; animation:bLoser 0.4s ease infinite alternate; margin-bottom:8px; }
 @keyframes bLoser { from{transform:scale(1)} to{transform:scale(1.15)} }
-#quiz-a1 .loser-text { font-size: 2.2rem; color: #fbbf24; font-weight: 900; text-shadow: 2px 2px 0 #000; margin-bottom: 18px; }
-#quiz-a1 .loser-close { background: #b91c1c; color: #fff; padding: 10px 28px; border-radius: 12px; font-size: 1rem; font-family: inherit; }
+#quiz-a1 .loser-text { font-size:2.2rem; color:#fbbf24; font-weight:900; text-shadow:2px 2px 0 #000; margin-bottom:18px; }
+#quiz-a1 .loser-close { background:#b91c1c; color:#fff; padding:10px 28px; border-radius:12px; font-size:1rem; font-family:inherit; }
+/* Shop overlay */
 #quiz-a1 .shop-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-  z-index: 18500; display: none; align-items: flex-start;
-  justify-content: center; overflow-y: auto; padding: 30px 18px;
+  position:fixed; inset:0; background:rgba(0,0,0,0.75);
+  z-index:18500; display:none; align-items:flex-start;
+  justify-content:center; overflow-y:auto; padding:30px 18px;
 }
-#quiz-a1 .shop-overlay.show { display: flex; }
-#quiz-a1 .shop-panel { background: #fffbeb; border-radius: 20px; padding: 24px; max-width: 680px; width: 100%; border: 3px solid #fbbf24; }
-#quiz-a1 .shop-panel h2 { text-align: center; color: #92400e; margin-bottom: 16px; font-size: 1.5rem; }
-#quiz-a1 .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px,1fr)); gap: 12px; }
+#quiz-a1 .shop-overlay.show { display:flex; }
+#quiz-a1 .shop-panel { background:#fffbeb; border-radius:20px; padding:24px; max-width:680px; width:100%; border:3px solid #fbbf24; }
+#quiz-a1 .shop-panel h2 { text-align:center; color:#92400e; margin-bottom:16px; font-size:1.5rem; }
+#quiz-a1 .shop-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:12px; }
 #quiz-a1 .shop-item {
-  background: #fff; border-radius: 12px; padding: 12px 8px; text-align: center;
-  border: 2px solid #fde68a; font-family: inherit; cursor: pointer; transition: all 0.15s;
+  background:#fff; border-radius:12px; padding:12px 8px; text-align:center;
+  border:2px solid #fde68a; font-family:inherit; cursor:pointer; transition:all 0.15s;
 }
-#quiz-a1 .shop-item:hover { border-color: #f59e0b; transform: scale(1.04); }
-#quiz-a1 .shop-item.owned { background: #f0fdf4; border-color: #16a34a; }
-#quiz-a1 .shop-item .si-icon { font-size: 2rem; margin-bottom: 4px; }
-#quiz-a1 .shop-item .si-name { font-size: 0.78rem; color: #374151; font-weight: 600; }
-#quiz-a1 .shop-item .si-price { font-size: 0.75rem; color: #f59e0b; margin-top: 2px; }
-#quiz-a1 .close-shop { display: block; margin: 14px auto 0; background: #b91c1c; color: #fff; padding: 9px 26px; border-radius: 10px; font-size: 0.95rem; font-family: inherit; }
-#quiz-a1 .start-card { background: rgba(255,255,255,0.97); border-radius: 24px; padding: 36px 28px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 3px solid #fbbf24; text-align: center; }
-#quiz-a1 .start-card h2 { font-size: 1.9rem; color: #b91c1c; margin-bottom: 12px; }
-#quiz-a1 .start-card p { color: #374151; font-size: 0.98rem; margin-bottom: 6px; }
-#quiz-a1 .start-btn { background: linear-gradient(135deg,#f59e0b,#b91c1c); color:#fff; padding:13px 34px; border-radius:14px; font-size:1.1rem; font-family:inherit; margin-top:18px; box-shadow:0 4px 14px rgba(185,28,28,0.4); }
-#quiz-a1 .start-btn:hover { transform: scale(1.04); }
-#quiz-a1 .char-display { font-size: 3.2rem; text-align: center; margin-bottom: 10px; }
+#quiz-a1 .shop-item:hover { border-color:#f59e0b; transform:scale(1.04); }
+#quiz-a1 .shop-item.owned { background:#f0fdf4; border-color:#16a34a; }
+#quiz-a1 .shop-item.equipped { background:#dbeafe; border-color:#2563eb; }
+#quiz-a1 .shop-item .si-preview { height:70px; display:flex; align-items:center; justify-content:center; margin-bottom:6px; }
+#quiz-a1 .shop-item .si-name { font-size:0.78rem; color:#374151; font-weight:600; }
+#quiz-a1 .shop-item .si-price { font-size:0.75rem; color:#f59e0b; margin-top:2px; }
+#quiz-a1 .close-shop { display:block; margin:14px auto 0; background:#b91c1c; color:#fff; padding:9px 26px; border-radius:10px; font-size:0.95rem; font-family:inherit; }
+/* Start screen */
+#quiz-a1 .start-card { background:rgba(255,255,255,0.97); border-radius:24px; padding:36px 28px; box-shadow:0 10px 40px rgba(0,0,0,0.2); border:3px solid #fbbf24; text-align:center; }
+#quiz-a1 .start-card h2 { font-size:1.9rem; color:#b91c1c; margin-bottom:12px; }
+#quiz-a1 .start-card p { color:#374151; font-size:0.98rem; margin-bottom:6px; }
+#quiz-a1 .start-btn { background:linear-gradient(135deg,#f59e0b,#b91c1c); color:#fff; padding:13px 34px; border-radius:14px; font-size:1.1rem; font-family:inherit; margin-top:18px; box-shadow:0 4px 14px rgba(185,28,28,0.4); }
+#quiz-a1 .start-btn:hover { transform:scale(1.04); }
+#quiz-a1 .char-display { display:flex; justify-content:center; margin:10px 0; }
+/* Building done card */
+#quiz-a1 .done-overlay {
+  position:absolute; inset:0; z-index:20;
+  background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;
+}
+#quiz-a1 .done-card { background:#fff; border-radius:20px; padding:30px; text-align:center; max-width:500px; width:90%; border:3px solid #fbbf24; }
+/* Final end screen */
+#quiz-a1 .end-wrap {
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(180deg,#87ceeb,#b6f0a0);
+  padding:20px;
+}
+
 
 /* ============================================================
    QUIZ A2 — Super London  (white / red / gold)
@@ -494,24 +572,21 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 #quiz-a5 .nav-a5.show { display:inline-block; }
 
 /* ============================================================
-   QUIZ C1 — Scotland Topics (minimalist / nature)
+   QUIZ C1 — Scotland Topics (nature imagery)
    ============================================================ */
-#quiz-c1 { min-height:100vh; position:relative; overflow:hidden; background:#f8faf8; font-family:'Georgia',serif; }
+#quiz-c1 { min-height:100vh; position:relative; overflow:hidden; background:#1a2e1a; font-family:'Georgia',serif; }
 #quiz-c1 .scot-bg-img {
-  position:fixed; inset:0; z-index:0; background-size:cover; background-position:center;
-  opacity:0.18; transition:background-image 0.8s ease;
+  position:fixed; inset:0; z-index:0;
+  background-size:cover; background-position:center;
+  transition:background-image 0.8s ease, opacity 0.8s ease;
+  opacity:0.35;
 }
+#quiz-c1 .scot-overlay { position:fixed; inset:0; z-index:1; background:linear-gradient(180deg,rgba(0,0,0,0.3) 0%,rgba(6,95,70,0.3) 100%); pointer-events:none; }
 #quiz-c1 .content-wrap { position:relative; z-index:2; max-width:720px; margin:0 auto; padding:40px 18px 70px; }
-#quiz-c1 .game-title-c1 { text-align:center; font-size:2rem; color:#1e3a8a; margin-bottom:4px; }
-#quiz-c1 .game-sub-c1 { text-align:center; color:#6b7280; font-size:0.95rem; margin-bottom:18px; }
-#quiz-c1 .score-c1 { text-align:center; font-size:1rem; font-weight:700; color:#065f46; margin-bottom:14px; }
-#quiz-c1 .img-frame {
-  width:100%; max-height:260px; border-radius:14px; overflow:hidden; margin-bottom:18px;
-  display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(135deg,#065f46 0%,#1e3a8a 100%);
-  font-size:5rem; min-height:160px;
-}
-#quiz-c1 .q-card-c1 { background:rgba(255,255,255,0.95); border-radius:16px; padding:24px; box-shadow:0 6px 22px rgba(0,0,0,0.1); border:1px solid #d1d5db; }
+#quiz-c1 .game-title-c1 { text-align:center; font-size:2rem; color:#fff; margin-bottom:4px; text-shadow:0 3px 12px rgba(0,0,0,0.5); }
+#quiz-c1 .game-sub-c1 { text-align:center; color:rgba(255,255,255,0.7); font-size:0.95rem; margin-bottom:18px; }
+#quiz-c1 .score-c1 { text-align:center; font-size:1rem; font-weight:700; color:#fbbf24; margin-bottom:14px; text-shadow:0 1px 4px rgba(0,0,0,0.4); }
+#quiz-c1 .q-card-c1 { background:rgba(255,255,255,0.92); border-radius:16px; padding:24px; box-shadow:0 6px 22px rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.3); backdrop-filter:blur(2px); }
 #quiz-c1 .q-text-c1 { font-size:1.08rem; color:#111827; font-weight:700; margin-bottom:16px; text-align:center; }
 #quiz-c1 .opts-c1 { display:flex; flex-direction:column; gap:10px; }
 #quiz-c1 .opt-c1 { background:#f0fdf4; color:#065f46; padding:12px 16px; border-radius:10px; text-align:left; font-size:0.97rem; font-family:inherit; border:2px solid #bbf7d0; transition:all 0.15s; cursor:pointer; }
@@ -526,6 +601,7 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 #quiz-c1 .nav-c1 { background:#065f46; color:#fff; padding:10px 22px; border-radius:10px; font-size:0.97rem; font-family:inherit; display:none; margin-top:8px; }
 #quiz-c1 .nav-c1.show { display:inline-block; }
 #quiz-c1 .stars-row { font-size:2.5rem; letter-spacing:8px; margin:14px 0; }
+
 
 /* ============================================================
    QUIZ D1 — Manchester Quiz App (stadium bg)
@@ -666,11 +742,9 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
      QUIZ SCREENS
      ============================================================ -->
 
-<!-- A1: City Hunter -->
+<!-- A1: City Hunter (Walking Simulator) -->
 <div id="quiz-a1" class="screen">
-  <div class="sun">☀️</div>
-  <div class="cloud-bg" id="a1-clouds"></div>
-  <div class="content-wrap" id="a1-wrap"></div>
+  <div id="a1-scene"></div>
   <div class="loser-popup" id="a1-loser">
     <div class="loser-face">😂</div>
     <div class="loser-text" data-i="loserText">LOSER! –1 🪙</div>
@@ -721,6 +795,7 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 <!-- C1: Scotland Topics -->
 <div id="quiz-c1" class="screen">
   <div class="scot-bg-img" id="c1-bg"></div>
+  <div class="scot-overlay"></div>
   <div class="content-wrap" id="c1-wrap"></div>
 </div>
 
@@ -801,6 +876,14 @@ const T = {
     a1ShopCoin:'🪙 {n}',
     a1ShopNoCoin:'Not enough coins! You need {n} 🪙',
     a1ShopEquip:'Equipped: {name}!',
+    a1SightCount:'{n} sights to explore today',
+    a1SightN:'Sight {a} / {b}',
+    a1WalkingTo:'Walking to {name}…',
+    a1Finish:'🏁 Finish Tour!',
+    a1EndTitle:'🗺️ Tour Complete!',
+    a1EndScore:'You earned {n} coins across {s} London sights!',
+    a1EndMsg:'Your coins are saved. Come back to explore more sights!',
+    a1Replay:'🔁 New Tour (different sights!)',
     // A2 Super London
     a2Title:'🔴 Super London',
     a2Score:'Question {a} of {b} | Score: {s}',
@@ -883,6 +966,8 @@ const T = {
     c1EndScore:'You scored {s} / 16 points',
     c1Stars:'{n} out of 5 Stars',
     c1Replay:'🔁 Play again',
+    c1Pts:'points',
+    c1NoFive:'You can only get 5 stars with a perfect score – no wrong answers!',
     // D1 Manchester Quiz App
     d1GameTitle:'⚽ Manchester Quiz App',
     d1Score:'Score: {s} | Question {a} of {b}',
@@ -958,6 +1043,14 @@ const T = {
     a1ShopCoin:'🪙 {n}',
     a1ShopNoCoin:'Nicht genug Münzen! Du brauchst {n} 🪙',
     a1ShopEquip:'Ausgerüstet: {name}!',
+    a1SightCount:'{n} Sehenswürdigkeiten heute',
+    a1SightN:'Station {a} / {b}',
+    a1WalkingTo:'Unterwegs zu {name}…',
+    a1Finish:'🏁 Tour beenden!',
+    a1EndTitle:'🗺️ Tour abgeschlossen!',
+    a1EndScore:'Du hast {n} Münzen an {s} Londoner Sehenswürdigkeiten gesammelt!',
+    a1EndMsg:'Deine Münzen sind gespeichert. Komm zurück für neue Orte!',
+    a1Replay:'🔁 Neue Tour (andere Orte!)',
     a2Title:'🔴 Super London',
     a2Score:'Frage {a} von {b} | Punkte: {s}',
     a2True:'✅ RICHTIG', a2False:'❌ FALSCH',
@@ -1036,6 +1129,8 @@ const T = {
     c1EndScore:'Du hast {s} / 16 Punkte',
     c1Stars:'{n} von 5 Sternen',
     c1Replay:'🔁 Nochmal spielen',
+    c1Pts:'Punkte',
+    c1NoFive:'5 Sterne gibt es nur ohne Fehler!',
     // D1
     d1GameTitle:'⚽ Manchester Quiz App',
     d1Score:'Punkte: {s} | Frage {a} von {b}',
@@ -1193,122 +1288,331 @@ function rerenderSubmenu() {
 }
 
 /* =====================================================================
-   QUIZ A1 — City Hunter
+   QUIZ A1 — City Hunter (Walking Simulator)
    ===================================================================== */
-const a1Buildings = [
-  { name:'Big Ben', icon:'🕰️', questions:[
-    {q:'How tall is the Elizabeth Tower (Big Ben)?', opts:['96 metres','120 metres','60 metres','150 metres'], ans:0, tip:'Think about a skyscraper of 20 floors.'},
-    {q:'In which year did the Great Bell of Big Ben first ring?', opts:['1859','1900','1812','1950'], ans:0, tip:'It was during the reign of Queen Victoria.'},
-    {q:'What is the official name of the tower that houses Big Ben?', opts:['Elizabeth Tower','Victoria Tower','Westminster Tower','Bell Tower'], ans:0, tip:'It was renamed in 2012 for a royal jubilee.'}
+const a1Sights = [
+  {name:'Buckingham Palace',icon:'🏰',q:[
+    {q:'How many rooms does Buckingham Palace have?',o:['775 rooms','200 rooms','100 rooms','1500 rooms'],a:0,t:'It includes 19 state rooms and 52 royal bedrooms.'},
+    {q:'What ceremony takes place outside Buckingham Palace?',o:['Changing of the Guard','Trooping the Colour','The Lord Mayor\'s Show','Bonfire Night'],a:0,t:'Soldiers in red uniforms march and swap duties.'},
+    {q:'Which queen made Buckingham Palace the main royal home?',o:['Queen Victoria','Queen Elizabeth I','Queen Anne','Queen Mary'],a:0,t:'She was the first monarch to live there permanently.'}
   ]},
-  { name:'Tower Bridge', icon:'🌉', questions:[
-    {q:'In which year was Tower Bridge opened?', opts:['1894','1850','1920','1910'], ans:0, tip:'It was in the late 19th century.'},
-    {q:'What type of bridge is Tower Bridge?', opts:['Bascule (drawbridge) bridge','Suspension bridge','Arch bridge','Cable-stayed bridge'], ans:0, tip:'Its middle section can be raised to let ships through.'},
-    {q:'The two towers of Tower Bridge are made of…?', opts:['Steel and stone cladding','Pure marble','Wood and brick','Solid gold'], ans:0, tip:'There is a hidden steel frame inside.'}
+  {name:'Big Ben',icon:'🕰️',q:[
+    {q:'How tall is the Elizabeth Tower (Big Ben)?',o:['96 metres','120 metres','60 metres','150 metres'],a:0,t:'Think about a skyscraper of 20 floors.'},
+    {q:'When did the Great Bell of Big Ben first ring?',o:['1859','1900','1812','1950'],a:0,t:'It was during the reign of Queen Victoria.'},
+    {q:'What is the tower\'s official name?',o:['Elizabeth Tower','Victoria Tower','Westminster Tower','Bell Tower'],a:0,t:'It was renamed in 2012 for a royal jubilee.'}
   ]},
-  { name:'Buckingham Palace', icon:'🏰', questions:[
-    {q:'How many rooms does Buckingham Palace have?', opts:['775 rooms','200 rooms','100 rooms','1500 rooms'], ans:0, tip:'It includes 19 state rooms and 52 royal bedrooms.'},
-    {q:'What famous ceremony happens outside Buckingham Palace?', opts:['Changing of the Guard','Trooping the Colour','The Lord Mayor\'s Show','Bonfire Night'], ans:0, tip:'Soldiers in red uniforms march and swap duties.'},
-    {q:'Buckingham Palace became the main royal residence in which century?', opts:['19th century','17th century','20th century','18th century'], ans:0, tip:'Queen Victoria was the first monarch to live there permanently.'}
+  {name:'Tower Bridge',icon:'🌉',q:[
+    {q:'In which year was Tower Bridge opened?',o:['1894','1850','1920','1910'],a:0,t:'Late 19th century.'},
+    {q:'What type of bridge is Tower Bridge?',o:['Bascule (drawbridge)','Suspension bridge','Arch bridge','Cable-stayed bridge'],a:0,t:'Its middle can be raised for ships.'},
+    {q:'The towers of Tower Bridge are made of…?',o:['Steel with stone cladding','Pure marble','Wood and brick','Solid gold'],a:0,t:'Hidden steel frame inside.'}
   ]},
-  { name:'The Shard', icon:'🔺', questions:[
-    {q:'How tall is The Shard?', opts:['310 metres','200 metres','150 metres','450 metres'], ans:0, tip:'It is the tallest building in the UK.'},
-    {q:'On which side of the River Thames is The Shard?', opts:['South bank (Southwark)','North bank (City)','West bank','East bank'], ans:0, tip:'It is near London Bridge station.'},
-    {q:'How many floors does The Shard have?', opts:['95 floors','50 floors','120 floors','75 floors'], ans:0, tip:'The viewing platform is at floor 72.'}
+  {name:'The Shard',icon:'🔺',q:[
+    {q:'How tall is The Shard?',o:['310 metres','200 metres','150 metres','450 metres'],a:0,t:'Tallest building in the UK.'},
+    {q:'On which side of the Thames is The Shard?',o:['South bank (Southwark)','North bank (City)','West bank','East bank'],a:0,t:'Near London Bridge station.'},
+    {q:'How many floors does The Shard have?',o:['95 floors','50 floors','120 floors','75 floors'],a:0,t:'The viewing platform is at floor 72.'}
   ]},
-  { name:'The London Eye', icon:'🎡', questions:[
-    {q:'How tall is the London Eye?', opts:['135 metres','90 metres','200 metres','60 metres'], ans:0, tip:'It is one of the largest Ferris wheels in the world.'},
-    {q:'How long does one full rotation of the London Eye take?', opts:['30 minutes','5 minutes','1 hour','15 minutes'], ans:0, tip:'It moves slowly so passengers can enjoy the view.'},
-    {q:'In which year did the London Eye open to the public?', opts:['2000','1995','2010','1985'], ans:0, tip:'It opened at the start of the new millennium.'}
+  {name:'London Eye',icon:'🎡',q:[
+    {q:'How tall is the London Eye?',o:['135 metres','90 metres','200 metres','60 metres'],a:0,t:'One of the largest Ferris wheels in the world.'},
+    {q:'How long does one full rotation take?',o:['30 minutes','5 minutes','1 hour','15 minutes'],a:0,t:'It moves slowly for the view.'},
+    {q:'When did the London Eye open?',o:['2000','1995','2010','1985'],a:0,t:'Start of the new millennium.'}
+  ]},
+  {name:'Tower of London',icon:'🏯',q:[
+    {q:'In which year was the Tower of London founded?',o:['1066','1215','1350','1485'],a:0,t:'William the Conqueror built it.'},
+    {q:'What precious items are kept in the Tower?',o:['The Crown Jewels','The Magna Carta','The Rosetta Stone','Shakespeare\'s manuscripts'],a:0,t:'They have been there for centuries.'},
+    {q:'What birds are famously kept at the Tower?',o:['Ravens','Pigeons','Parrots','Eagles'],a:0,t:'Legend says the kingdom falls if they leave.'}
+  ]},
+  {name:'St Paul\'s Cathedral',icon:'⛪',q:[
+    {q:'Who designed St Paul\'s Cathedral?',o:['Sir Christopher Wren','Charles Dickens','Isambard Kingdom Brunel','William Shakespeare'],a:0,t:'After the Great Fire of London.'},
+    {q:'What style of architecture is St Paul\'s?',o:['Baroque','Gothic','Art Deco','Modernist'],a:0,t:'Dome and columns.'},
+    {q:'In which century was the current St Paul\'s built?',o:['17th century','12th century','19th century','15th century'],a:0,t:'After the 1666 fire.'}
+  ]},
+  {name:'Westminster Abbey',icon:'🏛️',q:[
+    {q:'What ceremony takes place at Westminster Abbey?',o:['Royal coronations','Football finals','Music festivals','Science fairs'],a:0,t:'Kings and queens are crowned here.'},
+    {q:'How old is Westminster Abbey?',o:['Over 1000 years','500 years','200 years','2000 years'],a:0,t:'Founded in the 10th century.'},
+    {q:'Who is NOT buried at Westminster Abbey?',o:['Queen Victoria','Isaac Newton','Charles Darwin','Geoffrey Chaucer'],a:0,t:'Victoria is buried at Windsor.'}
+  ]},
+  {name:'Trafalgar Square',icon:'🦁',q:[
+    {q:'What famous column stands in Trafalgar Square?',o:['Nelson\'s Column','The Shard','The Gherkin','Marble Arch'],a:0,t:'Named after a naval hero.'},
+    {q:'Which gallery is on Trafalgar Square?',o:['The National Gallery','Tate Modern','The V&A','The Saatchi Gallery'],a:0,t:'One of the world\'s greatest art collections.'},
+    {q:'What animals guard the base of Nelson\'s Column?',o:['Bronze lions','Stone eagles','Iron horses','Marble dragons'],a:0,t:'Four of them!'}
+  ]},
+  {name:'Piccadilly Circus',icon:'💡',q:[
+    {q:'What is Piccadilly Circus famous for?',o:['Neon advertising signs','A real circus','A zoo','A castle'],a:0,t:'Bright lights and billboards.'},
+    {q:'What statue is in the centre of Piccadilly Circus?',o:['Eros (Angel of Charity)','Queen Victoria','Winston Churchill','A lion'],a:0,t:'Often called Eros but officially Anteros.'},
+    {q:'In which part of London is Piccadilly Circus?',o:['West End','East End','South Bank','Canary Wharf'],a:0,t:'The theatre and entertainment district.'}
+  ]},
+  {name:'Hyde Park',icon:'🌳',q:[
+    {q:'How big is Hyde Park?',o:['140 hectares (350 acres)','50 hectares','300 hectares','20 hectares'],a:0,t:'One of London\'s largest royal parks.'},
+    {q:'What is Speakers\' Corner in Hyde Park?',o:['A place where anyone can give a public speech','A music venue','A café','A playground'],a:0,t:'Free speech tradition since 1866.'},
+    {q:'Which lake is inside Hyde Park?',o:['The Serpentine','The Thames','The Pond','Lake London'],a:0,t:'You can go boating on it.'}
+  ]},
+  {name:'British Museum',icon:'🏺',q:[
+    {q:'Which famous stone is in the British Museum?',o:['The Rosetta Stone','The Blarney Stone','The Stone of Scone','A moonrock'],a:0,t:'It helped decode Egyptian hieroglyphs.'},
+    {q:'How much does it cost to enter the British Museum?',o:['It is free','£20','£10','£50'],a:0,t:'A gift to everyone.'},
+    {q:'How many objects are in the British Museum collection?',o:['About 8 million','About 1 million','About 100,000','About 50 million'],a:0,t:'One of the largest collections in the world.'}
+  ]},
+  {name:'Natural History Museum',icon:'🦕',q:[
+    {q:'What famous skeleton used to hang in the main hall?',o:['Dippy the Diplodocus','T-Rex Sue','A blue whale','A mammoth'],a:0,t:'A beloved dinosaur replica, now replaced by a whale.'},
+    {q:'The museum is in which London area?',o:['South Kensington','Camden','Shoreditch','Greenwich'],a:0,t:'Near the V&A and Science Museum.'},
+    {q:'When did the Natural History Museum open?',o:['1881','1750','1920','1960'],a:0,t:'Victorian era.'}
+  ]},
+  {name:'Covent Garden',icon:'🎭',q:[
+    {q:'What is Covent Garden famous for?',o:['Street performers and market','A royal palace','A football stadium','A university'],a:0,t:'Buskers perform here every day.'},
+    {q:'What was Covent Garden originally?',o:['A fruit and vegetable market','A prison','A church','A farm'],a:0,t:'The market moved to New Covent Garden in 1974.'},
+    {q:'Which famous opera house is in Covent Garden?',o:['The Royal Opera House','The Globe Theatre','The Palladium','The Old Vic'],a:0,t:'Home of The Royal Ballet too.'}
+  ]},
+  {name:'The Gherkin',icon:'🥒',q:[
+    {q:'What is the Gherkin\'s real name?',o:['30 St Mary Axe','The Pickle Tower','The Green Tower','City Spire'],a:0,t:'Named after its street address.'},
+    {q:'How many floors does the Gherkin have?',o:['41','60','25','80'],a:0,t:'Shorter than The Shard but iconic.'},
+    {q:'What shape is the Gherkin?',o:['A bullet / pickle shape','A perfect cube','A pyramid','A cylinder'],a:0,t:'Its curved shape reduces wind.'}
+  ]},
+  {name:'Greenwich Observatory',icon:'🔭',q:[
+    {q:'What is the Prime Meridian at Greenwich?',o:['0 degrees longitude — where East meets West','The equator','The North Pole line','A river'],a:0,t:'All time zones start here.'},
+    {q:'What time system comes from Greenwich?',o:['Greenwich Mean Time (GMT)','British Summer Time','Central European Time','Pacific Time'],a:0,t:'The world\'s time standard.'},
+    {q:'You can stand with one foot in each hemisphere at Greenwich.',o:['True — on the Meridian Line','False — that\'s at the equator','False — it\'s just a museum','True — but only at midnight'],a:0,t:'A famous photo spot!'}
+  ]},
+  {name:'Camden Market',icon:'🎸',q:[
+    {q:'What type of goods is Camden Market famous for?',o:['Alternative fashion, vintage and street food','Luxury handbags','Fresh fish','Electronics'],a:0,t:'Punk, goth, and vintage styles.'},
+    {q:'Camden is in which part of London?',o:['North London','South London','East London','West London'],a:0,t:'Near Regent\'s Canal.'},
+    {q:'How many visitors does Camden Market get each week?',o:['About 250,000','About 50,000','About 1 million','About 10,000'],a:0,t:'One of London\'s top attractions.'}
+  ]},
+  {name:'Shakespeare\'s Globe',icon:'🎪',q:[
+    {q:'The Globe Theatre is a reconstruction. When was the original built?',o:['1599','1700','1500','1400'],a:0,t:'Shakespeare\'s acting company built it.'},
+    {q:'Where is the Globe Theatre?',o:['South Bank of the Thames','Covent Garden','West End','Trafalgar Square'],a:0,t:'Near the Tate Modern.'},
+    {q:'In a Globe Theatre show, "groundlings" are…?',o:['People who stand in front of the stage','The actors','The musicians','The royal guests'],a:0,t:'The cheapest tickets — standing room only!'}
+  ]},
+  {name:'Harrods',icon:'🛍️',q:[
+    {q:'Harrods is the world\'s most famous…?',o:['Department store','Museum','Library','Hotel'],a:0,t:'In Knightsbridge, very luxurious.'},
+    {q:'In which year did Harrods first open?',o:['1849','1920','1776','1960'],a:0,t:'Over 170 years ago.'},
+    {q:'Harrods once sold a pet…?',o:['Baby elephant','Giraffe','Penguin','Tiger'],a:0,t:'Exotic pets were sold there in the past!'}
+  ]},
+  {name:'HMS Belfast',icon:'🚢',q:[
+    {q:'What is HMS Belfast?',o:['A historic warship museum','A restaurant boat','A ferry terminal','A royal yacht'],a:0,t:'Permanently moored on the Thames.'},
+    {q:'HMS Belfast served in which war?',o:['World War II','World War I','The Falklands War','The Napoleonic Wars'],a:0,t:'Launched in 1938.'},
+    {q:'Where is HMS Belfast moored?',o:['Near Tower Bridge','At Greenwich','At Canary Wharf','At Westminster'],a:0,t:'You can see Tower Bridge from the deck.'}
   ]}
 ];
-const a1ShopItems = [
-  {icon:'👒',name:'Summer Hat',price:3,type:'outfit'},{icon:'🕶️',name:'Sunglasses',price:3,type:'outfit'},
-  {icon:'🌺',name:'Flower Dress',price:5,type:'outfit'},{icon:'🧢',name:'Cap',price:2,type:'outfit'},
-  {icon:'👟',name:'Trainers',price:4,type:'outfit'},{icon:'🎨',name:'Artist Smock',price:5,type:'outfit'},
-  {icon:'👩‍🔬',name:'Lab Coat',price:6,type:'outfit'},{icon:'🥋',name:'Karate Gi',price:5,type:'outfit'},
-  {icon:'🧁',name:'Baker Hat',price:4,type:'outfit'},{icon:'🚀',name:'Astronaut',price:8,type:'outfit'},
-  {icon:'🏴‍☠️',name:'Pirate',price:6,type:'outfit'},{icon:'🧜',name:'Mermaid',price:7,type:'outfit'},
-  {icon:'🎸',name:'Rock Star',price:7,type:'outfit'},{icon:'🏄',name:'Surfer',price:5,type:'outfit'},
-  {icon:'🧙',name:'Wizard',price:8,type:'outfit'},{icon:'🦸',name:'Superhero',price:9,type:'outfit'},
-  {icon:'🚲',name:'Bicycle',price:10,type:'vehicle'},{icon:'🛴',name:'Inline Skates',price:8,type:'vehicle'},
-  {icon:'🚗',name:'Mini Car',price:12,type:'vehicle'},{icon:'🛵',name:'Scooter',price:10,type:'vehicle'}
+
+const a1Outfits = [
+  {name:'Default',shirt:'#3b82f6',pants:'#1e3a8a',shoes:'#1f2937',hair:'#5a3825',acc:'',price:0},
+  {name:'British Classic',shirt:'#dc2626',pants:'#1f2937',shoes:'#78350f',hair:'#5a3825',acc:'🎩',price:3},
+  {name:'Summer Vibes',shirt:'#facc15',pants:'#fff',shoes:'#f472b6',hair:'#d97706',acc:'🕶️',price:3},
+  {name:'Sporty',shirt:'#10b981',pants:'#1f2937',shoes:'#ef4444',hair:'#5a3825',acc:'🧢',price:4},
+  {name:'Streetwear',shirt:'#7c3aed',pants:'#374151',shoes:'#fff',hair:'#111',acc:'',price:4},
+  {name:'Vintage',shirt:'#92400e',pants:'#78350f',shoes:'#1f2937',hair:'#b45309',acc:'👒',price:5},
+  {name:'Preppy',shirt:'#166534',pants:'#fde68a',shoes:'#78350f',hair:'#5a3825',acc:'',price:5},
+  {name:'Rock Star',shirt:'#111',pants:'#111',shoes:'#111',hair:'#dc2626',acc:'🎸',price:6},
+  {name:'Cottagecore',shirt:'#fda4af',pants:'#fef3c7',shoes:'#78350f',hair:'#d97706',acc:'🌸',price:5},
+  {name:'Dark Academia',shirt:'#78350f',pants:'#374151',shoes:'#1f2937',hair:'#1c1917',acc:'📚',price:6},
+  {name:'Athleisure',shirt:'#06b6d4',pants:'#374151',shoes:'#10b981',hair:'#5a3825',acc:'',price:4},
+  {name:'Punk',shirt:'#111',pants:'#6b21a8',shoes:'#dc2626',hair:'#ec4899',acc:'',price:7},
+  {name:'Royal Guard',shirt:'#dc2626',pants:'#1f2937',shoes:'#111',hair:'#111',acc:'🎖️',price:8},
+  {name:'Detective',shirt:'#78716c',pants:'#44403c',shoes:'#1c1917',hair:'#5a3825',acc:'🔍',price:7},
+  {name:'Explorer',shirt:'#a16207',pants:'#a16207',shoes:'#78350f',hair:'#5a3825',acc:'🧭',price:6},
+  {name:'Artist',shirt:'#8b5cf6',pants:'#4338ca',shoes:'#c026d3',hair:'#c026d3',acc:'🎨',price:5},
+  {name:'Skater',shirt:'#f97316',pants:'#374151',shoes:'#dc2626',hair:'#5a3825',acc:'🛹',price:5},
+  {name:'Minimalist',shirt:'#fff',pants:'#111',shoes:'#111',hair:'#5a3825',acc:'',price:3},
+  {name:'Beach Day',shirt:'#38bdf8',pants:'#fde68a',shoes:'#f59e0b',hair:'#d97706',acc:'🏄',price:5},
+  {name:'Superhero',shirt:'#dc2626',pants:'#1e40af',shoes:'#dc2626',hair:'#111',acc:'⚡',price:9}
 ];
+
+const SIGHTS_PER_SESSION = 12;
 let a1State = {};
 
-function initQuizA1() {
+function charSVG(outfit, size) {
+  const o = outfit || a1Outfits[0];
+  const s = size || 60;
+  const scale = s / 60;
+  return '<svg width="'+s+'" height="'+(s*1.65)+'" viewBox="0 0 60 99" xmlns="http://www.w3.org/2000/svg">' +
+    '<circle cx="30" cy="16" r="13" fill="#fcd5b4" stroke="#d4a574" stroke-width="0.8"/>' +
+    '<path d="M17 12 Q17 3 30 3 Q43 3 43 12 Z" fill="'+o.hair+'"/>' +
+    '<circle cx="24" cy="14" r="2" fill="#333"/><circle cx="36" cy="14" r="2" fill="#333"/>' +
+    '<path d="M25 20 Q30 25 35 20" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"/>' +
+    '<rect x="19" y="30" width="22" height="26" rx="4" fill="'+o.shirt+'"/>' +
+    '<rect x="11" y="32" width="8" height="20" rx="4" fill="'+o.shirt+'"/>' +
+    '<rect x="41" y="32" width="8" height="20" rx="4" fill="'+o.shirt+'"/>' +
+    '<circle cx="15" cy="54" r="3.5" fill="#fcd5b4"/><circle cx="45" cy="54" r="3.5" fill="#fcd5b4"/>' +
+    '<rect x="19" y="55" width="9" height="22" rx="3" fill="'+o.pants+'" class="char-leg-l" style="transform-origin:23px 55px"/>' +
+    '<rect x="32" y="55" width="9" height="22" rx="3" fill="'+o.pants+'" class="char-leg-r" style="transform-origin:36px 55px"/>' +
+    '<rect x="17" y="75" width="13" height="5" rx="2.5" fill="'+o.shoes+'"/>' +
+    '<rect x="30" y="75" width="13" height="5" rx="2.5" fill="'+o.shoes+'"/>' +
+    (o.acc ? '<text x="30" y="-2" text-anchor="middle" font-size="14">'+o.acc+'</text>' : '') +
+    '</svg>';
+}
+
+function saveA1(){ try{localStorage.setItem('a1save',JSON.stringify({coins:a1State.coins,owned:a1State.owned,equipped:a1State.equipped}));}catch(e){} }
+function loadA1(){ try{const d=JSON.parse(localStorage.getItem('a1save'));if(d){return d;}}catch(e){} return null; }
+
+function initQuizA1(){
+  const save = loadA1();
+  const shuffledSights = [...a1Sights].sort(()=>Math.random()-0.5).slice(0, SIGHTS_PER_SESSION);
+  // Shuffle questions within each sight too
+  shuffledSights.forEach(s => { s.q = [...s.q].sort(()=>Math.random()-0.5); });
+  a1State = {
+    coins: save ? save.coins : 0,
+    owned: save ? save.owned : [0],
+    equipped: save ? save.equipped : 0,
+    sights: shuffledSights,
+    sightIdx: 0,
+    qIdx: 0,
+    started: false,
+    phase: 'start', // start | walking | quiz | sightDone | gameEnd
+    walkTimer: null,
+    walkSec: 0
+  };
+  renderA1Start();
+}
+
+function renderA1Start(){
+  a1State.phase = 'start';
+  const outfit = a1Outfits[a1State.equipped];
+  document.getElementById('a1-scene').innerHTML =
+    '<div style="min-height:100vh;background:linear-gradient(180deg,#87ceeb 0%,#b6f0a0 60%,#6ec94a 100%);display:flex;align-items:center;justify-content:center;padding:20px;">' +
+    '<div class="start-card">' +
+    '<h2>'+t('a1StartH')+'</h2>' +
+    '<div class="char-display">'+charSVG(outfit,80)+'</div>' +
+    '<p>'+t('a1StartP1')+'</p>' +
+    '<p>'+t('a1StartP2')+'</p>' +
+    '<p>'+t('a1StartP3')+'</p>' +
+    '<p>'+t('a1StartP4')+'</p>' +
+    '<p style="color:#6b7280;font-size:0.88rem;margin-top:8px;">'+t('a1SightCount',{n:a1State.sights.length})+'</p>' +
+    '<button class="start-btn" onclick="startA1Walking()">'+t('a1StartBtn')+'</button>' +
+    '</div></div>';
+}
+
+function buildCityscape(){
+  let blds = '';
+  const colors = ['#374151','#4b5563','#6b7280','#1e3a8a','#1e40af','#7c2d12','#991b1b','#312e81'];
+  for(let i=0;i<60;i++){
+    const h = 60 + Math.random()*140;
+    const w = 20 + Math.random()*30;
+    const c = colors[Math.floor(Math.random()*colors.length)];
+    let wins = '';
+    for(let r=10;r<h-10;r+=16){
+      for(let cl=4;cl<w-8;cl+=10){
+        if(Math.random()>0.3) wins += '<div class="win" style="left:'+cl+'px;bottom:'+r+'px;"></div>';
+      }
+    }
+    blds += '<div class="bld" style="width:'+w+'px;height:'+h+'px;background:'+c+';">'+wins+'</div>';
+  }
+  return blds;
+}
+
+function renderWalkScene(){
+  const outfit = a1Outfits[a1State.equipped];
+  const s = a1State.sights[a1State.sightIdx];
+  const cityscape = buildCityscape();
+  document.getElementById('a1-scene').innerHTML =
+    '<div class="walk-scene">' +
+    '<div class="sky-layer"></div>' +
+    '<div class="sun">☀️</div>' +
+    '<div class="cloud-layer" id="a1-clouds"></div>' +
+    '<div class="buildings-layer" style="--walk-dur:'+a1State.walkSec+'s;--walk-play:running;"><div class="bld-strip">'+cityscape+cityscape+cityscape+'</div></div>' +
+    '<div class="road-layer"><div class="sidewalk"></div><div class="road-line" style="--walk-dur:'+a1State.walkSec+'s;--walk-play:running;"></div></div>' +
+    '<div class="char-wrap walking" id="a1-char">'+charSVG(outfit,55)+'</div>' +
+    '<div class="walk-hud">' +
+    '<div class="hud-coins">🪙 '+a1State.coins+' <button class="shop-btn" onclick="openA1Shop()">'+t('a1ShopBtn')+'</button></div>' +
+    '<div class="hud-info">'+t('a1SightN',{a:a1State.sightIdx+1,b:a1State.sights.length})+'</div>' +
+    '</div>' +
+    '<div class="walk-dest">'+s.icon+' '+t('a1WalkingTo',{name:s.name})+'</div>' +
+    '<div class="walk-timer"><div class="timer-bar"><div class="timer-fill" id="a1-timer-fill" style="width:100%"></div></div><div class="timer-text" id="a1-timer-text">'+a1State.walkSec+'s</div></div>' +
+    '</div>';
+  // Add clouds
   const cb = document.getElementById('a1-clouds');
-  cb.innerHTML = '';
   for(let i=0;i<5;i++){
     const c=document.createElement('div'); c.className='cloud-float'; c.textContent='☁️';
-    c.style.top=(5+Math.random()*28)+'%';
+    c.style.top=(5+Math.random()*80)+'%';
     c.style.animationDuration=(20+Math.random()*20)+'s';
     c.style.animationDelay=(-Math.random()*28)+'s';
     cb.appendChild(c);
   }
-  a1State={coins:0,buildingIdx:0,qIdx:0,owned:[],character:'🧍',started:false};
-  renderA1Start();
+  // Spawn occasional cars
+  a1State._carInt = setInterval(()=>{
+    if(Math.random()<0.4){
+      const cars=['🚗','🚕','🚙','🚌','🏎️'];
+      const el=document.createElement('div');el.className='car-anim';
+      el.textContent=cars[Math.floor(Math.random()*cars.length)];
+      el.style.bottom=(2+Math.random()*12)+'%';
+      const scene=document.querySelector('#quiz-a1 .walk-scene');
+      if(scene){scene.appendChild(el);setTimeout(()=>el.remove(),4500);}
+    }
+  },2000);
+  // Timer countdown
+  let sec = a1State.walkSec;
+  a1State.walkTimer = setInterval(()=>{
+    sec--;
+    const pct = (sec/a1State.walkSec)*100;
+    const fill=document.getElementById('a1-timer-fill');
+    const txt=document.getElementById('a1-timer-text');
+    if(fill) fill.style.width=pct+'%';
+    if(txt) txt.textContent=sec+'s';
+    if(sec<=0){
+      clearInterval(a1State.walkTimer);
+      if(a1State._carInt) clearInterval(a1State._carInt);
+      a1State.phase='quiz';
+      a1State.qIdx=0;
+      renderA1Quiz();
+    }
+  },1000);
 }
 
-function renderA1Start() {
-  a1State.started=false;
-  document.getElementById('a1-wrap').innerHTML=`
-    <div class="start-card">
-      <h2>${t('a1StartH')}</h2>
-      <div class="char-display">🧍</div>
-      <p>${t('a1StartP1')}</p>
-      <p>${t('a1StartP2')}</p>
-      <p>${t('a1StartP3')}</p>
-      <p>${t('a1StartP4')}</p>
-      <button class="start-btn" onclick="a1State.started=true;renderA1Quiz()">${t('a1StartBtn')}</button>
-    </div>`;
+function startA1Walking(){
+  a1State.started=true;
+  a1State.phase='walking';
+  a1State.walkSec = a1State.sightIdx===0 ? 5 : 10;
+  renderWalkScene();
 }
 
-function renderA1Quiz() {
-  const b=a1Buildings[a1State.buildingIdx%a1Buildings.length];
-  const q=b.questions[a1State.qIdx];
-  const optsHtml=q.opts.map((o,i)=>
-    `<button class="opt-btn" data-idx="${i}" onclick="answerA1(${i})">${String.fromCharCode(65+i)}) ${o}</button>`
+function shuffleOpts(q){
+  const indices = q.o.map((_,i)=>i).sort(()=>Math.random()-0.5);
+  return { opts:indices.map(i=>q.o[i]), correctIdx:indices.indexOf(q.a) };
+}
+
+function renderA1Quiz(){
+  const s = a1State.sights[a1State.sightIdx];
+  if(a1State.qIdx >= s.q.length){ renderA1SightDone(); return; }
+  const q = s.q[a1State.qIdx];
+  const sh = shuffleOpts(q);
+  a1State._correctIdx = sh.correctIdx;
+  const outfit = a1Outfits[a1State.equipped];
+  const optsHtml = sh.opts.map((o,i)=>
+    '<button class="opt-btn" data-idx="'+i+'" onclick="answerA1('+i+')">'+String.fromCharCode(65+i)+') '+o+'</button>'
   ).join('');
-  document.getElementById('a1-wrap').innerHTML=`
-    <div class="game-title">${t('a1GameTitle')}</div>
-    <div class="coin-bar">
-      <span style="font-size:2rem;">${a1State.character}</span>
-      🪙 ${t('a1CoinBar',{n:a1State.coins})}
-      <button class="shop-btn" onclick="openA1Shop()">${t('a1ShopBtn')}</button>
-    </div>
-    <div class="card">
-      <div class="building-header">
-        <div class="building-icon">${b.icon}</div>
-        <div class="building-name">${b.name}</div>
-      </div>
-      <div class="q-count">${t('a1QOf',{a:a1State.qIdx+1,b:b.questions.length})}</div>
-      <div class="question-text">${q.q}</div>
-      <div class="options" id="a1-opts">${optsHtml}</div>
-      <div class="feedback-box" id="a1-fb"></div>
-      <div style="text-align:center;">
-        <button class="nav-btn" id="a1-next" style="display:none;" onclick="nextA1()">${t('a1Next')}</button>
-      </div>
-    </div>`;
+  document.getElementById('a1-scene').innerHTML =
+    '<div class="walk-scene">' +
+    '<div class="sky-layer" style="filter:blur(3px);opacity:0.6;"></div>' +
+    '<div class="sight-card"><div class="sight-inner">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">' +
+    '<div class="sight-header"><div class="sight-icon">'+s.icon+'</div><div class="sight-name">'+s.name+'</div></div>' +
+    '<div class="hud-coins" style="font-size:0.9rem;">🪙 '+a1State.coins+' <button class="shop-btn" style="font-size:0.8rem;padding:5px 10px;" onclick="openA1Shop()">'+t('a1ShopBtn')+'</button></div>' +
+    '</div>' +
+    '<div class="q-count">'+t('a1QOf',{a:a1State.qIdx+1,b:s.q.length})+'</div>' +
+    '<div class="question-text">'+q.q+'</div>' +
+    '<div class="options" id="a1-opts">'+optsHtml+'</div>' +
+    '<div class="feedback-box" id="a1-fb"></div>' +
+    '<div style="text-align:center;"><button class="nav-btn" id="a1-next" style="display:none;" onclick="nextA1()">'+t('a1Next')+'</button></div>' +
+    '</div></div></div>';
 }
 
-function answerA1(idx) {
-  const b=a1Buildings[a1State.buildingIdx%a1Buildings.length];
-  const q=b.questions[a1State.qIdx];
-  document.querySelectorAll('#a1-opts .opt-btn').forEach(btn=>btn.disabled=true);
-  const fb=document.getElementById('a1-fb');
-  if(idx===q.ans){
+function answerA1(idx){
+  const s = a1State.sights[a1State.sightIdx];
+  const q = s.q[a1State.qIdx];
+  const correctIdx = a1State._correctIdx;
+  document.querySelectorAll('#a1-opts .opt-btn').forEach(b=>b.disabled=true);
+  const fb = document.getElementById('a1-fb');
+  if(idx === correctIdx){
     a1State.coins++;
-    document.querySelector(`#a1-opts .opt-btn[data-idx="${idx}"]`).classList.add('correct');
+    document.querySelector('#a1-opts .opt-btn[data-idx="'+idx+'"]').classList.add('correct');
     fb.className='feedback-box show correct'; fb.innerHTML=t('a1Correct');
   } else {
-    document.querySelector(`#a1-opts .opt-btn[data-idx="${idx}"]`).classList.add('wrong');
-    document.querySelector(`#a1-opts .opt-btn[data-idx="${q.ans}"]`).classList.add('correct');
+    document.querySelector('#a1-opts .opt-btn[data-idx="'+idx+'"]').classList.add('wrong');
+    document.querySelector('#a1-opts .opt-btn[data-idx="'+correctIdx+'"]').classList.add('correct');
     a1State.coins=Math.max(0,a1State.coins-1);
     fb.className='feedback-box show wrong';
-    fb.innerHTML=t('a1Wrong',{ans:q.opts[q.ans]})+'<br><small>'+t('a1Tip',{t:q.tip})+'</small>';
+    fb.innerHTML=t('a1Wrong',{ans:q.o[q.a]})+'<br><small>'+t('a1Tip',{t:q.t})+'</small>';
     setTimeout(()=>showLoser(),400);
   }
+  saveA1();
   document.getElementById('a1-next').style.display='inline-block';
 }
 
@@ -1321,52 +1625,83 @@ function showLoser(){
 function closeLoser(){ document.getElementById('a1-loser').classList.remove('show'); }
 
 function nextA1(){
-  const b=a1Buildings[a1State.buildingIdx%a1Buildings.length];
   a1State.qIdx++;
-  if(a1State.qIdx>=b.questions.length){ a1State.buildingIdx++; a1State.qIdx=0; renderA1Done(); }
-  else renderA1Quiz();
+  renderA1Quiz();
 }
 
-function renderA1Done(){
-  const nextB=a1Buildings[a1State.buildingIdx%a1Buildings.length];
-  document.getElementById('a1-wrap').innerHTML=`
-    <div class="coin-bar">
-      <span style="font-size:2rem;">${a1State.character}</span>
-      🪙 ${t('a1CoinBar',{n:a1State.coins})}
-      <button class="shop-btn" onclick="openA1Shop()">${t('a1ShopBtn')}</button>
-    </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:3rem;">🎉</div>
-      <h2 style="color:#1e3a8a;margin:10px 0;">${t('a1BldComplete')}</h2>
-      <p style="color:#374151;margin-bottom:16px;">${t('a1BldCompleteP')}<br>${t('a1NextStop',{b:nextB.icon+' '+nextB.name})}</p>
-      <button class="nav-btn" onclick="renderA1Quiz()">${t('a1KeepWalking')}</button>
-    </div>`;
+function renderA1SightDone(){
+  const s = a1State.sights[a1State.sightIdx];
+  const isLast = a1State.sightIdx >= a1State.sights.length - 1;
+  const nextSight = isLast ? null : a1State.sights[a1State.sightIdx+1];
+  document.getElementById('a1-scene').innerHTML =
+    '<div class="walk-scene"><div class="sky-layer"></div>' +
+    '<div class="done-overlay"><div class="done-card">' +
+    '<div style="font-size:3rem;">🎉</div>' +
+    '<h2 style="color:#1e3a8a;margin:10px 0;">'+t('a1BldComplete')+'</h2>' +
+    '<p style="color:#374151;">'+s.icon+' '+s.name+'</p>' +
+    '<p style="color:#6b7280;margin:10px 0;">🪙 '+a1State.coins+' '+t('a1CoinBar',{n:a1State.coins})+'</p>' +
+    (nextSight ? '<p style="color:#374151;">'+t('a1NextStop',{b:nextSight.icon+' '+nextSight.name})+'</p>' : '') +
+    '<button class="nav-btn" style="margin-top:14px;" onclick="'+(isLast?'renderA1End()':'advanceA1Sight()')+'">'+
+    (isLast?t('a1Finish'):t('a1KeepWalking'))+'</button>' +
+    '</div></div></div>';
+}
+
+function advanceA1Sight(){
+  a1State.sightIdx++;
+  a1State.qIdx=0;
+  a1State.phase='walking';
+  a1State.walkSec=10;
+  renderWalkScene();
+}
+
+function renderA1End(){
+  document.getElementById('a1-scene').innerHTML =
+    '<div class="end-wrap"><div class="end-card" style="max-width:500px;width:90%;border:3px solid #fbbf24;">' +
+    '<div style="font-size:3.5rem;">🏆🗺️</div>' +
+    '<h3>'+t('a1EndTitle')+'</h3>' +
+    '<p>'+t('a1EndScore',{n:a1State.coins,s:a1State.sights.length})+'</p>' +
+    '<p style="margin-top:8px;">'+charSVG(a1Outfits[a1State.equipped],70)+'</p>' +
+    '<p style="color:#6b7280;margin-top:8px;">'+t('a1EndMsg')+'</p>' +
+    '<button class="restart-btn" style="margin-top:14px;" onclick="initQuizA1()">'+t('a1Replay')+'</button>' +
+    '</div></div>';
+  launchCf('a1-scene','cf-piece');
 }
 
 function openA1Shop(){
   const grid=document.getElementById('a1-shop-grid');
-  grid.innerHTML=a1ShopItems.map((item,i)=>{
+  grid.innerHTML=a1Outfits.map((item,i)=>{
     const owned=a1State.owned.includes(i);
-    return `<div class="shop-item${owned?' owned':''}" onclick="buyA1Item(${i})">
-      <div class="si-icon">${item.icon}</div>
-      <div class="si-name">${item.name}</div>
-      <div class="si-price">${owned?t('a1ShopOwned'):t('a1ShopCoin',{n:item.price})}</div>
-    </div>`;
+    const eq=a1State.equipped===i;
+    return '<div class="shop-item'+(owned?' owned':'')+(eq?' equipped':'')+'" onclick="buyA1Item('+i+')">' +
+      '<div class="si-preview">'+charSVG(item,50)+'</div>' +
+      '<div class="si-name">'+(item.acc?item.acc+' ':'')+item.name+'</div>' +
+      '<div class="si-price">'+(eq?'✅ Wearing':owned?t('a1ShopOwned'):t('a1ShopCoin',{n:item.price}))+'</div>' +
+      '</div>';
   }).join('');
   document.getElementById('a1-shop').classList.add('show');
 }
 
 function buyA1Item(idx){
   if(a1State.owned.includes(idx)){
-    a1State.character=a1ShopItems[idx].icon;
-    alert(t('a1ShopEquip',{name:a1ShopItems[idx].name})); openA1Shop(); return;
+    a1State.equipped=idx;
+    saveA1();
+    alert(t('a1ShopEquip',{name:a1Outfits[idx].name})); openA1Shop(); return;
   }
-  const item=a1ShopItems[idx];
+  const item=a1Outfits[idx];
+  if(item.price===0){ a1State.owned.push(idx); a1State.equipped=idx; saveA1(); openA1Shop(); return; }
   if(a1State.coins<item.price){ alert(t('a1ShopNoCoin',{n:item.price})); return; }
-  a1State.coins-=item.price; a1State.owned.push(idx);
-  a1State.character=item.icon;
+  a1State.coins-=item.price; a1State.owned.push(idx); a1State.equipped=idx;
+  saveA1();
   alert(t('a1ShopBuy',{name:item.name})); openA1Shop();
 }
+
+function renderA1QuizIfActive() {
+  if(typeof a1State !== 'undefined' && a1State.started) {
+    if(a1State.phase==='quiz') renderA1Quiz();
+    else if(a1State.phase==='start') renderA1Start();
+  }
+}
+
 
 /* =====================================================================
    QUIZ A2 — Super London
@@ -1901,39 +2236,57 @@ function renderA5End(){
 }
 
 /* =====================================================================
-   QUIZ C1 — Scotland Topics (16 questions, retry missed, star rating)
+   QUIZ C1 — Scotland Topics (16 questions, half-point retries, star rating)
    ===================================================================== */
 const c1AllQuestions=[
-  // 8 Multiple-Choice
-  {type:'mc',q:'How many islands does Scotland have?',opts:['215','920','800'],ans:2,img:'🏝️'},
-  {type:'mc',q:'What are the four main groups of the Scottish Isles?',opts:['Shetland Islands, Outer Hebrides, Inner Hebrides, Orkney Islands','Ben Wyvis, Orkney Islands, Oslo, Edinburgh','Shetland Island, Outer Hebrides, Inner Hebrides, Edinburgh'],ans:0,img:'🗺️'},
-  {type:'mc',q:'What is the highest mountain in Scotland?',opts:['Ben Nevis','Ben Wyvis','Ben Macdui'],ans:0,img:'🏔️'},
-  {type:'mc',q:'How many of Scotland\'s islands are inhabited?',opts:['~800','~100','~500'],ans:1,img:'🏘️'},
-  {type:'mc',q:'Why do Selkies leave the sea according to mythology?',opts:['They are looking for love','They are looking for a party','They are looking for their babies'],ans:0,img:'🦭'},
-  {type:'mc',q:'What are Kelpies in Scottish folklore?',opts:['Water horses','Water people','Water spirits'],ans:0,img:'🐴'},
-  {type:'mc',q:'Which traditional music instrument is widely associated with Scotland?',opts:['Bagpipes','Pop Music','Harp'],ans:0,img:'🎵'},
-  {type:'mc',q:'What is the national animal of Scotland?',opts:['Unicorn','Red deer','Highland cow'],ans:0,img:'🦄'},
-  // 8 Yes/No
-  {type:'yn',q:'Is the population density of Scotland one of the least dense in Europe?',ans:0,img:'👥',opts:['Yes','No']},
-  {type:'yn',q:'Is the Puffin a native bird commonly found on Scottish islands?',ans:0,img:'🐧',opts:['Yes','No']},
-  {type:'yn',q:'Does Scotland have more than 30,000 freshwater lochs?',ans:0,img:'🌊',opts:['Yes','No']},
-  {type:'yn',q:'Is Loch Ness the largest freshwater lake in Scotland by volume?',ans:0,img:'🐉',opts:['Yes','No']},
-  {type:'yn',q:'Are the Northern Lights sometimes visible from Scotland?',ans:0,img:'🌌',opts:['Yes','No']},
-  {type:'yn',q:'Is the Scottish Highlands home to wild red deer?',ans:0,img:'🦌',opts:['Yes','No']},
-  {type:'yn',q:'Is Edinburgh the capital city of Scotland?',ans:0,img:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',opts:['Yes','No']},
-  {type:'yn',q:'Does Scotland have its own national football team?',ans:0,img:'⚽',opts:['Yes','No']}
+  // Multiple-Choice (8) — bg images are neutral, do NOT hint at answer
+  {type:'mc',q:'How many islands does Scotland have?',opts:['215','920','800'],ans:2,
+   bg:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=70'},
+  {type:'mc',q:'What are the four main groups of the Scottish Isles?',opts:['Shetland Islands, Outer Hebrides, Inner Hebrides, Orkney Islands','Ben Wyvis, Orkney Islands, Oslo, Edinburgh','Shetland Island, Outer Hebrides, Inner Hebrides, Edinburgh'],ans:0,
+   bg:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900&q=70'},
+  {type:'mc',q:'What is the highest mountain in Scotland?',opts:['Ben Nevis','Ben Wyvis','Ben Macdui'],ans:0,
+   bg:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=70'},
+  {type:'mc',q:'How many of Scotland\'s islands are inhabited?',opts:['About 800','About 100','About 500'],ans:1,
+   bg:'https://images.unsplash.com/photo-1518173946687-a250ed5b0d50?w=900&q=70'},
+  {type:'mc',q:'Why do Selkies leave the sea according to mythology?',opts:['They are looking for love','They are looking for a party','They are looking for their babies'],ans:0,
+   bg:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=70'},
+  {type:'mc',q:'What are Kelpies in Scottish folklore?',opts:['Water horses','Water people','Water spirits'],ans:0,
+   bg:'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=900&q=70'},
+  {type:'mc',q:'Which traditional music instrument is widely associated with Scotland?',opts:['Bagpipes','Pop Music','Harp'],ans:0,
+   bg:'https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=900&q=70'},
+  {type:'mc',q:'What is the national animal of Scotland?',opts:['Unicorn','Red deer','Highland cow'],ans:0,
+   bg:'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=900&q=70'},
+  // Yes/No (8)
+  {type:'yn',q:'Is the population density of Scotland one of the least dense in Europe?',ans:0,opts:['Yes','No'],
+   bg:'https://images.unsplash.com/photo-1533577116850-9cc66cad8a9b?w=900&q=70'},
+  {type:'yn',q:'Is the Puffin a native bird commonly found on Scottish islands?',ans:0,opts:['Yes','No'],
+   bg:'https://images.unsplash.com/photo-1444464666168-49d633b86797?w=900&q=70'},
+  {type:'yn',q:'Does Scotland have more than 30,000 freshwater lochs?',ans:0,opts:['Yes','No'],
+   bg:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=70'},
+  {type:'yn',q:'Is Loch Ness the largest freshwater lake in Scotland by volume?',ans:0,opts:['Yes','No'],
+   bg:'https://images.unsplash.com/photo-1500534314263-a5c3a7b0e07a?w=900&q=70'},
+  {type:'yn',q:'Are the Northern Lights sometimes visible from Scotland?',ans:0,opts:['Yes','No'],
+   bg:'https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=900&q=70'},
+  {type:'yn',q:'Is the Scottish Highlands home to wild red deer?',ans:0,opts:['Yes','No'],
+   bg:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=70'},
+  {type:'yn',q:'Is Edinburgh the capital city of Scotland?',ans:0,opts:['Yes','No'],
+   bg:'https://images.unsplash.com/photo-1477346611705-65d1883cee1e?w=900&q=70'},
+  {type:'yn',q:'Does Scotland have its own national football team?',ans:0,opts:['Yes','No'],
+   bg:'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&q=70'}
 ];
+// Fallback gradient if image fails to load
+const c1FallbackBg = 'linear-gradient(135deg,#065f46 0%,#1e3a8a 50%,#312e81 100%)';
 let c1State={};
 
 function initQuizC1(){
   const shuffled=[...c1AllQuestions].sort(()=>Math.random()-0.5);
-  c1State={queue:[...shuffled],retry:[],idx:0,score:0,total:c1AllQuestions.length,phase:'main'};
+  c1State={queue:[...shuffled],retry:[],idx:0,score:0,total:c1AllQuestions.length,phase:'main',hadWrong:false};
   renderC1();
 }
 
 function renderC1(){
   const wrap=document.getElementById('c1-wrap');
-  // Check if current queue is done
+  const bg=document.getElementById('c1-bg');
   if(c1State.idx>=c1State.queue.length){
     if(c1State.retry.length>0){
       c1State.queue=c1State.retry.sort(()=>Math.random()-0.5);
@@ -1945,41 +2298,49 @@ function renderC1(){
     }
   }
   const q=c1State.queue[c1State.idx];
+  // Set real photo background
+  if(q.bg){
+    bg.style.backgroundImage='url('+q.bg+')';
+    bg.style.background='url('+q.bg+') center/cover no-repeat';
+    bg.onerror=()=>{bg.style.background=c1FallbackBg;};
+  } else {
+    bg.style.background=c1FallbackBg;
+  }
   // Shuffle options
   const indices=[...q.opts.keys()].sort(()=>Math.random()-0.5);
-  const globalNum=c1State.total-c1State.queue.length+c1State.idx+1-(c1State.phase==='retry'?0:0);
-  // Update bg emoji
-  document.getElementById('c1-bg').style.background='none';
-  wrap.innerHTML=`
-    <div style="text-align:center;">
-      <div class="game-title-c1">${t('c1GameTitle')}</div>
-      <div class="score-c1">${t('c1Score',{s:c1State.score})}</div>
-    </div>
-    <div class="img-frame">${q.img}</div>
-    <div class="q-card-c1">
-      <div class="q-text-c1">${q.q}</div>
-      <div class="opts-c1" id="c1-opts">
-        ${indices.map(i=>`<button class="opt-c1" data-idx="${i}" onclick="answerC1(${i})">${q.opts[i]}</button>`).join('')}
-      </div>
-      <div class="fb-c1" id="c1-fb"></div>
-      <div style="text-align:center;">
-        <button class="nav-c1" id="c1-nav" onclick="nextC1()">${t('c1Next')}</button>
-      </div>
-    </div>`;
+  const retryLabel=c1State.phase==='retry'?' <span style="color:#d97706;font-size:0.85rem;">(½ pt)</span>':'';
+  wrap.innerHTML=
+    '<div style="text-align:center;">' +
+    '<div class="game-title-c1">'+t('c1GameTitle')+'</div>' +
+    '<div class="score-c1">'+t('c1Score',{s:c1State.score})+retryLabel+'</div>' +
+    '</div>' +
+    '<div class="q-card-c1">' +
+    '<div class="q-text-c1">'+q.q+'</div>' +
+    '<div class="opts-c1" id="c1-opts">' +
+    indices.map(i=>'<button class="opt-c1" data-idx="'+i+'" onclick="answerC1('+i+')">'+q.opts[i]+'</button>').join('') +
+    '</div>' +
+    '<div class="fb-c1" id="c1-fb"></div>' +
+    '<div style="text-align:center;"><button class="nav-c1" id="c1-nav" onclick="nextC1()">'+t('c1Next')+'</button></div>' +
+    '</div>';
 }
 
 function answerC1(idx){
   const q=c1State.queue[c1State.idx];
   const correct=idx===q.ans;
   document.querySelectorAll('#c1-opts .opt-c1').forEach(b=>b.disabled=true);
-  document.querySelector(`#c1-opts .opt-c1[data-idx="${q.ans}"]`).classList.add('correct');
-  if(!correct) document.querySelector(`#c1-opts .opt-c1[data-idx="${idx}"]`).classList.add('wrong');
+  document.querySelector('#c1-opts .opt-c1[data-idx="'+q.ans+'"]').classList.add('correct');
+  if(!correct) document.querySelector('#c1-opts .opt-c1[data-idx="'+idx+'"]').classList.add('wrong');
   const fb=document.getElementById('c1-fb');
   if(correct){
-    c1State.score++;
+    if(c1State.phase==='retry'){
+      c1State.score+=0.5; // Half point on retry
+    } else {
+      c1State.score+=1;
+    }
     fb.className='fb-c1 show correct';
     fb.textContent=t('c1Correct');
   } else {
+    c1State.hadWrong=true;
     fb.className='fb-c1 show wrong';
     fb.innerHTML=t('c1Wrong')+'<br><small>'+t('c1RetryNote')+'</small>';
     c1State.retry.push(q);
@@ -1991,22 +2352,33 @@ function nextC1(){ c1State.idx++; renderC1(); }
 
 function renderC1End(){
   const s=c1State.score;
-  let stars=s>=14?5:s>=11?4:s>=8?3:s>=5?2:1;
+  // Star rating: 5 stars ONLY if perfect (no wrong answers)
+  let stars;
+  if(!c1State.hadWrong && s>=16) stars=5;
+  else if(s>=14) stars=4;
+  else if(s>=11) stars=3;
+  else if(s>=8) stars=2;
+  else stars=1;
+  // Can't get 5 stars if any wrong answer
+  if(c1State.hadWrong && stars>=5) stars=4;
   const starStr='⭐'.repeat(stars)+'☆'.repeat(5-stars);
-  document.getElementById('c1-wrap').innerHTML=`
-    <div style="text-align:center;">
-      <div class="game-title-c1">${t('c1GameTitle')}</div>
-    </div>
-    <div class="end-card" style="margin-top:30px;">
-      <div style="font-size:3rem;">🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>
-      <h3>${t('c1EndTitle')}</h3>
-      <p>${t('c1EndScore',{s:c1State.score})}</p>
-      <div class="stars-row">${starStr}</div>
-      <p>${t('c1Stars',{n:stars})}</p>
-      <button class="restart-btn" onclick="initQuizC1()">${t('c1Replay')}</button>
-    </div>`;
+  // Clear bg
+  document.getElementById('c1-bg').style.background='linear-gradient(135deg,#065f46 0%,#1e3a8a 100%)';
+  document.getElementById('c1-bg').style.opacity='0.5';
+  document.getElementById('c1-wrap').innerHTML=
+    '<div style="text-align:center;"><div class="game-title-c1">'+t('c1GameTitle')+'</div></div>' +
+    '<div class="end-card" style="margin-top:30px;">' +
+    '<div style="font-size:3rem;">🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>' +
+    '<h3>'+t('c1EndTitle')+'</h3>' +
+    '<p style="font-size:1.2rem;font-weight:700;">'+s+' / 16 '+t('c1Pts')+'</p>' +
+    '<div class="stars-row">'+starStr+'</div>' +
+    '<p>'+t('c1Stars',{n:stars})+'</p>' +
+    (c1State.hadWrong?'<p style="color:#92400e;font-size:0.88rem;margin-top:6px;">'+t('c1NoFive')+'</p>':'') +
+    '<button class="restart-btn" onclick="initQuizC1()">'+t('c1Replay')+'</button>' +
+    '</div>';
   launchCf('quiz-c1','cf-piece');
 }
+
 
 /* =====================================================================
    QUIZ D1 — Manchester Quiz App (stadium, hints cost points)
