@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class 6.3 App Lab – Rosa-Luxemburg-Gymnasium Berlin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:      #F5EFE0;
+      --cream:     #FBF7EE;
+      --amber:     #E8A838;
+      --amber-deep:#C4842A;
+      --rust:      #C95F38;
+      --bark:      #3D2B1A;
+      --mist:      #EDE4D0;
+      --card-bg:   #FFFDF7;
+      --shadow:    rgba(61,43,26,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--sand);
+      color: var(--bark);
+      min-height: 100vh;
+    }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    header {
+      position: relative;
+      padding: 3.5rem 2rem 2.8rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Big watermark monogram */
+    header::before {
+      content: "6.3";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: clamp(10rem, 30vw, 22rem);
+      color: var(--amber);
+      opacity: 0.10;
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber-deep);
+      margin-bottom: 0.9rem;
+    }
+
+    h1 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      line-height: 1.1;
+      color: var(--bark);
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+
+    h1 span {
+      color: var(--rust);
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #7A5C3A;
+      max-width: 480px;
+      margin: 0 auto 0.5rem;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.4rem;
+      position: relative;
+    }
+
+    .pill {
+      background: var(--mist);
+      border: 1.5px solid var(--amber);
+      border-radius: 99px;
+      padding: 0.25rem 0.85rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--amber-deep);
+      text-transform: uppercase;
+    }
+
+    /* ── DIVIDER ──────────────────────────────────────── */
+    .divider {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      margin: 0 0 2.5rem;
+    }
+
+    /* ── GRID ─────────────────────────────────────────── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .grid-label {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #A07840;
+      margin-bottom: 1.4rem;
+    }
+
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* ── CARD ─────────────────────────────────────────── */
+    .app-card {
+      background: var(--card-bg);
+      border: 2px solid var(--mist);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .app-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(61,43,26,0.14);
+      border-color: var(--amber);
+    }
+
+    .app-card:focus-visible {
+      outline: 3px solid var(--rust);
+      outline-offset: 3px;
+    }
+
+    /* Thumbnail area */
+    .thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--mist);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Placeholder icon when no thumbnail yet */
+    .thumb-placeholder {
+      font-size: 2.8rem;
+      opacity: 0.5;
+    }
+
+    /* Accent bar at top of thumb */
+    .thumb::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--amber);
+    }
+
+    /* Per-card accent colours (cycle through 4) */
+    .app-card:nth-child(4n+1) .thumb::after { background: var(--amber); }
+    .app-card:nth-child(4n+2) .thumb::after { background: var(--rust); }
+    .app-card:nth-child(4n+3) .thumb::after { background: #7DB87D; }
+    .app-card:nth-child(4n+4) .thumb::after { background: #6A9CC4; }
+
+    .card-body {
+      padding: 1rem 1.1rem 1.2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .app-name {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--bark);
+      line-height: 1.25;
+    }
+
+    .app-desc {
+      font-size: 0.82rem;
+      color: #8A6A48;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card-cta {
+      margin-top: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--rust);
+      letter-spacing: 0.04em;
+    }
+
+    .card-cta svg {
+      transition: transform 0.15s ease;
+    }
+
+    .app-card:hover .card-cta svg {
+      transform: translateX(4px);
+    }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 2.5rem;
+      font-size: 0.78rem;
+      color: #A07840;
+      border-top: 1.5px solid var(--mist);
+    }
+
+    footer strong { color: var(--bark); }
+
+    @media (max-width: 520px) {
+      .apps-grid { grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+      header { padding: 2.5rem 1.2rem 2rem; }
+      h1 { font-size: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .app-card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Rosa-Luxemburg-Gymnasium Berlin · English · Vibe Coding Project</p>
+  <h1>Class <span>6.3</span> App Lab</h1>
+  <p class="subtitle">Twelve apps made by students — using AI prompting as a creative tool for the first time.</p>
+  <div class="meta-pills">
+    <span class="pill">🤖 AI-assisted</span>
+    <span class="pill">🇬🇧 English Project</span>
+    <span class="pill">🏫 School Year 2025/26</span>
+    <span class="pill">✦ Prompting Competence</span>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<main>
+  <p class="grid-label">✦ All 12 Apps</p>
+  <div class="apps-grid">
+
+    <!-- App 1 -->
+    <a class="app-card" href="#" aria-label="Open App 1">
+      <div class="thumb">
+        <!-- <img src="thumbnails/app1.png" alt=""> -->
+        <span class="thumb-placeholder">🎮</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 1</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 2 -->
+    <a class="app-card" href="#" aria-label="Open App 2">
+      <div class="thumb">
+        <span class="thumb-placeholder">📚</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 2</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 3 -->
+    <a class="app-card" href="#" aria-label="Open App 3">
+      <div class="thumb">
+        <span class="thumb-placeholder">🌍</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 3</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 4 -->
+    <a class="app-card" href="#" aria-label="Open App 4">
+      <div class="thumb">
+        <span class="thumb-placeholder">🎨</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 4</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 5 -->
+    <a class="app-card" href="#" aria-label="Open App 5">
+      <div class="thumb">
+        <span class="thumb-placeholder">🧠</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 5</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 6 -->
+    <a class="app-card" href="#" aria-label="Open App 6">
+      <div class="thumb">
+        <span class="thumb-placeholder">🔬</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 6</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 7 -->
+    <a class="app-card" href="#" aria-label="Open App 7">
+      <div class="thumb">
+        <span class="thumb-placeholder">🎵</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 7</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 8 -->
+    <a class="app-card" href="#" aria-label="Open App 8">
+      <div class="thumb">
+        <span class="thumb-placeholder">🏆</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 8</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 9 -->
+    <a class="app-card" href="#" aria-label="Open App 9">
+      <div class="thumb">
+        <span class="thumb-placeholder">🌱</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 9</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 10 -->
+    <a class="app-card" href="#" aria-label="Open App 10">
+      <div class="thumb">
+        <span class="thumb-placeholder">🚀</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 10</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 11 -->
+    <a class="app-card" href="#" aria-label="Open App 11">
+      <div class="thumb">
+        <span class="thumb-placeholder">🦋</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 11</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+    <!-- App 12 -->
+    <a class="app-card" href="#" aria-label="Open App 12">
+      <div class="thumb">
+        <span class="thumb-placeholder">⚡</span>
+      </div>
+      <div class="card-body">
+        <div class="app-name">App Name 12</div>
+        <div class="app-desc">Short description of what this app does goes here.</div>
+        <div class="card-cta">Open app <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  <strong>Rosa-Luxemburg-Gymnasium Berlin</strong> · Class 6.3 · English Project 2025/26<br>
+  Made with AI prompting — <em>every app written by students, together with an AI.</em>
+</footer>
+
+</body>
+</html>
