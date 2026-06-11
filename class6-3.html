@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class 6.3 App Lab – Rosa-Luxemburg-Gymnasium Berlin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:      #F5EFE0;
+      --cream:     #FBF7EE;
+      --amber:     #E8A838;
+      --amber-deep:#C4842A;
+      --rust:      #C95F38;
+      --bark:      #3D2B1A;
+      --mist:      #EDE4D0;
+      --card-bg:   #FFFDF7;
+      --shadow:    rgba(61,43,26,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--sand);
+      color: var(--bark);
+      min-height: 100vh;
+    }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    header {
+      position: relative;
+      padding: 3.5rem 2rem 2.8rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    header::before {
+      content: "6.3";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: clamp(10rem, 30vw, 22rem);
+      color: var(--amber);
+      opacity: 0.10;
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+    .eyebrow {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--amber-deep); margin-bottom: 0.9rem;
+    }
+    h1 {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: clamp(2rem, 6vw, 3.8rem); line-height: 1.1;
+      color: var(--bark); margin-bottom: 0.6rem; position: relative;
+    }
+    h1 span { color: var(--rust); }
+    .subtitle {
+      font-size: 1rem; color: #7A5C3A; max-width: 480px;
+      margin: 0 auto 0.5rem; line-height: 1.6; position: relative;
+    }
+    .meta-pills {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      justify-content: center; margin-top: 1.4rem; position: relative;
+    }
+    .pill {
+      background: var(--mist); border: 1.5px solid var(--amber);
+      border-radius: 99px; padding: 0.25rem 0.85rem;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--amber-deep); text-transform: uppercase;
+    }
+
+    .divider {
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      margin: 0 0 2.5rem;
+    }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .grid-label {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #A07840; margin-bottom: 1.4rem;
+    }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .app-card {
+      background: var(--card-bg); border: 2px solid var(--mist);
+      border-radius: 16px; overflow: hidden; text-align: left;
+      cursor: pointer; color: inherit; font-family: inherit;
+      display: flex; flex-direction: column;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .app-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(61,43,26,0.14);
+      border-color: var(--amber);
+    }
+    .app-card:focus-visible { outline: 3px solid var(--rust); outline-offset: 3px; }
+
+    .thumb {
+      width: 100%; aspect-ratio: 16 / 9; background: var(--mist);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .thumb-placeholder { font-size: 2.8rem; opacity: 0.65; }
+    .thumb::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; background: var(--amber);
+    }
+    .app-card:nth-child(4n+1) .thumb::after { background: var(--amber); }
+    .app-card:nth-child(4n+2) .thumb::after { background: var(--rust); }
+    .app-card:nth-child(4n+3) .thumb::after { background: #7DB87D; }
+    .app-card:nth-child(4n+4) .thumb::after { background: #6A9CC4; }
+
+    .card-body {
+      padding: 1rem 1.1rem 1.2rem; flex: 1;
+      display: flex; flex-direction: column; gap: 0.35rem;
+    }
+    .app-name {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 1.05rem; color: var(--bark); line-height: 1.25;
+    }
+    .app-desc { font-size: 0.82rem; color: #8A6A48; line-height: 1.5; flex: 1; }
+    .credits {
+      font-size: 0.72rem; color: #A07840; font-weight: 700;
+      margin-top: 0.3rem;
+    }
+    .card-cta {
+      margin-top: 0.7rem; display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.8rem;
+      color: var(--rust); letter-spacing: 0.04em;
+    }
+    .card-cta svg { transition: transform 0.15s ease; }
+    .app-card:hover .card-cta svg { transform: translateX(4px); }
+
+    footer {
+      text-align: center; padding: 2rem 1rem 2.5rem;
+      font-size: 0.78rem; color: #A07840; border-top: 1.5px solid var(--mist);
+    }
+    footer strong { color: var(--bark); }
+
+    /* ── GAME OVERLAY ─────────────────────────────────── */
+    #overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: var(--bark);
+      display: none; flex-direction: column;
+    }
+    #overlay.open { display: flex; }
+    #overlay-bar {
+      flex: 0 0 auto; display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.6rem 1rem; background: var(--bark);
+      border-bottom: 2px solid var(--amber-deep);
+    }
+    #back-btn {
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.85rem;
+      background: var(--amber); color: var(--bark); border: none;
+      border-radius: 99px; padding: 0.45rem 1rem; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    #back-btn:hover { background: #f2bb56; }
+    #overlay-title {
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+      color: var(--cream);
+    }
+    #game-frame {
+      flex: 1 1 auto; width: 100%; border: none; background: #000;
+    }
+
+    @media (max-width: 560px) {
+      .apps-grid { grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+      header { padding: 2.5rem 1.2rem 2rem; }
+      h1 { font-size: 2rem; }
+      .credits { font-size: 0.66rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .app-card { transition: none; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Rosa-Luxemburg-Gymnasium Berlin · English · Vibe Coding Project</p>
+  <h1>Class <span>6.3</span> App Lab</h1>
+  <p class="subtitle">Six games and quizzes made by students — using AI prompting as a creative tool for the first time.</p>
+  <div class="meta-pills">
+    <span class="pill">🤖 AI-assisted</span>
+    <span class="pill">🇬🇧 English Project</span>
+    <span class="pill">🏫 School Year 2025/26</span>
+    <span class="pill">✦ Prompting Competence</span>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<main>
+  <p class="grid-label">✦ All Apps</p>
+  <div class="apps-grid">
+
+    <button class="app-card" data-game="bmw" aria-label="Play BMW Highway Race">
+      <div class="thumb"><span class="thumb-placeholder">🏎️</span></div>
+      <div class="card-body">
+        <div class="app-name">BMW Highway Race</div>
+        <div class="app-desc">Dodge the slow cars on the motorway. Collect 5 coins for a second life.</div>
+        <div class="credits">by Nicolas &amp; Boris</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+    <button class="app-card" data-game="squishy" aria-label="Play Create Your Squishy and Slime">
+      <div class="thumb"><span class="thumb-placeholder">🟣</span></div>
+      <div class="card-body">
+        <div class="app-name">Create Your Squishy &amp; Slime</div>
+        <div class="app-desc">Build your own squishy or slime, pick by pick — then squish it!</div>
+        <div class="credits">by Hana, Emma &amp; Chloë</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+    <button class="app-card" data-game="pyramid" aria-label="Play Pyramid Escape">
+      <div class="thumb"><span class="thumb-placeholder">🏺</span></div>
+      <div class="card-body">
+        <div class="app-name">Pyramid Escape</div>
+        <div class="app-desc">An anime-style escape room. Solve riddles, fight mummies, find the exit.</div>
+        <div class="credits">Class 6.3</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+    <button class="app-card" data-game="chicken" aria-label="Play Chicken Race">
+      <div class="thumb"><span class="thumb-placeholder">🐔</span></div>
+      <div class="card-body">
+        <div class="app-name">Chicken Race</div>
+        <div class="app-desc">Hold to flap, dodge the flying eggs and jump the holes. Survive for points!</div>
+        <div class="credits">by Milan, Bela, Theo &amp; Tony</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+    <button class="app-card" data-game="movie" aria-label="Play Movie Quiz">
+      <div class="thumb"><span class="thumb-placeholder">🎬</span></div>
+      <div class="card-body">
+        <div class="app-name">Movie Quiz</div>
+        <div class="app-desc">Three clues, one movie. Guess early for more points!</div>
+        <div class="credits">by Frida-Linn, Nandiimaa &amp; Elsbeth</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+    <button class="app-card" data-game="amongus" aria-label="Play Among Us Hide and Seek">
+      <div class="thumb"><span class="thumb-placeholder">🔍</span></div>
+      <div class="card-body">
+        <div class="app-name">Hide &amp; Seek</div>
+        <div class="app-desc">Among Us style. Be the seeker or the hider — survive the countdown!</div>
+        <div class="credits">by Jasper &amp; Felix</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+  </div>
+</main>
+
+<footer>
+  <strong>Rosa-Luxemburg-Gymnasium Berlin</strong> · Class 6.3 · English Project 2025/26<br>
+  Made with AI prompting — <em>every app written by students, together with an AI.</em>
+</footer>
+
+<!-- ── GAME OVERLAY ─────────────────────────────────── -->
+<div id="overlay" role="dialog" aria-modal="true">
+  <div id="overlay-bar">
+    <button id="back-btn">‹ Back to Apps</button>
+    <span id="overlay-title"></span>
+  </div>
+  <iframe id="game-frame" title="Game" sandbox="allow-scripts allow-same-origin"></iframe>
+</div>
+
+<!-- ════════════ GAME MODULES (each runs sandboxed) ════════════ -->
+
+<template id="game-bmw"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; font-family:'Trebuchet MS',sans-serif; user-select:none; }
+  body { background:#1b1d24; display:flex; align-items:center; justify-content:center; }
+  #wrap { position:relative; width:100%; max-width:440px; height:100%; max-height:760px; }
+  canvas { display:block; width:100%; height:100%; background:#3a3f4b; }
+  .hud {
+    position:absolute; top:10px; left:0; right:0; padding:0 14px;
+    display:flex; justify-content:space-between; align-items:center;
+    color:#fff; font-weight:bold; font-size:18px; pointer-events:none;
+    text-shadow:0 2px 4px rgba(0,0,0,.6);
+  }
+  .coins { color:#ffd84d; }
+  .touch-controls {
+    position:absolute; bottom:18px; left:0; right:0;
+    display:flex; justify-content:space-between; padding:0 18px;
+  }
+  .tbtn {
+    width:74px; height:74px; border-radius:50%;
+    background:rgba(255,255,255,.14); border:2px solid rgba(255,255,255,.4);
+    color:#fff; font-size:30px; display:flex; align-items:center; justify-content:center;
+    backdrop-filter:blur(2px);
+  }
+  .tbtn:active { background:rgba(255,255,255,.32); }
+  .overlay-screen {
+    position:absolute; inset:0; background:rgba(20,22,28,.92);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:#fff; text-align:center; padding:24px; gap:14px;
+  }
+  .overlay-screen h2 { font-size:30px; color:#ffd84d; }
+  .overlay-screen p { font-size:15px; line-height:1.5; max-width:300px; opacity:.9; }
+  .play-btn {
+    margin-top:6px; background:#4da3ff; color:#fff; border:none;
+    padding:12px 30px; border-radius:99px; font-size:18px; font-weight:bold; cursor:pointer;
+  }
+  .play-btn:active { transform:scale(.96); }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c"></canvas>
+  <div class="hud">
+    <span>Score: <span id="score">0</span></span>
+    <span class="coins">🪙 <span id="coins">0</span>/5</span>
+  </div>
+  <div class="touch-controls">
+    <div class="tbtn" id="leftBtn">◀</div>
+    <div class="tbtn" id="rightBtn">▶</div>
+  </div>
+
+  <div class="overlay-screen" id="startScreen">
+    <h2>BMW Highway Race</h2>
+    <p>Steer your BMW down the motorway and dodge the slow cars. Each car you pass = <b>1 point</b>.</p>
+    <p>Collect <b>5 coins</b> 🪙 and you get a <b>second try</b> after a crash!</p>
+    <p>◀ ▶ arrow keys, A / D, or the on-screen buttons.</p>
+    <button class="play-btn" id="startBtn">Start Engine</button>
+  </div>
+
+  <div class="overlay-screen hidden" id="overScreen">
+    <h2 id="overTitle">Crash!</h2>
+    <p id="overMsg"></p>
+    <button class="play-btn" id="againBtn">Drive Again</button>
+  </div>
+</div>
+
+<script>
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+let W = 440, H = 760;
+function fit(){
+  const r = cv.getBoundingClientRect();
+  W = cv.width = Math.round(r.width);
+  H = cv.height = Math.round(r.height);
+  LANES = [W*0.22, W*0.41, W*0.59, W*0.78];
+}
+let LANES = [];
+
+const scoreEl = document.getElementById('score');
+const coinsEl = document.getElementById('coins');
+const startScreen = document.getElementById('startScreen');
+const overScreen = document.getElementById('overScreen');
+const overTitle = document.getElementById('overTitle');
+const overMsg = document.getElementById('overMsg');
+
+let state = 'menu';
+let player, enemies, coins, score, coinCount, roadY, speed, spawnT, coinT, hasRevive;
+
+function reset(){
+  fit();
+  player = { lane:1, x:LANES[1], w:Math.min(48,W*0.13), h:84, y:H-150, tx:LANES[1] };
+  enemies = []; coins = [];
+  score = 0; coinCount = 0; roadY = 0; speed = 5; spawnT = 0; coinT = 60;
+  hasRevive = false;
+  scoreEl.textContent = '0'; coinsEl.textContent = '0';
+}
+
+function startGame(){
+  reset(); state='play';
+  startScreen.classList.add('hidden');
+  overScreen.classList.add('hidden');
+}
+
+function gameOver(){
+  state='over';
+  overTitle.textContent = '💥 Crash!';
+  overMsg.textContent = 'Final score: ' + score + (coinCount>0 ? ' · Coins this run: ' + coinCount : '');
+  overScreen.classList.remove('hidden');
+}
+
+function reviveLife(){
+  coinCount = 0; coinsEl.textContent = '0'; hasRevive = false;
+  enemies = enemies.filter(e => e.y < player.y - 200);
+  player.lane = 1; player.x = player.tx = LANES[1];
+  flash = 30;
+}
+let flash = 0;
+
+function move(dir){
+  if(state!=='play') return;
+  player.lane = Math.max(0, Math.min(3, player.lane + dir));
+  player.tx = LANES[player.lane];
+}
+
+// input
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A') move(-1);
+  if(e.key==='ArrowRight'||e.key==='d'||e.key==='D') move(1);
+});
+function bindHold(id,dir){
+  const el=document.getElementById(id);
+  const go=ev=>{ev.preventDefault(); move(dir);};
+  el.addEventListener('touchstart',go,{passive:false});
+  el.addEventListener('mousedown',go);
+}
+bindHold('leftBtn',-1); bindHold('rightBtn',1);
+
+document.getElementById('startBtn').onclick = startGame;
+document.getElementById('againBtn').onclick = startGame;
+
+// drawing helpers
+function drawCar(x,y,w,h,body,top){
+  ctx.fillStyle=body;
+  roundRect(x-w/2,y-h/2,w,h,8); ctx.fill();
+  // windows
+  ctx.fillStyle=top;
+  roundRect(x-w/2+5,y-h/2+10,w-10,h*0.28,4); ctx.fill();
+  roundRect(x-w/2+5,y+h*0.10,w-10,h*0.26,4); ctx.fill();
+  // wheels
+  ctx.fillStyle='#111';
+  ctx.fillRect(x-w/2-3,y-h*0.30,4,h*0.22);
+  ctx.fillRect(x+w/2-1,y-h*0.30,4,h*0.22);
+  ctx.fillRect(x-w/2-3,y+h*0.10,4,h*0.22);
+  ctx.fillRect(x+w/2-1,y+h*0.10,4,h*0.22);
+}
+function roundRect(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+
+function loop(){
+  requestAnimationFrame(loop);
+  ctx.clearRect(0,0,W,H);
+  // road
+  ctx.fillStyle='#43484f'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#3a3f4b';
+  ctx.fillRect(W*0.13,0,W*0.74,H);
+  // lane dashes
+  if(state==='play') roadY=(roadY+speed)%56;
+  ctx.fillStyle='rgba(255,255,255,.55)';
+  for(let lx of [W*0.31,W*0.50,W*0.69]){
+    for(let yy=-56+ (state==='play'?roadY:0); yy<H; yy+=56){
+      ctx.fillRect(lx-2,yy,4,30);
+    }
+  }
+  // edges
+  ctx.fillStyle='#ffd84d';
+  ctx.fillRect(W*0.13-4,0,4,H); ctx.fillRect(W*0.87,0,4,H);
+
+  if(state==='play'){
+    // smooth steer
+    player.x += (player.tx - player.x)*0.25;
+
+    // spawn enemies
+    spawnT--;
+    if(spawnT<=0){
+      const lane = Math.floor(Math.random()*4);
+      enemies.push({lane,x:LANES[lane],y:-90,w:player.w,h:84,
+        color:['#d94f4f','#5fa84f','#bb6fd0','#e0993d'][Math.floor(Math.random()*4)],
+        scored:false});
+      spawnT = Math.max(34, 80 - score); // gets harder
+    }
+    // spawn coins
+    coinT--;
+    if(coinT<=0){
+      const lane = Math.floor(Math.random()*4);
+      coins.push({x:LANES[lane], y:-40, r:13});
+      coinT = 150 + Math.random()*120;
+    }
+
+    speed = 5 + Math.min(5, score*0.05);
+
+    // update enemies
+    for(const e of enemies){
+      e.y += speed*0.62;
+      if(!e.scored && e.y > player.y + 50){ e.scored=true; score++; scoreEl.textContent=score; }
+      // collision
+      if(Math.abs(e.x-player.x)<player.w*0.85 && Math.abs(e.y-player.y)<82){
+        if(hasRevive){ reviveLife(); }
+        else { gameOver(); }
+      }
+    }
+    enemies = enemies.filter(e=>e.y<H+100);
+
+    // update coins
+    for(const c of coins){
+      c.y += speed*0.62;
+      if(!c.got && Math.abs(c.x-player.x)<player.w && Math.abs(c.y-player.y)<60){
+        c.got=true; coinCount++; if(coinCount>=5){coinCount=5;hasRevive=true;}
+        coinsEl.textContent=coinCount;
+      }
+    }
+    coins = coins.filter(c=>!c.got && c.y<H+40);
+  }
+
+  // draw coins
+  for(const c of coins){
+    ctx.fillStyle='#ffd84d'; ctx.beginPath(); ctx.arc(c.x,c.y,c.r,0,7); ctx.fill();
+    ctx.fillStyle='#caa12b'; ctx.beginPath(); ctx.arc(c.x,c.y,c.r*0.6,0,7); ctx.fill();
+    ctx.fillStyle='#ffd84d'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('€',c.x,c.y+4);
+  }
+  // draw enemies
+  for(const e of enemies) drawCar(e.x,e.y,e.w,e.h,e.color,'#dfe7ee');
+  // draw player (BMW - blue)
+  if(state!=='menu'){
+    if(flash>0){flash--; if(flash%6<3){/*blink*/}else drawCar(player.x,player.y,player.w,player.h,'#2d6fd6','#cfe3ff');}
+    else drawCar(player.x,player.y,player.w,player.h,'#2d6fd6','#cfe3ff');
+    // revive badge
+    if(hasRevive){
+      ctx.fillStyle='#7CFC8A'; ctx.font='bold 13px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('+1 LIFE READY', player.x, player.y-58);
+    }
+  }
+}
+
+window.addEventListener('resize', ()=>{ fit(); if(player){LANES.length&&(player.tx=LANES[player.lane]);} });
+fit(); loop();
+</script>
+</body>
+</html>
+</template>
+<template id="game-squishy"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Trebuchet MS',sans-serif;background:linear-gradient(160deg,#ffe6f2,#e6f7ff);
+       min-height:100vh;color:#5a3d57;display:flex;flex-direction:column;align-items:center;
+       padding:20px 16px 40px;user-select:none;}
+  h1{font-size:26px;margin-bottom:4px;text-align:center;color:#c44b8a;}
+  .step-label{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#a06b95;margin-bottom:14px;}
+  .card{background:#fff;border-radius:22px;padding:22px 18px;box-shadow:0 8px 24px rgba(196,75,138,.18);
+        width:100%;max-width:420px;text-align:center;}
+  .opts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:6px;}
+  .opt{flex:1 1 120px;min-width:110px;max-width:150px;background:#fff7fc;border:3px solid #ffd6ec;
+       border-radius:18px;padding:14px 10px;cursor:pointer;transition:transform .12s,border-color .12s;
+       display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .opt:hover{transform:translateY(-4px);border-color:#ff9ccb;}
+  .opt:active{transform:scale(.96);}
+  .opt svg{width:74px;height:74px;}
+  .opt .name{font-weight:bold;font-size:15px;}
+  .colors{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px;}
+  .sw{width:42px;height:42px;border-radius:50%;cursor:pointer;border:3px solid #fff;
+      box-shadow:0 2px 6px rgba(0,0,0,.18);transition:transform .12s;}
+  .sw:hover{transform:scale(1.12);}
+  .back{margin-top:16px;background:none;border:none;color:#a06b95;font-size:14px;cursor:pointer;text-decoration:underline;}
+  .stage{display:flex;flex-direction:column;align-items:center;gap:18px;}
+  #blob-wrap{width:240px;height:200px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  #blob{filter:drop-shadow(0 10px 16px rgba(0,0,0,.18));transition:transform .08s;}
+  .squish-hint{font-size:14px;color:#a06b95;}
+  .summary{font-size:15px;line-height:1.6;}
+  .summary b{color:#c44b8a;}
+  .again{margin-top:6px;background:#c44b8a;color:#fff;border:none;padding:11px 26px;border-radius:99px;
+         font-size:16px;font-weight:bold;cursor:pointer;}
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+  <h1>🟣 Squishy &amp; Slime Maker</h1>
+  <div class="step-label" id="stepLabel">Step 1 of 4</div>
+  <div class="card" id="card"></div>
+
+<script>
+// ---- tiny sound engine (no files) ----
+let actx;
+function snd(type){
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const t = actx.currentTime;
+    if(type==='squish'){
+      const o=actx.createOscillator(), g=actx.createGain();
+      o.type='sine'; o.frequency.setValueAtTime(420,t);
+      o.frequency.exponentialRampToValueAtTime(120,t+0.18);
+      g.gain.setValueAtTime(0.3,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.2);
+      o.connect(g).connect(actx.destination); o.start(t); o.stop(t+0.22);
+    } else if(type==='slime'){
+      const o=actx.createOscillator(), g=actx.createGain();
+      o.type='triangle'; o.frequency.setValueAtTime(180,t);
+      o.frequency.exponentialRampToValueAtTime(90,t+0.3);
+      g.gain.setValueAtTime(0.25,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.32);
+      o.connect(g).connect(actx.destination); o.start(t); o.stop(t+0.34);
+    } else if(type==='crack'){
+      const bufSize=actx.sampleRate*0.12, buf=actx.createBuffer(1,bufSize,actx.sampleRate);
+      const d=buf.getChannelData(0);
+      for(let i=0;i<bufSize;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/bufSize,2);
+      const s=actx.createBufferSource(); s.buffer=buf;
+      const g=actx.createGain(); g.gain.value=0.4;
+      s.connect(g).connect(actx.destination); s.start();
+    }
+  }catch(e){}
+}
+
+const RAINBOW=[['Red','#ff4d4d'],['Orange','#ff9a3d'],['Yellow','#ffe14d'],
+  ['Green','#5fd16a'],['Blue','#4da3ff'],['Indigo','#6a5acd'],['Violet','#b85ec9']];
+
+// SVG icons
+function svgSquishy(kind,color){
+  if(kind==='Butter')   return blobSvg(color,'M40 110 Q40 60 110 60 Q180 60 180 110 Q180 150 110 150 Q40 150 40 110Z','butter');
+  if(kind==='NeeDoh')    return blobSvg(color,'M110 50 C150 50 175 80 175 110 C175 145 145 160 110 160 C75 160 45 145 45 110 C45 80 70 50 110 50Z','dots');
+  return blobSvg(color,'M70 60 L150 60 L165 120 L110 165 L55 120 Z','claw'); // Cat Claw
+}
+function svgSlime(kind,color){
+  return blobSvg(color,'M40 130 Q35 70 110 70 Q185 70 180 130 Q183 165 150 162 Q145 178 120 168 Q110 180 100 168 Q75 178 70 162 Q37 165 40 130Z', kind==='Fluffy'?'fluff':(kind==='Water'?'shine':'butter'));
+}
+function blobSvg(color,path,deco){
+  let extra='';
+  if(deco==='dots') extra='<circle cx="90" cy="100" r="6" fill="rgba(255,255,255,.6)"/><circle cx="125" cy="115" r="5" fill="rgba(255,255,255,.5)"/><circle cx="108" cy="85" r="4" fill="rgba(255,255,255,.5)"/>';
+  if(deco==='shine') extra='<ellipse cx="90" cy="98" rx="16" ry="9" fill="rgba(255,255,255,.55)"/>';
+  if(deco==='fluff') extra='<circle cx="95" cy="100" r="3" fill="rgba(255,255,255,.7)"/><circle cx="115" cy="108" r="3" fill="rgba(255,255,255,.7)"/><circle cx="105" cy="120" r="3" fill="rgba(255,255,255,.7)"/>';
+  if(deco==='butter') extra='<ellipse cx="95" cy="100" rx="20" ry="10" fill="rgba(255,255,255,.4)"/>';
+  return '<svg viewBox="0 0 220 200"><path d="'+path+'" fill="'+color+'"/><path d="'+path+'" fill="rgba(0,0,0,.08)" transform="translate(3,5)" style="mix-blend-mode:multiply"/>'+extra+'</svg>';
+}
+
+const card=document.getElementById('card');
+const stepLabel=document.getElementById('stepLabel');
+
+let choice={mode:null,kind:null,color:RAINBOW[4],wax:false};
+
+function step1(){
+  stepLabel.textContent='Step 1 of 4 — What do you want to make?';
+  card.innerHTML='<div class="opts">'+
+    '<button class="opt" data-m="squishy"><div style="width:74px;height:74px">'+svgSquishy('NeeDoh','#ff7fb6')+'</div><div class="name">Squishy</div></button>'+
+    '<button class="opt" data-m="slime"><div style="width:74px;height:74px">'+svgSlime('Fluffy','#7ad6ff')+'</div><div class="name">Slime</div></button>'+
+    '</div>';
+  card.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    choice.mode=b.dataset.m; snd(choice.mode==='squishy'?'squish':'slime'); step2();
+  });
+}
+
+function step2(){
+  stepLabel.textContent='Step 2 of 4 — Choose the type';
+  const isSq=choice.mode==='squishy';
+  const kinds=isSq?['Butter','NeeDoh','Cat Claw']:['Fluffy','Butter','Water'];
+  let html='<div class="opts">';
+  kinds.forEach(k=>{
+    const icon=isSq?svgSquishy(k,'#ff8fc0'):svgSlime(k,'#7ad6ff');
+    const label=isSq?k:(k+' Slime');
+    html+='<button class="opt" data-k="'+k+'"><div style="width:74px;height:74px">'+icon+'</div><div class="name">'+label+'</div></button>';
+  });
+  html+='</div><button class="back" id="bk">‹ back</button>';
+  card.innerHTML=html;
+  card.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    choice.kind=b.dataset.k; snd(isSq?'squish':'slime'); step3();
+  });
+  document.getElementById('bk').onclick=step1;
+}
+
+function step3(){
+  stepLabel.textContent='Step 3 of 4 — Pick a rainbow colour';
+  let html='<div class="colors">';
+  RAINBOW.forEach((c,i)=>html+='<div class="sw" data-i="'+i+'" title="'+c[0]+'" style="background:'+c[1]+'"></div>');
+  html+='</div><button class="back" id="bk">‹ back</button>';
+  card.innerHTML=html;
+  card.querySelectorAll('.sw').forEach(s=>s.onclick=()=>{
+    choice.color=RAINBOW[+s.dataset.i]; snd('slime'); step4();
+  });
+  document.getElementById('bk').onclick=step2;
+}
+
+function step4(){
+  stepLabel.textContent='Step 4 of 4 — Add cracking wax?';
+  card.innerHTML='<div class="opts">'+
+    '<button class="opt" data-w="1"><div style="font-size:48px">🪵</div><div class="name">Wax cracking</div></button>'+
+    '<button class="opt" data-w="0"><div style="font-size:48px">✨</div><div class="name">No wax</div></button>'+
+    '</div><button class="back" id="bk">‹ back</button>';
+  card.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    choice.wax=b.dataset.w==='1'; snd(choice.wax?'crack':'squish'); reveal();
+  });
+  document.getElementById('bk').onclick=step3;
+}
+
+let squishCount=0;
+function reveal(){
+  stepLabel.textContent='Ta-da! Your creation';
+  const isSq=choice.mode==='squishy';
+  const icon=isSq?svgSquishy(choice.kind,choice.color[1]):svgSlime(choice.kind,choice.color[1]);
+  const typeName=isSq?choice.kind:(choice.kind+' Slime');
+  card.innerHTML='<div class="stage">'+
+    '<div class="summary">A <b>'+choice.color[0]+'</b> '+(isSq?'<b>'+typeName+' Squishy</b>':'<b>'+typeName+'</b>')+
+    (choice.wax?' with <b>cracking wax</b>':'')+'!</div>'+
+    '<div id="blob-wrap"><div id="blob" style="width:200px;height:180px">'+icon+'</div></div>'+
+    '<div class="squish-hint">👆 Tap it to '+(isSq?'squish':'squelch')+'! (<span id="cnt">0</span>)</div>'+
+    '<button class="again">Make another</button></div>';
+  const wrap=document.getElementById('blob-wrap');
+  const blob=document.getElementById('blob');
+  const cnt=document.getElementById('cnt');
+  wrap.onclick=()=>{
+    squishCount++; cnt.textContent=squishCount;
+    snd(choice.wax?'crack':(isSq?'squish':'slime'));
+    blob.style.transform='scaleX(1.25) scaleY(0.7)';
+    setTimeout(()=>blob.style.transform='scaleX(1) scaleY(1)',90);
+  };
+  card.querySelector('.again').onclick=()=>{squishCount=0;choice={mode:null,kind:null,color:RAINBOW[4],wax:false};step1();};
+}
+
+step1();
+</script>
+</body>
+</html>
+</template>
+<template id="game-pyramid"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cinzel:wght@600&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Caveat',cursive;background:#1c140a;color:#f3e2c0;min-height:100vh;
+       display:flex;flex-direction:column;align-items:center;user-select:none;overflow:hidden;}
+  /* sand + dark vignette stage */
+  #stage{position:relative;width:100%;max-width:480px;min-height:100vh;
+         background:radial-gradient(120% 80% at 50% 30%,#caa46a 0%,#8a6a3c 45%,#3c2c16 100%);
+         overflow:hidden;}
+  #stage::after{content:'';position:absolute;inset:0;pointer-events:none;
+         box-shadow:inset 0 0 140px 50px rgba(10,6,2,.85);}
+  .hiedirections{position:absolute;inset:0;opacity:.07;pointer-events:none;
+         background:repeating-linear-gradient(90deg,transparent 0 38px,#1c140a 38px 40px);}
+  .topbar{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;gap:8px;padding:10px;}
+  .tbtn{font-family:'Cinzel',serif;font-size:13px;background:rgba(28,20,10,.85);color:#ffd98a;
+        border:2px solid #b6894a;border-radius:10px;padding:7px 12px;cursor:pointer;font-weight:600;}
+  .tbtn:active{transform:scale(.95);}
+  .stat{margin-left:auto;font-family:'Cinzel',serif;font-size:12px;color:#ffe6ad;
+        background:rgba(28,20,10,.85);border:2px solid #b6894a;border-radius:10px;padding:7px 10px;display:flex;gap:10px;}
+  .scene{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;
+         align-items:center;justify-content:center;padding:64px 24px 30px;text-align:center;}
+  h1{font-family:'Cinzel',serif;font-size:30px;color:#ffd98a;text-shadow:0 2px 8px #1c140a;margin-bottom:6px;}
+  .scroll{background:rgba(247,232,200,.92);color:#4a3414;border-radius:14px;padding:18px 18px;
+          max-width:380px;box-shadow:0 8px 24px rgba(0,0,0,.5);transform:rotate(-.6deg);}
+  .scroll p{font-size:23px;line-height:1.3;}
+  .scroll .small{font-size:18px;opacity:.8;}
+  .btn{font-family:'Cinzel',serif;font-size:16px;font-weight:600;background:#caa46a;color:#2a1d0c;
+       border:none;border-radius:99px;padding:11px 26px;margin-top:14px;cursor:pointer;
+       box-shadow:0 4px 0 #8a6a3c;}
+  .btn:active{transform:translateY(3px);box-shadow:0 1px 0 #8a6a3c;}
+  .choices{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;justify-content:center;}
+  .hero-pick{background:rgba(28,20,10,.6);border:3px solid #b6894a;border-radius:18px;padding:14px;
+             cursor:pointer;transition:transform .12s,border-color .12s;}
+  .hero-pick:hover{transform:translateY(-5px);border-color:#ffd98a;}
+  .hero-pick .lbl{font-size:22px;color:#ffd98a;margin-top:4px;}
+  input.name{font-family:'Caveat',cursive;font-size:24px;text-align:center;border:none;
+        border-bottom:3px solid #b6894a;background:transparent;color:#3c2912;padding:6px 4px;width:200px;outline:none;}
+  .riddle-in{font-family:'Caveat',cursive;font-size:22px;text-align:center;border:2px solid #b6894a;
+        border-radius:10px;background:#fff8e8;color:#4a3414;padding:8px;width:220px;outline:none;margin-top:10px;}
+  .hint{font-size:18px;color:#ffe6ad;margin-top:10px;min-height:22px;}
+  /* fight */
+  .mummy{font-size:96px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.6));transition:transform .08s;}
+  .hpbar{width:200px;height:14px;background:#3c2c16;border:2px solid #b6894a;border-radius:8px;
+         margin:8px auto;overflow:hidden;}
+  .hpfill{height:100%;background:linear-gradient(90deg,#e05a4a,#ffb24a);width:100%;transition:width .15s;}
+  .fight-hint{font-size:20px;color:#ffd98a;margin-top:8px;}
+  /* chest hunt */
+  .dig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;}
+  .dig{width:84px;height:84px;border-radius:14px;background:rgba(60,44,22,.7);border:3px solid #b6894a;
+       font-size:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .dig:hover{border-color:#ffd98a;}
+  /* panel */
+  .panel{position:absolute;inset:0;z-index:8;background:rgba(12,8,3,.92);display:none;
+         flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center;}
+  .panel.open{display:flex;}
+  .panel h2{font-family:'Cinzel',serif;color:#ffd98a;font-size:24px;margin-bottom:14px;}
+  .panel ul{list-style:none;font-size:22px;line-height:1.5;}
+  .hidden{display:none!important;}
+  .you{font-size:60px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6));}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="hiedirections"></div>
+
+  <div class="topbar hidden" id="topbar">
+    <button class="tbtn" id="invBtn">🎒 Inventory</button>
+    <button class="tbtn" id="lvlBtn">⬆ Level Up</button>
+    <div class="stat">
+      <span>❤ <span id="hp">100</span></span>
+      <span>Lv <span id="lvl">1</span></span>
+      <span>⭐ <span id="xp">0</span></span>
+    </div>
+  </div>
+
+  <div class="scene" id="scene"></div>
+
+  <div class="panel" id="invPanel">
+    <h2>🎒 Inventory</h2>
+    <ul id="invList"><li>(empty)</li></ul>
+    <button class="btn" onclick="closePanels()">Close</button>
+  </div>
+  <div class="panel" id="lvlPanel">
+    <h2>⬆ Level Up</h2>
+    <p id="lvlMsg" style="font-size:21px;max-width:300px;line-height:1.4"></p>
+    <button class="btn" id="doLvl" style="margin-top:18px">Use materials</button>
+    <button class="btn" onclick="closePanels()" style="margin-top:10px;background:#8a6a3c;color:#ffe6ad">Close</button>
+  </div>
+</div>
+
+<script>
+const scene=document.getElementById('scene');
+const topbar=document.getElementById('topbar');
+const hpEl=document.getElementById('hp'), lvlEl=document.getElementById('lvl'), xpEl=document.getElementById('xp');
+
+let hero={name:'',gender:'',hp:100,maxhp:100,lvl:1,xp:0,atk:25,mats:0,inv:[]};
+function refresh(){hpEl.textContent=hero.hp;lvlEl.textContent=hero.lvl;xpEl.textContent=hero.xp;}
+function addItem(it){hero.inv.push(it);renderInv();}
+function renderInv(){
+  document.getElementById('invList').innerHTML = hero.inv.length
+    ? hero.inv.map(i=>'<li>'+i+'</li>').join('') : '<li>(empty)</li>';
+}
+
+// ---- intro: choose character ----
+function sceneChar(){
+  topbar.classList.add('hidden');
+  scene.innerHTML='<h1>Pyramid Escape</h1>'+
+    '<div class="scroll"><p>Trapped deep inside an ancient pyramid…</p><p class="small">Choose your hero.</p></div>'+
+    '<div class="choices">'+
+      '<div class="hero-pick" data-g="male"><div class="you">'+heroSvg("male")+'</div><div class="lbl">Son of Ra</div></div>'+
+      '<div class="hero-pick" data-g="female"><div class="you">'+heroSvg("female")+'</div><div class="lbl">Daughter of Isis</div></div>'+
+    '</div>';
+  scene.querySelectorAll('.hero-pick').forEach(p=>p.onclick=()=>{hero.gender=p.dataset.g;sceneName();});
+}
+function heroSvg(g){
+  // anime-ish egyptian god, NO full face mask
+  const headdress=g==='male'?'#3a7bd5':'#d56aa0';
+  const skin='#e8b98a';
+  return '<svg width="86" height="100" viewBox="0 0 86 100">'+
+    '<rect x="20" y="6" width="46" height="30" rx="8" fill="'+headdress+'"/>'+      // nemes headdress
+    '<rect x="14" y="20" width="12" height="34" rx="5" fill="'+headdress+'"/>'+
+    '<rect x="60" y="20" width="12" height="34" rx="5" fill="'+headdress+'"/>'+
+    '<rect x="36" y="2" width="14" height="12" rx="3" fill="#ffd84d"/>'+           // gold band
+    '<circle cx="43" cy="40" r="18" fill="'+skin+'"/>'+                            // face (open, no mask)
+    '<circle cx="37" cy="38" r="2.4" fill="#23150a"/><circle cx="49" cy="38" r="2.4" fill="#23150a"/>'+
+    '<path d="M30 36 h7 M49 36 h7" stroke="#23150a" stroke-width="2" fill="none"/>'+ // anime eyeliner
+    '<path d="M38 47 q5 4 10 0" stroke="#7a4a2a" stroke-width="2" fill="none"/>'+
+    '<rect x="30" y="58" width="26" height="34" rx="6" fill="#f0e2c0"/>'+          // robe
+    '<rect x="30" y="58" width="26" height="8" fill="#ffd84d"/>'+
+    '</svg>';
+}
+
+function sceneName(){
+  scene.innerHTML='<h1>Your name?</h1>'+
+    '<div class="scroll"><p>The gods wish to know who walks these halls.</p>'+
+    '<input class="name" id="nm" maxlength="14" placeholder="enter name" /></div>'+
+    '<button class="btn" id="go">Begin the escape</button>';
+  const nm=document.getElementById('nm'); nm.focus();
+  document.getElementById('go').onclick=()=>{
+    hero.name=nm.value.trim()||'Wanderer';
+    topbar.classList.remove('hidden'); refresh();
+    sceneIntro();
+  };
+  nm.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('go').click();});
+}
+
+function sceneIntro(){
+  scene.innerHTML='<div class="you">'+heroSvg(hero.gender)+'</div>'+
+    '<div class="scroll"><p>Welcome, <b>'+hero.name+'</b>.</p>'+
+    '<p class="small">Direction: tap <b>🎒 Inventory</b> and <b>⬆ Level Up</b> (top-left) any time. '+
+    'Solve the riddles, beat the mummies, find chests, and reach the exit.</p></div>'+
+    '<button class="btn" id="next">Enter Chamber I →</button>';
+  document.getElementById('next').onclick=room1;
+}
+
+// ---- ROOM 1: riddle ----
+function room1(){
+  scene.innerHTML='<h1>Chamber I — The Riddle</h1>'+
+    '<div class="scroll"><p>Carved on the wall:</p>'+
+    '<p>"I have a face and two hands, but no arms. The pharaohs read me by the sun. What am I?"</p>'+
+    '<input class="riddle-in" id="ans" placeholder="your answer"/></div>'+
+    '<div class="hint" id="h1"></div>'+
+    '<button class="btn" id="try">Answer</button>';
+  const ans=document.getElementById('ans');ans.focus();
+  document.getElementById('try').onclick=()=>{
+    const v=ans.value.toLowerCase();
+    if(v.includes('clock')||v.includes('sundial')||v.includes('uhr')||v.includes('watch')){
+      hero.xp+=10;refresh();
+      sceneClear('Chamber I cleared! +10 ⭐','The wall slides open…','Enter Chamber II →',room2);
+    } else { document.getElementById('h1').textContent='Hint: it tells the time. (Try "clock" or "sundial")'; }
+  };
+  ans.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('try').click();});
+}
+
+// ---- ROOM 2: mummy fight ----
+function room2(){ mummyFight('Chamber II — Guardian Mummy',60,()=>{
+  hero.xp+=15;refresh();
+  sceneClear('Mummy defeated! +15 ⭐','You find a hidden passage.','Enter Chamber III →',room3);
+}); }
+
+function mummyFight(title,mummyHp,onWin){
+  let mhp=mummyHp,maxm=mummyHp,locked=false;
+  scene.innerHTML='<h1>'+title+'</h1>'+
+    '<div class="mummy" id="mum">🧟</div>'+
+    '<div class="hpbar"><div class="hpfill" id="mfill"></div></div>'+
+    '<div class="fight-hint">Press <b>Enter</b> (or tap the spear) to attack with your spear 🔱</div>'+
+    '<button class="btn" id="spear" style="margin-top:14px">🔱 Stab!</button>';
+  const mum=document.getElementById('mum'),mfill=document.getElementById('mfill');
+  function attack(){
+    if(locked)return;
+    mhp-=hero.atk; if(mhp<0)mhp=0;
+    mfill.style.width=(mhp/maxm*100)+'%';
+    mum.style.transform='translateX(6px) scale(1.05)';
+    setTimeout(()=>mum.style.transform='',90);
+    if(mhp<=0){ locked=true; mum.textContent='💀';
+      setTimeout(onWin,500); return; }
+    // mummy hits back
+    hero.hp-=8; if(hero.hp<0)hero.hp=0; refresh();
+    if(hero.hp<=0){ locked=true; gameOver(); }
+  }
+  document.getElementById('spear').onclick=attack;
+  window.__fightKey=e=>{if(e.key==='Enter')attack();};
+  document.addEventListener('keydown',window.__fightKey);
+  scene.dataset.fight='1';
+}
+function clearFightKey(){if(window.__fightKey){document.removeEventListener('keydown',window.__fightKey);window.__fightKey=null;}}
+
+// ---- ROOM 3: chest hunt ----
+function room3(){
+  clearFightKey();
+  const chest=Math.floor(Math.random()*9);
+  let found=false;
+  let html='<h1>Chamber III — Hidden Chest</h1>'+
+    '<div class="scroll"><p>A chest of <b>level-up materials</b> is buried here.</p>'+
+    '<p class="small">Dig in the sand. It is not too easy… not too hard.</p></div>'+
+    '<div class="dig-grid">';
+  for(let i=0;i<9;i++) html+='<div class="dig" data-i="'+i+'">🏜️</div>';
+  html+='</div><div class="hint" id="dh"></div>';
+  scene.innerHTML=html;
+  scene.querySelectorAll('.dig').forEach(d=>d.onclick=()=>{
+    if(found)return;
+    const i=+d.dataset.i;
+    if(i===chest){ found=true; d.textContent='📦'; hero.mats+=3; addItem('🔶 Level-up materials ×3'); hero.xp+=10; refresh();
+      sceneClear('Chest found! +3 materials, +10 ⭐','You can now Level Up (top-left).','Enter Chamber IV →',room4);
+    } else {
+      d.textContent='🕳️';
+      const dist=Math.abs(i-chest);
+      document.getElementById('dh').textContent = dist<=1?'You feel something close…':'Nothing here.';
+    }
+  });
+}
+
+// ---- ROOM 4: riddle ----
+function room4(){
+  scene.innerHTML='<h1>Chamber IV — The Final Riddle</h1>'+
+    '<div class="scroll"><p>Hieroglyphs whisper:</p>'+
+    '<p>"The more you take, the more you leave behind. What am I?"</p>'+
+    '<input class="riddle-in" id="ans" placeholder="your answer"/></div>'+
+    '<div class="hint" id="h2"></div>'+
+    '<button class="btn" id="try">Answer</button>';
+  const ans=document.getElementById('ans');ans.focus();
+  document.getElementById('try').onclick=()=>{
+    const v=ans.value.toLowerCase();
+    if(v.includes('footstep')||v.includes('step')||v.includes('fußspur')||v.includes('fussspur')){
+      hero.xp+=15;refresh();
+      sceneClear('Correct! +15 ⭐','One guardian remains before the exit…','Face the last guardian →',room5);
+    } else { document.getElementById('h2').textContent='Hint: you make them when you walk. (Try "footsteps")'; }
+  };
+  ans.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('try').click();});
+}
+
+// ---- ROOM 5: boss + exit ----
+function room5(){ mummyFight('Chamber V — The Pharaoh\u2019s Guard',90,()=>{
+  hero.xp+=30;refresh(); win();
+}); }
+
+// ---- helper scenes ----
+function sceneClear(title,sub,btn,next){
+  clearFightKey();
+  scene.innerHTML='<h1>'+title+'</h1>'+
+    '<div class="scroll"><p>'+sub+'</p></div>'+
+    '<button class="btn" id="n">'+btn+'</button>';
+  document.getElementById('n').onclick=next;
+}
+function win(){
+  clearFightKey();
+  scene.innerHTML='<h1>☀ You Escaped!</h1>'+
+    '<div class="you" style="font-size:80px">'+heroSvg(hero.gender)+'</div>'+
+    '<div class="scroll"><p><b>'+hero.name+'</b> steps into the desert sun.</p>'+
+    '<p class="small">Level '+hero.lvl+' · ⭐ '+hero.xp+' XP · ❤ '+hero.hp+' HP</p></div>'+
+    '<button class="btn" id="r">Play again</button>';
+  document.getElementById('r').onclick=()=>{hero={name:'',gender:'',hp:100,maxhp:100,lvl:1,xp:0,atk:25,mats:0,inv:[]};renderInv();refresh();sceneChar();};
+}
+function gameOver(){
+  clearFightKey();
+  scene.innerHTML='<h1>💀 Fallen</h1>'+
+    '<div class="scroll"><p>The pyramid claims another soul…</p></div>'+
+    '<button class="btn" id="r">Try again</button>';
+  document.getElementById('r').onclick=()=>{hero.hp=hero.maxhp;refresh();room1();};
+}
+
+// ---- panels ----
+function closePanels(){document.getElementById('invPanel').classList.remove('open');document.getElementById('lvlPanel').classList.remove('open');}
+document.getElementById('invBtn').onclick=()=>{renderInv();document.getElementById('invPanel').classList.add('open');};
+document.getElementById('lvlBtn').onclick=()=>{
+  const msg=document.getElementById('lvlMsg');
+  if(hero.mats>=3){ msg.textContent='You have '+hero.mats+' materials. Spend 3 to reach Level '+(hero.lvl+1)+' (+20 max HP, +8 attack).'; document.getElementById('doLvl').classList.remove('hidden'); }
+  else { msg.textContent='You need 3 level-up materials. Find a chest first! (You have '+hero.mats+')'; document.getElementById('doLvl').classList.add('hidden'); }
+  document.getElementById('lvlPanel').classList.add('open');
+};
+document.getElementById('doLvl').onclick=()=>{
+  if(hero.mats>=3){hero.mats-=3;hero.lvl++;hero.maxhp+=20;hero.hp=hero.maxhp;hero.atk+=8;
+    hero.inv=hero.inv.filter(i=>!i.includes('materials'));renderInv();refresh();
+    document.getElementById('lvlMsg').textContent='Level '+hero.lvl+'! HP fully restored. ⚔ Attack now '+hero.atk+'.';
+    document.getElementById('doLvl').classList.add('hidden');}
+};
+
+sceneChar();
+</script>
+</body>
+</html>
+</template>
+<template id="game-chicken"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;font-family:'Trebuchet MS',sans-serif;user-select:none;}
+  body{background:#7ec0ee;display:flex;align-items:center;justify-content:center;}
+  #wrap{position:relative;width:100%;max-width:480px;height:100%;max-height:760px;}
+  canvas{display:block;width:100%;height:100%;}
+  .hud{position:absolute;top:10px;left:0;right:0;padding:0 16px;display:flex;justify-content:space-between;
+       color:#fff;font-weight:bold;font-size:20px;text-shadow:0 2px 4px rgba(0,0,0,.4);pointer-events:none;}
+  .overlay-screen{position:absolute;inset:0;background:rgba(20,40,30,.9);display:flex;flex-direction:column;
+       align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;gap:12px;}
+  .overlay-screen h2{font-size:30px;color:#ffe14d;}
+  .overlay-screen p{font-size:15px;line-height:1.5;max-width:320px;opacity:.92;}
+  .play-btn{margin-top:6px;background:#ffb74d;color:#3a2a10;border:none;padding:12px 30px;border-radius:99px;
+       font-size:18px;font-weight:bold;cursor:pointer;}
+  .play-btn:active{transform:scale(.96);}
+  .hidden{display:none!important;}
+  .tip{font-size:13px;opacity:.8;}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c"></canvas>
+  <div class="hud">
+    <span>⏱ <span id="time">0</span>s</span>
+    <span>⭐ <span id="pts">0</span></span>
+  </div>
+  <div class="overlay-screen" id="startScreen">
+    <h2>🐔 Chicken Race</h2>
+    <p><b>Hold</b> the screen / mouse / <b>Space</b> to flap upward. The longer you hold, the higher you fly.</p>
+    <p>Dodge the flying <b>eggs</b> 🥚, fly over the <b>holes</b>, and don't hit the ceiling!</p>
+    <p>Each second survived = 1 point.</p>
+    <button class="play-btn" id="startBtn">Start Running</button>
+  </div>
+  <div class="overlay-screen hidden" id="overScreen">
+    <h2 id="overTitle">Game Over</h2>
+    <p id="overMsg"></p>
+    <button class="play-btn" id="againBtn">Run Again</button>
+  </div>
+</div>
+
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+let W=480,H=760,GROUND=0,CEIL=70;
+function fit(){const r=cv.getBoundingClientRect();W=cv.width=Math.round(r.width);H=cv.height=Math.round(r.height);GROUND=H-90;CEIL=64;}
+const timeEl=document.getElementById('time'),ptsEl=document.getElementById('pts');
+const startScreen=document.getElementById('startScreen'),overScreen=document.getElementById('overScreen');
+const overTitle=document.getElementById('overTitle'),overMsg=document.getElementById('overMsg');
+
+let state='menu',chick,eggs,holes,scroll,t0,points,holding,bgX,cluckT;
+
+// sound
+let actx;
+function cluck(){try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime;
+  const o=actx.createOscillator(),g=actx.createGain();o.type='square';
+  o.frequency.setValueAtTime(720,t);o.frequency.setValueAtTime(520,t+0.07);o.frequency.setValueAtTime(880,t+0.12);
+  g.gain.setValueAtTime(0.12,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.18);
+  o.connect(g).connect(actx.destination);o.start(t);o.stop(t+0.2);}catch(e){}}
+
+function reset(){
+  fit();
+  chick={x:W*0.26,y:GROUND-26,vy:0,size:46,onGround:true,wing:0};
+  eggs=[];holes=[];scroll=4;points=0;bgX=0;cluckT=180;
+  t0=performance.now();holding=false;
+  timeEl.textContent='0';ptsEl.textContent='0';
+}
+function start(){reset();state='play';startScreen.classList.add('hidden');overScreen.classList.add('hidden');}
+function over(reason){state='over';overTitle.textContent='🐔 Game Over';
+  overMsg.textContent=reason+' Final score: '+points+' points.';overScreen.classList.remove('hidden');}
+
+document.getElementById('startBtn').onclick=start;
+document.getElementById('againBtn').onclick=start;
+
+// input: hold to fly
+function down(e){if(e&&e.preventDefault)e.preventDefault();holding=true;}
+function up(){holding=false;}
+cv.addEventListener('touchstart',down,{passive:false});
+cv.addEventListener('touchend',up);
+cv.addEventListener('mousedown',down);
+window.addEventListener('mouseup',up);
+document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();holding=true;}});
+document.addEventListener('keyup',e=>{if(e.code==='Space')holding=false;});
+
+function spawn(){
+  // eggs at various heights
+  if(Math.random()<0.022+points*0.0002){
+    const h=CEIL+30+Math.random()*(GROUND-CEIL-80);
+    eggs.push({x:W+30,y:h,r:16});
+  }
+  // holes in ground
+  if(Math.random()<0.010 && holes.every(o=>o.x<W-160)){
+    holes.push({x:W+30,w:70+Math.random()*60});
+  }
+}
+
+function loop(){
+  requestAnimationFrame(loop);
+  // sky
+  const grd=ctx.createLinearGradient(0,0,0,H);grd.addColorStop(0,'#8fd0ff');grd.addColorStop(1,'#cfeeff');
+  ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+  // clouds
+  ctx.fillStyle='rgba(255,255,255,.7)';
+  for(let i=0;i<3;i++){const cx=((bgX*0.3+i*200)%(W+120))-60;ctx.beginPath();ctx.ellipse(cx,90+i*40,40,18,0,0,7);ctx.fill();}
+  // ceiling bar
+  ctx.fillStyle='#5a4632';ctx.fillRect(0,0,W,CEIL-6);
+  ctx.fillStyle='#3f3122';ctx.fillRect(0,CEIL-6,W,6);
+
+  if(state==='play'){
+    bgX+=scroll;
+    scroll=4+Math.min(4,points*0.04);
+    const tsec=Math.floor((performance.now()-t0)/1000);
+    if(tsec!==points){points=tsec;ptsEl.textContent=points;timeEl.textContent=points;}
+    spawn();
+    cluckT--; if(cluckT<=0){cluck();cluckT=140+Math.random()*200;}
+
+    // physics
+    if(holding){chick.vy-=0.55;}      // flap up while held (longer hold = keeps rising)
+    chick.vy+=0.32;                    // gravity
+    chick.vy=Math.max(-9,Math.min(11,chick.vy));
+    chick.y+=chick.vy;
+    chick.wing+=holding?0.5:0.2;
+
+    // ceiling
+    if(chick.y-chick.size/2<CEIL){ over('You hit the ceiling!'); }
+
+    // ground / holes
+    const overHole=holes.some(o=>chick.x>o.x && chick.x<o.x+o.w);
+    if(chick.y+chick.size/2>=GROUND){
+      if(overHole){ over('You fell into a hole!'); }
+      else { chick.y=GROUND-chick.size/2; chick.vy=0; chick.onGround=true; }
+    } else chick.onGround=false;
+
+    // move world objects
+    for(const e of eggs)e.x-=scroll;
+    for(const o of holes)o.x-=scroll;
+    eggs=eggs.filter(e=>e.x>-40);
+    holes=holes.filter(o=>o.x+o.w>-10);
+
+    // egg collision
+    for(const e of eggs){
+      const dx=Math.abs(e.x-chick.x),dy=Math.abs(e.y-chick.y);
+      if(dx<chick.size*0.4+e.r && dy<chick.size*0.4+e.r){ over('An egg got you!'); break; }
+    }
+  }
+
+  // ground (grass) with holes
+  ctx.fillStyle='#5fbf4f';ctx.fillRect(0,GROUND,W,H-GROUND);
+  ctx.fillStyle='#4aa83f';ctx.fillRect(0,GROUND,W,8);
+  ctx.fillStyle='#8b6b3f'; // dirt under
+  ctx.fillRect(0,GROUND+8,W,H-GROUND-8);
+  if(state!=='menu') for(const o of holes){ ctx.fillStyle='#2a1d10'; ctx.fillRect(o.x,GROUND,o.w,H-GROUND); }
+  // grass blades
+  ctx.strokeStyle='#7ada66';ctx.lineWidth=2;
+  for(let gx=(bgX%18);gx<W;gx+=18){const inHole=holes.some(o=>gx>o.x&&gx<o.x+o.w);if(state==='menu'||!inHole){ctx.beginPath();ctx.moveTo(gx,GROUND);ctx.lineTo(gx-3,GROUND-8);ctx.stroke();}}
+
+  // eggs
+  if(state!=='menu') for(const e of eggs){
+    ctx.fillStyle='#fff'; ctx.strokeStyle='#e6cf9a'; ctx.lineWidth=2;
+    ctx.beginPath();ctx.ellipse(e.x,e.y,e.r*0.8,e.r,0,0,7);ctx.fill();ctx.stroke();
+  }
+
+  // chicken
+  if(state!=='menu') drawChicken(chick);
+}
+
+function drawChicken(ch){
+  const s=ch.size;
+  ctx.save();ctx.translate(ch.x,ch.y);
+  // wing (animated)
+  const wy=Math.sin(ch.wing)*8;
+  ctx.fillStyle='#f0c000';
+  ctx.beginPath();ctx.ellipse(-s*0.42,wy,s*0.3,s*0.18,-0.3,0,7);ctx.fill();
+  // body: quadratic with rounded corners
+  ctx.fillStyle='#fff7c4';
+  roundRect(-s/2,-s/2,s,s,s*0.32);ctx.fill();
+  // comb
+  ctx.fillStyle='#e0463c';
+  ctx.beginPath();ctx.arc(-3,-s/2+2,4,0,7);ctx.arc(4,-s/2,4,0,7);ctx.fill();
+  // eye
+  ctx.fillStyle='#222';ctx.beginPath();ctx.arc(s*0.18,-s*0.1,3.4,0,7);ctx.fill();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(s*0.20,-s*0.12,1.2,0,7);ctx.fill();
+  // beak
+  ctx.fillStyle='#ff9a2e';ctx.beginPath();ctx.moveTo(s*0.4,0);ctx.lineTo(s*0.58,-3);ctx.lineTo(s*0.58,4);ctx.fill();
+  // far wing
+  ctx.fillStyle='#f7d83a';ctx.beginPath();ctx.ellipse(s*0.05,wy*0.5+4,s*0.22,s*0.14,0.2,0,7);ctx.fill();
+  // legs
+  ctx.strokeStyle='#ff9a2e';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(-4,s/2-2);ctx.lineTo(-4,s/2+8);ctx.moveTo(6,s/2-2);ctx.lineTo(6,s/2+8);ctx.stroke();
+  ctx.restore();
+}
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+window.addEventListener('resize',fit);
+fit();loop();
+</script>
+</body>
+</html>
+</template>
+<template id="game-movie"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Oswald',sans-serif;background:#0a0608;min-height:100vh;color:#fff;
+       display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;user-select:none;}
+  #theatre{position:relative;width:100%;max-width:520px;min-height:100vh;
+           background:radial-gradient(120% 90% at 50% 40%,#241015 0%,#0a0608 70%);
+           display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  /* curtains */
+  .curtain{position:absolute;top:0;bottom:0;width:52%;z-index:20;transition:transform 1.6s cubic-bezier(.7,0,.3,1);
+    background:repeating-linear-gradient(90deg,#7a0d12 0 16px,#9a1118 16px 26px,#6a0a0f 26px 40px);
+    box-shadow:inset -20px 0 40px rgba(0,0,0,.5);}
+  #cL{left:0;border-right:3px solid #c9a24a;}
+  #cR{right:0;border-left:3px solid #c9a24a;background:repeating-linear-gradient(90deg,#6a0a0f 0 14px,#9a1118 14px 24px,#7a0d12 24px 40px);box-shadow:inset 20px 0 40px rgba(0,0,0,.5);}
+  #theatre.open #cL{transform:translateX(-100%);}
+  #theatre.open #cR{transform:translateX(100%);}
+  .valance{position:absolute;top:0;left:0;right:0;height:46px;z-index:21;
+    background:repeating-linear-gradient(90deg,#7a0d12 0 18px,#9a1118 18px 30px);
+    border-bottom:3px solid #c9a24a;}
+  /* screen */
+  #screen{width:88%;max-width:440px;background:#11141c;border:6px solid #c9a24a;border-radius:8px;
+    box-shadow:0 0 60px rgba(201,162,74,.25);padding:26px 22px;text-align:center;z-index:10;min-height:340px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+  h1{font-size:30px;font-weight:700;letter-spacing:.04em;color:#ffd86b;}
+  .lead{font-size:16px;opacity:.9;line-height:1.5;}
+  .btn{font-family:'Oswald',sans-serif;font-weight:600;font-size:17px;background:#c9a24a;color:#1a1208;
+    border:none;border-radius:6px;padding:12px 28px;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;}
+  .btn:active{transform:scale(.96);}
+  .progress{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#c9a24a;}
+  .tipbox{background:#1a1f2b;border:1px solid #2e3b4a;border-radius:8px;padding:16px;width:100%;}
+  .tip-kind{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#ffd86b;margin-bottom:8px;}
+  .quote{font-size:19px;font-style:italic;line-height:1.4;}
+  .emoji{font-size:54px;letter-spacing:6px;}
+  .pts-pill{display:inline-block;background:#2a1d2e;border:1px solid #c9a24a;border-radius:99px;
+    padding:3px 12px;font-size:13px;color:#ffd86b;margin-top:6px;}
+  .guess-row{display:flex;gap:8px;width:100%;margin-top:6px;}
+  input.guess{flex:1;font-family:'Oswald',sans-serif;font-size:16px;padding:11px;border-radius:6px;border:2px solid #3a3f4b;
+    background:#0d1017;color:#fff;outline:none;}
+  input.guess:focus{border-color:#c9a24a;}
+  .feedback{font-size:15px;min-height:20px;}
+  .right{color:#7CFC8A;} .wrong{color:#ff8080;}
+  .scoreboard{position:absolute;top:56px;right:14px;z-index:15;background:rgba(10,6,8,.7);
+    border:1px solid #c9a24a;border-radius:8px;padding:6px 12px;font-size:14px;color:#ffd86b;}
+  svg.scene{width:100%;max-width:300px;height:150px;}
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div id="theatre">
+  <div class="valance"></div>
+  <div class="curtain" id="cL"></div>
+  <div class="curtain" id="cR"></div>
+  <div class="scoreboard hidden" id="sb">⭐ <span id="score">0</span></div>
+  <div id="screen"></div>
+</div>
+
+<script>
+const theatre=document.getElementById('theatre');
+const screen=document.getElementById('screen');
+const sb=document.getElementById('sb'), scoreEl=document.getElementById('score');
+
+// Original clue lines + original SVG scenes (no copyrighted quotes/stills)
+const MOVIES=[
+  {answer:'Star Wars', accept:['star wars','starwars','krieg der sterne'],
+   quote:'An old knight tells a farm boy about an invisible energy that flows through every living thing in the galaxy.',
+   scene:sceneSpace, emoji:'🤖 ⚔️ 🌌'},
+  {answer:'Titanic', accept:['titanic'],
+   quote:'In 1912, two young people from very different worlds fall in love aboard a giant ship that everyone called unsinkable.',
+   scene:sceneShip, emoji:'🚢 ❄️ 💔'},
+  {answer:'Frozen', accept:['frozen','die eiskönigin','die eiskoenigin','eiskönigin','eiskoenigin'],
+   quote:'A young queen cannot control her icy powers, so she runs away and builds a glittering palace of snow on a mountain.',
+   scene:sceneIce, emoji:'❄️ 👑 ⛄'},
+  {answer:'Spider-Man', accept:['spider-man','spiderman','spider man'],
+   quote:'A shy school student is bitten by a special spider, gains amazing powers, and learns that great power brings great responsibility.',
+   scene:sceneCity, emoji:'🕷️ 🕸️ 🏙️'},
+];
+
+let idx=0, stage=0, score=0; // stage 0=hard,1=medium,2=easy
+
+function sceneSpace(){return '<svg class="scene" viewBox="0 0 300 150"><rect width="300" height="150" fill="#05060f"/>'+
+  '<circle cx="40" cy="30" r="3" fill="#fff"/><circle cx="120" cy="20" r="2" fill="#fff"/><circle cx="220" cy="40" r="2.5" fill="#fff"/><circle cx="270" cy="90" r="2" fill="#fff"/><circle cx="80" cy="110" r="2" fill="#fff"/>'+
+  '<circle cx="230" cy="100" r="34" fill="#caa46a"/><circle cx="220" cy="92" r="8" fill="#a8854c"/>'+
+  '<polygon points="40,80 90,70 95,82 88,90" fill="#cfd8e0"/><rect x="30" y="76" width="14" height="6" fill="#9aa6b0"/>'+
+  '<line x1="95" y1="80" x2="180" y2="80" stroke="#ff3b3b" stroke-width="3"/>'+
+  '<line x1="60" y1="120" x2="60" y2="50" stroke="#5ad1ff" stroke-width="4" stroke-linecap="round"/></svg>';}
+function sceneShip(){return '<svg class="scene" viewBox="0 0 300 150"><rect width="300" height="80" fill="#1a2a4a"/><rect y="80" width="300" height="70" fill="#0d3b5c"/>'+
+  '<g transform="rotate(-12 150 110)"><rect x="60" y="84" width="170" height="26" fill="#2b2f38"/><polygon points="60,84 60,110 40,110" fill="#2b2f38"/>'+
+  '<rect x="80" y="64" width="120" height="20" fill="#3a3f4b"/><rect x="95" y="50" width="14" height="16" fill="#e0b020"/><rect x="120" y="50" width="14" height="16" fill="#e0b020"/><rect x="145" y="50" width="14" height="16" fill="#e0b020"/></g>'+
+  '<circle cx="250" cy="40" r="14" fill="#f4f1c0"/>'+
+  '<rect x="20" y="120" width="24" height="12" rx="3" fill="#dff" opacity=".7"/><rect x="200" y="128" width="30" height="10" rx="3" fill="#dff" opacity=".6"/></svg>';}
+function sceneIce(){return '<svg class="scene" viewBox="0 0 300 150"><rect width="300" height="150" fill="#bfe6ff"/>'+
+  '<polygon points="0,150 0,90 50,70 110,100 160,60 220,95 300,70 300,150" fill="#fff"/>'+
+  '<polygon points="120,150 120,55 150,30 180,55 180,150" fill="#9fd4f5"/>'+
+  '<polygon points="150,30 150,12 158,30" fill="#cdeeff"/><rect x="140" y="80" width="20" height="40" fill="#7ab8e0"/>'+
+  '<circle cx="60" cy="40" r="3" fill="#fff"/><circle cx="200" cy="30" r="3" fill="#fff"/><circle cx="260" cy="50" r="2.5" fill="#fff"/><circle cx="100" cy="25" r="2.5" fill="#fff"/></svg>';}
+function sceneCity(){return '<svg class="scene" viewBox="0 0 300 150"><rect width="300" height="150" fill="#1b2436"/>'+
+  '<rect x="20" y="60" width="40" height="90" fill="#2e3a52"/><rect x="70" y="40" width="46" height="110" fill="#374560"/><rect x="126" y="70" width="38" height="80" fill="#2e3a52"/><rect x="175" y="30" width="50" height="120" fill="#3f4f6e"/><rect x="235" y="64" width="44" height="86" fill="#2e3a52"/>'+
+  '<g fill="#ffe07a">'+
+  '<rect x="28" y="70" width="6" height="6"/><rect x="44" y="84" width="6" height="6"/><rect x="80" y="52" width="6" height="6"/><rect x="98" y="76" width="6" height="6"/><rect x="186" y="44" width="6" height="6"/><rect x="206" y="80" width="6" height="6"/><rect x="246" y="78" width="6" height="6"/></g>'+
+  '<path d="M150 10 L150 60 M150 60 L120 90 M150 60 L180 90 M150 30 L125 50 M150 30 L175 50" stroke="#dfe7ff" stroke-width="1.5" fill="none" opacity=".8"/>'+
+  '<circle cx="150" cy="60" r="5" fill="#e03b3b"/></svg>';}
+
+function showIntro(){
+  sb.classList.add('hidden');
+  screen.innerHTML='<h1>🎬 Movie Quiz</h1>'+
+    '<p class="lead">Welcome to our quiz!<br>Guess the movie from three clues.<br>The earlier you guess, the more points you score.</p>'+
+    '<button class="btn" id="start">Start Quiz</button>';
+  document.getElementById('start').onclick=()=>{ theatre.classList.add('open'); setTimeout(beginQuiz,900); };
+}
+function beginQuiz(){ idx=0;score=0;scoreEl.textContent='0';sb.classList.remove('hidden');showQuestion(); }
+
+function showQuestion(){
+  stage=0;
+  const m=MOVIES[idx];
+  renderTip(m);
+}
+
+function renderTip(m){
+  const kinds=['Clue 1 — Hard (3 pts)','Clue 2 — Medium (2 pts)','Clue 3 — Easy (1 pt)'];
+  let body='';
+  if(stage===0) body='<div class="quote">'+m.quote+'</div>';
+  else if(stage===1) body=m.scene();
+  else body='<div class="emoji">'+m.emoji+'</div>';
+  screen.innerHTML=
+    '<div class="progress">Movie '+(idx+1)+' of '+MOVIES.length+'</div>'+
+    '<div class="tipbox"><div class="tip-kind">'+kinds[stage]+'</div>'+body+'</div>'+
+    '<div class="guess-row"><input class="guess" id="g" placeholder="Type the movie name…" autocomplete="off"/>'+
+    '<button class="btn" id="guessBtn">Guess</button></div>'+
+    '<div class="feedback" id="fb"></div>';
+  const g=document.getElementById('g'); g.focus();
+  document.getElementById('guessBtn').onclick=checkGuess;
+  g.addEventListener('keydown',e=>{if(e.key==='Enter')checkGuess();});
+}
+
+function norm(s){return s.toLowerCase().replace(/[^a-zäöü ]/g,'').trim();}
+function checkGuess(){
+  const m=MOVIES[idx];
+  const val=norm(document.getElementById('g').value);
+  const fb=document.getElementById('fb');
+  const correct = m.accept.some(a=>norm(a)===val) || (val.length>3 && norm(m.answer).includes(val));
+  if(correct){
+    const pts=[3,2,1][stage];
+    score+=pts; scoreEl.textContent=score;
+    solution(true,pts);
+  } else {
+    if(stage<2){ stage++; fb.className='feedback wrong'; fb.textContent='Not quite — here\u2019s another clue!';
+      setTimeout(()=>renderTip(m),650); }
+    else { solution(false,0); }
+  }
+}
+
+function solution(won,pts){
+  const m=MOVIES[idx];
+  screen.innerHTML='<div class="progress">Movie '+(idx+1)+' of '+MOVIES.length+'</div>'+
+    '<div class="'+(won?'right':'wrong')+'" style="font-size:22px">'+(won?'✅ Correct!':'❌ The answer was…')+'</div>'+
+    '<h1 style="font-size:26px">'+m.answer+'</h1>'+
+    '<div class="emoji" style="font-size:40px">'+m.emoji+'</div>'+
+    '<span class="pts-pill">+'+pts+' point'+(pts===1?'':'s')+'</span>'+
+    '<button class="btn" id="next">'+(idx<MOVIES.length-1?'Next movie →':'See results')+'</button>';
+  document.getElementById('next').onclick=()=>{
+    idx++;
+    if(idx<MOVIES.length) showQuestion(); else results();
+  };
+}
+
+function results(){
+  const max=MOVIES.length*3;
+  let msg = score>=10?'🌟 Movie master!' : score>=6?'🍿 Nicely done!' : '🎥 Keep watching!';
+  screen.innerHTML='<h1>🏁 Results</h1>'+
+    '<div class="lead">You scored</div>'+
+    '<div style="font-size:46px;color:#ffd86b;font-weight:700">'+score+' / '+max+'</div>'+
+    '<div class="lead">'+msg+'</div>'+
+    '<button class="btn" id="again">Play again</button>';
+  document.getElementById('again').onclick=()=>{ theatre.classList.remove('open'); setTimeout(showIntro,400); };
+}
+
+showIntro();
+</script>
+</body>
+</html>
+</template>
+<template id="game-amongus"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;font-family:'Trebuchet MS',sans-serif;user-select:none;}
+  body{background:#0c1018;display:flex;align-items:center;justify-content:center;}
+  #wrap{position:relative;width:100%;max-width:480px;height:100%;max-height:760px;}
+  canvas{display:block;width:100%;height:100%;background:#11151f;}
+  .hud{position:absolute;top:8px;left:0;right:0;padding:0 14px;display:flex;justify-content:space-between;
+       align-items:center;color:#fff;font-weight:bold;font-size:16px;pointer-events:none;
+       text-shadow:0 2px 4px rgba(0,0,0,.6);}
+  .timer{font-size:22px;}
+  .reveal-flag{color:#ff6b6b;}
+  .prox{position:absolute;top:42px;left:0;right:0;text-align:center;font-weight:bold;font-size:15px;
+        color:#ffd84d;text-shadow:0 2px 4px rgba(0,0,0,.6);pointer-events:none;}
+  /* dpad */
+  .dpad{position:absolute;bottom:18px;left:14px;width:150px;height:150px;}
+  .dbtn{position:absolute;width:50px;height:50px;background:rgba(255,255,255,.14);
+        border:2px solid rgba(255,255,255,.35);border-radius:12px;color:#fff;font-size:22px;
+        display:flex;align-items:center;justify-content:center;}
+  .dbtn:active{background:rgba(255,255,255,.34);}
+  #up{left:50px;top:0;} #down{left:50px;top:100px;} #left{left:0;top:50px;} #right{left:100px;top:50px;}
+  .overlay-screen{position:absolute;inset:0;background:rgba(8,12,20,.94);display:flex;flex-direction:column;
+       align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;gap:14px;}
+  .overlay-screen h2{font-size:28px;color:#ffd84d;}
+  .overlay-screen p{font-size:14px;line-height:1.5;max-width:330px;opacity:.92;}
+  .role-row{display:flex;gap:16px;margin-top:10px;}
+  .role{background:#1a2030;border:3px solid #2e3a52;border-radius:16px;padding:16px 14px;cursor:pointer;
+        transition:transform .12s,border-color .12s;width:130px;}
+  .role:hover{transform:translateY(-5px);border-color:#ffd84d;}
+  .role .ic{font-size:40px;} .role .nm{font-weight:bold;margin-top:6px;font-size:16px;}
+  .role .ds{font-size:11px;opacity:.7;margin-top:4px;line-height:1.3;}
+  .play-btn{margin-top:6px;background:#ff6b6b;color:#fff;border:none;padding:12px 30px;border-radius:99px;
+       font-size:18px;font-weight:bold;cursor:pointer;}
+  .play-btn:active{transform:scale(.96);}
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c"></canvas>
+  <div class="hud">
+    <span id="roleLbl"></span>
+    <span class="timer" id="timer">2:00</span>
+  </div>
+  <div class="prox" id="prox"></div>
+
+  <div class="dpad" id="dpad">
+    <div class="dbtn" id="up">▲</div>
+    <div class="dbtn" id="down">▼</div>
+    <div class="dbtn" id="left">◀</div>
+    <div class="dbtn" id="right">▶</div>
+  </div>
+
+  <div class="overlay-screen" id="startScreen">
+    <h2>🔍 Hide &amp; Seek</h2>
+    <p>Among Us style. Pick your role:</p>
+    <div class="role-row">
+      <div class="role" id="pickSeeker"><div class="ic">🔪</div><div class="nm">Seeker</div>
+        <div class="ds">Faster. Find &amp; tag the hider. You're blind until the last 30s!</div></div>
+      <div class="role" id="pickHider"><div class="ic">🫥</div><div class="nm">Hider</div>
+        <div class="ds">Slower, but you see how close the seeker is. Survive 2:30!</div></div>
+    </div>
+    <p style="font-size:12px;opacity:.7">Move with WASD / arrows or the on-screen pad.</p>
+  </div>
+
+  <div class="overlay-screen hidden" id="overScreen">
+    <h2 id="overTitle"></h2>
+    <p id="overMsg"></p>
+    <button class="play-btn" id="againBtn">Play Again</button>
+  </div>
+</div>
+
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+let W=480,H=760,SC=1,OX=0,OY=0;
+const V=600; // virtual map size
+function fit(){
+  const r=cv.getBoundingClientRect();W=cv.width=Math.round(r.width);H=cv.height=Math.round(r.height);
+  const usable=Math.min(W,H-60);SC=usable/V;OX=(W-V*SC)/2;OY=(H-V*SC)/2+20;
+}
+function vx(x){return OX+x*SC;} function vy(y){return OY+y*SC;}
+
+const timerEl=document.getElementById('timer'),proxEl=document.getElementById('prox'),roleLbl=document.getElementById('roleLbl');
+const startScreen=document.getElementById('startScreen'),overScreen=document.getElementById('overScreen');
+const overTitle=document.getElementById('overTitle'),overMsg=document.getElementById('overMsg');
+
+// walls (rectangles) inside a bordered arena
+const PAD=18, R=15;
+const BLOCKS=[
+  [60,60,120,90],[330,50,150,80],[80,250,110,120],[250,210,120,110],
+  [430,230,110,130],[120,420,150,100],[350,400,150,120]
+];
+function inWall(x,y){
+  if(x<PAD+R||x>V-PAD-R||y<PAD+R||y>V-PAD-R) return true;
+  for(const b of BLOCKS){ if(x>b[0]-R&&x<b[0]+b[2]+R&&y>b[1]-R&&y<b[1]+b[3]+R) return true; }
+  return false;
+}
+function randFree(){let x,y,n=0;do{x=PAD+R+Math.random()*(V-2*(PAD+R));y=PAD+R+Math.random()*(V-2*(PAD+R));n++;}while(inWall(x,y)&&n<200);return{x,y};}
+
+let state='menu', myRole, seeker, hider, phase, tLeft, caught;
+const HIDDEN=120, REVEAL=30;
+
+function startGame(role){
+  fit();
+  myRole=role; state='play'; phase='hidden'; tLeft=HIDDEN; caught=false;
+  seeker={x:300,y:90,sp:2.7,tgt:null,tt:0};
+  hider ={x:300,y:520,sp:2.05,tgt:null,tt:0};
+  // ensure not in wall
+  if(inWall(seeker.x,seeker.y))Object.assign(seeker,randFree());
+  if(inWall(hider.x,hider.y))Object.assign(hider,randFree());
+  roleLbl.textContent = role==='seeker'?'🔪 You are the SEEKER':'🫥 You are the HIDER';
+  startScreen.classList.add('hidden'); overScreen.classList.add('hidden');
+  proxEl.textContent='';
+}
+function endGame(seekerWon){
+  state='over';
+  const youWon = (myRole==='seeker')===seekerWon;
+  overTitle.textContent = youWon?'🎉 You Win!':'💀 You Lose';
+  overMsg.textContent = seekerWon?'The seeker tagged the hider!':'The hider survived the countdown!';
+  overScreen.classList.remove('hidden');
+}
+
+document.getElementById('pickSeeker').onclick=()=>startGame('seeker');
+document.getElementById('pickHider').onclick=()=>startGame('hider');
+document.getElementById('againBtn').onclick=()=>{state='menu';startScreen.classList.remove('hidden');overScreen.classList.add('hidden');};
+
+// ---- input ----
+const keys={};
+document.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k))e.preventDefault();keys[k]=true;});
+document.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+function bindPad(id,kx){const el=document.getElementById(id);
+  const on=e=>{e.preventDefault();keys[kx]=true;};const off=e=>{e.preventDefault();keys[kx]=false;};
+  el.addEventListener('touchstart',on,{passive:false});el.addEventListener('touchend',off);
+  el.addEventListener('mousedown',on);el.addEventListener('mouseup',off);el.addEventListener('mouseleave',off);}
+bindPad('up','arrowup');bindPad('down','arrowdown');bindPad('left','arrowleft');bindPad('right','arrowright');
+
+function inputVec(){
+  let dx=0,dy=0;
+  if(keys['arrowup']||keys['w'])dy-=1; if(keys['arrowdown']||keys['s'])dy+=1;
+  if(keys['arrowleft']||keys['a'])dx-=1; if(keys['arrowright']||keys['d'])dx+=1;
+  const m=Math.hypot(dx,dy); if(m>0){dx/=m;dy/=m;} return {dx,dy};
+}
+function moveEnt(e,dx,dy,sp){
+  let nx=e.x+dx*sp; if(!inWall(nx,e.y))e.x=nx;
+  let ny=e.y+dy*sp; if(!inWall(e.x,ny))e.y=ny;
+}
+function aiMove(e,target,sp,flee){
+  e.tt--;
+  if(!e.tgt||e.tt<=0){ e.tgt=randFree(); e.tt=60+Math.random()*60; }
+  let tx,ty;
+  if(target){ // chase or flee a point
+    if(flee){ tx=e.x+(e.x-target.x); ty=e.y+(e.y-target.y); }
+    else { tx=target.x; ty=target.y; }
+  } else { tx=e.tgt.x; ty=e.tgt.y; }
+  let dx=tx-e.x,dy=ty-e.y;const m=Math.hypot(dx,dy)||1;dx/=m;dy/=m;
+  const before={x:e.x,y:e.y};
+  moveEnt(e,dx,dy,sp);
+  // if stuck, pick a new wander target
+  if(Math.hypot(e.x-before.x,e.y-before.y)<0.4){ e.tgt=randFree(); e.tt=40;
+    // try a nudge
+    moveEnt(e,Math.sign(dy)||1,Math.sign(-dx)||1,sp);
+  }
+}
+
+function loop(){
+  requestAnimationFrame(loop);
+  // bg
+  ctx.fillStyle='#0c1018';ctx.fillRect(0,0,W,H);
+  // arena floor
+  ctx.fillStyle='#1c2433';ctx.fillRect(vx(PAD),vy(PAD),(V-2*PAD)*SC,(V-2*PAD)*SC);
+  // border
+  ctx.strokeStyle='#3a4a66';ctx.lineWidth=4;ctx.strokeRect(vx(PAD),vy(PAD),(V-2*PAD)*SC,(V-2*PAD)*SC);
+  // wall blocks
+  for(const b of BLOCKS){
+    ctx.fillStyle='#2b3852';ctx.fillRect(vx(b[0]),vy(b[1]),b[2]*SC,b[3]*SC);
+    ctx.strokeStyle='#46587e';ctx.lineWidth=2;ctx.strokeRect(vx(b[0]),vy(b[1]),b[2]*SC,b[3]*SC);
+  }
+
+  if(state==='play'){
+    tLeft-=1/60;
+    if(phase==='hidden'&&tLeft<=0){ phase='reveal'; tLeft=REVEAL; }
+    if(phase==='reveal'&&tLeft<=0){ endGame(false); } // hider survives
+
+    const v=inputVec();
+    if(myRole==='seeker'){
+      moveEnt(seeker,v.dx,v.dy,seeker.sp);
+      // hider AI: wander, flee if seeker near or revealed
+      const d=Math.hypot(seeker.x-hider.x,seeker.y-hider.y);
+      const flee = d<140 || phase==='reveal';
+      aiMove(hider, flee?seeker:null, hider.sp, flee);
+    } else {
+      moveEnt(hider,v.dx,v.dy,hider.sp);
+      // seeker AI: wander in hidden phase, chase in reveal
+      aiMove(seeker, phase==='reveal'?hider:null, seeker.sp, false);
+    }
+
+    // catch check
+    const dist=Math.hypot(seeker.x-hider.x,seeker.y-hider.y);
+    if(dist<R*1.6){ endGame(true); }
+
+    // proximity meter for hider
+    if(myRole==='hider'){
+      let m = dist<90?'🔴 VERY CLOSE!':dist<180?'🟠 Close':dist<300?'🟡 Getting closer':'🟢 Far away';
+      proxEl.textContent='Seeker: '+m;
+    } else {
+      proxEl.textContent = phase==='reveal'?'⚠ REVEAL! The hider is visible — catch them!':'Hunting… (hider is hidden)';
+    }
+
+    // timer display
+    const mm=Math.max(0,Math.floor(tLeft/60)), ss=Math.max(0,Math.floor(tLeft%60));
+    timerEl.textContent=(phase==='reveal'?'⏳ ':'')+mm+':'+String(ss).padStart(2,'0');
+    timerEl.className='timer'+(phase==='reveal'?' reveal-flag':'');
+  }
+
+  // draw entities
+  if(state!=='menu'){
+    // hider visible to: hider player always; seeker only in reveal
+    const showHider = (myRole==='hider') || (phase==='reveal');
+    if(showHider) drawCrew(hider.x,hider.y,'#5fd16a', myRole==='hider');
+    // seeker always visible
+    drawCrew(seeker.x,seeker.y,'#e0463c', myRole==='seeker');
+    if(myRole==='seeker'&&!showHider){
+      // faint hint nothing — keep blind
+    }
+  }
+}
+
+function drawCrew(x,y,color,isYou){
+  const px=vx(x),py=vy(y),r=R*SC;
+  // shadow
+  ctx.fillStyle='rgba(0,0,0,.3)';ctx.beginPath();ctx.ellipse(px,py+r*0.9,r*0.9,r*0.4,0,0,7);ctx.fill();
+  // body (capsule)
+  ctx.fillStyle=color;
+  ctx.beginPath();ctx.moveTo(px-r*0.7,py+r);
+  ctx.lineTo(px-r*0.7,py-r*0.3);
+  ctx.arc(px,py-r*0.3,r*0.7,Math.PI,0);
+  ctx.lineTo(px+r*0.7,py+r);
+  ctx.arc(px,py+r,r*0.7,0,Math.PI);ctx.closePath();ctx.fill();
+  // backpack
+  ctx.fillStyle=shade(color,-30);
+  ctx.fillRect(px+r*0.5,py-r*0.15,r*0.4,r*0.9);
+  // visor
+  ctx.fillStyle='#a9d4e8';
+  ctx.beginPath();ctx.ellipse(px+r*0.12,py-r*0.35,r*0.5,r*0.32,0,0,7);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.5)';
+  ctx.beginPath();ctx.ellipse(px+r*0.02,py-r*0.4,r*0.18,r*0.12,0,0,7);ctx.fill();
+  if(isYou){
+    ctx.strokeStyle='#ffd84d';ctx.lineWidth=2.5;
+    ctx.beginPath();ctx.arc(px,py,r*1.5,0,7);ctx.stroke();
+  }
+}
+function shade(hex,amt){
+  let c=hex.replace('#','');const n=parseInt(c,16);
+  let r=(n>>16)+amt,g=((n>>8)&255)+amt,b=(n&255)+amt;
+  r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));
+  return '#'+((r<<16)|(g<<8)|b).toString(16).padStart(6,'0');
+}
+
+window.addEventListener('resize',fit);
+fit();loop();
+</script>
+</body>
+</html>
+</template>
+
+<script>
+  const overlay = document.getElementById('overlay');
+  const frame   = document.getElementById('game-frame');
+  const titleEl = document.getElementById('overlay-title');
+  const backBtn = document.getElementById('back-btn');
+
+  const TITLES = {
+    bmw: '🏎️ BMW Highway Race',
+    squishy: '🟣 Create Your Squishy & Slime',
+    pyramid: '🏺 Pyramid Escape',
+    chicken: '🐔 Chicken Race',
+    movie: '🎬 Movie Quiz',
+    amongus: '🔍 Hide & Seek'
+  };
+
+  function openGame(key) {
+    const tpl = document.getElementById('game-' + key);
+    if (!tpl) return;
+    titleEl.textContent = TITLES[key] || '';
+    frame.srcdoc = tpl.innerHTML;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeGame() {
+    overlay.classList.remove('open');
+    frame.srcdoc = '';            // stop the game & free resources
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.app-card').forEach(card => {
+    card.addEventListener('click', () => openGame(card.dataset.game));
+  });
+  backBtn.addEventListener('click', closeGame);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeGame();
+  });
+</script>
+
+</body>
+</html>
