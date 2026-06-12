@@ -194,7 +194,7 @@
 <header>
   <p class="eyebrow">Rosa-Luxemburg-Gymnasium Berlin · English · Vibe Coding Project</p>
   <h1>Class <span>6.3</span> App Lab</h1>
-  <p class="subtitle">Six games and quizzes made by students — using AI prompting as a creative tool for the first time.</p>
+  <p class="subtitle">Nine games and quizzes made by students — using AI prompting as a creative tool for the first time.</p>
   <div class="meta-pills">
     <span class="pill">🤖 AI-assisted</span>
     <span class="pill">🇬🇧 English Project</span>
@@ -234,7 +234,7 @@
       <div class="card-body">
         <div class="app-name">Pyramid Escape</div>
         <div class="app-desc">An anime-style escape room. Solve riddles, fight mummies, find the exit.</div>
-        <div class="credits">Class 6.3</div>
+        <div class="credits">by Theona, Paula &amp; Clara · Class 6.3</div>
         <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
     </button>
@@ -265,6 +265,36 @@
         <div class="app-name">Hide &amp; Seek</div>
         <div class="app-desc">Among Us style. Be the seeker or the hider — survive the countdown!</div>
         <div class="credits">by Jasper &amp; Felix</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+    <button class="app-card" data-game="quiz" aria-label="Play Crazy Numbers Quiz">
+      <div class="thumb"><span class="thumb-placeholder">🔢</span></div>
+      <div class="card-body">
+        <div class="app-name">Crazy Numbers</div>
+        <div class="app-desc">Endless number trivia: nature, K-pop, animals, records &amp; spooky stuff. Beat the 10-second clock!</div>
+        <div class="credits">by Karla, Nino, Mona, Frieda &amp; Marlen</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+    <button class="app-card" data-game="stickman" aria-label="Play Stick-Man Parcour">
+      <div class="thumb"><span class="thumb-placeholder">🦿</span></div>
+      <div class="card-body">
+        <div class="app-name">Stick-Man Parcour</div>
+        <div class="app-desc">Raise your stilts to step over the grass barriers — time it right or crash!</div>
+        <div class="credits">by Mio, Tom &amp; Laurenz</div>
+        <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </button>
+
+    <button class="app-card" data-game="coinrunner" aria-label="Play Coin Runner">
+      <div class="thumb"><span class="thumb-placeholder">🪙</span></div>
+      <div class="card-body">
+        <div class="app-name">Coin Runner</div>
+        <div class="app-desc">Jump the stones, shoot water at coins to speed up, then take on the boss!</div>
+        <div class="credits">by Henry, Elias, Jonathan, Theodor &amp; Alfons</div>
         <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
     </button>
@@ -887,6 +917,7 @@ function sceneIntro(){
     '<div class="scroll"><p>Welcome, <b>'+hero.name+'</b>.</p>'+
     '<p class="small">Direction: tap <b>🎒 Inventory</b> and <b>⬆ Level Up</b> (top-left) any time. '+
     'Solve the riddles, beat the mummies, find chests, and reach the exit.</p></div>'+
+    '<p style="font-size:16px;color:#ffe6ad;margin-top:6px;opacity:.85">Created by Theona, Paula &amp; Clara</p>'+
     '<button class="btn" id="next">Enter Chamber I →</button>';
   document.getElementById('next').onclick=room1;
 }
@@ -1264,6 +1295,13 @@ fit();loop();
   .valance{position:absolute;top:0;left:0;right:0;height:46px;z-index:21;
     background:repeating-linear-gradient(90deg,#7a0d12 0 18px,#9a1118 18px 30px);
     border-bottom:3px solid #c9a24a;}
+  #curtainHint{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:10px;cursor:pointer;font-size:60px;
+    color:#ffd86b;text-shadow:0 4px 12px rgba(0,0,0,.6);transition:opacity .4s;}
+  #curtainHint .hinttxt{font-size:18px;letter-spacing:.08em;text-transform:uppercase;
+    background:rgba(10,6,8,.55);padding:8px 18px;border:1px solid #c9a24a;border-radius:99px;animation:pulse 1.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.06);opacity:1}}
+  #curtainHint.gone{opacity:0;pointer-events:none;}
   /* screen */
   #screen{width:88%;max-width:440px;background:#11141c;border:6px solid #c9a24a;border-radius:8px;
     box-shadow:0 0 60px rgba(201,162,74,.25);padding:26px 22px;text-align:center;z-index:10;min-height:340px;
@@ -1297,6 +1335,7 @@ fit();loop();
   <div class="valance"></div>
   <div class="curtain" id="cL"></div>
   <div class="curtain" id="cR"></div>
+  <div id="curtainHint">🎬<div class="hinttxt">Tap to open the curtains</div></div>
   <div class="scoreboard hidden" id="sb">⭐ <span id="score">0</span></div>
   <div id="screen"></div>
 </div>
@@ -1347,12 +1386,31 @@ function sceneCity(){return '<svg class="scene" viewBox="0 0 300 150"><rect widt
   '<path d="M150 10 L150 60 M150 60 L120 90 M150 60 L180 90 M150 30 L125 50 M150 30 L175 50" stroke="#dfe7ff" stroke-width="1.5" fill="none" opacity=".8"/>'+
   '<circle cx="150" cy="60" r="5" fill="#e03b3b"/></svg>';}
 
+let opened=false, bootTimer=null;
+function bootCinema(){
+  sb.classList.add('hidden');
+  theatre.classList.remove('open');
+  opened=false;
+  const hint=document.getElementById('curtainHint');
+  hint.classList.remove('gone');
+  screen.innerHTML='<h1 style="opacity:.25">\uD83C\uDFAC</h1>';
+  clearTimeout(bootTimer);
+  bootTimer=setTimeout(openCurtains, 1600);   // auto-open fallback if no tap
+}
+function openCurtains(){
+  if(opened) return; opened=true;
+  clearTimeout(bootTimer);
+  document.getElementById('curtainHint').classList.add('gone');
+  theatre.classList.add('open');               // curtains slide away
+  setTimeout(showIntro, 900);                   // reveal welcome + start
+}
 function showIntro(){
   sb.classList.add('hidden');
+  theatre.classList.add('open');
   screen.innerHTML='<h1>🎬 Movie Quiz</h1>'+
     '<p class="lead">Welcome to our quiz!<br>Guess the movie from three clues.<br>The earlier you guess, the more points you score.</p>'+
     '<button class="btn" id="start">Start Quiz</button>';
-  document.getElementById('start').onclick=()=>{ theatre.classList.add('open'); setTimeout(beginQuiz,900); };
+  document.getElementById('start').onclick=beginQuiz;
 }
 function beginQuiz(){ idx=0;score=0;scoreEl.textContent='0';sb.classList.remove('hidden');showQuestion(); }
 
@@ -1418,10 +1476,13 @@ function results(){
     '<div style="font-size:46px;color:#ffd86b;font-weight:700">'+score+' / '+max+'</div>'+
     '<div class="lead">'+msg+'</div>'+
     '<button class="btn" id="again">Play again</button>';
-  document.getElementById('again').onclick=()=>{ theatre.classList.remove('open'); setTimeout(showIntro,400); };
+  document.getElementById('again').onclick=()=>{ bootCinema(); };
 }
 
-showIntro();
+document.getElementById('curtainHint').addEventListener('click', openCurtains);
+document.getElementById('cL').addEventListener('click', openCurtains);
+document.getElementById('cR').addEventListener('click', openCurtains);
+bootCinema();
 </script>
 </body>
 </html>
@@ -1694,6 +1755,623 @@ fit();loop();
 </body>
 </html>
 </template>
+<template id="game-quiz"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;font-family:'Nunito',sans-serif;user-select:none;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  #bg{position:fixed;inset:0;transition:background .5s;display:flex;align-items:center;justify-content:center;}
+  #bg .bigemoji{font-size:46vh;opacity:.18;filter:blur(1px);}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:40;}
+  #wrap{position:relative;z-index:10;width:100%;max-width:440px;padding:18px;}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .clock{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.35);color:#fff;
+    border-radius:99px;padding:6px 14px;font-weight:800;font-size:18px;backdrop-filter:blur(4px);}
+  .ring{width:26px;height:26px;}
+  .score{background:rgba(0,0,0,.35);color:#fff;border-radius:99px;padding:6px 14px;font-weight:800;font-size:16px;backdrop-filter:blur(4px);}
+  .card{background:var(--card,#fff);border:4px solid var(--accent,#333);border-radius:22px;
+    padding:20px 18px;box-shadow:0 14px 34px rgba(0,0,0,.32);}
+  .topic{font-family:'Baloo 2',cursive;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent,#333);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .q{font-family:'Baloo 2',cursive;font-size:23px;line-height:1.25;color:#222;min-height:64px;}
+  .opts{margin-top:16px;display:flex;flex-direction:column;gap:11px;}
+  .opt{background:var(--opt,#f4f4f4);border:3px solid var(--accent,#333);border-radius:14px;
+    padding:14px;font-size:18px;font-weight:800;color:#222;cursor:pointer;text-align:left;
+    transition:transform .1s,filter .1s;font-family:'Nunito',sans-serif;}
+  .opt:hover{filter:brightness(1.05);transform:translateY(-2px);}
+  .opt:active{transform:scale(.98);}
+  .opt:disabled{cursor:default;}
+  .blink-green{animation:bg 0.5s ease-in-out 3;border-color:#1faa4a!important;}
+  .blink-red{animation:br 0.5s ease-in-out 3;border-color:#d63030!important;}
+  @keyframes bg{0%,100%{background:var(--opt,#f4f4f4)}50%{background:#7CFC8A}}
+  @keyframes br{0%,100%{background:var(--opt,#f4f4f4)}50%{background:#ff8585}}
+  .feedback{text-align:center;margin-top:14px;font-weight:800;font-size:18px;color:#fff;min-height:24px;
+    text-shadow:0 2px 6px rgba(0,0,0,.5);}
+</style>
+</head>
+<body>
+<div id="bg"><div class="bigemoji" id="bigEmoji">❓</div></div>
+<canvas id="confetti"></canvas>
+<div id="wrap">
+  <div class="topbar">
+    <div class="clock"><svg class="ring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="5"/><circle id="ringFill" cx="18" cy="18" r="15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-dasharray="94" stroke-dashoffset="0" transform="rotate(-90 18 18)"/></svg><span id="time">10</span>s</div>
+    <div class="score">⭐ <span id="score">0</span></div>
+  </div>
+  <div class="card" id="card">
+    <div class="topic" id="topic"></div>
+    <div class="q" id="question"></div>
+    <div class="opts" id="opts"></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+</div>
+
+<script>
+// ---- Question pool (accurate facts). Each: topic visuals + q + 3 options + correct index ----
+const T={
+  nature:{emoji:'🌿',bg:'linear-gradient(160deg,#1e6b3a,#7ec850)',card:'#f3fbef',accent:'#1f7a3f',opt:'#e3f4dd'},
+  mj:{emoji:'🕺',bg:'linear-gradient(160deg,#3a2150,#9a4dff)',card:'#f6f0ff',accent:'#6a2da8',opt:'#ece0fb'},
+  billie:{emoji:'🎤',bg:'linear-gradient(160deg,#1d3b1f,#8ee63f)',card:'#f4fbe9',accent:'#3f7d12',opt:'#e7f5cf'},
+  skz:{emoji:'🎶',bg:'linear-gradient(160deg,#5a0d12,#e0463c)',card:'#fff0ef',accent:'#b5251c',opt:'#fbdcd9'},
+  katy:{emoji:'🍬',bg:'linear-gradient(160deg,#c84d9a,#4db6e0)',card:'#fdeff8',accent:'#c23b8a',opt:'#f8dcee'},
+  buildings:{emoji:'🏙️',bg:'linear-gradient(160deg,#2b3a55,#7d93b0)',card:'#eef3fa',accent:'#36507a',opt:'#dde6f2'},
+  kpop:{emoji:'💜',bg:'linear-gradient(160deg,#6a1d8a,#ff5fbf)',card:'#fbeefb',accent:'#9026a0',opt:'#f3dcf3'},
+  demon:{emoji:'👹',bg:'linear-gradient(160deg,#2a0d3a,#c9a24a)',card:'#f7f1e4',accent:'#7a2da0',opt:'#ece0c6'},
+  records:{emoji:'🏆',bg:'linear-gradient(160deg,#8a6a1a,#ffd84d)',card:'#fffae6','accent':'#b58a1f',opt:'#fbeeb8'},
+  animals:{emoji:'🦁',bg:'linear-gradient(160deg,#9a5a1a,#e0a84d)',card:'#fdf3e3',accent:'#b5701f',opt:'#f6e2c4'},
+  scary:{emoji:'👻',bg:'linear-gradient(160deg,#0d0d18,#5a2d6a)',card:'#efeaf5',accent:'#6a2d8a',opt:'#ddd2ea'},
+};
+const QUESTIONS=[
+  {t:'nature',q:'How many hearts does an octopus have?',o:['1','3','7'],c:1},
+  {t:'nature',q:'How many bones are in the adult human body?',o:['150','206','310'],c:1},
+  {t:'nature',q:'How many legs does a spider have?',o:['6','8','10'],c:1},
+  {t:'mj',q:'In which year was Michael Jackson\u2019s album \u201CThriller\u201D released?',o:['1979','1982','1987'],c:1},
+  {t:'mj',q:'How old was Michael Jackson when \u201CThriller\u201D came out (born 1958)?',o:['24','31','19'],c:0},
+  {t:'billie',q:'In which year was Billie Eilish born?',o:['1998','2001','2004'],c:1},
+  {t:'billie',q:'How many Grammys did Billie Eilish win in one night in 2020?',o:['2','5','8'],c:1},
+  {t:'billie',q:'How old was Billie when \u201COcean Eyes\u201D went viral (2015)?',o:['13','17','20'],c:0},
+  {t:'skz',q:'How many members are in Stray Kids?',o:['7','8','9'],c:1},
+  {t:'skz',q:'In which year did Stray Kids debut?',o:['2016','2018','2020'],c:1},
+  {t:'katy',q:'In which year was Katy Perry\u2019s hit \u201CFirework\u201D released?',o:['2008','2010','2014'],c:1},
+  {t:'katy',q:'In which year was Katy Perry born?',o:['1984','1990','1979'],c:0},
+  {t:'buildings',q:'How tall is the Burj Khalifa, the world\u2019s tallest building?',o:['555 m','828 m','1010 m'],c:1},
+  {t:'buildings',q:'How tall is the Eiffel Tower (with antenna)?',o:['330 m','200 m','500 m'],c:0},
+  {t:'buildings',q:'How many floors does the Empire State Building have?',o:['70','102','150'],c:1},
+  {t:'kpop',q:'How many members are in BTS?',o:['5','7','9'],c:1},
+  {t:'kpop',q:'How many members are in BLACKPINK?',o:['3','4','5'],c:1},
+  {t:'kpop',q:'In which year did BLACKPINK debut?',o:['2012','2016','2019'],c:1},
+  {t:'demon',q:'How many members are in HUNTR/X in \u201CKPop Demon Hunters\u201D?',o:['3','4','5'],c:0},
+  {t:'demon',q:'How many members are in the rival \u201CSaja Boys\u201D?',o:['4','5','6'],c:1},
+  {t:'demon',q:'In which year did \u201CKPop Demon Hunters\u201D come out on Netflix?',o:['2023','2025','2026'],c:1},
+  {t:'records',q:'How tall was Robert Wadlow, the tallest man ever recorded?',o:['2.72 m','2.10 m','3.10 m'],c:0},
+  {t:'records',q:'About how fast can a cheetah, the fastest land animal, run?',o:['70 km/h','110 km/h','180 km/h'],c:1},
+  {t:'animals',q:'How many eyes does a honeybee have?',o:['2','5','8'],c:1},
+  {t:'animals',q:'How many compartments does a cow\u2019s stomach have?',o:['1','4','2'],c:1},
+  {t:'animals',q:'How long can a snail sleep at a time?',o:['3 hours','3 days','3 years'],c:2},
+  {t:'scary',q:'How many days can a cockroach survive without its head?',o:['1 hour','about 7 days','1 year'],c:1},
+  {t:'scary',q:'What is a group of crows called?',o:['A murder','A party','A swarm'],c:0},
+];
+
+const bg=document.getElementById('bg'),bigEmoji=document.getElementById('bigEmoji');
+const topicEl=document.getElementById('topic'),qEl=document.getElementById('question'),optsEl=document.getElementById('opts');
+const fbEl=document.getElementById('feedback'),timeEl=document.getElementById('time'),ringFill=document.getElementById('ringFill');
+const scoreEl=document.getElementById('score'),card=document.getElementById('card');
+
+let order=[],ptr=0,score=0,timer=null,timeLeft=10,answered=false,cur=null;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function nextQ(){
+  if(ptr>=order.length){ order=shuffle([...Array(QUESTIONS.length).keys()]); ptr=0; }
+  cur=QUESTIONS[order[ptr++]];
+  render();
+}
+function render(){
+  answered=false; fbEl.textContent='';
+  const th=T[cur.t];
+  bg.style.background=th.bg; bigEmoji.textContent=th.emoji;
+  card.style.setProperty('--card',th.card);
+  card.style.setProperty('--accent',th.accent);
+  card.style.setProperty('--opt',th.opt);
+  topicEl.innerHTML=th.emoji+' '+cur.t.replace('mj','Michael Jackson').replace('skz','Stray Kids').replace('katy','Katy Perry').replace('kpop','K-Pop').replace('demon','Demon Hunters').replace('billie','Billie Eilish').replace('buildings','Buildings').replace('nature','Nature').replace('records','Records').replace('animals','Animals').replace('scary','Something Scary');
+  qEl.textContent=cur.q;
+  optsEl.innerHTML='';
+  cur.o.forEach((txt,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=txt; b.dataset.i=i;
+    b.onclick=()=>choose(i);
+    optsEl.appendChild(b);
+  });
+  startTimer();
+}
+function startTimer(){
+  timeLeft=10; timeEl.textContent='10'; ringFill.style.strokeDashoffset='0';
+  clearInterval(timer);
+  const start=Date.now();
+  timer=setInterval(()=>{
+    const elapsed=(Date.now()-start)/1000;
+    timeLeft=Math.max(0,10-elapsed);
+    timeEl.textContent=Math.ceil(timeLeft);
+    ringFill.style.strokeDashoffset=String(94*(1-timeLeft/10));
+    if(timeLeft<=0){ clearInterval(timer); timeUp(); }
+  },100);
+}
+function lockOpts(){ optsEl.querySelectorAll('.opt').forEach(b=>b.disabled=true); }
+function revealCorrect(){
+  const buttons=optsEl.querySelectorAll('.opt');
+  buttons[cur.c].classList.add('blink-green');
+}
+function choose(i){
+  if(answered) return; answered=true;
+  clearInterval(timer); lockOpts();
+  const buttons=optsEl.querySelectorAll('.opt');
+  if(i===cur.c){
+    score++; scoreEl.textContent=score;
+    buttons[i].classList.add('blink-green');
+    fbEl.textContent='✅ Correct! +1';
+    burstConfetti();
+  } else {
+    buttons[i].classList.add('blink-red');
+    buttons[cur.c].classList.add('blink-green');
+    fbEl.textContent='❌ Wrong — no point';
+  }
+  setTimeout(nextQ,2000);
+}
+function timeUp(){
+  if(answered) return; answered=true; lockOpts();
+  revealCorrect();
+  fbEl.textContent='⏰ Time\u2019s up! No point';
+  setTimeout(nextQ,2000);
+}
+
+// ---- confetti ----
+const cc=document.getElementById('confetti'),cx=cc.getContext('2d');
+let parts=[];
+function sizeC(){cc.width=window.innerWidth;cc.height=window.innerHeight;}
+sizeC(); window.addEventListener('resize',sizeC);
+function burstConfetti(){
+  const colors=['#ffd84d','#ff5fbf','#5fd16a','#4da3ff','#ff8585','#b85ec9'];
+  for(let i=0;i<120;i++){
+    parts.push({x:cc.width/2+(Math.random()-.5)*cc.width*.5,y:-20,
+      vx:(Math.random()-.5)*6,vy:Math.random()*3+2,
+      s:Math.random()*8+4,c:colors[Math.floor(Math.random()*colors.length)],
+      r:Math.random()*Math.PI,vr:(Math.random()-.5)*.3,life:120});
+  }
+}
+function confLoop(){
+  requestAnimationFrame(confLoop);
+  cx.clearRect(0,0,cc.width,cc.height);
+  parts=parts.filter(p=>p.life>0&&p.y<cc.height+30);
+  for(const p of parts){
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.12;p.r+=p.vr;p.life--;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;
+    cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);cx.restore();
+  }
+}
+confLoop();
+
+order=shuffle([...Array(QUESTIONS.length).keys()]);
+nextQ();
+</script>
+</body>
+</html>
+</template>
+<template id="game-stickman"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;font-family:'Trebuchet MS',sans-serif;user-select:none;}
+  body{background:#bfe9ff;display:flex;align-items:center;justify-content:center;}
+  #wrap{position:relative;width:100%;max-width:520px;height:100%;max-height:680px;}
+  canvas{display:block;width:100%;height:100%;}
+  .hud{position:absolute;top:10px;left:0;right:0;padding:0 16px;display:flex;justify-content:space-between;
+       color:#234;font-weight:bold;font-size:20px;pointer-events:none;text-shadow:0 1px 2px rgba(255,255,255,.6);}
+  .stilt-ind{position:absolute;top:42px;left:16px;font-weight:bold;color:#234;font-size:14px;pointer-events:none;}
+  .overlay-screen{position:absolute;inset:0;background:rgba(20,40,55,.92);display:flex;flex-direction:column;
+       align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;gap:13px;}
+  .overlay-screen h2{font-size:28px;color:#ffe14d;}
+  .overlay-screen p{font-size:15px;line-height:1.5;max-width:330px;opacity:.92;}
+  .play-btn{margin-top:6px;background:#7CFC8A;color:#16351c;border:none;padding:12px 30px;border-radius:99px;
+       font-size:18px;font-weight:bold;cursor:pointer;}
+  .play-btn:active{transform:scale(.96);}
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c"></canvas>
+  <div class="hud"><span>&#129727; Score: <span id="score">0</span></span><span id="speedlbl"></span></div>
+  <div class="stilt-ind" id="stiltInd"></div>
+  <div class="overlay-screen" id="startScreen">
+    <h2>&#129455; Stick-Man Parcour</h2>
+    <p>You run on stilts across the grass. Press <b>Space</b> / tap to raise your stilts <b>one block higher</b>.</p>
+    <p>Make your stilts <b>tall enough</b> to step over each grass-block barrier. Too short = your stilt breaks and you lose!</p>
+    <p>After each barrier you step back down to the grass.</p>
+    <button class="play-btn" id="startBtn">Start Running</button>
+  </div>
+  <div class="overlay-screen hidden" id="overScreen">
+    <h2>&#128165; Stilt Broken!</h2>
+    <p id="overMsg"></p>
+    <button class="play-btn" id="againBtn">Run Again</button>
+  </div>
+</div>
+
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+let W=520,H=680,GROUND=0,BLOCK=46;
+function fit(){const r=cv.getBoundingClientRect();W=cv.width=Math.round(r.width);H=cv.height=Math.round(r.height);GROUND=H-70;BLOCK=Math.min(46,H*0.085);}
+const scoreEl=document.getElementById('score'),stiltInd=document.getElementById('stiltInd');
+const startScreen=document.getElementById('startScreen'),overScreen=document.getElementById('overScreen'),overMsg=document.getElementById('overMsg');
+
+let state='menu',px,stiltTarget,stiltVis,barriers,scroll,score,legPhase,broken;
+
+function reset(){
+  fit();
+  px=W*0.26; stiltTarget=1; stiltVis=1; barriers=[]; scroll=4; score=0; legPhase=0; broken=false;
+  let x=W+200;
+  for(let i=0;i<4;i++){ barriers.push(makeBarrier(x)); x+=260+Math.random()*120; }
+  scoreEl.textContent='0';
+  updateInd();
+}
+function makeBarrier(x){ return {x, h:1+Math.floor(Math.random()*3), passed:false, w:BLOCK}; }
+function start(){reset();state='play';startScreen.classList.add('hidden');overScreen.classList.add('hidden');}
+function over(){state='over';broken=true;overMsg.textContent='You cleared '+score+' barriers.';overScreen.classList.remove('hidden');}
+
+function raise(){ if(state!=='play')return; stiltTarget=Math.min(4,stiltTarget+1); updateInd(); }
+function updateInd(){ stiltInd.textContent='Stilts: '+'\u25AE'.repeat(stiltTarget)+'\u25AF'.repeat(4-stiltTarget)+' ('+stiltTarget+'/4)'; }
+
+document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();raise();}});
+cv.addEventListener('mousedown',raise);
+cv.addEventListener('touchstart',e=>{e.preventDefault();raise();},{passive:false});
+document.getElementById('startBtn').onclick=start;
+document.getElementById('againBtn').onclick=start;
+
+function loop(){
+  requestAnimationFrame(loop);
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#bfe9ff');g.addColorStop(1,'#e7f7ff');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(255,255,255,.8)';
+  for(let i=0;i<3;i++){const cx2=((-(scroll*0.3*performance.now()/16)+i*220)%(W+140)+W+140)%(W+140)-70;ctx.beginPath();ctx.ellipse(cx2,80+i*34,38,16,0,0,7);ctx.fill();}
+
+  if(state==='play'){
+    scroll=4+Math.min(5,score*0.12);
+    legPhase+=scroll*0.05;
+    stiltVis+=(stiltTarget-stiltVis)*0.35;
+
+    for(const b of barriers){
+      b.x-=scroll;
+      if(!b.passed && b.x < px-6){
+        if(stiltTarget>=b.h){ b.passed=true; score++; scoreEl.textContent=score; stiltTarget=1; updateInd(); }
+        else { over(); }
+      }
+    }
+    barriers=barriers.filter(b=>b.x>-80);
+    let lastX=barriers.length?Math.max.apply(null,barriers.map(b=>b.x)):px;
+    while(lastX < W+260){ const nb=makeBarrier(lastX+240+Math.random()*160); barriers.push(nb); lastX=nb.x; }
+  }
+
+  ctx.fillStyle='#5fbf4f';ctx.fillRect(0,GROUND,W,H-GROUND);
+  ctx.fillStyle='#4aa83f';ctx.fillRect(0,GROUND,W,7);
+  ctx.fillStyle='#8b6b3f';ctx.fillRect(0,GROUND+7,W,H-GROUND-7);
+
+  if(state!=='menu') for(const b of barriers){
+    for(let k=0;k<b.h;k++){
+      const by=GROUND-(k+1)*BLOCK;
+      ctx.fillStyle='#4aa83f';ctx.fillRect(b.x-b.w/2,by,b.w,BLOCK);
+      ctx.fillStyle='#5fcf55';ctx.fillRect(b.x-b.w/2,by,b.w,6);
+      ctx.strokeStyle='#2f7a28';ctx.lineWidth=2;ctx.strokeRect(b.x-b.w/2,by,b.w,BLOCK);
+    }
+  }
+
+  drawStick(px||W*0.26, state==='menu'?1:stiltVis);
+}
+
+function drawStick(x,stiltBlocks){
+  const stiltLen=stiltBlocks*BLOCK;
+  const footY=GROUND;
+  const hipY=footY-stiltLen;
+  const bob=Math.sin(legPhase)*3;
+  const by=hipY+bob;
+  ctx.lineCap='round';
+  const sw=Math.sin(legPhase)*8;
+  if(broken){
+    ctx.strokeStyle='#7a3b1b';ctx.lineWidth=5;
+    ctx.beginPath();ctx.moveTo(x-6,by);ctx.lineTo(x-14,by+stiltLen*0.5);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x-20,by+stiltLen*0.55);ctx.lineTo(x-10,footY);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x+6,by);ctx.lineTo(x+8,footY);ctx.stroke();
+  } else {
+    ctx.strokeStyle='#9a5a2a';ctx.lineWidth=5;
+    ctx.beginPath();ctx.moveTo(x-6,by);ctx.lineTo(x-6+sw,footY);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x+6,by);ctx.lineTo(x+6-sw,footY);ctx.stroke();
+    ctx.fillStyle='#9a5a2a';
+    ctx.fillRect(x-6+sw-7,footY-3,14,5);ctx.fillRect(x+6-sw-7,footY-3,14,5);
+  }
+  ctx.strokeStyle='#1b1b1b';ctx.lineWidth=4;
+  ctx.beginPath();ctx.moveTo(x,by);ctx.lineTo(x,by-30);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x,by-22);ctx.lineTo(x-12,by-22+sw);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x,by-22);ctx.lineTo(x+12,by-22-sw);ctx.stroke();
+  ctx.fillStyle='#1b1b1b';ctx.beginPath();ctx.arc(x,by-40,10,0,7);ctx.fill();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x+3,by-42,2,0,7);ctx.fill();
+}
+
+window.addEventListener('resize',fit);
+fit();reset();state='menu';loop();
+</script>
+</body>
+</html>
+</template>
+<template id="game-coinrunner"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;font-family:'Trebuchet MS',sans-serif;user-select:none;}
+  body{background:#2a2236;display:flex;align-items:center;justify-content:center;}
+  #wrap{position:relative;width:100%;max-width:560px;height:100%;max-height:660px;}
+  canvas{display:block;width:100%;height:100%;}
+  .hud{position:absolute;top:10px;left:0;right:0;padding:0 16px;display:flex;justify-content:space-between;
+       color:#fff;font-weight:bold;font-size:18px;pointer-events:none;text-shadow:0 2px 4px rgba(0,0,0,.5);}
+  .controls-hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;color:#fff;
+       font-size:12px;opacity:.65;pointer-events:none;}
+  .touch{position:absolute;bottom:16px;display:flex;gap:12px;}
+  .tbtn{width:84px;height:60px;border-radius:14px;background:rgba(255,255,255,.16);
+       border:2px solid rgba(255,255,255,.4);color:#fff;font-size:15px;font-weight:bold;
+       display:flex;align-items:center;justify-content:center;}
+  .tbtn:active{background:rgba(255,255,255,.34);}
+  #jumpBtn{right:16px;} #shootBtn{right:116px;}
+  .overlay-screen{position:absolute;inset:0;background:rgba(25,18,35,.93);display:flex;flex-direction:column;
+       align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;gap:13px;}
+  .overlay-screen h2{font-size:28px;color:#ffd84d;}
+  .overlay-screen p{font-size:15px;line-height:1.5;max-width:340px;opacity:.92;}
+  .play-btn{margin-top:6px;background:#4dd0e1;color:#10303a;border:none;padding:12px 28px;border-radius:99px;
+       font-size:17px;font-weight:bold;cursor:pointer;}
+  .play-btn.alt{background:#ffd84d;color:#3a2e10;}
+  .play-btn:active{transform:scale(.96);}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c"></canvas>
+  <div class="hud"><span id="leftHud">🪙 0 / 5</span><span id="rightHud"></span></div>
+  <div class="touch">
+    <div class="tbtn" id="shootBtn">💧 Water<br>(S)</div>
+    <div class="tbtn" id="jumpBtn">⤴ Jump<br>(Space)</div>
+  </div>
+  <div class="controls-hint">Space = jump · S = shoot water · hit 5 coins to reach the boss</div>
+
+  <div class="overlay-screen" id="startScreen">
+    <h2>💧 Coin Runner</h2>
+    <p>You run forward automatically. <b>Space</b> to jump over stones. <b>S</b> shoots water — it flies straight at your current height and keeps going until it hits a <b>coin</b> 🪙 or a stone.</p>
+    <p>Jump to line up with floating coins! Hit <b>5 coins</b> and you teleport to the <b>boss</b> — splash him 10 times to win.</p>
+    <button class="play-btn" id="startBtn">Start Running</button>
+  </div>
+  <div class="overlay-screen hidden" id="overScreen">
+    <h2 id="overTitle">Game Over</h2>
+    <p id="overMsg"></p>
+    <div class="btn-row" id="overBtns"></div>
+  </div>
+</div>
+
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+let W=560,H=660,GROUND=0;
+function fit(){const r=cv.getBoundingClientRect();W=cv.width=Math.round(r.width);H=cv.height=Math.round(r.height);GROUND=H-80;}
+const leftHud=document.getElementById('leftHud'),rightHud=document.getElementById('rightHud');
+const startScreen=document.getElementById('startScreen'),overScreen=document.getElementById('overScreen');
+const overTitle=document.getElementById('overTitle'),overMsg=document.getElementById('overMsg'),overBtns=document.getElementById('overBtns');
+
+let state='menu',mode='run';
+let player,stones,coins,waters,scroll,coinsShot,baseSpeed,coinTimer,bossStoneTimer;
+let boss;
+const JUMP_V=-12.5, GRAV=0.6;
+const HEIGHTS=()=>[GROUND-20, GROUND-110, GROUND-200]; // coin heights (low/mid/high)
+
+function reset(full){
+  fit();
+  player={x:W*0.22,y:GROUND-20,vy:0,r:20,onGround:true};
+  stones=[];coins=[];waters=[];
+  scroll=5;baseSpeed=5;coinTimer=0;bossStoneTimer=0;
+  if(full){coinsShot=0;}
+  mode='run';
+  updateHud();
+}
+function start(){reset(true);state='play';startScreen.classList.add('hidden');overScreen.classList.add('hidden');}
+function updateHud(){
+  if(mode==='run'){ leftHud.textContent='🪙 '+coinsShot+' / 5'; rightHud.textContent='⚡ x'+(baseSpeed/5).toFixed(1); }
+  else { leftHud.textContent='💧 Boss hits: '+boss.hits+' / 10'; rightHud.textContent='👹 BOSS'; }
+}
+function gameOver(msg){
+  state='over'; overTitle.textContent='💥 Game Over'; overMsg.textContent=msg;
+  overBtns.innerHTML='<button class="play-btn" id="againBtn">Play Again</button>';
+  document.getElementById('againBtn').onclick=start;
+  overScreen.classList.remove('hidden');
+}
+function bossWin(){
+  state='over'; overTitle.textContent='🏆 Boss Defeated!';
+  overMsg.textContent='You splashed the boss 10 times!';
+  overBtns.innerHTML='<button class="play-btn" id="contBtn">Continue Running</button>'+
+                     '<button class="play-btn alt" id="restBtn">Start Over</button>';
+  document.getElementById('contBtn').onclick=()=>{reset(true);state='play';overScreen.classList.add('hidden');};
+  document.getElementById('restBtn').onclick=start;
+  overScreen.classList.remove('hidden');
+}
+
+function goBoss(){
+  mode='boss'; boss={x:W-90,y:GROUND-70,hp:10,hits:0,w:70,h:130};
+  stones=[];coins=[];waters=[];bossStoneTimer=0;
+  player.x=W*0.22;player.y=GROUND-20;player.vy=0;player.onGround=true;
+  updateHud();
+}
+
+// input
+function jump(){ if(state!=='play')return; if(player.onGround){player.vy=JUMP_V;player.onGround=false;} }
+function shoot(){ if(state!=='play')return; waters.push({x:player.x+player.r,y:player.y,vx:scroll+7,r:8}); }
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'){e.preventDefault();jump();}
+  if(e.key==='s'||e.key==='S'){e.preventDefault();shoot();}
+});
+function bindTap(id,fn){const el=document.getElementById(id);
+  const h=e=>{e.preventDefault();fn();};
+  el.addEventListener('touchstart',h,{passive:false});el.addEventListener('mousedown',h);}
+bindTap('jumpBtn',jump);bindTap('shootBtn',shoot);
+document.getElementById('startBtn').onclick=start;
+
+function loop(){
+  requestAnimationFrame(loop);
+  // bg
+  const g=ctx.createLinearGradient(0,0,0,H);
+  if(mode==='boss'){g.addColorStop(0,'#3a1f2e');g.addColorStop(1,'#1a0e16');}
+  else{g.addColorStop(0,'#3b2f57');g.addColorStop(1,'#241b38');}
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+  if(state==='play'){
+    // physics
+    player.vy+=GRAV; player.y+=player.vy;
+    if(player.y>=GROUND-20){player.y=GROUND-20;player.vy=0;player.onGround=true;}
+
+    if(mode==='run') updateRun(); else updateBoss();
+
+    // waters
+    for(const w of waters){ w.x+=w.vx; }
+    waters=waters.filter(w=>w.x<W+40);
+  }
+
+  // ground
+  ctx.fillStyle=mode==='boss'?'#4a3145':'#4a3a6a';ctx.fillRect(0,GROUND,W,H-GROUND);
+  ctx.fillStyle=mode==='boss'?'#5e3f57':'#5d4a85';ctx.fillRect(0,GROUND,W,6);
+
+  drawScene();
+}
+
+function updateRun(){
+  scroll=baseSpeed;
+  // spawn stones
+  if(Math.random()<0.018){ if(stones.every(s=>s.x<W-160)) stones.push({x:W+30,y:GROUND-22,w:30,h:42}); }
+  // spawn coins every ~10s
+  coinTimer++;
+  if(coinTimer> 600){ coinTimer=0; const hs=HEIGHTS(); coins.push({x:W+30,y:hs[Math.floor(Math.random()*hs.length)],r:15,got:false}); }
+  // also a few coins sprinkled
+  if(Math.random()<0.006){ const hs=HEIGHTS(); coins.push({x:W+30,y:hs[Math.floor(Math.random()*hs.length)],r:15,got:false}); }
+
+  for(const s of stones){ s.x-=scroll; }
+  for(const c of coins){ c.x-=scroll; }
+  stones=stones.filter(s=>s.x>-50);
+  coins=coins.filter(c=>!c.got && c.x>-40);
+
+  // stone collision (must jump over)
+  for(const s of stones){
+    if(Math.abs(s.x-player.x)<player.r*0.7+s.w/2 && player.y+player.r > s.y-2){
+      gameOver('You ran into a stone! Coins this run: '+coinsShot); return;
+    }
+  }
+  // water hits coins (same height) or stones (blocked)
+  for(const w of waters){
+    for(const s of stones){ if(Math.abs(w.x-s.x)<s.w/2+w.r && Math.abs(w.y-(s.y))<s.h){ w.dead=true; } }
+    for(const c of coins){
+      if(!c.got && Math.abs(w.x-c.x)<c.r+w.r && Math.abs(w.y-c.y)<c.r+6){
+        c.got=true; w.dead=true; coinsShot++; baseSpeed=Math.min(9,baseSpeed+0.5); updateHud();
+        if(coinsShot>=5){ goBoss(); return; }
+      }
+    }
+  }
+  waters=waters.filter(w=>!w.dead);
+}
+
+function updateBoss(){
+  scroll=0;
+  // boss throws a stone every 4s (~240 frames)
+  bossStoneTimer++;
+  if(bossStoneTimer>=240){ bossStoneTimer=0; stones.push({x:boss.x-30,y:GROUND-22,w:30,h:42,vx:-6,thrown:true}); }
+  for(const s of stones){ s.x+=s.vx||0; }
+  stones=stones.filter(s=>s.x>-50);
+  // thrown stone hits player (dodge by jumping)
+  for(const s of stones){
+    if(Math.abs(s.x-player.x)<player.r*0.7+s.w/2 && player.y+player.r > s.y-2){
+      gameOver('The boss\u2019s stone hit you! Hits landed: '+boss.hits+'/10'); return;
+    }
+  }
+  // water hits boss
+  for(const w of waters){
+    if(w.x+w.r > boss.x-boss.w/2 && w.y>boss.y-boss.h/2 && w.y<boss.y+boss.h/2){
+      w.dead=true; boss.hits++; boss.hp--; updateHud();
+      if(boss.hits>=10){ bossWin(); return; }
+    }
+    // stones block water
+    for(const s of stones){ if(Math.abs(w.x-s.x)<s.w/2+w.r && Math.abs(w.y-s.y)<s.h){ w.dead=true; } }
+  }
+  waters=waters.filter(w=>!w.dead);
+}
+
+function drawScene(){
+  if(state==='menu'){ drawRunner(); return; }
+  // coins
+  for(const c of coins){ if(c.got)continue;
+    ctx.fillStyle='#ffd84d';ctx.beginPath();ctx.arc(c.x,c.y,c.r,0,7);ctx.fill();
+    ctx.fillStyle='#caa12b';ctx.beginPath();ctx.arc(c.x,c.y,c.r*0.6,0,7);ctx.fill();
+    ctx.fillStyle='#ffd84d';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('$',c.x,c.y+5);
+  }
+  // stones
+  for(const s of stones){
+    ctx.fillStyle='#8a8a96';ctx.beginPath();
+    ctx.ellipse(s.x,s.y+s.h*0.25,s.w*0.7,s.h*0.5,0,0,7);ctx.fill();
+    ctx.fillStyle='#6f6f7a';ctx.beginPath();ctx.ellipse(s.x-3,s.y+s.h*0.2,s.w*0.4,s.h*0.3,0,0,7);ctx.fill();
+  }
+  // waters
+  for(const w of waters){
+    ctx.fillStyle='#5fd0ff';ctx.beginPath();ctx.ellipse(w.x,w.y,w.r*1.4,w.r,0,0,7);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,.6)';ctx.beginPath();ctx.arc(w.x-w.r*0.3,w.y-w.r*0.3,w.r*0.4,0,7);ctx.fill();
+  }
+  // boss
+  if(mode==='boss'&&boss){
+    ctx.fillStyle='#b13a5e';
+    roundRect(boss.x-boss.w/2,boss.y-boss.h/2,boss.w,boss.h,12);ctx.fill();
+    // eyes
+    ctx.fillStyle='#ffe14d';ctx.beginPath();ctx.arc(boss.x-14,boss.y-30,8,0,7);ctx.arc(boss.x+14,boss.y-30,8,0,7);ctx.fill();
+    ctx.fillStyle='#1a0e16';ctx.beginPath();ctx.arc(boss.x-14,boss.y-30,3,0,7);ctx.arc(boss.x+14,boss.y-30,3,0,7);ctx.fill();
+    // mouth
+    ctx.strokeStyle='#1a0e16';ctx.lineWidth=3;ctx.beginPath();ctx.arc(boss.x,boss.y-2,16,0.15*Math.PI,0.85*Math.PI);ctx.stroke();
+    // hp bar
+    ctx.fillStyle='#3a1f2e';ctx.fillRect(boss.x-40,boss.y-boss.h/2-18,80,9);
+    ctx.fillStyle='#ff5b7a';ctx.fillRect(boss.x-40,boss.y-boss.h/2-18,80*(boss.hp/10),9);
+  }
+  drawRunner();
+}
+
+function drawRunner(){
+  const p=player||{x:W*0.22,y:GROUND-20,r:20};
+  const x=p.x,y=p.y,r=p.r;
+  // body
+  ctx.fillStyle='#4dd0e1';
+  roundRect(x-r*0.7,y-r,r*1.4,r*2,8);ctx.fill();
+  // face
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x+r*0.2,y-r*0.3,4,0,7);ctx.fill();
+  ctx.fillStyle='#10303a';ctx.beginPath();ctx.arc(x+r*0.3,y-r*0.3,2,0,7);ctx.fill();
+  // water tank hint
+  ctx.fillStyle='#2aa7bd';ctx.fillRect(x-r*0.7,y+r*0.4,r*1.4,r*0.5);
+  // legs
+  ctx.strokeStyle='#2aa7bd';ctx.lineWidth=4;
+  const lp=(p.onGround?Math.sin(performance.now()/80)*5:0);
+  ctx.beginPath();ctx.moveTo(x-5,y+r);ctx.lineTo(x-5+lp,y+r+10);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+5,y+r);ctx.lineTo(x+5-lp,y+r+10);ctx.stroke();
+}
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+window.addEventListener('resize',fit);
+fit();reset(true);state='menu';loop();
+</script>
+</body>
+</html>
+</template>
 
 <script>
   const overlay = document.getElementById('overlay');
@@ -1707,7 +2385,10 @@ fit();loop();
     pyramid: '🏺 Pyramid Escape',
     chicken: '🐔 Chicken Race',
     movie: '🎬 Movie Quiz',
-    amongus: '🔍 Hide & Seek'
+    amongus: '🔍 Hide & Seek',
+    quiz: '🔢 Crazy Numbers',
+    stickman: '🦿 Stick-Man Parcour',
+    coinrunner: '🪙 Coin Runner'
   };
 
   function openGame(key) {
