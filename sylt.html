@@ -648,6 +648,23 @@ const ARCHETYPES = {
   celebrity: { key:'celebrity',emoji:'💎',  title:'Sylt Celebrity',      color:'#AD1457' },
 };
 
+const TAGLINES = {
+  viking:'First into every adventure.',
+  frisian:'The loyal heart of the crew.',
+  keeper:'The calm that keeps everyone on course.',
+  artist:'Finds beauty everywhere.',
+  guardian:'Protector of wild and beautiful things.',
+  celebrity:'Lights up every room.'
+};
+const SOURCES = [
+  ['Sylt — history, geography & culture','https://en.wikipedia.org/wiki/Sylt'],
+  ['Sylt','https://www.britannica.com/place/Sylt'],
+  ['The Frisians (Frisian Seafarer)','https://en.wikipedia.org/wiki/Frisians'],
+  ['Wadden Sea, UNESCO site (Dune Guardian)','https://en.wikipedia.org/wiki/Wadden_Sea'],
+  ['Kampen, Sylt (Sylt Celebrity)','https://en.wikipedia.org/wiki/Kampen,_Sylt'],
+  ['Island facts','https://www.insel-sylt.de/']
+];
+
 const RESULTS = {
   viking: {
     desc: `You're a born trailblazer. Where others see a horizon, you see an invitation. You thrive on the thrill of the unknown, charging headfirst into every new adventure with wide eyes and an unshakeable spirit. Whether it's a stormy sea or an unexplored path through the dunes, you're the first one in — and you wouldn't have it any other way.`,
@@ -696,223 +713,223 @@ const FACTS = [
 
 const QUESTIONS = [
   {
-    emoji:'☀️', text:'How do you spend the perfect day on Sylt?',
+    emoji:"☀️", text:"It's a free day on Sylt. What's your first instinct?",
     answers:[
-      {emoji:'⚔️', text:'Exploring every corner of the island on foot, map in hand', arch:'viking'},
-      {emoji:'🌊', text:'Out on a fishing boat with good friends and salty air', arch:'frisian'},
-      {emoji:'🔦', text:'Sitting in a cosy lighthouse café, watching the sea for hours', arch:'keeper'},
-      {emoji:'🎨', text:'Sketching the dunes and cliffs, chasing perfect light', arch:'artist'},
-      {emoji:'🌱', text:'Joining a beach clean-up or nature walk in the Wadden Sea', arch:'guardian'},
-      {emoji:'💎', text:'Brunch at a Michelin-starred restaurant, then afternoon on the beach bar', arch:'celebrity'},
+      {text:"Grab a map and explore a stretch of coast I've never seen.", arch:"viking"},
+      {text:"Round up my closest friends and do something together.", arch:"frisian"},
+      {text:"Find a quiet spot and just watch the sea for a while.", arch:"keeper"},
+      {text:"Bring a sketchbook or camera and chase the best light.", arch:"artist"},
+      {text:"Join a beach clean-up or a walk through the Wadden Sea.", arch:"guardian"},
+      {text:"Head to Kampen for the buzz, the cafés and the people.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'⛈️', text:'A massive storm is rolling in from the North Sea. What do you do?',
+    emoji:"⚡", text:"Two friends are arguing and it's getting heated. You…",
     answers:[
-      {emoji:'⚔️', text:'Grab your jacket and run to the cliffs to watch it head-on', arch:'viking'},
-      {emoji:'🌊', text:'Make sure every boat in the harbour is safely tied down', arch:'frisian'},
-      {emoji:'🔦', text:'Head to the lighthouse and monitor conditions calmly', arch:'keeper'},
-      {emoji:'🎨', text:'Set up easel inside and paint the dramatic sky from the window', arch:'artist'},
-      {emoji:'🌱', text:'Worry about the nesting birds and go check on the dune barriers', arch:'guardian'},
-      {emoji:'💎', text:'Order hot wine at the best hotel bar and enjoy the dramatic mood', arch:'celebrity'},
+      {text:"Stay calm, listen, and quietly help them find common ground.", arch:"keeper"},
+      {text:"Step straight in and tackle the problem head-on.", arch:"viking"},
+      {text:"Remind them they're a team, not rivals.", arch:"frisian"},
+      {text:"Help them see each other's side of the story.", arch:"artist"},
+      {text:"Make sure no one gets hurt and everyone feels heard.", arch:"guardian"},
+      {text:"Crack a joke to break the tension and lighten the mood.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'📍', text:'Which Sylt location would you visit first?',
+    emoji:"😨", text:"What honestly scares you the most?",
     answers:[
-      {emoji:'⚔️', text:'The northern tip of List — the very edge of the island', arch:'viking'},
-      {emoji:'🌊', text:'The old Hörnum harbour at the southern end', arch:'frisian'},
-      {emoji:'🔦', text:'The Ellenbogen lighthouse on the spit', arch:'keeper'},
-      {emoji:'🎨', text:'The red sandstone cliffs at Rotes Kliff, Kampen', arch:'artist'},
-      {emoji:'🌱', text:'The Wadden Sea national park visitor centre', arch:'guardian'},
-      {emoji:'💎', text:'Westerland promenade and its designer boutiques', arch:'celebrity'},
+      {text:"A life that's safe, predictable and boring.", arch:"viking"},
+      {text:"Letting down the people who count on me.", arch:"frisian"},
+      {text:"Losing control when everything depends on me.", arch:"keeper"},
+      {text:"Never making the thing I was meant to create.", arch:"artist"},
+      {text:"Watching something beautiful be destroyed for nothing.", arch:"guardian"},
+      {text:"Being forgotten or overlooked.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🧑‍🤝‍🧑', text:'What role do you naturally play in a group?',
+    emoji:"🏛️", text:"When people remember you one day, you want them to say…",
     answers:[
-      {emoji:'⚔️', text:'The trailblazer who says "let\'s try this" and leads the way', arch:'viking'},
-      {emoji:'🌊', text:'The reliable backbone everyone else depends on', arch:'frisian'},
-      {emoji:'🔦', text:'The quiet observer who notices everything and speaks up wisely', arch:'keeper'},
-      {emoji:'🎨', text:'The creative thinker with surprising ideas out of nowhere', arch:'artist'},
-      {emoji:'🌱', text:'The conscience of the group who keeps everyone grounded', arch:'guardian'},
-      {emoji:'💎', text:'The social glue who makes everyone feel welcome and excited', arch:'celebrity'},
+      {text:"Fearless — they went everywhere first.", arch:"viking"},
+      {text:"They always showed up for us.", arch:"frisian"},
+      {text:"They were the steady one we could always rely on.", arch:"keeper"},
+      {text:"They saw beauty the rest of us missed.", arch:"artist"},
+      {text:"They left the world better than they found it.", arch:"guardian"},
+      {text:"They lit up every room they walked into.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'💎', text:'You find a chest buried in the Sylt dunes. What treasure excites you most?',
+    emoji:"🤔", text:"You have a big decision to make. How do you decide?",
     answers:[
-      {emoji:'⚔️', text:'An ancient Viking navigation chart of the North Sea', arch:'viking'},
-      {emoji:'🌊', text:'A handwritten Frisian fishing logbook from 1612', arch:'frisian'},
-      {emoji:'🔦', text:'A brass lighthouse keeper\'s log listing every ship saved', arch:'keeper'},
-      {emoji:'🎨', text:'Oil paintings by a forgotten island artist from 1890', arch:'artist'},
-      {emoji:'🌱', text:'Seeds of a rare coastal plant thought to be extinct', arch:'guardian'},
-      {emoji:'💎', text:'A vintage champagne collection from a legendary island party', arch:'celebrity'},
+      {text:"Carefully weigh every option before moving.", arch:"keeper"},
+      {text:"Trust my gut and leap.", arch:"viking"},
+      {text:"Ask the people I trust what they think.", arch:"frisian"},
+      {text:"Go with what feels right deep down.", arch:"artist"},
+      {text:"Choose whatever does the least harm.", arch:"guardian"},
+      {text:"Pick the option that's the most exciting.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🌅', text:'Which sunset experience sounds most like you?',
+    emoji:"👥", text:"In a group project, your natural role is…",
     answers:[
-      {emoji:'⚔️', text:'Watching from the highest dune after a 20km solo hike', arch:'viking'},
-      {emoji:'🌊', text:'From a fishing boat, surrounded by your crew', arch:'frisian'},
-      {emoji:'🔦', text:'From the lighthouse lantern room, alone and peaceful', arch:'keeper'},
-      {emoji:'🎨', text:'Capturing it on canvas — the colours are insane tonight', arch:'artist'},
-      {emoji:'🌱', text:'With binoculars, watching migrating birds silhouetted against it', arch:'guardian'},
-      {emoji:'💎', text:'Aperol in hand on a rooftop terrace, surrounded by friends', arch:'celebrity'},
+      {text:"The one who pushes us to try something bold.", arch:"viking"},
+      {text:"The glue who keeps everyone working together.", arch:"frisian"},
+      {text:"The organiser who makes sure nothing falls apart.", arch:"keeper"},
+      {text:"The one who makes it look and feel amazing.", arch:"artist"},
+      {text:"The conscience who keeps it fair and meaningful.", arch:"guardian"},
+      {text:"The face who presents it and wins the room.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🍽️', text:'Your ideal Sylt meal is…',
+    emoji:"🌪️", text:"Under pressure, you tend to…",
     answers:[
-      {emoji:'⚔️', text:'A whole smoked fish eaten on a rocky beach you discovered yourself', arch:'viking'},
-      {emoji:'🌊', text:'Freshly caught herring at a harbour kiosk with other fishermen', arch:'frisian'},
-      {emoji:'🔦', text:'A simple bowl of fish soup, warm and reliable after a long watch', arch:'keeper'},
-      {emoji:'🎨', text:'An artfully plated seasonal tasting menu at a chef-driven bistro', arch:'artist'},
-      {emoji:'🌱', text:'A farm-to-table vegan feast using local Sylt herbs and sea vegetables', arch:'guardian'},
-      {emoji:'💎', text:'Sylt oysters and Krug champagne at a beach club, obviously', arch:'celebrity'},
+      {text:"Get quieter and more focused.", arch:"keeper"},
+      {text:"Get bolder and act fast.", arch:"viking"},
+      {text:"Lean on my crew and share the load.", arch:"frisian"},
+      {text:"Pour the feeling into something creative.", arch:"artist"},
+      {text:"Slow down and think about the bigger picture.", arch:"guardian"},
+      {text:"Stay upbeat and keep everyone's spirits high.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🎒', text:'What would you pack for a week on Sylt?',
+    emoji:"💰", text:"You unexpectedly win a lot of money. You…",
     answers:[
-      {emoji:'⚔️', text:'Trail maps, compass, waterproof boots and a multi-tool', arch:'viking'},
-      {emoji:'🌊', text:'Rope, weatherproof gear and a tide table', arch:'frisian'},
-      {emoji:'🔦', text:'A good book, binoculars, a thermos and a journal', arch:'keeper'},
-      {emoji:'🎨', text:'Sketchbook, watercolours, a camera and noise-cancelling headphones', arch:'artist'},
-      {emoji:'🌱', text:'Reusable everything, a field guide and my best hiking sandals', arch:'guardian'},
-      {emoji:'💎', text:'Three suitcases, skincare and a dinner reservation list', arch:'celebrity'},
+      {text:"Book the wildest trip I can imagine.", arch:"viking"},
+      {text:"Share it with family and save the rest.", arch:"frisian"},
+      {text:"Put it somewhere safe and plan carefully.", arch:"keeper"},
+      {text:"Spend it on art, music and beautiful things.", arch:"artist"},
+      {text:"Donate a big chunk to protecting nature.", arch:"guardian"},
+      {text:"Throw an unforgettable party in Kampen.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🌊', text:'How do you feel standing at the edge of the North Sea?',
+    emoji:"🌅", text:"Standing on the Rotes Kliff at sunset, you mostly feel…",
     answers:[
-      {emoji:'⚔️', text:'Like you could jump in a longship and sail to the horizon right now', arch:'viking'},
-      {emoji:'🌊', text:'Deep respect — this sea fed your ancestors and demands yours', arch:'frisian'},
-      {emoji:'🔦', text:'Serenely alert — you notice the current patterns and wind direction', arch:'keeper'},
-      {emoji:'🎨', text:'Overwhelmed by beauty — the grey-green light is absolutely extraordinary', arch:'artist'},
-      {emoji:'🌱', text:'Grateful and worried — this ecosystem is fragile and precious', arch:'guardian'},
-      {emoji:'💎', text:'Exhilarated — there\'s nothing like sea air to make you feel alive', arch:'celebrity'},
+      {text:"Inspired — I want to capture this forever.", arch:"artist"},
+      {text:"Restless — I want to know what's beyond the horizon.", arch:"viking"},
+      {text:"Peaceful — I could watch this for hours.", arch:"keeper"},
+      {text:"Grateful — I wish my friends were here too.", arch:"frisian"},
+      {text:"Protective — places like this must be kept safe.", arch:"guardian"},
+      {text:"Excited — this is the perfect spot for a photo.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🐚', text:'You find a rare shell on the beach. You…',
+    emoji:"🤝", text:"Your friends would describe you as the one who…",
     answers:[
-      {emoji:'⚔️', text:'Pocket it as a trophy and mark the spot on your map', arch:'viking'},
-      {emoji:'🌊', text:'Take it home to show your family and place it on the mantelpiece', arch:'frisian'},
-      {emoji:'🔦', text:'Examine it carefully and look it up in your guidebook later', arch:'keeper'},
-      {emoji:'🎨', text:'Spend an hour photographing it in different light', arch:'artist'},
-      {emoji:'🌱', text:'Leave it — it belongs in the ecosystem, not in a pocket', arch:'guardian'},
-      {emoji:'💎', text:'Turn it into a quirky necklace to show off at tonight\'s dinner', arch:'celebrity'},
+      {text:"Always has their back, no matter what.", arch:"frisian"},
+      {text:"Drags everyone on adventures.", arch:"viking"},
+      {text:"Gives the calmest, wisest advice.", arch:"keeper"},
+      {text:"Notices the little things and feelings.", arch:"artist"},
+      {text:"Stands up for what's right.", arch:"guardian"},
+      {text:"Makes everything more fun.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'📚', text:'What would you most likely write a book about?',
+    emoji:"🎲", text:"A risky opportunity appears with no guarantee it works. You…",
     answers:[
-      {emoji:'⚔️', text:'An epic of seafaring expeditions across the unknown world', arch:'viking'},
-      {emoji:'🌊', text:'The untold history of Frisian fishing communities', arch:'frisian'},
-      {emoji:'🔦', text:'A quiet novel set entirely inside a lighthouse over 100 years', arch:'keeper'},
-      {emoji:'🎨', text:'A collection of prose-poems inspired by coastal light and silence', arch:'artist'},
-      {emoji:'🌱', text:'A manifesto for coastal rewilding and ocean conservation', arch:'guardian'},
-      {emoji:'💎', text:'A delicious memoir of summers on the island with glamorous friends', arch:'celebrity'},
+      {text:"Take it instantly — fortune favours the bold.", arch:"viking"},
+      {text:"Study it carefully, then decide.", arch:"keeper"},
+      {text:"Talk it over with people I trust first.", arch:"frisian"},
+      {text:"Only take it if it won't harm anyone.", arch:"guardian"},
+      {text:"Follow it if it feels meaningful.", arch:"artist"},
+      {text:"Go for it if it could be amazing.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🎵', text:'What\'s on your Sylt playlist?',
+    emoji:"💬", text:"How do you usually get your point across?",
     answers:[
-      {emoji:'⚔️', text:'Epic orchestral soundtracks — sweeping and cinematic', arch:'viking'},
-      {emoji:'🌊', text:'Traditional Frisian folk songs and sea shanties', arch:'frisian'},
-      {emoji:'🔦', text:'Ambient instrumental — soft piano, distant fog horns', arch:'keeper'},
-      {emoji:'🎨', text:'Indie and art-rock — unexpected, emotionally complex', arch:'artist'},
-      {emoji:'🌱', text:'Nature sounds mixed with calm acoustic guitar', arch:'guardian'},
-      {emoji:'💎', text:'House and electronic from the best beach clubs in Ibiza', arch:'celebrity'},
+      {text:"With charm and confidence — I love an audience.", arch:"celebrity"},
+      {text:"Calmly and clearly, only when it matters.", arch:"keeper"},
+      {text:"Through stories, images and feeling.", arch:"artist"},
+      {text:"Directly and boldly, no sugar-coating.", arch:"viking"},
+      {text:"Honestly and warmly, person to person.", arch:"frisian"},
+      {text:"By appealing to fairness and values.", arch:"guardian"},
     ]
   },
   {
-    emoji:'🤝', text:'A stranger is lost on the island. You…',
+    emoji:"🌙", text:"Your ideal quiet evening looks like…",
     answers:[
-      {emoji:'⚔️', text:'Offer to guide them on an impromptu adventure instead', arch:'viking'},
-      {emoji:'🌊', text:'Walk them all the way to their destination without hesitation', arch:'frisian'},
-      {emoji:'🔦', text:'Draw them a precise, helpful map from memory', arch:'keeper'},
-      {emoji:'🎨', text:'Show them the hidden spots most tourists never find', arch:'artist'},
-      {emoji:'🌱', text:'Suggest an eco-friendly route that avoids sensitive dune areas', arch:'guardian'},
-      {emoji:'💎', text:'Take them for coffee and make a new friend in the process', arch:'celebrity'},
+      {text:"Alone with a book and the sound of the waves.", arch:"keeper"},
+      {text:"Making something — music, art or writing.", arch:"artist"},
+      {text:"A cosy dinner with the people I love.", arch:"frisian"},
+      {text:"A walk in nature before the light fades.", arch:"guardian"},
+      {text:"Planning my next big adventure.", arch:"viking"},
+      {text:"Out somewhere lively where things are happening.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🏗️', text:'If you were building something on Sylt, what would it be?',
+    emoji:"⏰", text:"What gets you out of bed in the morning?",
     answers:[
-      {emoji:'⚔️', text:'A coastal expedition base for exploring the North Frisian islands', arch:'viking'},
-      {emoji:'🌊', text:'A working fishing cooperative with a shared boat and smokehouse', arch:'frisian'},
-      {emoji:'🔦', text:'A restored historical lighthouse turned living archive', arch:'keeper'},
-      {emoji:'🎨', text:'A wild open-air artist residency programme in the dunes', arch:'artist'},
-      {emoji:'🌱', text:'A sustainable eco-lodge powered by wind and tide', arch:'guardian'},
-      {emoji:'💎', text:'The most exclusive, architecturally stunning beach club on the island', arch:'celebrity'},
+      {text:"The chance to discover something new.", arch:"viking"},
+      {text:"The people who are counting on me.", arch:"frisian"},
+      {text:"Knowing I'm needed and dependable.", arch:"keeper"},
+      {text:"The urge to create.", arch:"artist"},
+      {text:"Making a real difference.", arch:"guardian"},
+      {text:"The thrill of what today might bring.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🧭', text:'Your life philosophy is closest to…',
+    emoji:"🎁", text:"You're giving a friend the perfect gift. It's…",
     answers:[
-      {emoji:'⚔️', text:'"Fortune favours the bold — sail before the wind dies."', arch:'viking'},
-      {emoji:'🌊', text:'"A rising tide lifts all boats — look after your people."', arch:'frisian'},
-      {emoji:'🔦', text:'"Be the light — steady, reliable and always watching."', arch:'keeper'},
-      {emoji:'🎨', text:'"Life is too short for the mediocre — make it beautiful."', arch:'artist'},
-      {emoji:'🌱', text:'"We don\'t inherit the earth — we borrow it from our children."', arch:'guardian'},
-      {emoji:'💎', text:'"Live fully, love loudly, and never apologise for sparkle."', arch:'celebrity'},
+      {text:"Something handmade and personal.", arch:"artist"},
+      {text:"An experience they'll never forget.", arch:"celebrity"},
+      {text:"Something useful they'll actually need.", arch:"frisian"},
+      {text:"Tickets to an adventure we can share.", arch:"viking"},
+      {text:"Something thoughtful that shows I was paying attention.", arch:"keeper"},
+      {text:"Something sustainable and kind to the planet.", arch:"guardian"},
     ]
   },
   {
-    emoji:'🌧️', text:'It\'s a cold grey Sylt morning. What gets you out of bed?',
+    emoji:"🏠", text:"Your dream home on Sylt would be…",
     answers:[
-      {emoji:'⚔️', text:'A challenging 15km trail you haven\'t done yet', arch:'viking'},
-      {emoji:'🌊', text:'The knowledge that your crew is already at the harbour waiting', arch:'frisian'},
-      {emoji:'🔦', text:'Your morning routine — watch, log, brew tea, observe', arch:'keeper'},
-      {emoji:'🎨', text:'The light on mornings like this is absolutely extraordinary', arch:'artist'},
-      {emoji:'🌱', text:'A guided dawn birdwatch in the Wadden Sea wetlands', arch:'guardian'},
-      {emoji:'💎', text:'A reservation at the best brunch spot — you booked weeks ago', arch:'celebrity'},
+      {text:"A lighthouse cottage with a view of the sea.", arch:"keeper"},
+      {text:"A traditional thatched Frisian house full of family.", arch:"frisian"},
+      {text:"A sleek modern villa near the Kampen scene.", arch:"celebrity"},
+      {text:"A light-filled studio by the dunes.", arch:"artist"},
+      {text:"A boat — so I'm never tied to one place.", arch:"viking"},
+      {text:"An eco-house that gives back to the land.", arch:"guardian"},
     ]
   },
   {
-    emoji:'🛟', text:'There\'s an emergency on the beach. What\'s your reaction?',
+    emoji:"💥", text:"Something you worked hard on fails. Your reaction?",
     answers:[
-      {emoji:'⚔️', text:'You\'re already sprinting toward it — instinct takes over', arch:'viking'},
-      {emoji:'🌊', text:'You coordinate the response calmly — you\'ve trained for this', arch:'frisian'},
-      {emoji:'🔦', text:'You stay composed, assess the situation and direct others clearly', arch:'keeper'},
-      {emoji:'🎨', text:'You talk down the panicking bystanders while others act', arch:'artist'},
-      {emoji:'🌱', text:'You make sure no wildlife or habitat is disturbed in the response', arch:'guardian'},
-      {emoji:'💎', text:'You use your contacts to get the right help there faster than anyone', arch:'celebrity'},
+      {text:"Shake it off and charge at the next thing.", arch:"viking"},
+      {text:"Calmly work out what went wrong.", arch:"keeper"},
+      {text:"Lean on my friends and try again together.", arch:"frisian"},
+      {text:"Feel it fully, then turn it into something.", arch:"artist"},
+      {text:"Ask what it taught me and grow.", arch:"guardian"},
+      {text:"Stay positive and keep my head up.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🌍', text:'What\'s your relationship with the environment?',
+    emoji:"⭐", text:"Which of these matters most to you?",
     answers:[
-      {emoji:'⚔️', text:'It\'s a magnificent arena — I want to experience every inch of it', arch:'viking'},
-      {emoji:'🌊', text:'It sustains me and mine — I give back what I take', arch:'frisian'},
-      {emoji:'🔦', text:'Something to understand deeply and treat with great care', arch:'keeper'},
-      {emoji:'🎨', text:'Endless inspiration — I try to capture its beauty before it changes', arch:'artist'},
-      {emoji:'🌱', text:'My core responsibility — protecting it defines everything I do', arch:'guardian'},
-      {emoji:'💎', text:'A luxury worth preserving so future generations can enjoy it too', arch:'celebrity'},
+      {text:"Doing the right thing.", arch:"guardian"},
+      {text:"Loyalty and belonging.", arch:"frisian"},
+      {text:"Freedom and adventure.", arch:"viking"},
+      {text:"Trust and reliability.", arch:"keeper"},
+      {text:"Beauty and meaning.", arch:"artist"},
+      {text:"Joy and connection.", arch:"celebrity"},
     ]
   },
   {
-    emoji:'🎭', text:'People who know you well would describe you as…',
+    emoji:"🚪", text:"Walking into a room full of strangers, you…",
     answers:[
-      {emoji:'⚔️', text:'Daring, energetic, and impossible to slow down', arch:'viking'},
-      {emoji:'🌊', text:'Dependable, warm and quietly fierce', arch:'frisian'},
-      {emoji:'🔦', text:'Thoughtful, composed and almost eerily perceptive', arch:'keeper'},
-      {emoji:'🎨', text:'Imaginative, intense and beautifully strange', arch:'artist'},
-      {emoji:'🌱', text:'Principled, gentle and completely sincere', arch:'guardian'},
-      {emoji:'💎', text:'Magnetic, vibrant and genuinely fun to be around', arch:'celebrity'},
+      {text:"Light it up and start talking to everyone.", arch:"celebrity"},
+      {text:"Hang back, observe, and read the room.", arch:"keeper"},
+      {text:"Look for the most interesting challenge in it.", arch:"viking"},
+      {text:"Find the small group that feels genuine.", arch:"frisian"},
+      {text:"Notice the mood, the colours, the details.", arch:"artist"},
+      {text:"Look for anyone who seems left out.", arch:"guardian"},
     ]
   },
   {
-    emoji:'🏆', text:'What would your Sylt legacy be?',
+    emoji:"🌊", text:"The North Sea means ____ to you.",
     answers:[
-      {emoji:'⚔️', text:'A trail named after you for mapping every path on the island', arch:'viking'},
-      {emoji:'🌊', text:'A fishing tradition carried on by your family for generations', arch:'frisian'},
-      {emoji:'🔦', text:'A lighthouse you kept running for 40 years without missing a night', arch:'keeper'},
-      {emoji:'🎨', text:'Paintings that still hang in galleries long after you\'re gone', arch:'artist'},
-      {emoji:'🌱', text:'A nature reserve established in your name on the dunes', arch:'guardian'},
-      {emoji:'💎', text:'A legendary annual party that became an island institution', arch:'celebrity'},
+      {text:"a road to everywhere I haven't been.", arch:"viking"},
+      {text:"home, history and the people who lived by it.", arch:"frisian"},
+      {text:"something powerful that deserves respect and watching.", arch:"keeper"},
+      {text:"endless inspiration.", arch:"artist"},
+      {text:"a fragile world worth protecting.", arch:"guardian"},
+      {text:"the perfect backdrop for the good life.", arch:"celebrity"},
     ]
   },
 ];
@@ -955,12 +972,17 @@ function renderIntro() {
       <span class="intro-emoji">🌊</span>
       <h2>Find Your Inner Sylt Legend</h2>
       <p>20 quick questions stand between you and your North Sea destiny.<br>
-      Which of these six legendary archetypes lives inside your soul?</p>
-      <div class="legend-preview">
-        ${Object.values(ARCHETYPES).map(a=>`
-          <div class="legend-chip">
-            <span class="lc-emoji">${a.emoji}</span>
-            ${a.title}
+      Here are the six legends you could become:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 22px;text-align:left;">
+        ${Object.values(ARCHETYPES).map(t=>`
+          <div style="background:#fff;border:2px solid ${t.color}33;border-left:6px solid ${t.color};
+                      border-radius:14px;padding:11px 12px;box-shadow:0 4px 12px rgba(0,0,0,.06);">
+            <div style="font-weight:800;color:${t.color};font-size:.98rem;">${t.title}</div>
+            <div style="font-style:italic;color:var(--text-mid);font-size:.78rem;margin:3px 0 6px;">${TAGLINES[t.key]}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              ${RESULTS[t.key].traits.map(tr=>`<span style="background:${t.color}1a;color:${t.color};
+                 border-radius:20px;padding:2px 8px;font-size:.68rem;font-weight:700;">${tr}</span>`).join('')}
+            </div>
           </div>
         `).join('')}
       </div>
@@ -991,15 +1013,15 @@ function renderQuestion() {
   document.getElementById('progressPct').textContent = pct + '%';
   document.getElementById('progressFill').style.width = pct + '%';
 
+  const ans = [...q.answers].sort(()=>Math.random()-0.5);
   const card = document.getElementById('quizCard');
   card.innerHTML = `
     <div class="q-number">Question ${currentQ+1} / ${QUESTIONS.length}</div>
     <span class="q-emoji">${q.emoji}</span>
     <div class="q-text">${q.text}</div>
     <div class="answers">
-      ${q.answers.map((a,i)=>`
+      ${ans.map((a,i)=>`
         <button class="answer-btn" data-idx="${i}" data-arch="${a.arch}" onclick="selectAnswer(this)">
-          <span class="a-emoji">${a.emoji}</span>
           <span>${a.text}</span>
         </button>
       `).join('')}
@@ -1070,6 +1092,13 @@ function renderResult() {
       <div class="fact-box">
         <div class="fb-label">🏝️ Sylt Fun Fact</div>
         <p>${fact}</p>
+      </div>
+      <div class="history-box" style="margin-top:14px;">
+        <div class="hb-label">📚 Sources &amp; references</div>
+        <p style="font-size:.82rem;line-height:1.7;">The Sylt legends and fun facts are based on the island's real history and culture:</p>
+        <ul style="text-align:left;font-size:.8rem;line-height:1.6;padding-left:18px;margin-top:6px;">
+          ${SOURCES.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener" style="color:var(--ocean,#1565C0);">${s[0]}</a></li>`).join('')}
+        </ul>
       </div>
       <button class="again-btn" onclick="resetQuiz()">🔄 Take the Quiz Again</button>
     </div>
@@ -1423,230 +1452,429 @@ renderIntro();
 </script>
 </template>
     <template id="game-B2"><style>
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Trebuchet MS',sans-serif;background:linear-gradient(160deg,#2a0d4f,#5a189a 55%,#9d4edd);color:#fff;min-height:100vh;overflow-x:hidden;}
-  #disco{position:fixed;top:8px;left:50%;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;
-    background:radial-gradient(circle at 35% 30%,#fff,#c77dff 60%,#7b2cbf);
-    background-size:14px 14px;box-shadow:0 0 22px #e0aaff;animation:spin 4s linear infinite;z-index:5;}
-  @keyframes spin{to{transform:translateX(-50%) rotate(360deg);}}
-  .wrap{max-width:640px;margin:0 auto;padding:78px 16px 32px;}
-  h1{text-align:center;font-size:1.7rem;text-shadow:0 2px 10px #3c096c;}
-  .sub{text-align:center;opacity:.85;margin-bottom:18px;font-size:.95rem;}
-  .panel{background:rgba(255,255,255,.1);border:2px solid #e0aaff55;border-radius:16px;padding:18px;margin:14px 0;backdrop-filter:blur(4px);}
-  label{display:block;margin:10px 0 4px;font-weight:bold;}
-  input,select{width:100%;padding:10px;border-radius:10px;border:none;font-size:1rem;}
-  button{cursor:pointer;border:none;border-radius:12px;font-weight:bold;font-family:inherit;}
-  .big{display:block;width:100%;padding:15px;font-size:1.15rem;background:#ffd60a;color:#3c096c;margin-top:14px;box-shadow:0 5px 0 #c79a00;transition:transform .08s;}
-  .big:active{transform:translateY(4px);box-shadow:0 1px 0 #c79a00;}
+  :root{
+    --sand:#E9D8B4; --ocean:#3D7EA6; --seafoam:#8FB9A8; --dune:#6F8F5F; --sunset:#F4A261;
+    --ink:#1f3b47; --deep:#274b5b; --glass:rgba(255,255,255,.62);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--ink);overflow-x:hidden;
+    background:linear-gradient(180deg,#bfe0ec 0%,#9fc7d6 30%,var(--ocean) 62%,#274b5b 100%);
+    min-height:100%;}
+  /* animated sea + dunes + lighthouse */
+  .scene{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+  .sun{position:absolute;top:8%;right:14%;width:84px;height:84px;border-radius:50%;
+    background:radial-gradient(circle,#ffe6b0,var(--sunset));box-shadow:0 0 60px #f4a26199;}
+  .lighthouse{position:absolute;bottom:30%;left:7%;width:34px;height:96px;
+    background:linear-gradient(90deg,#e9e9ee,#cfd3d8);border-radius:6px 6px 2px 2px;
+    clip-path:polygon(28% 0,72% 0,86% 100%,14% 100%);}
+  .lighthouse::before{content:"";position:absolute;top:0;left:-7px;width:48px;height:22px;background:#d64f4f;border-radius:6px;}
+  .lighthouse::after{content:"";position:absolute;top:18px;left:6px;width:22px;height:14px;background:#ffe9a8;border-radius:3px;box-shadow:0 0 18px #ffe9a8;}
+  .dunes{position:absolute;bottom:0;left:0;width:100%;height:30%;
+    background:linear-gradient(180deg,#d8c79b,var(--sand));border-radius:50% 50% 0 0/22% 22% 0 0;}
+  .grass{position:absolute;bottom:26%;width:3px;height:26px;background:var(--dune);border-radius:2px;transform-origin:bottom;}
+  .wave{position:absolute;left:-10%;width:120%;height:90px;opacity:.5;
+    background:radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.5),transparent 70%);}
+  .w1{bottom:28%;animation:sway 7s ease-in-out infinite;}
+  .w2{bottom:24%;animation:sway 9s ease-in-out infinite reverse;opacity:.3;}
+  @keyframes sway{0%,100%{transform:translateX(-3%);}50%{transform:translateX(3%);}}
+
+  .app{position:relative;z-index:2;max-width:540px;margin:0 auto;padding:14px 14px 30px;min-height:100%;}
+  .screen{display:none;animation:fade .4s ease;}
+  .screen.on{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .glass{background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.6);border-radius:22px;box-shadow:0 10px 30px rgba(31,59,71,.18);}
+  .pad{padding:20px;}
+
+  h1{font-size:2rem;text-align:center;color:#fff;text-shadow:0 3px 14px rgba(31,59,71,.5);letter-spacing:.5px;}
+  .sub{text-align:center;color:#eef7fb;font-size:.92rem;margin-top:4px;text-shadow:0 1px 6px rgba(31,59,71,.4);}
+  h2{color:var(--deep);font-size:1.15rem;margin-bottom:8px;}
+  p.lead{color:var(--deep);line-height:1.55;font-size:.95rem;}
+
+  .btn{display:block;width:100%;border:none;border-radius:16px;padding:16px;font-size:1.1rem;font-weight:800;
+    cursor:pointer;transition:transform .12s,box-shadow .12s;color:#fff;background:var(--ocean);box-shadow:0 6px 0 #2c5e74;}
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #2c5e74;}
+  .btn.sun{background:var(--sunset);box-shadow:0 6px 0 #c9783f;color:#5a2f12;}
+  .btn.green{background:var(--dune);box-shadow:0 6px 0 #4f6b42;}
+  .btn.ghost{background:rgba(255,255,255,.7);color:var(--deep);box-shadow:0 4px 0 #b9c6cc;}
+  .btn.small{padding:11px;font-size:.95rem;border-radius:13px;}
+  .btn[disabled]{opacity:.5;}
+
+  .scorebox{background:linear-gradient(135deg,#fff7e6,#ffe9c4);border-radius:14px;padding:12px;text-align:center;margin:14px 0;}
+  .scorebox b{color:var(--ocean);}
+
   .teamrow{display:flex;gap:8px;align-items:center;margin:8px 0;}
-  .teamrow input{flex:1;}
-  .clue{background:rgba(255,255,255,.16);border-left:5px solid #ffd60a;padding:12px 14px;border-radius:8px;margin:10px 0;font-size:1.05rem;animation:pop .3s ease;}
-  @keyframes pop{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
-  .guessbtns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
-  .guessbtns button{flex:1 1 40%;padding:14px;background:#c77dff;color:#fff;font-size:1rem;}
-  .guessbtns button:disabled{opacity:.35;}
-  .reveal{padding:13px;background:#7b2cbf;color:#fff;width:100%;margin-top:10px;font-size:1rem;}
-  .scoreboard{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0;}
-  .scorechip{background:#3c096c;border:2px solid #e0aaff;border-radius:30px;padding:8px 16px;font-weight:bold;}
-  .modal{position:fixed;inset:0;background:rgba(20,0,40,.85);display:none;align-items:center;justify-content:center;z-index:30;padding:20px;}
-  .modal.on{display:flex;}
-  .modal .box{background:#5a189a;border:3px solid #ffd60a;border-radius:18px;padding:22px;text-align:center;max-width:420px;width:100%;}
-  .yn{display:flex;gap:12px;margin-top:16px;}
-  .yn button{flex:1;padding:16px;font-size:1.1rem;}
-  .yes{background:#52b788;color:#fff;} .no{background:#e5383b;color:#fff;}
-  .songtitle{font-size:1.5rem;margin:10px 0;color:#ffd60a;}
-  .small{font-size:.85rem;opacity:.8;}
-  .note{font-size:.8rem;opacity:.7;text-align:center;margin-top:10px;}
-  .winner{text-align:center;}
-  .winner h2{font-size:2rem;color:#ffd60a;margin:14px 0;}
+  .teamrow input{flex:1;border:2px solid var(--seafoam);border-radius:12px;padding:11px;font-size:1rem;background:#fff;}
+  .teamrow .del{background:#e76f51;color:#fff;border:none;border-radius:10px;width:42px;height:42px;font-size:1.2rem;cursor:pointer;}
+
+  .lead-strip{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;}
+  .chip{background:rgba(255,255,255,.78);border-radius:30px;padding:6px 13px;font-weight:700;font-size:.86rem;color:var(--deep);
+    border:2px solid transparent;display:flex;gap:6px;align-items:center;}
+  .chip.active{border-color:var(--sunset);background:#fff;box-shadow:0 0 0 3px #f4a26140;}
+  .chip .sc{color:var(--ocean);}
+  .chip.lead-team::before{content:"👑";}
+
+  .meta{display:flex;justify-content:space-between;align-items:center;color:var(--deep);font-weight:700;font-size:.9rem;margin:4px 2px 12px;}
+  .points-pill{background:var(--dune);color:#fff;border-radius:30px;padding:5px 14px;font-size:.95rem;}
+
+  .turnbar{text-align:center;font-weight:800;color:var(--deep);font-size:1.05rem;margin:6px 0 12px;}
+  .turnbar .who{color:var(--ocean);}
+  .turnbar.steal .who{color:var(--sunset);}
+
+  .clue{background:#fff;border-left:6px solid var(--ocean);border-radius:14px;padding:14px 16px;margin:9px 0;
+    box-shadow:0 4px 12px rgba(31,59,71,.1);animation:fade .35s;}
+  .clue .n{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--seafoam);}
+  .clue .t{font-size:1rem;color:var(--ink);margin-top:3px;line-height:1.45;}
+  .clue.cur{border-left-color:var(--sunset);background:#fffaf0;}
+  .clue .worth{float:right;font-size:.74rem;color:var(--dune);font-weight:800;}
+
+  .melody-btn{margin-top:8px;background:var(--seafoam);color:#143;border:none;border-radius:12px;padding:9px 14px;font-weight:700;cursor:pointer;}
+  .note{font-size:.74rem;color:#5d7280;margin-top:6px;font-style:italic;}
+
+  .inputs{margin-top:8px;}
+  .inputs input{width:100%;border:2px solid var(--seafoam);border-radius:13px;padding:13px;font-size:1rem;margin-bottom:8px;background:#fff;}
+  .btnrow{display:flex;gap:8px;}
+  .btnrow .btn{margin:0;}
+
+  .feedback{text-align:center;font-weight:800;margin:10px 0;padding:10px;border-radius:12px;display:none;}
+  .feedback.show{display:block;animation:fade .3s;}
+  .feedback.ok{background:#d8f3e4;color:#1b7a4b;}
+  .feedback.bad{background:#fde0d8;color:#b23a1e;}
+
+  /* round result / reveal */
+  .disc{width:120px;height:120px;border-radius:50%;margin:6px auto 12px;position:relative;
+    background:repeating-radial-gradient(circle at 50% 50%,#222 0 4px,#2c2c2c 4px 8px);box-shadow:0 8px 22px rgba(0,0,0,.4);}
+  .disc::after{content:"";position:absolute;top:50%;left:50%;width:34px;height:34px;border-radius:50%;
+    background:radial-gradient(circle,var(--sunset),#c9783f);transform:translate(-50%,-50%);border:4px solid #fff;}
+  .reveal-title{text-align:center;font-size:1.4rem;font-weight:900;color:var(--deep);}
+  .reveal-artist{text-align:center;color:var(--ocean);font-weight:700;margin-bottom:10px;}
+  .funfact{background:#eaf6fb;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.9rem;line-height:1.5;color:var(--deep);}
+  .funfact b{color:var(--ocean);}
+  .trivia{background:#f3efe0;border-radius:12px;padding:11px 14px;margin:10px 0;font-size:.86rem;color:#5a5126;}
+  .pts-change{text-align:center;font-size:1.05rem;font-weight:800;margin:6px 0;}
+
+  .rank{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:13px 16px;margin:8px 0;box-shadow:0 4px 12px rgba(31,59,71,.1);}
+  .rank .medal{font-size:1.6rem;}
+  .rank .nm{flex:1;font-weight:800;color:var(--deep);}
+  .rank .sc{font-weight:900;color:var(--ocean);font-size:1.2rem;}
+
+  #confetti{position:fixed;inset:0;z-index:50;pointer-events:none;}
 </style>
 
-<div id="disco"></div>
-<div class="wrap">
-  <h1>🎵 Guess the Song</h1>
-  <div class="sub">Factual clues only — no lyrics. Fewer clues = more points!</div>
-
-  <div id="setup" class="panel">
-    <label>How many teams?</label>
-    <select id="numTeams">
-      <option value="2">2 teams</option>
-      <option value="3">3 teams</option>
-      <option value="4">4 teams</option>
-    </select>
-    <div id="teamNames"></div>
-    <button class="big" id="startBtn">Start the Game ▶</button>
-    <p class="note">A host reads the clues aloud and taps which team guessed.</p>
-  </div>
-
-  <div id="game" style="display:none;">
-    <div class="scoreboard" id="scoreboard"></div>
-    <div class="panel">
-      <div class="small">Song <span id="songNum"></span> of <span id="songTot"></span> · Clues used: <span id="clueCount">0</span></div>
-      <div id="clues"></div>
-      <button class="reveal" id="revealBtn">🔍 Reveal next clue</button>
-      <div class="guessbtns" id="guessBtns"></div>
-    </div>
-  </div>
-
-  <div id="end" class="panel winner" style="display:none;"></div>
+<div class="scene">
+  <div class="sun"></div>
+  <div class="wave w1"></div><div class="wave w2"></div>
+  <div class="dunes"></div>
+  <div class="lighthouse"></div>
+  <div id="grasses"></div>
 </div>
+<canvas id="confetti"></canvas>
 
-<div class="modal" id="modal">
-  <div class="box">
-    <div id="modalTeam" style="font-weight:bold;font-size:1.2rem;"></div>
-    <div style="margin-top:8px;">Did they name the song correctly?</div>
-    <div class="yn">
-      <button class="yes" id="yesBtn">✔ Correct</button>
-      <button class="no" id="noBtn">✗ Wrong</button>
+<div class="app">
+
+  <!-- WELCOME -->
+  <section class="screen on" id="welcome">
+    <h1>🎵 Sylt Song Challenge</h1>
+    <div class="sub">Westerland · Kampen · Hörnum · List · Rotes Kliff</div>
+    <div class="glass pad" style="margin-top:16px;">
+      <p class="lead">Can you recognize the song from just one clue? Start with the hardest hint and see how many points you can earn. Need help? Reveal more clues — but every extra clue reduces your score. Compete with other teams, earn bonus points by naming the artist, and explore Sylt through music while discovering the island's unique coastal charm!</p>
+      <div class="scorebox">
+        <b>Scoring:</b> 1st clue <b>100</b> · then <b>80 · 60 · 40 · 20</b><br>
+        +20 for naming the artist · −10 for a wrong guess
+      </div>
+      <h2>Teams</h2>
+      <div id="teamList"></div>
+      <button class="btn ghost small" id="addTeam" style="margin-top:6px;">+ Add team</button>
+      <button class="btn sun" id="startBtn" style="margin-top:14px;">Start Game →</button>
     </div>
-  </div>
-</div>
+  </section>
 
-<div class="modal" id="songModal">
-  <div class="box">
-    <div class="small">The song was…</div>
-    <div class="songtitle" id="songReveal"></div>
-    <div id="awardMsg"></div>
-    <button class="big" id="nextSongBtn">Next song ▶</button>
-  </div>
+  <!-- GAME -->
+  <section class="screen" id="game">
+    <div class="lead-strip" id="leadStrip"></div>
+    <div class="meta">
+      <span>Round <span id="roundNo">1</span></span>
+      <span class="points-pill">Worth now: <span id="curPts">100</span> pts</span>
+    </div>
+    <div class="turnbar" id="turnBar"></div>
+    <div id="clues"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="glass pad inputs">
+      <input id="guessSong" placeholder="Song title…" autocomplete="off">
+      <input id="guessArtist" placeholder="Artist (optional — +20 pts)" autocomplete="off">
+      <button class="btn" id="submitBtn">Submit guess</button>
+      <div class="btnrow" style="margin-top:8px;">
+        <button class="btn ghost small" id="revealBtn">Reveal next clue (−pts)</button>
+        <button class="btn ghost small" id="passBtn" style="display:none;">Pass</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROUND RESULT -->
+  <section class="screen" id="result">
+    <div class="glass pad">
+      <div class="disc"></div>
+      <div class="reveal-title" id="rTitle"></div>
+      <div class="reveal-artist" id="rArtist"></div>
+      <div class="pts-change" id="rResult"></div>
+      <div class="funfact" id="rFact"></div>
+      <div class="trivia" id="rTrivia"></div>
+      <h2 style="text-align:center;margin-top:10px;">Leaderboard</h2>
+      <div class="lead-strip" id="rLead"></div>
+      <button class="btn sun" id="continueBtn" style="margin-top:12px;">Next round →</button>
+      <button class="btn ghost small" id="finishBtn" style="margin-top:8px;">Finish &amp; see ranking</button>
+    </div>
+  </section>
+
+  <!-- GAME OVER -->
+  <section class="screen" id="over">
+    <h1>🏆 Final Ranking</h1>
+    <div class="glass pad" style="margin-top:14px;">
+      <div id="ranking"></div>
+      <button class="btn sun" id="playAgain" style="margin-top:14px;">Play again</button>
+    </div>
+  </section>
 </div>
 
 <script>
+const SONGS = [{"title": "Starships","short": "starships","artist": "Nicki Minaj","clues": ["A 2012 dance-pop crossover from a rapper's second album.","Named after fictional space vehicles.","By a Trinidad-born rapper raised in Queens, famous for colourful wigs.","Her stage first name is 'Nicki'."],"fun": "It became one of the best-selling digital singles in the world.","talias": [],"aalias": ["nicki minaj"]},{"title": "Beauty and a Beat","short": "beauty and a beat","artist": "Justin Bieber ft. Nicki Minaj","clues": ["A 2012 dance-pop duet between a Canadian teen star and a female rapper.","The title twists a fairy-tale phrase, swapping a word for 'beat'.","The male singer was discovered on YouTube as a child.","By Justin Bieber, featuring Nicki Minaj."],"fun": "The video was styled to look like leaked phone footage of a pool party.","talias": [],"aalias": ["justin bieber","nicki minaj"]},{"title": "Lush Life","short": "lush life","artist": "Zara Larsson","clues": ["A 2015 summer pop hit with a beach-party video.","A two-word title meaning a luxurious lifestyle.","By a Swedish singer who won a children's talent show.","By Zara Larsson."],"fun": "It topped the charts across much of Europe.","talias": [],"aalias": ["zara larsson"]},{"title": "Oops!... I Did It Again","short": "oops i did it again","artist": "Britney Spears","clues": ["A 2000 pop smash with a red-catsuit video set on Mars.","The title admits to repeating a mistake.","By a former Disney 'Mickey Mouse Club' star.","By Britney Spears."],"fun": "The Mars-themed video included a playful nod to the film Titanic.","talias": ["oops i did it again"],"aalias": ["britney spears"]},{"title": "TiK ToK","short": "tik tok","artist": "Kesha","clues": ["A 2009 party anthem spelled with mixed capital letters.","The singer once styled her name with a dollar sign.","It is about waking up and getting ready to party.","By Kesha."],"fun": "It was one of the best-selling singles of 2010.","talias": ["tiktok","tik tok"],"aalias": ["kesha","ke ha"]},{"title": "Baby","short": "baby","artist": "Justin Bieber","clues": ["A 2010 song that spent years among YouTube's most-viewed videos.","It features a guest verse from rapper Ludacris.","By a Canadian teenager discovered online.","By Justin Bieber."],"fun": "For years it was one of the most 'disliked' videos online.","talias": [],"aalias": ["justin bieber"]},{"title": "Diamonds","short": "diamonds","artist": "Rihanna","clues": ["A 2012 ballad-pop song comparing a person to a precious stone.","Songwriter Sia reportedly wrote it in about 14 minutes.","By a singer from Barbados.","By Rihanna."],"fun": "It was Rihanna's twelfth US number-one single.","talias": [],"aalias": ["rihanna","rhianna"]},{"title": "Waka Waka (This Time for Africa)","short": "waka waka","artist": "Shakira","clues": ["The official song of the 2010 FIFA World Cup.","Its chorus borrows from a 1980s Cameroonian army song.","By a Colombian singer famous for her dancing.","By Shakira."],"fun": "It is one of the best-selling World Cup songs ever.","talias": ["waka waka this time for africa"],"aalias": ["shakira"]},{"title": "Gimme! Gimme! Gimme! (A Man After Midnight)","short": "gimme gimme gimme","artist": "ABBA","clues": ["A 1979 disco song later sampled by Madonna in 'Hung Up'.","The title repeats one word three times.","By a four-member Swedish supergroup.","By ABBA."],"fun": "Madonna needed special permission to sample it.","talias": ["gimme gimme gimme a man after midnight","gimme gimme gimme"],"aalias": ["abba"]},{"title": "Shake It Off","short": "shake it off","artist": "Taylor Swift","clues": ["A 2014 song about ignoring critics, from the album '1989'.","It marked the singer's move from country to pop.","By an American singer-songwriter who started in Nashville.","By Taylor Swift."],"fun": "It was her first single after fully 'going pop'.","talias": [],"aalias": ["taylor swift"]},{"title": "Dancing Queen","short": "dancing queen","artist": "ABBA","clues": ["A 1976 disco classic about a seventeen-year-old on the dance floor.","It inspired parts of the musical 'Mamma Mia!'.","By a Swedish group made of two couples.","By ABBA."],"fun": "It is ABBA's only US number-one single.","talias": [],"aalias": ["abba"]},{"title": "Please Please Please","short": "please please please","artist": "Sabrina Carpenter","clues": ["A 2024 number-one with the title word repeated three times.","Her boyfriend at the time appeared in the music video.","By an American singer and former Disney actress.","By Sabrina Carpenter."],"fun": "It hit number one the same summer as her hit 'Espresso'.","talias": ["please please please"],"aalias": ["sabrina carpenter","sabrina"]},{"title": "Tau mich auf","short": "tau mich auf","artist": "Zartmann","clues": ["A 2024 German-language viral hit; the title means 'thaw me'.","It blew up on TikTok across Germany.","By a German artist who goes by a single one-word name.","By Zartmann."],"fun": "It became one of Germany's biggest streaming songs of the year.","talias": [],"aalias": ["zartmann"]},{"title": "Arcade","short": "arcade","artist": "Duncan Laurence","clues": ["The winner of the Eurovision Song Contest 2019.","Performed at the piano by a Dutch singer.","It became a surprise TikTok hit about a year later.","By Duncan Laurence."],"fun": "It was the first Eurovision winner to become a big TikTok hit.","talias": [],"aalias": ["duncan laurence","duncan lawrence"]},{"title": "Bauch Beine Po","short": "bauch beine po","artist": "Shirin David","clues": ["A 2023 German pop-rap song named after a gym workout class.","The title lists three body areas in German.","By a German YouTuber-turned-rapper.","By Shirin David."],"fun": "It debuted at number one in Germany.","talias": ["bauch beine po"],"aalias": ["shirin david"]},{"title": "Stateside","short": "stateside","artist": "Zara Larsson","clues": ["A 2024 pop song whose title means 'in America'.","By the same Swedish singer behind 'Lush Life'.","From her album 'Venus'.","By Zara Larsson."],"fun": "It continued her run of glossy dance-pop singles.","talias": [],"aalias": ["zara larsson"]},{"title": "House Tour","short": "house tour","artist": "Sabrina Carpenter","clues": ["A 2024 album track named after showing someone around your home.","From the album 'Short n' Sweet'.","By the singer of 'Espresso' and 'Please Please Please'.","By Sabrina Carpenter."],"fun": "It appears on one of 2024's best-selling pop albums.","talias": [],"aalias": ["sabrina carpenter","sabrina"]},{"title": "Billie Jean","short": "billie jean","artist": "Michael Jackson","clues": ["A 1983 song with a famous video of light-up pavement.","It helped break barriers on early MTV.","By the self-styled 'King of Pop'.","By Michael Jackson."],"fun": "He first performed the moonwalk to this song on TV in 1983.","talias": ["billy jean"],"aalias": ["michael jackson"]},{"title": "Bohemian Rhapsody","short": "bohemian rhapsody","artist": "Queen","clues": ["A 1975 six-minute song mixing ballad, opera and hard rock.","It has no chorus and famously calls out 'Galileo'.","By a British band with a flamboyant lead singer.","By Queen."],"fun": "A 2018 film about the band borrowed this song's title.","talias": ["bohemian rapsody"],"aalias": ["queen"]},{"title": "The Fate of Ophelia","short": "fate of ophelia","artist": "Taylor Swift","clues": ["A 2025 single that references a Shakespeare character.","Ophelia is a character from 'Hamlet'.","By the artist behind 'Shake It Off' and the '1989' album.","By Taylor Swift."],"fun": "Its title is drawn from Shakespeare's tragic heroine.","talias": ["the fate of ophelia"],"aalias": ["taylor swift"]},{"title": "I Wanna Be Yours","short": "i wanna be yours","artist": "Arctic Monkeys","clues": ["A 2013 slow rock song based on a John Cooper Clarke poem.","It closes the album 'AM'.","By a British indie-rock band from Sheffield.","By Arctic Monkeys."],"fun": "Its words adapt a published poem by a punk poet.","talias": ["i want to be yours"],"aalias": ["arctic monkeys"]},{"title": "Smells Like Teen Spirit","short": "smells like teen spirit","artist": "Nirvana","clues": ["A 1991 song that helped launch the grunge movement.","It was named partly after a brand of deodorant.","By an American trio from Seattle.","By Nirvana."],"fun": "The title came from words a friend wrote on a wall.","talias": [],"aalias": ["nirvana"]},{"title": "Call Me Maybe","short": "call me maybe","artist": "Carly Rae Jepsen","clues": ["A 2012 bubble-gum pop song about giving someone your number.","A Canadian singer performs it.","It became a meme with countless celebrity lip-sync videos.","By Carly Rae Jepsen."],"fun": "A tweet from Justin Bieber helped make it a global hit.","talias": [],"aalias": ["carly rae jepsen"]},{"title": "California Gurls","short": "california gurls","artist": "Katy Perry ft. Snoop Dogg","clues": ["A 2010 summer anthem celebrating a US state, with a candy-themed video.","It features rapper Snoop Dogg.","The title deliberately misspells 'girls'.","By Katy Perry."],"fun": "The candyland video was inspired by the board game Candy Land.","talias": ["california girls"],"aalias": ["katy perry","snoop dogg"]},{"title": "Without Me","short": "without me","artist": "Eminem","clues": ["A 2002 comeback single packed with pop-culture jokes.","The rapper's alter ego is named Slim Shady.","By a rapper from Detroit.","By Eminem."],"fun": "Its video parodies many celebrities and superheroes.","talias": [],"aalias": ["eminem"]},{"title": "The Real Slim Shady","short": "real slim shady","artist": "Eminem","clues": ["A 2000 single asking a famous alter ego to 'stand up'.","It's full of jokes about other celebrities.","By a Detroit rapper with bleached hair at the time.","By Eminem."],"fun": "It won a Grammy for Best Rap Solo Performance.","talias": ["the real slim shady"],"aalias": ["eminem"]},{"title": "Mockingbird","short": "mockingbird","artist": "Eminem","clues": ["A 2004 heartfelt song a father wrote for his daughters.","Named after a bird from a famous lullaby.","By a Detroit rapper known for emotional storytelling.","By Eminem."],"fun": "It is one of his most personal, family-focused songs.","talias": [],"aalias": ["eminem"]},{"title": "Manchild","short": "manchild","artist": "Sabrina Carpenter","clues": ["A 2025 pop single about an immature partner.","By the singer of 'Espresso'.","The title is a word for a grown-up who acts childish.","By Sabrina Carpenter."],"fun": "It continued her streak of cheeky pop singles.","talias": [],"aalias": ["sabrina carpenter","sabrina"]},{"title": "good 4 u","short": "good 4 u","artist": "Olivia Rodrigo","clues": ["A 2021 pop-punk hit styled in lower-case letters.","From the debut album 'SOUR'.","By an American singer and former Disney actress.","By Olivia Rodrigo."],"fun": "Its sound drew comparisons to early-2000s pop-punk bands.","talias": ["good 4 you","good for you"],"aalias": ["olivia rodrigo"]},{"title": "Espresso","short": "espresso","artist": "Sabrina Carpenter","clues": ["A 2024 song of the summer named after a coffee drink.","It went viral worldwide on TikTok.","By an American former Disney star.","By Sabrina Carpenter."],"fun": "It dominated radio and streaming in summer 2024.","talias": [],"aalias": ["sabrina carpenter","sabrina"]},{"title": "deja vu","short": "deja vu","artist": "Olivia Rodrigo","clues": ["A 2021 song about an ex repeating things with someone new.","From the album 'SOUR', styled in lower case.","By the singer of 'good 4 u'.","By Olivia Rodrigo."],"fun": "Its title is a French phrase meaning 'already seen'.","talias": ["deja vu"],"aalias": ["olivia rodrigo"]},{"title": "Babydoll","short": "babydoll","artist": "Dominic Fike","clues": ["A 2022 mellow alt-pop track.","By an American singer-actor who appeared in 'Euphoria'.","A short, breezy, guitar-driven song.","By Dominic Fike."],"fun": "It found a second life going viral on TikTok.","talias": ["baby doll"],"aalias": ["dominic fike"]},{"title": "Mama's Boy","short": "mamas boy","artist": "Dominic Fike","clues": ["A 2023 alt-pop song about being close to one's mother.","By the artist behind 'Babydoll'.","An American singer who also acts.","By Dominic Fike."],"fun": "He is known for blending pop, rock and hip-hop.","talias": ["mamas boy"],"aalias": ["dominic fike"]},{"title": "Mamma Mia","short": "mamma mia","artist": "ABBA","clues": ["A 1975 pop song whose Italian title expresses surprise.","It later named a hit jukebox musical and film.","By a Swedish supergroup of two couples.","By ABBA."],"fun": "The musical built from ABBA's songs took its name from this one.","talias": ["mama mia"],"aalias": ["abba"]}];
+</script>
+<script>
 (function(){
-  // Factual, lyric-free clues. Hardest first, easiest last.
-  const SONGS = [
-    {t:"Starships — Nicki Minaj", c:["A 2012 dance-pop hit from a rapper's second studio album.","The artist grew up in Queens, New York and is known for colourful wigs.","The title is the plural of a fictional space vehicle.","Sung by Nicki Minaj."]},
-    {t:"Oops!... I Did It Again — Britney Spears", c:["A pop song from the year 2000 with a red catsuit music video.","The singer became famous one year earlier as a former Disney star.","The title admits to repeating a mistake.","Sung by Britney Spears."]},
-    {t:"TiK ToK — Kesha", c:["A 2009 party-pop song; its title is spelled with mixed capital letters.","The American singer often styled her name with a dollar sign.","It is about waking up and getting ready to party.","Sung by Kesha."]},
-    {t:"Baby — Justin Bieber", c:["A 2010 song that was one of YouTube's most-watched videos for years.","A Canadian teenager who was discovered online sings it.","Rapper Ludacris has a guest verse.","Sung by Justin Bieber."]},
-    {t:"Diamonds — Rihanna", c:["A 2012 ballad-pop song comparing someone to a precious stone.","The singer is from Barbados.","Songwriter Sia wrote it in about 14 minutes.","Sung by Rihanna."]},
-    {t:"Waka Waka (This Time for Africa) — Shakira", c:["The official song of the 2010 FIFA World Cup.","A Colombian singer known for her dancing performs it.","The chorus borrows from a Cameroonian army song.","Sung by Shakira."]},
-    {t:"Shake It Off — Taylor Swift", c:["A 2014 song about ignoring critics, from the album '1989'.","An American singer-songwriter who started in country music.","The title tells you to brush off the haters.","Sung by Taylor Swift."]},
-    {t:"Dancing Queen — ABBA", c:["A 1976 disco classic about a 17-year-old on the dance floor.","A four-member group from Sweden.","They later inspired the musical 'Mamma Mia!'.","Performed by ABBA."]},
-    {t:"Gimme! Gimme! Gimme! (A Man After Midnight) — ABBA", c:["A 1979 disco song; its intro was sampled by Madonna in 'Hung Up'.","A famous Swedish pop group sings it.","The title repeats the word 'give' three times.","Performed by ABBA."]},
-    {t:"Lush Life — Zara Larsson", c:["A 2015 summer pop hit with a beach-themed video.","A Swedish singer who won a talent show as a child.","The title is two words meaning a luxurious lifestyle.","Sung by Zara Larsson."]},
-    {t:"Please Please Please — Sabrina Carpenter", c:["A 2024 number-one pop hit; the title word is repeated.","An American singer and former Disney actress.","Her boyfriend at the time starred in the music video.","Sung by Sabrina Carpenter."]},
-    {t:"Arcade — Duncan Laurence", c:["The song that won the Eurovision Song Contest 2019.","A Dutch singer performed it at the piano.","It later became a surprise hit on TikTok in 2020/21.","Sung by Duncan Laurence."]}
-  ];
-  // shuffle
-  for(let i=SONGS.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[SONGS[i],SONGS[j]]=[SONGS[j],SONGS[i]];}
-
-  let teams=[], scores=[], songIdx=0, cluesShown=0, wrongThisRound=[];
   const $=id=>document.getElementById(id);
+  const PTS=[100,80,60,40,20];
+  const TRIVIA=[
+    "Sylt is Germany's northernmost island, reachable by a causeway railway — no road bridge.",
+    "The Rotes Kliff (Red Cliff) near Kampen glows warm red-brown at sunset.",
+    "Westerland is Sylt's largest town and a famous seaside resort.",
+    "List is the northernmost village in all of Germany.",
+    "The dunes of Sylt are protected — beach grass holds the sand in place.",
+    "Hörnum sits at Sylt's southern tip, a launch point for seal-watching trips.",
+    "Sylt's west coast loses about a metre of sand to the North Sea each year.",
+    "The Wadden Sea around Sylt is a UNESCO World Heritage site full of wildlife."
+  ];
 
-  function buildTeamInputs(){
-    const n=+$('numTeams').value;
-    const box=$('teamNames'); box.innerHTML='';
-    for(let i=0;i<n;i++){
-      const d=document.createElement('div'); d.className='teamrow';
-      d.innerHTML='<span>🎤</span><input id="tn'+i+'" placeholder="Team '+(i+1)+' name" value="Team '+(i+1)+'">';
-      box.appendChild(d);
-    }
-  }
-  $('numTeams').addEventListener('change',buildTeamInputs);
-  buildTeamInputs();
+  /* ---------- decorative grass ---------- */
+  (function(){let g='';for(let i=0;i<26;i++){const l=4+Math.random()*92,r=(-18+Math.random()*36);
+    g+='<div class="grass" style="left:'+l+'%;transform:rotate('+r+'deg);height:'+(16+Math.random()*18)+'px;"></div>';}
+    $('grasses').innerHTML=g;})();
 
-  $('startBtn').addEventListener('click',function(){
-    const n=+$('numTeams').value; teams=[]; scores=[];
-    for(let i=0;i<n;i++){teams.push(($('tn'+i).value||('Team '+(i+1))).slice(0,16)); scores.push(0);}
-    $('setup').style.display='none'; $('game').style.display='block';
-    $('songTot').textContent=SONGS.length;
-    loadSong();
-  });
+  /* ---------- fuzzy matching ---------- */
+  function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/&/g,' and ').replace(/[^a-z0-9 ]/g,' ').replace(/\b(the|a|feat|ft)\b/g,' ')
+    .replace(/\s+/g,' ').trim();}
+  function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;
+    let prev=Array.from({length:n+1},(_,i)=>i),cur=new Array(n+1);
+    for(let i=1;i<=m;i++){cur[0]=i;for(let j=1;j<=n;j++){
+      cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));}
+      [prev,cur]=[cur,prev];}return prev[n];}
+  function close(guess,target){
+    const g=norm(guess),t=norm(target);if(!g||!t)return false;
+    if(g===t)return true;
+    const tol=Math.max(1,Math.round(t.length*0.25));
+    if(lev(g,t)<=tol)return true;
+    if(t.length>=4&&(g.includes(t)||t.includes(g)))return true;
+    return false;
+  }
+  function matchSong(guess,song){
+    const cands=[song.title,song.short].concat(song.talias||[]);
+    return cands.some(c=>close(guess,c));
+  }
+  function matchArtist(guess,song){
+    if(!guess.trim())return false;
+    const cands=[song.artist].concat(song.aalias||[]);
+    return cands.some(c=>close(guess,c));
+  }
 
-  function drawScores(){
-    const sb=$('scoreboard'); sb.innerHTML='';
-    teams.forEach((t,i)=>{const c=document.createElement('div');c.className='scorechip';c.textContent=t+': '+scores[i];sb.appendChild(c);});
-  }
-  function loadSong(){
-    cluesShown=0; wrongThisRound=[];
-    $('songNum').textContent=songIdx+1;
-    $('clueCount').textContent=0;
-    $('clues').innerHTML='';
-    $('revealBtn').disabled=false;
-    drawScores();
-    drawGuessBtns();
-    showClue(); // reveal first clue automatically
-  }
-  function showClue(){
-    const song=SONGS[songIdx];
-    if(cluesShown>=song.c.length){return;}
-    const d=document.createElement('div'); d.className='clue';
-    d.textContent='Clue '+(cluesShown+1)+': '+song.c[cluesShown];
-    $('clues').appendChild(d);
-    cluesShown++;
-    $('clueCount').textContent=cluesShown;
-    if(cluesShown>=song.c.length){$('revealBtn').disabled=true;}
-  }
-  $('revealBtn').addEventListener('click',showClue);
+  /* ---------- state ---------- */
+  let teams=[{name:'Team 1',score:0},{name:'Team 2',score:0}];
+  let queue=[],round=0,activeIdx=0;
+  let song=null,clueLevel=0,attempted=new Set(),guesser=0,order=[],phase='active';
 
-  function drawGuessBtns(){
-    const box=$('guessBtns'); box.innerHTML='';
+  /* ---------- welcome / team setup ---------- */
+  function renderTeams(){
+    $('teamList').innerHTML='';
     teams.forEach((t,i)=>{
-      const b=document.createElement('button');
-      b.textContent=t+' guesses';
-      b.disabled=wrongThisRound.includes(i);
-      b.addEventListener('click',()=>askResult(i));
-      box.appendChild(b);
+      const row=document.createElement('div');row.className='teamrow';
+      row.innerHTML='<input value="'+t.name.replace(/"/g,'&quot;')+'" data-i="'+i+'">'+
+        (teams.length>1?'<button class="del" data-i="'+i+'">✕</button>':'');
+      $('teamList').appendChild(row);
     });
+    $('teamList').querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{teams[+e.target.dataset.i].name=e.target.value;}));
+    $('teamList').querySelectorAll('.del').forEach(b=>b.addEventListener('click',e=>{teams.splice(+e.target.dataset.i,1);renderTeams();}));
   }
+  $('addTeam').addEventListener('click',()=>{if(teams.length<8){teams.push({name:'Team '+(teams.length+1),score:0});renderTeams();}});
+  renderTeams();
 
-  let guessingTeam=null;
-  function askResult(i){
-    guessingTeam=i;
-    $('modalTeam').textContent=teams[i]+' is guessing…';
-    $('modal').classList.add('on');
-  }
-  $('yesBtn').addEventListener('click',()=>resolve(true));
-  $('noBtn').addEventListener('click',()=>resolve(false));
-
-  function resolve(correct){
-    $('modal').classList.remove('on');
-    const i=guessingTeam;
-    if(correct){
-      // fewer clues used = more points (max 5)
-      const pts=Math.max(1,6-cluesShown);
-      scores[i]+=pts;
-      revealSong(teams[i]+' guessed it! +'+pts+' points 🎉');
-    }else{
-      // small penalty for wrong guess, second chance for others
-      scores[i]=Math.max(0,scores[i]-1);
-      wrongThisRound.push(i);
-      drawScores(); drawGuessBtns();
-      if(wrongThisRound.length>=teams.length){
-        revealSong('Nobody got it this round. No points.');
-      }else{
-        // give a free extra clue as a "second chance" for remaining teams
-        showClue();
-        flash(teams[i]+' was wrong (−1). Other teams get a second chance!');
-      }
-    }
-  }
-  function flash(msg){
-    const d=document.createElement('div'); d.className='clue'; d.style.borderLeftColor='#e5383b';
-    d.textContent=msg; $('clues').appendChild(d);
-  }
-  function revealSong(msg){
-    $('songReveal').textContent=SONGS[songIdx].t;
-    $('awardMsg').innerHTML='<p style="margin-top:10px;">'+msg+'</p>';
-    $('songModal').classList.add('on');
-  }
-  $('nextSongBtn').addEventListener('click',function(){
-    $('songModal').classList.remove('on');
-    songIdx++;
-    if(songIdx>=SONGS.length){endGame();}else{loadSong();}
+  $('startBtn').addEventListener('click',()=>{
+    teams=teams.filter(t=>t.name.trim()).map(t=>({name:t.name.trim(),score:0}));
+    if(!teams.length){alert('Add at least one team.');renderTeams();return;}
+    queue=SONGS.map((s,i)=>i).sort(()=>Math.random()-0.5);
+    round=0;activeIdx=0;startRound();show('game');
   });
 
+  /* ---------- leaderboard ---------- */
+  function leaderHTML(highlightActive){
+    const max=Math.max(...teams.map(t=>t.score));
+    return teams.map((t,i)=>'<div class="chip'+(highlightActive&&i===activeIdx?' active':'')+
+      (t.score===max&&max!==0?' lead-team':'')+'">'+esc(t.name)+' <span class="sc">'+t.score+'</span></div>').join('');
+  }
+  function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+  /* ---------- round flow ---------- */
+  function startRound(){
+    if(!queue.length){endGame();return;}
+    round++;song=SONGS[queue.shift()];
+    clueLevel=0;attempted=new Set();
+    order=[activeIdx];for(let k=1;k<teams.length;k++)order.push((activeIdx+k)%teams.length);
+    guesser=activeIdx;phase='active';
+    $('guessSong').value='';$('guessArtist').value='';
+    hideFeedback();renderGame();
+  }
+
+  function clueText(level){
+    if(level<4)return song.clues[level];
+    return '🎵 Melody hint — the song is by '+song.artist+'. Hum it if you can!';
+  }
+  function renderGame(){
+    $('roundNo').textContent=round;
+    $('curPts').textContent=PTS[clueLevel];
+    $('leadStrip').innerHTML=leaderHTML(true);
+    // clues
+    let c='';
+    for(let l=0;l<=clueLevel;l++){
+      const cur=l===clueLevel;
+      c+='<div class="clue'+(cur?' cur':'')+'"><span class="worth">'+PTS[l]+' pts</span>'+
+        '<div class="n">Clue '+(l+1)+(l===4?' · melody':'')+'</div><div class="t">'+clueText(l)+'</div>';
+      if(l===4&&cur){c+='<button class="melody-btn" id="playMelody">▶ Play a mystery tune</button>'+
+        '<div class="note">A neutral placeholder tune — real song audio would need a licence.</div>';}
+      c+='</div>';
+    }
+    $('clues').innerHTML=c;
+    if($('playMelody'))$('playMelody').addEventListener('click',playMystery);
+    // turn bar
+    const tb=$('turnBar');
+    if(phase==='active'){tb.className='turnbar';tb.innerHTML='🎤 <span class="who">'+esc(teams[guesser].name)+'</span> — make your guess';
+      $('revealBtn').style.display=clueLevel<4?'block':'none';$('passBtn').style.display='none';}
+    else{tb.className='turnbar steal';tb.innerHTML='🪝 Steal! <span class="who">'+esc(teams[guesser].name)+'</span> — your turn';
+      $('revealBtn').style.display='none';$('passBtn').style.display='block';}
+  }
+
+  /* ---------- guessing ---------- */
+  $('submitBtn').addEventListener('click',submitGuess);
+  $('guessSong').addEventListener('keydown',e=>{if(e.key==='Enter')submitGuess();});
+  $('guessArtist').addEventListener('keydown',e=>{if(e.key==='Enter')submitGuess();});
+
+  function submitGuess(){
+    const g=$('guessSong').value.trim();if(!g){flash('bad','Type a song title first!');return;}
+    const songOK=matchSong(g,song);
+    const artistOK=matchArtist($('guessArtist').value,song);
+    if(songOK){
+      let gain=PTS[clueLevel]+(artistOK?20:0);
+      teams[guesser].score+=gain;
+      endRound({winner:guesser,artist:artistOK,gain:gain});
+      return;
+    }
+    // wrong
+    teams[guesser].score-=10;
+    attempted.add(guesser);
+    flash('bad','Not quite — −10 for '+esc(teams[guesser].name)+'.');
+    $('guessSong').value='';$('guessArtist').value='';
+    advance();
+  }
+  $('passBtn').addEventListener('click',()=>{
+    attempted.add(guesser);flash('bad',esc(teams[guesser].name)+' passes.');advance();
+  });
+  $('revealBtn').addEventListener('click',()=>{
+    if(clueLevel>=4)return;
+    clueLevel++;attempted=new Set();guesser=activeIdx;phase='active';
+    $('guessSong').value='';$('guessArtist').value='';hideFeedback();renderGame();
+  });
+
+  function advance(){
+    // next team in order who hasn't attempted at this clue
+    const next=order.find(i=>!attempted.has(i));
+    if(next!==undefined){
+      guesser=next;phase=(next===activeIdx)?'active':'steal';
+      setTimeout(()=>{hideFeedback();renderGame();},650);
+      return;
+    }
+    // everyone attempted at this clue
+    if(clueLevel<4){
+      setTimeout(()=>{clueLevel++;attempted=new Set();guesser=activeIdx;phase='active';
+        hideFeedback();renderGame();},800);
+    }else{
+      setTimeout(()=>endRound({winner:-1}),700);
+    }
+  }
+
+  /* ---------- end of round ---------- */
+  function endRound(res){
+    $('rTitle').textContent='"'+song.title+'"';
+    $('rArtist').textContent=song.artist;
+    const rr=$('rResult');
+    if(res.winner>=0){
+      rr.style.color='#1b7a4b';
+      rr.innerHTML='✅ '+esc(teams[res.winner].name)+' got it! +'+res.gain+' pts'+(res.artist?' <span style="color:#c9783f">(incl. +20 artist bonus)</span>':'');
+      launchConfetti();
+    }else{
+      rr.style.color='#b23a1e';
+      rr.innerHTML='❌ Nobody guessed it this round — better luck next time!';
+    }
+    $('rFact').innerHTML='<b>🎶 Fun fact:</b> '+song.fun;
+    $('rTrivia').innerHTML='🏝️ <b>Sylt:</b> '+TRIVIA[Math.floor(Math.random()*TRIVIA.length)];
+    $('rLead').innerHTML=leaderHTML(false);
+    activeIdx=(activeIdx+1)%teams.length; // rotate who starts next round
+    show('result');
+  }
+  $('continueBtn').addEventListener('click',()=>{startRound();show('game');});
+  $('finishBtn').addEventListener('click',endGame);
+
+  /* ---------- game over ---------- */
   function endGame(){
-    $('game').style.display='none';
-    const max=Math.max(...scores);
-    const winners=teams.filter((t,i)=>scores[i]===max);
-    let html='<h2>🏆 '+(winners.length>1?'Tie!':'Winner!')+'</h2>';
-    html+='<p style="font-size:1.3rem;">'+winners.join(' & ')+' — '+max+' points</p>';
-    html+='<div class="scoreboard" style="margin-top:18px;">';
-    teams.forEach((t,i)=>{html+='<div class="scorechip">'+t+': '+scores[i]+'</div>';});
-    html+='</div><button class="big" onclick="location.reload()">Play again ▶</button>';
-    const e=$('end'); e.innerHTML=html; e.style.display='block';
+    const sorted=teams.slice().sort((a,b)=>b.score-a.score);
+    const medals=['🥇','🥈','🥉'];
+    $('ranking').innerHTML=sorted.map((t,i)=>'<div class="rank"><span class="medal">'+(medals[i]||'🏅')+
+      '</span><span class="nm">'+esc(t.name)+'</span><span class="sc">'+t.score+'</span></div>').join('');
+    show('over');
+  }
+  $('playAgain').addEventListener('click',()=>{
+    teams=teams.map(t=>({name:t.name,score:0}));show('welcome');renderTeams();
+  });
+
+  /* ---------- helpers ---------- */
+  function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0);}
+  function flash(type,msg){const f=$('feedback');f.className='feedback show '+type;f.textContent=msg;}
+  function hideFeedback(){$('feedback').className='feedback';}
+
+  /* neutral, non-copyrighted "mystery" arpeggio */
+  function playMystery(){
+    try{
+      const Ctx=window.AudioContext||window.webkitAudioContext;const ac=new Ctx();
+      const notes=[392,440,494,587,523];let t=ac.currentTime;
+      notes.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();
+        o.type='triangle';o.frequency.value=f;o.connect(g);g.connect(ac.destination);
+        g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.18,t+0.03);
+        g.gain.exponentialRampToValueAtTime(0.0001,t+0.34);o.start(t);o.stop(t+0.36);t+=0.28;});
+    }catch(e){}
+  }
+
+  /* ---------- confetti ---------- */
+  function launchConfetti(){
+    const cv=$('confetti'),ctx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;
+    const cols=['#3D7EA6','#F4A261','#8FB9A8','#6F8F5F','#E9D8B4','#fff'];
+    const parts=Array.from({length:120},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*0.5,
+      r:4+Math.random()*6,c:cols[Math.floor(Math.random()*cols.length)],
+      vy:2+Math.random()*4,vx:-2+Math.random()*4,rot:Math.random()*6,vr:-0.2+Math.random()*0.4}));
+    let frames=0;
+    (function anim(){frames++;ctx.clearRect(0,0,cv.width,cv.height);
+      parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;
+        ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;
+        ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);ctx.restore();});
+      if(frames<150)requestAnimationFrame(anim);else ctx.clearRect(0,0,cv.width,cv.height);
+    })();
   }
 })();
 </script>
@@ -1844,87 +2072,88 @@ renderIntro();
 </script>
 </template>
     <template id="game-B4"><style>
-  *{box-sizing:border-box;margin:0;padding:0;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;}
   body{font-family:'Segoe UI',sans-serif;overflow:hidden;color:#06384f;position:relative;
-    background:linear-gradient(180deg,#aee3ff 0%,#7fc8ef 38%,#3a9bd0 52%,#2b86bd 60%,#e9d2a0 60%,#efdcb0 100%);}
-  /* sea + sand split handled by gradient; add a soft sun */
-  .sun{position:absolute;top:7%;right:14%;width:70px;height:70px;border-radius:50%;
-    background:radial-gradient(circle,#fff6c9,#ffe680);box-shadow:0 0 40px #ffe68088;z-index:0;}
-  .sea-shimmer{position:absolute;top:52%;left:0;width:100%;height:8%;z-index:0;opacity:.5;
-    background:repeating-linear-gradient(90deg,#ffffff55 0 18px,transparent 18px 40px);}
-  /* background seagulls */
-  .gull{position:absolute;z-index:1;opacity:.9;animation:flyAcross linear infinite;}
-  @keyframes flyAcross{
-    0%{transform:translateX(-12vw) translateY(0);}
-    50%{transform:translateX(50vw) translateY(-14px);}
-    100%{transform:translateX(112vw) translateY(4px);}
-  }
-  .corner{position:absolute;z-index:1;}
-  .tl{top:6px;left:6px;} .tr{top:6px;right:6px;} .bl{bottom:6px;left:6px;} .br{bottom:6px;right:6px;}
+    background:linear-gradient(180deg,#cfe3ee,#5e93ab);}
+  .sky{position:absolute;top:0;left:0;width:100%;height:52%;z-index:0;
+    background:linear-gradient(180deg,#dbe9f0 0%,#bcd4df 60%,#a7c4d2 100%);}
+  .sea{position:absolute;top:48%;left:0;width:100%;height:52%;z-index:0;
+    background:linear-gradient(180deg,#4f8aa3 0%,#356b82 55%,#27566a 100%);}
+  .waves{position:absolute;top:46%;left:0;width:100%;height:60px;z-index:1;opacity:.6;}
+  .clouds{position:absolute;top:6%;left:0;width:100%;height:60px;z-index:0;opacity:.8;}
+  .gull{position:absolute;z-index:2;will-change:transform;}
+  .corner{position:absolute;z-index:2;}
+  .tl{top:4px;left:4px;} .tr{top:4px;right:4px;} .bl{bottom:118px;left:4px;} .br{bottom:118px;right:4px;}
   .ui{position:relative;z-index:5;height:100%;display:flex;flex-direction:column;align-items:center;}
   .topbar{width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;}
-  .icon{width:46px;height:46px;border-radius:50%;background:#ffffffdd;border:none;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(0,0,0,.2);font-size:1.3rem;}
-  .points{background:#06384f;color:#ffd60a;font-weight:bold;padding:9px 16px;border-radius:30px;box-shadow:0 3px 8px rgba(0,0,0,.2);}
-  h1{color:#fff;text-shadow:0 2px 8px #0e5a7d;font-size:1.5rem;margin:2px 0 0;}
+  .points{background:#06384f;color:#ffd60a;font-weight:bold;padding:9px 16px;border-radius:30px;box-shadow:0 3px 8px rgba(0,0,0,.25);}
+  .icon{width:48px;height:48px;border-radius:50%;background:#ffffffee;border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.25);font-size:1.4rem;position:relative;}
+  h1{color:#fff;text-shadow:0 2px 8px #27566a;font-size:1.5rem;margin:2px 0 0;}
   .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:100%;position:relative;}
-  .wheelwrap{position:relative;display:flex;flex-direction:column;align-items:center;}
+  .wheelwrap{position:relative;display:flex;flex-direction:column;align-items:center;z-index:3;}
   .pointer{width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;
-    border-top:30px solid #ffcf33;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35));margin-bottom:-8px;z-index:7;}
-  canvas#wheel{border-radius:50%;box-shadow:0 8px 24px rgba(0,0,0,.35);background:#fff;}
-  /* wooden board the wheel stands on */
-  .board{width:240px;height:34px;margin-top:-6px;border-radius:8px;
-    background:repeating-linear-gradient(90deg,#a9712f 0 22px,#9a6429 22px 24px);
-    border:3px solid #7a4d1c;box-shadow:0 8px 14px rgba(0,0,0,.3);position:relative;}
-  .legs{display:flex;justify-content:space-between;width:200px;}
-  .legs span{width:14px;height:46px;background:linear-gradient(90deg,#7a4d1c,#a9712f);border-radius:3px;margin-top:-2px;}
-  .turn{margin:14px 0 4px;padding:15px 40px;border:none;border-radius:40px;background:#0e5a7d;color:#fff;
-    font-size:1.2rem;font-weight:bold;cursor:pointer;box-shadow:0 6px 0 #073b53;}
+    border-top:30px solid #ffcf33;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4));margin-bottom:-10px;z-index:7;}
+  canvas#wheel{border-radius:50%;box-shadow:0 8px 26px rgba(0,0,0,.4);background:#fff;}
+  .board{position:absolute;bottom:74px;left:0;width:100%;height:40px;z-index:2;
+    background:repeating-linear-gradient(90deg,#a9712f 0 26px,#9a6429 26px 28px);
+    border-top:4px solid #c98a45;border-bottom:5px solid #6f441a;box-shadow:0 6px 14px rgba(0,0,0,.35);}
+  .turn{margin:0 0 18px;padding:15px 46px;border:none;border-radius:40px;background:#0e5a7d;color:#fff;
+    font-size:1.2rem;font-weight:bold;cursor:pointer;box-shadow:0 6px 0 #073b53;z-index:6;}
   .turn:active{transform:translateY(4px);box-shadow:0 2px 0 #073b53;}
   .turn:disabled{opacity:.6;}
-  .panel{position:fixed;inset:0;background:rgba(8,40,60,.78);display:none;z-index:20;align-items:center;justify-content:center;padding:18px;}
+  .panel{position:fixed;inset:0;background:rgba(8,40,60,.82);display:none;z-index:20;align-items:center;justify-content:center;padding:18px;}
   .panel.on{display:flex;}
-  .card{background:#fffaf0;border-radius:20px;padding:22px;max-width:420px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.4);}
+  .card{background:#fffaf0;border-radius:20px;padding:24px;max-width:420px;width:100%;text-align:center;box-shadow:0 12px 34px rgba(0,0,0,.45);}
   .card h2{color:#0e5a7d;margin-bottom:8px;}
+  .intro-card{border:4px solid #ffcf33;box-shadow:0 0 0 4px #ffcf3340,0 12px 34px rgba(0,0,0,.45);}
+  .intro-card p{font-size:1.05rem;line-height:1.55;color:#234b5e;margin:10px 0 4px;}
   textarea{width:100%;height:90px;border-radius:12px;border:2px solid #7fc8ef;padding:10px;font-family:inherit;font-size:1rem;resize:none;margin-top:10px;}
   .send{margin-top:12px;padding:13px 26px;border:none;border-radius:30px;background:#06d6a0;color:#04372a;font-weight:bold;font-size:1.05rem;cursor:pointer;}
   .close{margin-top:10px;background:none;border:none;color:#e5383b;font-weight:bold;cursor:pointer;font-size:1rem;}
+  .gold-btn{margin-top:16px;padding:14px 30px;border:none;border-radius:40px;background:#ffcf33;color:#5a4500;font-weight:800;font-size:1.1rem;cursor:pointer;box-shadow:0 5px 0 #c79a00;}
+  .gold-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #c79a00;}
   .inboxlist{text-align:left;max-height:50vh;overflow:auto;margin-top:10px;}
   .inboxlist .msg{background:#eaf6ff;border-left:5px solid #06d6a0;border-radius:8px;padding:11px 13px;margin:8px 0;}
   .hint{font-size:.82rem;color:#3a5a7a;margin-top:8px;}
-  .editbtn{margin-top:8px;background:none;border:none;color:#0e5a7d;text-decoration:underline;cursor:pointer;font-size:.85rem;}
 </style>
 
-<div class="sun"></div>
-<div class="sea-shimmer"></div>
+<div class="sky"></div>
+<div class="sea"></div>
+<svg class="clouds" id="clouds" preserveAspectRatio="none" viewBox="0 0 400 60"></svg>
+<svg class="waves" id="waves" preserveAspectRatio="none" viewBox="0 0 400 60"></svg>
 <div id="gulls"></div>
 
-<!-- seashells & mussels in the corners -->
-<svg class="corner tl" width="64" height="64" id="c-tl"></svg>
-<svg class="corner tr" width="64" height="64" id="c-tr"></svg>
-<svg class="corner bl" width="68" height="68" id="c-bl"></svg>
-<svg class="corner br" width="68" height="68" id="c-br"></svg>
+<svg class="corner tl" width="96" height="80" id="c-tl"></svg>
+<svg class="corner tr" width="96" height="80" id="c-tr"></svg>
+<svg class="corner bl" width="96" height="80" id="c-bl"></svg>
+<svg class="corner br" width="96" height="80" id="c-br"></svg>
 
 <div class="ui">
   <div class="topbar">
-    <button class="icon" id="mailBtn" title="My compliments">✉</button>
     <div class="points">⭐ <span id="pts">0</span></div>
+    <button class="icon" id="mailBtn" title="Compliments you got">✉</button>
   </div>
   <h1>Make a Compliment</h1>
   <div class="stage">
     <div class="wheelwrap">
       <div class="pointer"></div>
-      <canvas id="wheel" width="260" height="260"></canvas>
-      <div class="board"></div>
-      <div class="legs"><span></span><span></span></div>
+      <canvas id="wheel" width="300" height="300"></canvas>
     </div>
+    <div class="board"></div>
     <button class="turn" id="turnBtn">TURN</button>
-    <button class="editbtn" id="editBtn">✎ Edit names</button>
   </div>
 </div>
 
-<!-- compliment panel -->
+<div class="panel on" id="introPanel">
+  <div class="card intro-card">
+    <h2>🪶 Make a Compliment</h2>
+    <p>Hi, here you can give your classmates compliments! The more compliments you give people, the more points you get. At the top right corner you can see what compliments you got!</p>
+    <button class="gold-btn" id="introOk">Let's go!</button>
+  </div>
+</div>
+
 <div class="panel" id="compPanel">
   <div class="card">
     <h2 id="compTitle">Give a compliment</h2>
@@ -1935,23 +2164,11 @@ renderIntro();
   </div>
 </div>
 
-<!-- inbox panel -->
 <div class="panel" id="inboxPanel">
   <div class="card">
-    <h2>📬 My compliments</h2>
+    <h2>📬 Compliments you got</h2>
     <div id="inboxBody"></div>
     <button class="close" id="closeInbox">Close</button>
-  </div>
-</div>
-
-<!-- edit names panel -->
-<div class="panel" id="editPanel">
-  <div class="card">
-    <h2>Edit wheel names</h2>
-    <p class="hint">Use your class list <strong>surnames</strong>, one per line.</p>
-    <textarea id="namesText" style="height:160px;"></textarea>
-    <br><button class="send" id="saveNames">Save</button>
-    <br><button class="close" id="closeEdit">Cancel</button>
   </div>
 </div>
 
@@ -1959,131 +2176,119 @@ renderIntro();
 (function(){
   const $=id=>document.getElementById(id);
 
-  /* ---- corner shells & mussels ---- */
-  function scallop(){return '<g transform="translate(4,4)"><path d="M28 4 C12 4 2 22 2 42 C2 50 8 56 16 56 L40 56 C48 56 54 50 54 42 C54 22 44 4 28 4Z" fill="#ffd9ec" stroke="#e07ba8" stroke-width="2.5"/><path d="M28 56 L28 8 M28 56 L10 18 M28 56 L46 18 M28 56 L4 36 M28 56 L52 36" stroke="#e07ba8" stroke-width="2" fill="none"/></g>';}
-  function mussel(){return '<g transform="translate(6,4)"><path d="M30 2 C14 8 4 34 12 56 C24 62 44 62 52 50 C56 30 48 8 30 2Z" fill="#3a4a6b" stroke="#1d2740" stroke-width="2.5"/><path d="M30 6 C20 18 18 40 24 56" stroke="#5a6b8b" stroke-width="2" fill="none"/><path d="M30 6 C40 18 44 40 40 56" stroke="#5a6b8b" stroke-width="2" fill="none"/></g>';}
-  $('c-tl').innerHTML=scallop(); $('c-br').innerHTML=scallop();
-  $('c-tr').innerHTML=mussel();  $('c-bl').innerHTML=mussel();
+  (function(){
+    let c='';
+    for(let i=0;i<4;i++){const x=20+i*100+Math.random()*30,y=8+Math.random()*22,s=0.7+Math.random()*0.6;
+      c+='<g transform="translate('+x+','+y+') scale('+s+')" fill="#ffffff" opacity="0.85"><ellipse cx="0" cy="0" rx="18" ry="10"/><ellipse cx="16" cy="4" rx="13" ry="8"/><ellipse cx="-16" cy="4" rx="13" ry="8"/></g>';}
+    $('clouds').innerHTML=c;
+    let w='<path d="M0 30 ';
+    for(let x=0;x<=400;x+=20)w+='Q '+(x+10)+' '+(22+Math.sin(x)*4)+' '+(x+20)+' 30 ';
+    w+='V60 H0 Z" fill="#5e93ab"/>';
+    w+='<path d="M0 40 ';for(let x=0;x<=400;x+=24)w+='Q '+(x+12)+' 33 '+(x+24)+' 40 ';
+    w+='V60 H0 Z" fill="#4f8aa3" opacity="0.7"/>';
+    $('waves').innerHTML=w;
+  })();
 
-  /* ---- background seagulls (look like seagulls, gentle wing arc) ---- */
-  function gullSVG(){
-    return '<svg width="46" height="22" viewBox="0 0 46 22"><path d="M2 14 C10 2 18 12 23 12 C28 12 36 2 44 14" fill="none" stroke="#f4f9ff" stroke-width="3" stroke-linecap="round"/><path d="M2 14 C10 5 18 13 23 13 C28 13 36 5 44 14" fill="none" stroke="#cfe3f0" stroke-width="1.5"/></svg>';
+  function gull(){
+    const g=document.createElement('div');g.className='gull';
+    g.innerHTML='<svg width="44" height="26" viewBox="0 0 44 26"><path d="M2 16 C10 4 18 14 22 14 C26 14 34 4 42 16" fill="none" stroke="#f6fbff" stroke-width="3" stroke-linecap="round"/><path d="M2 16 C10 7 18 15 22 15 C26 15 34 7 42 16" fill="none" stroke="#c9dceb" stroke-width="1.4"/></svg>';
+    return g;
   }
-  const gulls=$('gulls');
-  for(let i=0;i<6;i++){
-    const g=document.createElement('div'); g.className='gull';
-    g.innerHTML=gullSVG();
-    g.style.top=(6+Math.random()*38)+'%';
-    g.style.transform='scale('+(0.5+Math.random()*0.8)+')';
-    g.style.animationDuration=(13+Math.random()*12)+'s';
-    g.style.animationDelay=(-Math.random()*20)+'s';
-    gulls.appendChild(g);
+  const gbox=$('gulls');const gullData=[];
+  for(let i=0;i<5;i++){
+    const el=gull();gbox.appendChild(el);
+    gullData.push({el,x:Math.random()*window.innerWidth,y:20+Math.random()*window.innerHeight*0.34,
+      vx:(0.25+Math.random()*0.45),sc:0.55+Math.random()*0.8,ph:Math.random()*6});
   }
+  function flyGulls(t){
+    const w=window.innerWidth;
+    gullData.forEach(g=>{
+      g.x+=g.vx; if(g.x>w+40){g.x=-40;g.y=20+Math.random()*window.innerHeight*0.34;}
+      const flap=0.6+Math.abs(Math.sin(t*0.006+g.ph))*0.5;
+      g.el.style.transform='translate('+g.x+'px,'+(g.y+Math.sin(t*0.002+g.ph)*8)+'px) scale('+g.sc+','+(g.sc*flap)+')';
+    });
+    requestAnimationFrame(flyGulls);
+  }
+  requestAnimationFrame(flyGulls);
 
-  /* ---- data ---- */
-  let names=['Bauer','Schmidt','Müller','Fischer','Weber','Wagner','Becker','Hoffmann','Koch','Richter','Klein','Wolf'];
-  const inbox={}; // recipient(lowercase) -> [compliments]
-  let points=0;
+  const PASTELS=['#ffd9ec','#d9ecff','#fff1c1','#d9ffe7','#e7d9ff','#ffe0cc','#d9fbff'];
+  function shell(x,y,s,col){
+    return '<g transform="translate('+x+','+y+') scale('+s+')">'+
+      '<path d="M22 2 C9 2 1 16 1 30 C1 36 5 41 11 41 L33 41 C39 41 43 36 43 30 C43 16 35 2 22 2Z" fill="'+col+'" stroke="#0003" stroke-width="1.2"/>'+
+      '<path d="M22 41 L22 6 M22 41 L8 14 M22 41 L36 14 M22 41 L3 26 M22 41 L41 26" stroke="#00000022" stroke-width="1.4" fill="none"/></g>';
+  }
+  function cluster(id){
+    const n=3+Math.floor(Math.random()*2); let s='';
+    const cols=PASTELS.slice().sort(()=>Math.random()-0.5);
+    for(let i=0;i<n;i++) s+=shell(4+i*22+Math.random()*6, 14+Math.random()*30, 0.5+Math.random()*0.35, cols[i%cols.length]);
+    $(id).innerHTML=s;
+  }
+  ['c-tl','c-tr','c-bl','c-br'].forEach(cluster);
 
-  /* ---- wheel ---- */
-  const cv=$('wheel'), ctx=cv.getContext('2d');
-  const R=cv.width/2, cx=R, cy=R;
-  const palette=['#0e5a7d','#1a7abf','#06d6a0','#ffb703','#ef476f','#8338ec','#3a86ff','#fb8500','#2a9d8f','#e76f51','#118ab2','#ff70a6'];
-  let angle=0, spinning=false;
+  const names=['Ada','Alexandra','Ayumi','Bela','Caroline','Charlotte','Clara','Domenick','Emma',
+    'Felix G.','Felix L.','Franz','Jakob','Jonathan','Julian','Juna','Laura','Laurenzia','Leah',
+    'Leandra','Livia','Marinus','Mathis','Matthäus','Milo','Nathan','Noah','Oswald','Paul','Rio','Severin','Weiyang'];
+  const inbox={}; let points=0;
 
+  const cv=$('wheel'),ctx=cv.getContext('2d');
+  const R=cv.width/2,cx=R,cy=R; let angle=0,spinning=false;
+  const RED='#e63946', WHITE='#ffffff';
   function drawWheel(){
-    const n=names.length, seg=2*Math.PI/n;
+    const n=names.length,seg=2*Math.PI/n;
     ctx.clearRect(0,0,cv.width,cv.height);
     for(let i=0;i<n;i++){
-      const a0=angle+i*seg, a1=a0+seg;
+      const a0=angle+i*seg,a1=a0+seg,red=i%2===0;
       ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R-4,a0,a1);ctx.closePath();
-      ctx.fillStyle=palette[i%palette.length];ctx.fill();
-      ctx.strokeStyle='#ffffff';ctx.lineWidth=2;ctx.stroke();
-      // label
+      ctx.fillStyle=red?RED:WHITE;ctx.fill();
+      ctx.strokeStyle='#0e5a7d';ctx.lineWidth=1;ctx.stroke();
       ctx.save();ctx.translate(cx,cy);ctx.rotate(a0+seg/2);
-      ctx.fillStyle='#fff';ctx.font='bold 13px Segoe UI';ctx.textAlign='right';
-      ctx.fillText(names[i].slice(0,12),R-12,5);ctx.restore();
+      ctx.fillStyle=red?'#fff':'#c1121f';ctx.font='bold 10px Segoe UI';ctx.textAlign='right';
+      ctx.fillText(names[i],R-10,3);ctx.restore();
     }
-    ctx.beginPath();ctx.arc(cx,cy,16,0,2*Math.PI);ctx.fillStyle='#fffaf0';ctx.fill();
-    ctx.strokeStyle='#0e5a7d';ctx.lineWidth=3;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,16,0,7);ctx.fillStyle='#0e5a7d';ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.stroke();
   }
   drawWheel();
-
-  function buzz(ms){ if(navigator.vibrate) navigator.vibrate(ms); }
+  function buzz(ms){if(navigator.vibrate)navigator.vibrate(ms);}
 
   $('turnBtn').addEventListener('click',function(){
-    if(spinning) return; spinning=true; $('turnBtn').disabled=true; buzz(20);
-    const spins=5+Math.random()*4, total=spins*2*Math.PI+Math.random()*2*Math.PI;
-    const start=angle, t0=performance.now(), dur=3600;
-    function frame(t){
-      const k=Math.min(1,(t-t0)/dur);
-      const ease=1-Math.pow(1-k,3);
-      angle=start+total*ease; drawWheel();
-      if(k<1){requestAnimationFrame(frame);}
+    if(spinning)return;spinning=true;$('turnBtn').disabled=true;buzz(20);
+    const total=(5+Math.random()*4)*2*Math.PI+Math.random()*2*Math.PI,start=angle,t0=performance.now(),dur=3600;
+    requestAnimationFrame(function frame(t){
+      const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);
+      angle=start+total*e;drawWheel();
+      if(k<1)requestAnimationFrame(frame);
       else{spinning=false;$('turnBtn').disabled=false;buzz(40);landed();}
-    }
-    requestAnimationFrame(frame);
+    });
   });
-
   function landed(){
-    // pointer is at top (-90deg). find segment under it.
-    const n=names.length, seg=2*Math.PI/n;
-    let pointerAng=(-Math.PI/2 - angle)%(2*Math.PI);
-    if(pointerAng<0) pointerAng+=2*Math.PI;
-    const idx=Math.floor(pointerAng/seg)%n;
-    openComp(names[idx]);
+    const n=names.length,seg=2*Math.PI/n;
+    let p=(-Math.PI/2-angle)%(2*Math.PI);if(p<0)p+=2*Math.PI;
+    openComp(names[Math.floor(p/seg)%n]);
   }
 
-  /* ---- compliment flow ---- */
-  let currentTarget=null;
-  function openComp(name){
-    currentTarget=name;
-    $('compTitle').textContent='Give '+name+' a compliment';
-    $('compText').value='';
-    $('compPanel').classList.add('on');
-    setTimeout(()=>$('compText').focus(),100);
-  }
+  let target=null;
+  function openComp(name){target=name;$('compTitle').textContent='Give '+name+' a compliment';$('compText').value='';
+    $('compPanel').classList.add('on');setTimeout(()=>$('compText').focus(),100);}
   $('sendBtn').addEventListener('click',function(){
-    const txt=$('compText').value.trim();
-    if(!txt){return;}
-    const key=currentTarget.toLowerCase();
-    (inbox[key]=inbox[key]||[]).push(txt);
-    points++; $('pts').textContent=points; buzz(30);
-    $('compPanel').classList.remove('on');
+    const t=$('compText').value.trim();if(!t)return;
+    const k=target.toLowerCase();(inbox[k]=inbox[k]||[]).push(t);
+    points++;$('pts').textContent=points;buzz(30);$('compPanel').classList.remove('on');
   });
   $('closeComp').addEventListener('click',()=>$('compPanel').classList.remove('on'));
 
-  /* ---- inbox: ask name, show anonymous compliments ---- */
   $('mailBtn').addEventListener('click',function(){
-    const who=prompt('What is your name? (use your class-list surname)');
-    if(who===null) return;
-    const key=who.trim().toLowerCase();
-    const msgs=(key&&inbox[key])?inbox[key]:[];
-    let html='';
-    if(msgs.length===0){
-      html='<p class="hint">No compliments for "'+ (who.trim()||'—') +'" yet. Check back later!</p>';
-    }else{
-      html='<div class="inboxlist">'+msgs.map(m=>'<div class="msg">'+escapeHtml(m)+'</div>').join('')+'</div>';
-      html+='<p class="hint">You can\'t see who sent them — that\'s the secret part 🤫</p>';
-    }
-    $('inboxBody').innerHTML=html;
+    const who=prompt('What is your name?');if(who===null)return;
+    const msgs=inbox[who.trim().toLowerCase()]||[];
+    $('inboxBody').innerHTML = msgs.length
+      ? '<div class="inboxlist">'+msgs.map(m=>'<div class="msg">'+esc(m)+'</div>').join('')+'</div><p class="hint">You can\'t see who sent them — that\'s the secret 🤫</p>'
+      : '<p class="hint">No compliments for "'+esc(who.trim()||'—')+'" yet. Check back later!</p>';
     $('inboxPanel').classList.add('on');
   });
   $('closeInbox').addEventListener('click',()=>$('inboxPanel').classList.remove('on'));
+  function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
-  function escapeHtml(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-
-  /* ---- edit names ---- */
-  $('editBtn').addEventListener('click',function(){
-    $('namesText').value=names.join('\n');
-    $('editPanel').classList.add('on');
-  });
-  $('saveNames').addEventListener('click',function(){
-    const arr=$('namesText').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,16);
-    if(arr.length>=2){names=arr;drawWheel();}
-    $('editPanel').classList.remove('on');
-  });
-  $('closeEdit').addEventListener('click',()=>$('editPanel').classList.remove('on'));
+  $('introOk').addEventListener('click',()=>$('introPanel').classList.remove('on'));
 })();
 </script>
 </template>
@@ -2994,6 +3199,7 @@ renderIntro();
     <span class="chip">🏖 <span id="sand">0</span></span>
   </div>
   <button class="dropbtn" id="dropBtn" style="display:none;">⚓ Drop</button>
+  <button id="ingameShop" style="display:none;position:absolute;top:10px;right:10px;z-index:6;background:#ffd166;color:#013a63;border:none;border-radius:12px;padding:8px 12px;font-weight:bold;font-size:.95rem;cursor:pointer;font-family:inherit;box-shadow:0 3px 8px rgba(0,0,0,.3);">🛒 Shop</button>
 
   <div class="screen" id="start">
     <h1>⚓ Tilt It</h1>
@@ -3006,6 +3212,7 @@ renderIntro();
   <div class="screen hidden" id="shop">
     <h1>🛒 Upgrades</h1>
     <div class="coinrow">🏖 <span id="bankShop">0</span> sand</div>
+    <p class="small">🏖 sand is your currency — earn it by fishing up junk, then spend it here (even mid-run).</p>
     <div id="shopList"></div>
     <button class="btn" id="shopBack">⬅ Back</button>
   </div>
@@ -3015,6 +3222,12 @@ renderIntro();
     <p class="small" id="overMsg"></p>
     <button class="btn play" id="againBtn">Play again</button>
     <button class="btn" id="overShop">🛒 Shop</button>
+  </div>
+
+  <div class="screen hidden" id="howto">
+    <h1>⚓ How to play</h1>
+    <p class="small">Your boat sails in a straight line back and forth. Tap <strong>⚓ Drop</strong> to lower the hook — the boat holds still while it's down. Reel up <strong>junk</strong> to earn <strong>🏖 sand</strong>, your currency. Spend sand in the <strong>🛒 Shop</strong> — you can even open it mid-run! Energy ticks down, so keep collecting, and <strong>avoid the bombs 💣</strong>.</p>
+    <button class="btn play" id="howtoOk">Got it — set sail!</button>
   </div>
 </div>
 
@@ -3038,40 +3251,67 @@ renderIntro();
     {key:'motor',name:'Efficient motor',base:30,desc:'energy lasts longer',max:4}
   ];
   const cost=it=>Math.round(it.base*Math.pow(1.8,up[it.key]));
+  function curBal(){return shopReturn==='game'?sand:bank;}
   function renderShop(){
-    $('bankShop').textContent=bank;$('bankStart').textContent=bank;
+    $('bankShop').textContent=curBal();$('bankStart').textContent=bank;
     const L=$('shopList');L.innerHTML='';
     SHOP.forEach(it=>{const lvl=up[it.key],maxed=lvl>=it.max,c=cost(it);
       const d=document.createElement('div');d.className='shopitem';
       d.innerHTML='<div style="text-align:left;"><strong>'+it.name+'</strong><br><span class="small">'+it.desc+' · Lv '+lvl+'/'+it.max+'</span></div>';
-      const b=document.createElement('button');b.textContent=maxed?'MAX':('🏖 '+c);b.disabled=maxed||bank<c;
-      b.addEventListener('click',()=>{if(!maxed&&bank>=c){bank-=c;up[it.key]++;renderShop();}});
+      const b=document.createElement('button');b.textContent=maxed?'MAX':('🏖 '+c);b.disabled=maxed||curBal()<c;
+      b.addEventListener('click',()=>{if(!maxed&&curBal()>=c){if(shopReturn==='game')sand-=c;else bank-=c;up[it.key]++;renderShop();}});
       d.appendChild(b);L.appendChild(d);});
   }
-  $('shopBtn').addEventListener('click',()=>{renderShop();$('start').classList.add('hidden');$('shop').classList.remove('hidden');});
-  $('overShop').addEventListener('click',()=>{$('over').classList.add('hidden');renderShop();$('shop').classList.remove('hidden');});
-  $('shopBack').addEventListener('click',()=>{$('shop').classList.add('hidden');$('start').classList.remove('hidden');$('bankStart').textContent=bank;});
+  $('shopBtn').addEventListener('click',()=>{shopReturn='start';renderShop();$('start').classList.add('hidden');$('shop').classList.remove('hidden');});
+  $('overShop').addEventListener('click',()=>{shopReturn='over';$('over').classList.add('hidden');renderShop();$('shop').classList.remove('hidden');});
+  $('ingameShop').addEventListener('click',()=>{
+    if(shopReturn==='game'&&!$('shop').classList.contains('hidden'))return;
+    shopReturn='game';running=false;
+    $('ingameShop').style.display='none';$('dropBtn').style.display='none';$('hud').style.display='none';
+    renderShop();$('shop').classList.remove('hidden');
+  });
+  $('shopBack').addEventListener('click',()=>{
+    $('shop').classList.add('hidden');
+    if(shopReturn==='game'){
+      $('sand').textContent=sand;$('hud').style.display='flex';$('dropBtn').style.display='block';$('ingameShop').style.display='block';
+      running=true;last=performance.now();
+    }else if(shopReturn==='over'){
+      $('over').classList.remove('hidden');
+    }else{
+      $('start').classList.remove('hidden');
+    }
+    $('bankStart').textContent=bank;
+  });
+  $('howtoOk').addEventListener('click',()=>{$('howto').classList.add('hidden');seenHowto=true;running=true;last=performance.now();});
 
   /* game state */
-  let boat,hook,junk,energy,maxEnergy,sand,running,raf,last,driftTarget,driftT,shake;
-  const JUNK_TYPES=['can','bottle','tire','crate','bomb'];
+  let boat,hook,junk,energy,maxEnergy,sand,running,raf,last,shake;
+  let shopReturn='start', seenHowto=false;
+  const CATCH_TYPES=['can','bottle','tire','crate','boot','jug'];
+  const JUNK_VALUE={can:3,bottle:4,tire:6,crate:8,boot:5,jug:7};
 
   function startGame(){
     $('start').classList.add('hidden');$('shop').classList.add('hidden');$('over').classList.add('hidden');
     $('hud').style.display='flex';$('dropBtn').style.display='block';$('dropBtn').disabled=false;
-    boat={x:W/2,vx:0};
+    boat={x:W/2,dir:1};
     hook={state:'idle',y:seaTop,x:W/2,caught:null};
     junk=[];maxEnergy=100;energy=maxEnergy;sand=0;shake=0;
-    driftTarget=rand(W*0.2,W*0.8);driftT=0;
-    for(let i=0;i<7;i++)spawnJunk(rand(seaTop+40,floorY-20));
-    running=true;last=performance.now();
+    for(let i=0;i<7;i++)spawnJunk();
+    $('ingameShop').style.display='block';
+    last=performance.now();
     if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);
+    if(!seenHowto){running=false;$('howto').classList.remove('hidden');}else{running=true;}
   }
-  function spawnJunk(y){
-    const depthBias=Math.random();
-    const type=Math.random()<0.22?'bomb':JUNK_TYPES[Math.floor(Math.random()*4)];
-    junk.push({type,x:rand(20,W-20),y:y!=null?y:rand(seaTop+40,floorY-20),
-      vx:rand(-.5,.5)||0.3,rot:rand(0,6),size:rand(.85,1.2)});
+  function spawnJunk(y,forceCatch){
+    const reach=ropeLen();
+    const type=forceCatch?CATCH_TYPES[Math.floor(Math.random()*CATCH_TYPES.length)]
+      :(Math.random()<0.22?'bomb':CATCH_TYPES[Math.floor(Math.random()*CATCH_TYPES.length)]);
+    let yy;
+    if(y!=null) yy=y;
+    else if(forceCatch) yy=rand(seaTop+34,Math.max(seaTop+60,reach-12));
+    else if(type!=='bomb'&&Math.random()<0.65) yy=rand(seaTop+34,Math.max(seaTop+60,reach-12)); // catchables spawn near the top much more often
+    else yy=rand(seaTop+44,floorY-20);
+    junk.push({type,x:rand(20,W-20),y:yy,vx:rand(-.5,.5)||0.3,rot:rand(0,6),size:rand(.85,1.2)});
   }
 
   $('dropBtn').addEventListener('click',()=>{
@@ -3081,7 +3321,8 @@ renderIntro();
 
   function loop(t){raf=requestAnimationFrame(loop);const dt=Math.min(50,t-last);last=t;update(dt);draw();}
 
-  const ropeLen=()=>seaTop+ (floorY-seaTop)*(0.5+0.1*up.rope);
+  const ropeLen=()=>seaTop+ (floorY-seaTop)*Math.min(1,0.72+0.085*up.rope);
+  const boatSpeed=()=>0.13; // constant, linear
   const winchSpd=()=>1.6+0.5*up.winch;
   const hookR=()=>16+5*up.hook;
   const motorDrain=()=>0.9 - 0.13*up.motor; // energy/sec
@@ -3092,15 +3333,11 @@ renderIntro();
     energy-=motorDrain()*dt/1000;
     if(energy<=0){return end();}
 
-    // boat drift — non-linear: eased toward wandering target + sine sway, only when anchor is up
+    // boat moves in a steady LINEAR line, bouncing at the edges — stops while the hook is down
     if(hook.state==='idle'){
-      driftT+=dt;
-      if(driftT>rand(1200,2600)){driftT=0;driftTarget=rand(W*0.15,W*0.85);}
-      const desired=driftTarget+Math.sin(performance.now()*0.0012)*30;
-      const ax=(desired-boat.x)*0.0008*dt;     // acceleration toward target
-      boat.vx=(boat.vx+ax)*0.96;               // momentum + drag (eased, non-linear)
-      boat.x+=boat.vx*dt;
-      boat.x=Math.max(40,Math.min(W-40,boat.x));
+      boat.x+=boat.dir*boatSpeed()*dt;
+      if(boat.x<=40){boat.x=40;boat.dir=1;}
+      else if(boat.x>=W-40){boat.x=W-40;boat.dir=-1;}
     } // else: boat STOPS while anchor deployed
 
     // hook movement
@@ -3116,7 +3353,7 @@ renderIntro();
       hook.y-=winchSpd()*dt*0.075;
       if(hook.caught){hook.caught.x=hook.x;hook.caught.y=hook.y;}
       if(hook.y<=seaTop){hook.y=seaTop;hook.state='idle';$('dropBtn').disabled=false;
-        if(hook.caught){const v={can:3,bottle:4,tire:6,crate:8}[hook.caught.type]||3;
+        if(hook.caught){const v=JUNK_VALUE[hook.caught.type]||3;
           sand+=v;energy=Math.min(maxEnergy,energy+5);
           junk=junk.filter(j=>j!==hook.caught);hook.caught=null;}}
     }
@@ -3124,7 +3361,10 @@ renderIntro();
     // junk drift + dynamic faster respawn
     for(const j of junk){if(j.taken&&j!==hook.caught)continue;j.x+=j.vx*dt*0.03;if(j.x<14||j.x>W-14)j.vx*=-1;j.rot+=dt*0.0006;}
     junk=junk.filter(j=>!(j.taken&&j!==hook.caught));
-    while(junk.length<9)spawnJunk(); // keep the bay full, spawns continuously & fast
+    while(junk.length<9)spawnJunk();
+    // always guarantee at least one catchable item within current hook reach
+    const reach=ropeLen();
+    if(!junk.some(j=>j.type!=='bomb'&&!j.taken&&j.y<=reach-6)) spawnJunk(null,true);
 
     if(shake>0)shake-=dt*0.05;
     $('energy').style.width=(energy/maxEnergy*100)+'%';
@@ -3182,6 +3422,13 @@ renderIntro();
       case 'crate':
         ctx.fillStyle='#a1672f';ctx.fillRect(-12,-12,24,24);ctx.strokeStyle='#6e4520';ctx.lineWidth=3;ctx.strokeRect(-12,-12,24,24);
         ctx.beginPath();ctx.moveTo(-12,-12);ctx.lineTo(12,12);ctx.moveTo(12,-12);ctx.lineTo(-12,12);ctx.stroke();break;
+      case 'boot':
+        ctx.fillStyle='#5d4037';ctx.beginPath();ctx.moveTo(-8,-12);ctx.lineTo(4,-12);ctx.lineTo(4,6);ctx.lineTo(15,6);ctx.lineTo(15,13);ctx.lineTo(-8,13);ctx.closePath();ctx.fill();
+        ctx.fillStyle='#3e2723';ctx.fillRect(-9,11,25,4);ctx.fillStyle='#8d6e63';ctx.fillRect(-8,-12,12,4);break;
+      case 'jug':
+        ctx.fillStyle='#26a69a';ctx.beginPath();ctx.arc(0,3,11,0,7);ctx.fill();ctx.fillRect(-4,-13,8,7);
+        ctx.strokeStyle='#00796b';ctx.lineWidth=3;ctx.beginPath();ctx.arc(11,1,6,-1.2,1.2);ctx.stroke();
+        ctx.fillStyle='#b2dfdb';ctx.fillRect(-6,-1,12,5);break;
       case 'bomb':
         ctx.fillStyle='#212121';ctx.beginPath();ctx.arc(0,2,12,0,7);ctx.fill();
         ctx.fillStyle='#616161';ctx.fillRect(-3,-12,6,5);
@@ -3194,7 +3441,7 @@ renderIntro();
   function end(){running=false;if(raf)cancelAnimationFrame(raf);bank+=sand;buzz(80);
     $('overTitle').textContent='Out of energy!';
     $('overMsg').textContent='You collected 🏖 '+sand+' sand this run. Banked total: '+bank+'. Spend it in the shop!';
-    $('hud').style.display='none';$('dropBtn').style.display='none';$('over').classList.remove('hidden');}
+    $('hud').style.display='none';$('dropBtn').style.display='none';$('ingameShop').style.display='none';$('over').classList.remove('hidden');}
 
   $('playBtn').addEventListener('click',startGame);
   $('againBtn').addEventListener('click',startGame);
