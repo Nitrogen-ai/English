@@ -771,13 +771,11 @@ step1();
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   body{font-family:'Caveat',cursive;background:#1c140a;color:#f3e2c0;min-height:100vh;
        display:flex;flex-direction:column;align-items:center;user-select:none;overflow:hidden;}
-  /* sand + dark vignette stage */
   #stage{position:relative;width:100%;max-width:480px;min-height:100vh;
-         background:radial-gradient(120% 80% at 50% 30%,#caa46a 0%,#8a6a3c 45%,#3c2c16 100%);
-         overflow:hidden;}
+         background:radial-gradient(120% 80% at 50% 30%,#caa46a 0%,#8a6a3c 45%,#3c2c16 100%);overflow:hidden;}
   #stage::after{content:'';position:absolute;inset:0;pointer-events:none;
          box-shadow:inset 0 0 140px 50px rgba(10,6,2,.85);}
-  .hiedirections{position:absolute;inset:0;opacity:.07;pointer-events:none;
+  .hiero{position:absolute;inset:0;opacity:.07;pointer-events:none;
          background:repeating-linear-gradient(90deg,transparent 0 38px,#1c140a 38px 40px);}
   .topbar{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;gap:8px;padding:10px;}
   .tbtn{font-family:'Cinzel',serif;font-size:13px;background:rgba(28,20,10,.85);color:#ffd98a;
@@ -785,61 +783,81 @@ step1();
   .tbtn:active{transform:scale(.95);}
   .stat{margin-left:auto;font-family:'Cinzel',serif;font-size:12px;color:#ffe6ad;
         background:rgba(28,20,10,.85);border:2px solid #b6894a;border-radius:10px;padding:7px 10px;display:flex;gap:10px;}
+  .progress-pill{position:absolute;top:52px;left:50%;transform:translateX(-50%);z-index:5;
+        font-family:'Cinzel',serif;font-size:11px;color:#ffe6ad;background:rgba(28,20,10,.8);
+        border:1px solid #b6894a;border-radius:99px;padding:4px 12px;}
   .scene{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;
-         align-items:center;justify-content:center;padding:64px 24px 30px;text-align:center;}
-  h1{font-family:'Cinzel',serif;font-size:30px;color:#ffd98a;text-shadow:0 2px 8px #1c140a;margin-bottom:6px;}
-  .scroll{background:rgba(247,232,200,.92);color:#4a3414;border-radius:14px;padding:18px 18px;
-          max-width:380px;box-shadow:0 8px 24px rgba(0,0,0,.5);transform:rotate(-.6deg);}
-  .scroll p{font-size:23px;line-height:1.3;}
-  .scroll .small{font-size:18px;opacity:.8;}
-  .btn{font-family:'Cinzel',serif;font-size:16px;font-weight:600;background:#caa46a;color:#2a1d0c;
-       border:none;border-radius:99px;padding:11px 26px;margin-top:14px;cursor:pointer;
-       box-shadow:0 4px 0 #8a6a3c;}
+         align-items:center;justify-content:center;padding:78px 22px 28px;text-align:center;overflow-y:auto;}
+  h1{font-family:'Cinzel',serif;font-size:27px;color:#ffd98a;text-shadow:0 2px 8px #1c140a;margin-bottom:6px;}
+  .scroll{background:rgba(247,232,200,.93);color:#4a3414;border-radius:14px;padding:16px 18px;
+          max-width:380px;box-shadow:0 8px 24px rgba(0,0,0,.5);transform:rotate(-.5deg);}
+  .scroll p{font-size:22px;line-height:1.3;}
+  .scroll .small{font-size:17px;opacity:.8;}
+  .btn{font-family:'Cinzel',serif;font-size:15px;font-weight:600;background:#caa46a;color:#2a1d0c;
+       border:none;border-radius:99px;padding:10px 24px;margin-top:14px;cursor:pointer;box-shadow:0 4px 0 #8a6a3c;}
   .btn:active{transform:translateY(3px);box-shadow:0 1px 0 #8a6a3c;}
   .choices{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;justify-content:center;}
   .hero-pick{background:rgba(28,20,10,.6);border:3px solid #b6894a;border-radius:18px;padding:14px;
              cursor:pointer;transition:transform .12s,border-color .12s;}
   .hero-pick:hover{transform:translateY(-5px);border-color:#ffd98a;}
-  .hero-pick .lbl{font-size:22px;color:#ffd98a;margin-top:4px;}
+  .hero-pick .lbl{font-size:21px;color:#ffd98a;margin-top:4px;}
   input.name{font-family:'Caveat',cursive;font-size:24px;text-align:center;border:none;
         border-bottom:3px solid #b6894a;background:transparent;color:#3c2912;padding:6px 4px;width:200px;outline:none;}
   .riddle-in{font-family:'Caveat',cursive;font-size:22px;text-align:center;border:2px solid #b6894a;
         border-radius:10px;background:#fff8e8;color:#4a3414;padding:8px;width:220px;outline:none;margin-top:10px;}
-  .hint{font-size:18px;color:#ffe6ad;margin-top:10px;min-height:22px;}
+  .hint{font-size:18px;color:#ffe6ad;margin-top:12px;min-height:24px;max-width:340px;}
   /* fight */
-  .mummy{font-size:96px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.6));transition:transform .08s;}
-  .hpbar{width:200px;height:14px;background:#3c2c16;border:2px solid #b6894a;border-radius:8px;
-         margin:8px auto;overflow:hidden;}
+  #mum{transition:transform .08s,opacity .4s;filter:drop-shadow(0 10px 14px rgba(0,0,0,.6));}
+  #mum svg{width:130px;height:160px;}
+  .hpbar{width:210px;height:15px;background:#3c2c16;border:2px solid #b6894a;border-radius:8px;margin:10px auto;overflow:hidden;}
   .hpfill{height:100%;background:linear-gradient(90deg,#e05a4a,#ffb24a);width:100%;transition:width .15s;}
-  .fight-hint{font-size:20px;color:#ffd98a;margin-top:8px;}
-  /* chest hunt */
-  .dig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;}
-  .dig{width:84px;height:84px;border-radius:14px;background:rgba(60,44,22,.7);border:3px solid #b6894a;
+  .fight-hint{font-size:19px;color:#ffd98a;margin-top:6px;}
+  /* chest room */
+  .chest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px;}
+  .chest{width:84px;height:74px;border-radius:12px;background:rgba(60,44,22,.75);border:3px solid #b6894a;
+       font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .1s;}
+  .chest:hover{border-color:#ffd98a;transform:translateY(-3px);}
+  .chest.used{opacity:.5;cursor:default;}
+  .tries{font-family:'Cinzel',serif;font-size:16px;color:#ffd98a;margin-top:12px;}
+  /* sequence puzzle */
+  .sym-row{display:flex;gap:14px;margin-top:16px;flex-wrap:wrap;justify-content:center;}
+  .sym{width:74px;height:74px;border-radius:14px;background:rgba(28,20,10,.6);border:3px solid #b6894a;
        font-size:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
-  .dig:hover{border-color:#ffd98a;}
-  /* panel */
-  .panel{position:absolute;inset:0;z-index:8;background:rgba(12,8,3,.92);display:none;
+  .sym:hover{border-color:#ffd98a;} .sym.lit{background:#caa46a;}
+  .picked{font-size:30px;letter-spacing:8px;margin-top:10px;min-height:38px;}
+  /* lock puzzle */
+  .dials{display:flex;gap:16px;justify-content:center;margin-top:16px;}
+  .dial{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .dial .dbtn{width:50px;height:34px;border-radius:8px;background:#caa46a;color:#2a1d0c;border:none;font-size:18px;font-weight:bold;cursor:pointer;}
+  .dial .dval{font-family:'Cinzel',serif;font-size:34px;color:#ffd98a;width:50px;height:54px;
+       background:rgba(28,20,10,.7);border:2px solid #b6894a;border-radius:10px;display:flex;align-items:center;justify-content:center;}
+  /* memory puzzle */
+  .mem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
+  .mem{width:78px;height:78px;border-radius:12px;background:#8a6a3c;border:3px solid #b6894a;
+       font-size:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:transparent;}
+  .mem.flip{background:rgba(247,232,200,.92);color:#4a3414;}
+  .mem.done{background:#6a9a4a;color:#fff;cursor:default;}
+  /* panels */
+  .panel{position:absolute;inset:0;z-index:8;background:rgba(12,8,3,.94);display:none;
          flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center;}
   .panel.open{display:flex;}
   .panel h2{font-family:'Cinzel',serif;color:#ffd98a;font-size:24px;margin-bottom:14px;}
-  .panel ul{list-style:none;font-size:22px;line-height:1.5;}
+  .panel ul{list-style:none;font-size:21px;line-height:1.7;max-width:320px;}
+  .panel ul li.ach{color:#ffd84d;font-weight:bold;text-shadow:0 0 10px rgba(255,216,77,.5);}
   .hidden{display:none!important;}
   .you{font-size:60px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6));}
 </style>
 </head>
 <body>
 <div id="stage">
-  <div class="hiedirections"></div>
+  <div class="hiero"></div>
 
   <div class="topbar hidden" id="topbar">
     <button class="tbtn" id="invBtn">🎒 Inventory</button>
     <button class="tbtn" id="lvlBtn">⬆ Level Up</button>
-    <div class="stat">
-      <span>❤ <span id="hp">100</span></span>
-      <span>Lv <span id="lvl">1</span></span>
-      <span>⭐ <span id="xp">0</span></span>
-    </div>
+    <div class="stat"><span>❤ <span id="hp">100</span></span><span>Lv <span id="lvl">1</span></span><span>⭐ <span id="xp">0</span></span></div>
   </div>
+  <div class="progress-pill hidden" id="progress"></div>
 
   <div class="scene" id="scene"></div>
 
@@ -859,6 +877,7 @@ step1();
 <script>
 const scene=document.getElementById('scene');
 const topbar=document.getElementById('topbar');
+const progressEl=document.getElementById('progress');
 const hpEl=document.getElementById('hp'), lvlEl=document.getElementById('lvl'), xpEl=document.getElementById('xp');
 
 let hero={name:'',gender:'',hp:100,maxhp:100,lvl:1,xp:0,atk:25,mats:0,inv:[]};
@@ -866,201 +885,317 @@ function refresh(){hpEl.textContent=hero.hp;lvlEl.textContent=hero.lvl;xpEl.text
 function addItem(it){hero.inv.push(it);renderInv();}
 function renderInv(){
   document.getElementById('invList').innerHTML = hero.inv.length
-    ? hero.inv.map(i=>'<li>'+i+'</li>').join('') : '<li>(empty)</li>';
+    ? hero.inv.map(i=>'<li class="'+(i.indexOf('🏆')>=0?'ach':'')+'">'+i+'</li>').join('') : '<li>(empty)</li>';
 }
 
-// ---- intro: choose character ----
-function sceneChar(){
-  topbar.classList.add('hidden');
-  scene.innerHTML='<h1>Pyramid Escape</h1>'+
-    '<div class="scroll"><p>Trapped deep inside an ancient pyramid…</p><p class="small">Choose your hero.</p></div>'+
-    '<div class="choices">'+
-      '<div class="hero-pick" data-g="male"><div class="you">'+heroSvg("male")+'</div><div class="lbl">Son of Ra</div></div>'+
-      '<div class="hero-pick" data-g="female"><div class="you">'+heroSvg("female")+'</div><div class="lbl">Daughter of Isis</div></div>'+
-    '</div>';
-  scene.querySelectorAll('.hero-pick').forEach(p=>p.onclick=()=>{hero.gender=p.dataset.g;sceneName();});
-}
-function heroSvg(g){
-  // anime-ish egyptian god, NO full face mask
-  const headdress=g==='male'?'#3a7bd5':'#d56aa0';
-  const skin='#e8b98a';
-  return '<svg width="86" height="100" viewBox="0 0 86 100">'+
-    '<rect x="20" y="6" width="46" height="30" rx="8" fill="'+headdress+'"/>'+      // nemes headdress
-    '<rect x="14" y="20" width="12" height="34" rx="5" fill="'+headdress+'"/>'+
-    '<rect x="60" y="20" width="12" height="34" rx="5" fill="'+headdress+'"/>'+
-    '<rect x="36" y="2" width="14" height="12" rx="3" fill="#ffd84d"/>'+           // gold band
-    '<circle cx="43" cy="40" r="18" fill="'+skin+'"/>'+                            // face (open, no mask)
-    '<circle cx="37" cy="38" r="2.4" fill="#23150a"/><circle cx="49" cy="38" r="2.4" fill="#23150a"/>'+
-    '<path d="M30 36 h7 M49 36 h7" stroke="#23150a" stroke-width="2" fill="none"/>'+ // anime eyeliner
-    '<path d="M38 47 q5 4 10 0" stroke="#7a4a2a" stroke-width="2" fill="none"/>'+
-    '<rect x="30" y="58" width="26" height="34" rx="6" fill="#f0e2c0"/>'+          // robe
-    '<rect x="30" y="58" width="26" height="8" fill="#ffd84d"/>'+
+// ============ MUMMY ART (looks like a bandaged mummy) ============
+function mummySvg(){
+  return '<svg viewBox="0 0 130 160">'+
+    // outstretched arms
+    '<rect x="2" y="62" width="42" height="18" rx="9" fill="#ded2ab"/>'+
+    '<rect x="86" y="62" width="42" height="18" rx="9" fill="#ded2ab"/>'+
+    '<g stroke="#b3a072" stroke-width="2.5"><line x1="6" y1="68" x2="42" y2="66"/><line x1="6" y1="74" x2="42" y2="76"/>'+
+      '<line x1="88" y1="66" x2="124" y2="68"/><line x1="88" y1="76" x2="124" y2="74"/></g>'+
+    // body
+    '<rect x="36" y="50" width="58" height="92" rx="22" fill="#e8e0c8"/>'+
+    // head
+    '<circle cx="65" cy="38" r="27" fill="#e8e0c8"/>'+
+    // body bandage stripes
+    '<g stroke="#b3a072" stroke-width="3.2" fill="none">'+
+      '<line x1="37" y1="66" x2="93" y2="72"/><line x1="37" y1="82" x2="93" y2="88"/>'+
+      '<line x1="37" y1="98" x2="93" y2="104"/><line x1="37" y1="114" x2="93" y2="120"/>'+
+      '<line x1="37" y1="130" x2="93" y2="134"/></g>'+
+    // head bandages
+    '<g stroke="#b3a072" stroke-width="2.6" fill="none"><line x1="40" y1="30" x2="90" y2="26"/>'+
+      '<line x1="40" y1="44" x2="90" y2="48"/><line x1="42" y1="18" x2="88" y2="20"/></g>'+
+    // hollow glowing eyes
+    '<ellipse cx="55" cy="40" rx="6" ry="8" fill="#241606"/>'+
+    '<ellipse cx="75" cy="40" rx="6" ry="8" fill="#241606"/>'+
+    '<circle cx="56" cy="39" r="2" fill="#ff7a3a"/><circle cx="76" cy="39" r="2" fill="#ff7a3a"/>'+
+    // trailing loose bandage
+    '<path d="M44 140 q-10 12 -3 22" stroke="#ded2ab" stroke-width="7" fill="none" stroke-linecap="round"/>'+
+    '<path d="M90 138 q9 10 3 20" stroke="#ded2ab" stroke-width="6" fill="none" stroke-linecap="round"/>'+
     '</svg>';
 }
 
+// ============ HERO ART ============
+function heroSvg(g){
+  const headdress=g==='male'?'#3a7bd5':'#d56aa0';const skin='#e8b98a';
+  return '<svg width="86" height="100" viewBox="0 0 86 100">'+
+    '<rect x="20" y="6" width="46" height="30" rx="8" fill="'+headdress+'"/>'+
+    '<rect x="14" y="20" width="12" height="34" rx="5" fill="'+headdress+'"/>'+
+    '<rect x="60" y="20" width="12" height="34" rx="5" fill="'+headdress+'"/>'+
+    '<rect x="36" y="2" width="14" height="12" rx="3" fill="#ffd84d"/>'+
+    '<circle cx="43" cy="40" r="18" fill="'+skin+'"/>'+
+    '<circle cx="37" cy="38" r="2.4" fill="#23150a"/><circle cx="49" cy="38" r="2.4" fill="#23150a"/>'+
+    '<path d="M30 36 h7 M49 36 h7" stroke="#23150a" stroke-width="2" fill="none"/>'+
+    '<path d="M38 47 q5 4 10 0" stroke="#7a4a2a" stroke-width="2" fill="none"/>'+
+    '<rect x="30" y="58" width="26" height="34" rx="6" fill="#f0e2c0"/>'+
+    '<rect x="30" y="58" width="26" height="8" fill="#ffd84d"/></svg>';
+}
+
+// ============ INTRO ============
+function sceneChar(){
+  topbar.classList.add('hidden'); progressEl.classList.add('hidden');
+  scene.innerHTML='<h1>Pyramid Escape</h1>'+
+    '<div class="scroll"><p>Trapped deep inside an ancient pyramid…</p><p class="small">A long journey of riddles, puzzles and mummies lies ahead. Choose your hero.</p></div>'+
+    '<div class="choices">'+
+      '<div class="hero-pick" data-g="male"><div class="you">'+heroSvg("male")+'</div><div class="lbl">Son of Ra</div></div>'+
+      '<div class="hero-pick" data-g="female"><div class="you">'+heroSvg("female")+'</div><div class="lbl">Daughter of Isis</div></div>'+
+    '</div>'+
+    '<p style="font-size:15px;color:#ffe6ad;margin-top:14px;opacity:.85">Created by Theona, Paula &amp; Clara</p>';
+  scene.querySelectorAll('.hero-pick').forEach(p=>p.onclick=()=>{hero.gender=p.dataset.g;sceneName();});
+}
 function sceneName(){
   scene.innerHTML='<h1>Your name?</h1>'+
     '<div class="scroll"><p>The gods wish to know who walks these halls.</p>'+
     '<input class="name" id="nm" maxlength="14" placeholder="enter name" /></div>'+
     '<button class="btn" id="go">Begin the escape</button>';
   const nm=document.getElementById('nm'); nm.focus();
-  document.getElementById('go').onclick=()=>{
-    hero.name=nm.value.trim()||'Wanderer';
-    topbar.classList.remove('hidden'); refresh();
-    sceneIntro();
-  };
+  document.getElementById('go').onclick=()=>{hero.name=nm.value.trim()||'Wanderer';topbar.classList.remove('hidden');progressEl.classList.remove('hidden');refresh();sceneIntro();};
   nm.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('go').click();});
 }
-
 function sceneIntro(){
   scene.innerHTML='<div class="you">'+heroSvg(hero.gender)+'</div>'+
     '<div class="scroll"><p>Welcome, <b>'+hero.name+'</b>.</p>'+
-    '<p class="small">Direction: tap <b>🎒 Inventory</b> and <b>⬆ Level Up</b> (top-left) any time. '+
-    'Solve the riddles, beat the mummies, find chests, and reach the exit.</p></div>'+
-    '<p style="font-size:16px;color:#ffe6ad;margin-top:6px;opacity:.85">Created by Theona, Paula &amp; Clara</p>'+
+    '<p class="small">There are <b>12 chambers</b> between you and the desert sun. Tap <b>🎒 Inventory</b> and <b>⬆ Level Up</b> (top-left) any time. '+
+    'Solve riddles &amp; puzzles, beat the mummies, find the materials chest, and survive to earn a secret treasure.</p></div>'+
     '<button class="btn" id="next">Enter Chamber I →</button>';
-  document.getElementById('next').onclick=room1;
+  document.getElementById('next').onclick=startAdventure;
 }
 
-// ---- ROOM 1: riddle ----
-function room1(){
-  scene.innerHTML='<h1>Chamber I — The Riddle</h1>'+
-    '<div class="scroll"><p>Carved on the wall:</p>'+
-    '<p>"I have a face and two hands, but no arms. The pharaohs read me by the sun. What am I?"</p>'+
-    '<input class="riddle-in" id="ans" placeholder="your answer"/></div>'+
-    '<div class="hint" id="h1"></div>'+
-    '<button class="btn" id="try">Answer</button>';
-  const ans=document.getElementById('ans');ans.focus();
-  document.getElementById('try').onclick=()=>{
-    const v=ans.value.toLowerCase();
-    if(v.includes('clock')||v.includes('sundial')||v.includes('uhr')||v.includes('watch')){
-      hero.xp+=10;refresh();
-      sceneClear('Chamber I cleared! +10 ⭐','The wall slides open…','Enter Chamber II →',room2);
-    } else { document.getElementById('h1').textContent='Hint: it tells the time. (Try "clock" or "sundial")'; }
+// ============ CHAMBER RUNNER ============
+let CHAMBERS=[], cIdx=0;
+function startAdventure(){ cIdx=0; runChamber(); }
+function runChamber(){ progressEl.textContent='Chamber '+(cIdx+1)+' of '+CHAMBERS.length; CHAMBERS[cIdx](); }
+function goNext(){ cIdx++; if(cIdx<CHAMBERS.length) runChamber(); else win(); }
+function clearAndNext(title,sub){
+  clearFightKey();
+  scene.innerHTML='<h1>'+title+'</h1><div class="scroll"><p>'+sub+'</p></div><button class="btn" id="n">Continue →</button>';
+  document.getElementById('n').onclick=goNext;
+}
+
+// ---- RIDDLE builder (wrong = advice, never the answer) ----
+function makeRiddle(roman,title,question,check,advice,xp){
+  return function(){
+    clearFightKey();
+    scene.innerHTML='<h1>'+roman+' · '+title+'</h1>'+
+      '<div class="scroll"><p>'+question+'</p><input class="riddle-in" id="ans" placeholder="your answer"/></div>'+
+      '<div class="hint" id="h"></div><button class="btn" id="try">Answer</button>';
+    const ans=document.getElementById('ans'); ans.focus();
+    let misses=0;
+    document.getElementById('try').onclick=()=>{
+      const v=ans.value.toLowerCase().trim();
+      if(check(v)){ hero.xp+=xp; refresh(); clearAndNext(title+' solved!  +'+xp+' ⭐','The stone wall grinds open, revealing a passage deeper inside…'); }
+      else { misses++; document.getElementById('h').textContent='💡 Advice: '+advice; ans.value=''; ans.focus(); }
+    };
+    ans.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('try').click();});
   };
-  ans.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('try').click();});
 }
 
-// ---- ROOM 2: mummy fight ----
-function room2(){ mummyFight('Chamber II — Guardian Mummy',60,()=>{
-  hero.xp+=15;refresh();
-  sceneClear('Mummy defeated! +15 ⭐','You find a hidden passage.','Enter Chamber III →',room3);
-}); }
-
-function mummyFight(title,mummyHp,onWin){
-  let mhp=mummyHp,maxm=mummyHp,locked=false;
-  scene.innerHTML='<h1>'+title+'</h1>'+
-    '<div class="mummy" id="mum">🧟</div>'+
-    '<div class="hpbar"><div class="hpfill" id="mfill"></div></div>'+
-    '<div class="fight-hint">Press <b>Enter</b> (or tap the spear) to attack with your spear 🔱</div>'+
-    '<button class="btn" id="spear" style="margin-top:14px">🔱 Stab!</button>';
-  const mum=document.getElementById('mum'),mfill=document.getElementById('mfill');
-  function attack(){
-    if(locked)return;
-    mhp-=hero.atk; if(mhp<0)mhp=0;
-    mfill.style.width=(mhp/maxm*100)+'%';
-    mum.style.transform='translateX(6px) scale(1.05)';
-    setTimeout(()=>mum.style.transform='',90);
-    if(mhp<=0){ locked=true; mum.textContent='💀';
-      setTimeout(onWin,500); return; }
-    // mummy hits back
-    hero.hp-=8; if(hero.hp<0)hero.hp=0; refresh();
-    if(hero.hp<=0){ locked=true; gameOver(); }
-  }
-  document.getElementById('spear').onclick=attack;
-  window.__fightKey=e=>{if(e.key==='Enter')attack();};
-  document.addEventListener('keydown',window.__fightKey);
-  scene.dataset.fight='1';
+// ---- MUMMY FIGHT ----
+function makeFight(roman,title,mummyHp,dmg,xp){
+  return function(){
+    clearFightKey();
+    let mhp=mummyHp,maxm=mummyHp,locked=false;
+    scene.innerHTML='<h1>'+roman+' · '+title+'</h1>'+
+      '<div id="mum">'+mummySvg()+'</div>'+
+      '<div class="hpbar"><div class="hpfill" id="mfill"></div></div>'+
+      '<div class="fight-hint">Press <b>Enter</b> (or tap the spear) to strike with your spear 🔱</div>'+
+      '<button class="btn" id="spear" style="margin-top:12px">🔱 Stab!</button>';
+    const mum=document.getElementById('mum'),mfill=document.getElementById('mfill');
+    function attack(){
+      if(locked)return;
+      mhp-=hero.atk; if(mhp<0)mhp=0; mfill.style.width=(mhp/maxm*100)+'%';
+      mum.style.transform='translateX(7px) scale(1.04)'; setTimeout(()=>mum.style.transform='',90);
+      if(mhp<=0){ locked=true; mum.style.transform='rotate(90deg) translateY(30px)'; mum.style.opacity='.35';
+        setTimeout(()=>clearAndNext(title+' defeated!  +'+xp+' ⭐','The mummy crumbles into dust and bandages.'),650); hero.xp+=xp; refresh(); return; }
+      hero.hp-=dmg; if(hero.hp<0)hero.hp=0; refresh();
+      if(hero.hp<=0){ locked=true; gameOver(); }
+    }
+    document.getElementById('spear').onclick=attack;
+    window.__fightKey=e=>{if(e.key==='Enter')attack();};
+    document.addEventListener('keydown',window.__fightKey);
+  };
 }
 function clearFightKey(){if(window.__fightKey){document.removeEventListener('keydown',window.__fightKey);window.__fightKey=null;}}
 
-// ---- ROOM 3: chest hunt ----
-function room3(){
+// ---- CHEST ROOM: 9 chests, 3 tries, materials in ONE ----
+function chestRoom(){
   clearFightKey();
-  const chest=Math.floor(Math.random()*9);
-  let found=false;
-  let html='<h1>Chamber III — Hidden Chest</h1>'+
-    '<div class="scroll"><p>A chest of <b>level-up materials</b> is buried here.</p>'+
-    '<p class="small">Dig in the sand. It is not too easy… not too hard.</p></div>'+
-    '<div class="dig-grid">';
-  for(let i=0;i<9;i++) html+='<div class="dig" data-i="'+i+'">🏜️</div>';
-  html+='</div><div class="hint" id="dh"></div>';
+  const prize=Math.floor(Math.random()*9);
+  let tries=3, done=false;
+  let html='<h1>V · The Nine Chests</h1>'+
+    '<div class="scroll"><p>Nine sealed chests. Only <b>one</b> holds the level-up materials.</p>'+
+    '<p class="small">You may open just <b>three</b>. Choose wisely.</p></div>'+
+    '<div class="chest-grid">';
+  for(let i=0;i<9;i++) html+='<div class="chest" data-i="'+i+'">🧰</div>';
+  html+='</div><div class="tries" id="tr">Openings left: 3</div>';
   scene.innerHTML=html;
-  scene.querySelectorAll('.dig').forEach(d=>d.onclick=()=>{
-    if(found)return;
-    const i=+d.dataset.i;
-    if(i===chest){ found=true; d.textContent='📦'; hero.mats+=3; addItem('🔶 Level-up materials ×3'); hero.xp+=10; refresh();
-      sceneClear('Chest found! +3 materials, +10 ⭐','You can now Level Up (top-left).','Enter Chamber IV →',room4);
+  scene.querySelectorAll('.chest').forEach(c=>c.onclick=()=>{
+    if(done||c.classList.contains('used'))return;
+    const i=+c.dataset.i;
+    if(i===prize){ done=true; c.textContent='💰'; hero.mats+=3; addItem('🔶 Level-up materials ×3'); hero.xp+=12; refresh();
+      clearAndNext('Treasure!  +3 materials, +12 ⭐','You found the materials chest! Open the ⬆ Level Up menu (top-left) to grow stronger before the deeper chambers.');
     } else {
-      d.textContent='🕳️';
-      const dist=Math.abs(i-chest);
-      document.getElementById('dh').textContent = dist<=1?'You feel something close…':'Nothing here.';
+      c.classList.add('used'); c.textContent='🕸️'; tries--;
+      document.getElementById('tr').textContent='Openings left: '+tries;
+      if(tries<=0){ done=true;
+        clearAndNext('The chests are sealed again…','You ran out of openings and found no materials this time — but your journey continues. Press on, brave one.');
+      }
     }
   });
 }
 
-// ---- ROOM 4: riddle ----
-function room4(){
-  scene.innerHTML='<h1>Chamber IV — The Final Riddle</h1>'+
-    '<div class="scroll"><p>Hieroglyphs whisper:</p>'+
-    '<p>"The more you take, the more you leave behind. What am I?"</p>'+
-    '<input class="riddle-in" id="ans" placeholder="your answer"/></div>'+
-    '<div class="hint" id="h2"></div>'+
-    '<button class="btn" id="try">Answer</button>';
-  const ans=document.getElementById('ans');ans.focus();
-  document.getElementById('try').onclick=()=>{
-    const v=ans.value.toLowerCase();
-    if(v.includes('footstep')||v.includes('step')||v.includes('fußspur')||v.includes('fussspur')){
-      hero.xp+=15;refresh();
-      sceneClear('Correct! +15 ⭐','One guardian remains before the exit…','Face the last guardian →',room5);
-    } else { document.getElementById('h2').textContent='Hint: you make them when you walk. (Try "footsteps")'; }
-  };
-  ans.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('try').click();});
-}
-
-// ---- ROOM 5: boss + exit ----
-function room5(){ mummyFight('Chamber V — The Pharaoh\u2019s Guard',90,()=>{
-  hero.xp+=30;refresh(); win();
-}); }
-
-// ---- helper scenes ----
-function sceneClear(title,sub,btn,next){
+// ---- PUZZLE 1: SYMBOL ORDER (sequence) ----
+function puzzleSequence(){
   clearFightKey();
-  scene.innerHTML='<h1>'+title+'</h1>'+
-    '<div class="scroll"><p>'+sub+'</p></div>'+
-    '<button class="btn" id="n">'+btn+'</button>';
-  document.getElementById('n').onclick=next;
+  const SYM=[['☀','sun'],['🌙','moon'],['👁','eye'],['☥','ankh']];
+  const order=[0,1,2,3]; // Sun, Moon, Eye, Ankh
+  let picked=[];
+  const idxOrder=[0,1,2,3].sort(()=>Math.random()-0.5); // shuffle button positions
+  let html='<h1>II · The Offering</h1>'+
+    '<div class="scroll"><p>The carving commands:</p><p>"Honour the gods in order — first the <b>Sun</b>, then the <b>Moon</b>, then the <b>Eye</b>, then the <b>Ankh</b>."</p></div>'+
+    '<div class="sym-row">';
+  idxOrder.forEach(i=>html+='<div class="sym" data-i="'+i+'">'+SYM[i][0]+'</div>');
+  html+='</div><div class="picked" id="pk"></div><div class="hint" id="ph"></div>';
+  scene.innerHTML=html;
+  function reset(){picked=[];document.getElementById('pk').textContent='';scene.querySelectorAll('.sym').forEach(s=>s.classList.remove('lit'));}
+  scene.querySelectorAll('.sym').forEach(s=>s.onclick=()=>{
+    const i=+s.dataset.i;
+    const step=picked.length;
+    if(i===order[step]){ picked.push(i); s.classList.add('lit');
+      document.getElementById('pk').textContent=picked.map(k=>SYM[k][0]).join(' ');
+      if(picked.length===order.length){ hero.xp+=12; refresh();
+        clearAndNext('The Offering accepted!  +12 ⭐','The altar glows and a hidden door slides aside.'); }
+    } else { document.getElementById('ph').textContent='💡 Advice: read the carving again and tap the gods in the very order it names them. Starting over…'; reset(); }
+  });
 }
+
+// ---- PUZZLE 2: COMBINATION LOCK ----
+function puzzleLock(){
+  clearFightKey();
+  const code=[6,2,1]; let dials=[0,0,0];
+  scene.innerHTML='<h1>VI · The Stone Lock</h1>'+
+    '<div class="scroll"><p>Three dials guard the gate. The clue reads:</p>'+
+    '<p class="small">"Set them to: the legs of a <b>scarab beetle</b> · the eyes in a <b>pair</b> · the <b>suns</b> in our sky."</p></div>'+
+    '<div class="dials" id="dials"></div>'+
+    '<div class="hint" id="lh"></div>'+
+    '<button class="btn" id="unlock">Unlock</button>';
+  const dl=document.getElementById('dials');
+  function render(){
+    dl.innerHTML='';
+    dials.forEach((v,i)=>{
+      const d=document.createElement('div'); d.className='dial';
+      d.innerHTML='<button class="dbtn" data-i="'+i+'" data-d="1">▲</button>'+
+                  '<div class="dval">'+v+'</div>'+
+                  '<button class="dbtn" data-i="'+i+'" data-d="-1">▼</button>';
+      dl.appendChild(d);
+    });
+    dl.querySelectorAll('.dbtn').forEach(b=>b.onclick=()=>{
+      const i=+b.dataset.i, d=+b.dataset.d; dials[i]=(dials[i]+d+10)%10; render();
+    });
+  }
+  render();
+  document.getElementById('unlock').onclick=()=>{
+    if(dials[0]===code[0]&&dials[1]===code[1]&&dials[2]===code[2]){ hero.xp+=14; refresh();
+      clearAndNext('The lock clicks open!  +14 ⭐','The heavy gate swings wide.'); }
+    else { document.getElementById('lh').textContent='💡 Advice: count each thing carefully — an insect is not a spider, a pair means two, and look up by day.'; }
+  };
+}
+
+// ---- PUZZLE 3: MEMORY MATCH ----
+function puzzleMemory(){
+  clearFightKey();
+  const faces=['🐍','🦂','🐊']; let deck=[...faces,...faces].sort(()=>Math.random()-0.5);
+  let first=null, lock=false, matched=0;
+  let html='<h1>IX · The Twin Glyphs</h1>'+
+    '<div class="scroll"><p>Find the matching pairs of sacred glyphs to break the seal.</p></div>'+
+    '<div class="mem-grid">';
+  deck.forEach((f,i)=>html+='<div class="mem" data-i="'+i+'" data-f="'+f+'"></div>');
+  html+='</div>';
+  scene.innerHTML=html;
+  scene.querySelectorAll('.mem').forEach(card=>card.onclick=()=>{
+    if(lock||card.classList.contains('flip')||card.classList.contains('done'))return;
+    card.classList.add('flip'); card.textContent=card.dataset.f;
+    if(!first){ first=card; return; }
+    if(first.dataset.f===card.dataset.f){
+      first.classList.add('done'); card.classList.add('done'); first=null; matched++;
+      if(matched===faces.length){ hero.xp+=12; refresh();
+        setTimeout(()=>clearAndNext('The glyphs align!  +12 ⭐','The seal cracks and crumbles away.'),350); }
+    } else {
+      lock=true; const a=first, b=card;
+      setTimeout(()=>{a.classList.remove('flip');b.classList.remove('flip');a.textContent='';b.textContent='';first=null;lock=false;},700);
+    }
+  });
+}
+
+// ============ CHAMBER LIST (long!) ============
+CHAMBERS=[
+  makeRiddle('I','The Sundial',
+    '"I have a face and two hands, but no arms. The pharaohs read me by the sun. What am I?"',
+    v=>['clock','sundial','sun dial','sun-dial','uhr','sonnenuhr','watch'].some(a=>v.includes(a)),
+    'Long ago, people read the hour from the shadow the sun cast across the stone.',10),
+  puzzleSequence,
+  makeFight('III','Guardian Mummy',55,6,15),
+  makeRiddle('IV','The Great River',
+    '"I have a bed but never sleep, and a mouth but never eat. Through Egypt I run to the sea. What am I?"',
+    v=>['river','nile','nil','fluss','strom'].some(a=>v.includes(a)),
+    'The greatest of my kind flows north through all of Egypt — pharaohs were buried beside it.',12),
+  chestRoom,
+  puzzleLock,
+  makeFight('VII','Tomb Warden Mummy',85,8,18),
+  makeRiddle('VIII','The Voice in the Hall',
+    '"I speak without a mouth and answer without ears. Shout, and I return your words. What am I?"',
+    v=>['echo','echoes','widerhall','hall'].some(a=>v===a||v.includes('echo')),
+    'Call out in a deep canyon or empty hall, and something repeats you back.',12),
+  puzzleMemory,
+  makeRiddle('X','The Creeping Veil',
+    '"The more of me there is, the less you see. Light a torch and I flee. What am I?"',
+    v=>['dark','darkness','night','shadow','dunkelheit','finsternis','black'].some(a=>v.includes(a)),
+    'When I fill a chamber you must light a torch to find your way.',12),
+  makeRiddle('XI','The Traveller\u2019s Friend',
+    '"I have cities but no houses, forests but no trees, and rivers but no water. What am I?"',
+    v=>['map','karte','landkarte','plan'].some(a=>v.includes(a)),
+    'Travellers unfold me to find the way across the endless sands.',14),
+  makeFight('XII','The Pharaoh\u2019s Mummy',110,10,30),
+];
+
+// ============ END / FAIL ============
 function win(){
   clearFightKey();
+  addItem('🏆 Pharaoh\u2019s Crown — Master of the Pyramid');
   scene.innerHTML='<h1>☀ You Escaped!</h1>'+
     '<div class="you" style="font-size:80px">'+heroSvg(hero.gender)+'</div>'+
-    '<div class="scroll"><p><b>'+hero.name+'</b> steps into the desert sun.</p>'+
+    '<div class="scroll"><p><b>'+hero.name+'</b> steps into the blazing desert sun, victorious.</p>'+
+    '<p class="small">🏆 <b>Achievement unlocked:</b> "Pharaoh\u2019s Crown — Master of the Pyramid" has been added to your Inventory!</p>'+
     '<p class="small">Level '+hero.lvl+' · ⭐ '+hero.xp+' XP · ❤ '+hero.hp+' HP</p></div>'+
-    '<button class="btn" id="r">Play again</button>';
+    '<button class="btn" id="openInv">🎒 See Achievement</button>'+
+    '<button class="btn" id="r" style="background:#8a6a3c;color:#ffe6ad">Play again</button>';
+  document.getElementById('openInv').onclick=()=>{renderInv();document.getElementById('invPanel').classList.add('open');};
   document.getElementById('r').onclick=()=>{hero={name:'',gender:'',hp:100,maxhp:100,lvl:1,xp:0,atk:25,mats:0,inv:[]};renderInv();refresh();sceneChar();};
 }
 function gameOver(){
   clearFightKey();
   scene.innerHTML='<h1>💀 Fallen</h1>'+
-    '<div class="scroll"><p>The pyramid claims another soul…</p></div>'+
-    '<button class="btn" id="r">Try again</button>';
-  document.getElementById('r').onclick=()=>{hero.hp=hero.maxhp;refresh();room1();};
+    '<div class="scroll"><p>The pyramid claims another soul…</p><p class="small">You may rise and face this chamber once more.</p></div>'+
+    '<button class="btn" id="r">Try this chamber again</button>';
+  document.getElementById('r').onclick=()=>{hero.hp=hero.maxhp;refresh();runChamber();};
 }
 
-// ---- panels ----
+// ============ PANELS ============
 function closePanels(){document.getElementById('invPanel').classList.remove('open');document.getElementById('lvlPanel').classList.remove('open');}
 document.getElementById('invBtn').onclick=()=>{renderInv();document.getElementById('invPanel').classList.add('open');};
 document.getElementById('lvlBtn').onclick=()=>{
   const msg=document.getElementById('lvlMsg');
   if(hero.mats>=3){ msg.textContent='You have '+hero.mats+' materials. Spend 3 to reach Level '+(hero.lvl+1)+' (+20 max HP, +8 attack).'; document.getElementById('doLvl').classList.remove('hidden'); }
-  else { msg.textContent='You need 3 level-up materials. Find a chest first! (You have '+hero.mats+')'; document.getElementById('doLvl').classList.add('hidden'); }
+  else { msg.textContent='You need 3 level-up materials. Find the chest in Chamber V! (You have '+hero.mats+')'; document.getElementById('doLvl').classList.add('hidden'); }
   document.getElementById('lvlPanel').classList.add('open');
 };
 document.getElementById('doLvl').onclick=()=>{
   if(hero.mats>=3){hero.mats-=3;hero.lvl++;hero.maxhp+=20;hero.hp=hero.maxhp;hero.atk+=8;
-    hero.inv=hero.inv.filter(i=>!i.includes('materials'));renderInv();refresh();
-    document.getElementById('lvlMsg').textContent='Level '+hero.lvl+'! HP fully restored. ⚔ Attack now '+hero.atk+'.';
+    hero.inv=hero.inv.filter(i=>i.indexOf('materials')<0);renderInv();refresh();
+    document.getElementById('lvlMsg').textContent='Level '+hero.lvl+'! HP fully restored. ⚔ Attack is now '+hero.atk+'.';
     document.getElementById('doLvl').classList.add('hidden');}
 };
 
