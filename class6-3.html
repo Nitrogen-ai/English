@@ -283,7 +283,7 @@
       <div class="thumb"><span class="thumb-placeholder">🦿</span></div>
       <div class="card-body">
         <div class="app-name">Stick-Man Parcour</div>
-        <div class="app-desc">Raise your stilts to step over the grass barriers — time it right or crash!</div>
+        <div class="app-desc">Choose your difficulty and dodge holes, roofs &amp; barriers on your stilts!</div>
         <div class="credits">by Mio, Tom &amp; Laurenz</div>
         <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
@@ -293,7 +293,7 @@
       <div class="thumb"><span class="thumb-placeholder">🪙</span></div>
       <div class="card-body">
         <div class="app-name">Coin Runner</div>
-        <div class="app-desc">Jump the stones, shoot water at coins to speed up, then take on the boss!</div>
+        <div class="app-desc">Play as an elf — double-jump stones, shoot coins, and beat the goblin boss!</div>
         <div class="credits">by Henry, Elias, Jonathan, Theodor &amp; Alfons</div>
         <div class="card-cta">Play <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
@@ -2106,34 +2106,50 @@ nextQ();
   #wrap{position:relative;width:100%;max-width:520px;height:100%;max-height:680px;}
   canvas{display:block;width:100%;height:100%;}
   .hud{position:absolute;top:10px;left:0;right:0;padding:0 16px;display:flex;justify-content:space-between;
-       color:#234;font-weight:bold;font-size:20px;pointer-events:none;text-shadow:0 1px 2px rgba(255,255,255,.6);}
-  .stilt-ind{position:absolute;top:42px;left:16px;font-weight:bold;color:#234;font-size:14px;pointer-events:none;}
+       color:#234;font-weight:bold;font-size:18px;pointer-events:none;text-shadow:0 1px 2px rgba(255,255,255,.6);}
+  .stilt-ind{position:absolute;top:40px;left:16px;font-weight:bold;color:#234;font-size:13px;pointer-events:none;}
+  .diff-badge{position:absolute;top:40px;right:16px;font-weight:bold;color:#234;font-size:13px;pointer-events:none;}
   .overlay-screen{position:absolute;inset:0;background:rgba(20,40,55,.92);display:flex;flex-direction:column;
-       align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;gap:13px;}
-  .overlay-screen h2{font-size:28px;color:#ffe14d;}
-  .overlay-screen p{font-size:15px;line-height:1.5;max-width:330px;opacity:.92;}
-  .play-btn{margin-top:6px;background:#7CFC8A;color:#16351c;border:none;padding:12px 30px;border-radius:99px;
-       font-size:18px;font-weight:bold;cursor:pointer;}
+       align-items:center;justify-content:center;color:#fff;text-align:center;padding:22px;gap:12px;overflow-y:auto;}
+  .overlay-screen h2{font-size:27px;color:#ffe14d;}
+  .overlay-screen p{font-size:14px;line-height:1.5;max-width:330px;opacity:.92;}
+  .play-btn{margin-top:4px;background:#7CFC8A;color:#16351c;border:none;padding:11px 28px;border-radius:99px;
+       font-size:17px;font-weight:bold;cursor:pointer;}
   .play-btn:active{transform:scale(.96);}
+  .diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;width:100%;max-width:340px;}
+  .diff-btn{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.4);border-radius:14px;
+       padding:12px 8px;cursor:pointer;color:#fff;}
+  .diff-btn .nm{font-weight:bold;font-size:16px;}
+  .diff-btn .ds{font-size:11px;opacity:.75;margin-top:3px;}
+  .diff-btn:hover{border-color:#ffe14d;transform:translateY(-2px);}
+  .diff-btn.impossible{grid-column:span 2;}
   .hidden{display:none!important;}
 </style>
 </head>
 <body>
 <div id="wrap">
   <canvas id="c"></canvas>
-  <div class="hud"><span>&#129727; Score: <span id="score">0</span></span><span id="speedlbl"></span></div>
+  <div class="hud"><span>🦿 Score: <span id="score">0</span></span></div>
   <div class="stilt-ind" id="stiltInd"></div>
+  <div class="diff-badge" id="diffBadge"></div>
+
   <div class="overlay-screen" id="startScreen">
-    <h2>&#129455; Stick-Man Parcour</h2>
-    <p>You run on stilts across the grass. Press <b>Space</b> / tap to raise your stilts <b>one block higher</b>.</p>
-    <p>Make your stilts <b>tall enough</b> to step over each grass-block barrier. Too short = your stilt breaks and you lose!</p>
-    <p>After each barrier you step back down to the grass.</p>
-    <button class="play-btn" id="startBtn">Start Running</button>
+    <h2>🦯 Stick-Man Parcour</h2>
+    <p>You run on stilts across the grass. Press <b>Space</b> / tap to raise your stilts <b>one block higher</b>.
+    Make them tall enough to clear each barrier — too short and your stilt breaks!
+    Wide <b>holes</b> 🕳️ need extra-tall stilts to stride across, and some blocks have a <b>roof</b> 🪵 — go high enough but not too high!</p>
+    <div class="diff-grid">
+      <div class="diff-btn" data-d="easy"><div class="nm">🟢 Easy</div><div class="ds">Simple barriers, slow</div></div>
+      <div class="diff-btn" data-d="middle"><div class="nm">🟡 Middle</div><div class="ds">A few holes, a bit faster</div></div>
+      <div class="diff-btn" data-d="hard"><div class="nm">🟠 Hard</div><div class="ds">Roofs appear, faster</div></div>
+      <div class="diff-btn" data-d="veryhard"><div class="nm">🔴 Very Hard</div><div class="ds">Tight gaps, fast</div></div>
+      <div class="diff-btn impossible" data-d="impossible"><div class="nm">⚫ Impossible</div><div class="ds">Everything, all the time, very fast</div></div>
+    </div>
   </div>
   <div class="overlay-screen hidden" id="overScreen">
-    <h2>&#128165; Stilt Broken!</h2>
+    <h2>💥 Stilt Broken!</h2>
     <p id="overMsg"></p>
-    <button class="play-btn" id="againBtn">Run Again</button>
+    <button class="play-btn" id="againBtn">Choose Difficulty</button>
   </div>
 </div>
 
@@ -2141,31 +2157,58 @@ nextQ();
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');
 let W=520,H=680,GROUND=0,BLOCK=46;
 function fit(){const r=cv.getBoundingClientRect();W=cv.width=Math.round(r.width);H=cv.height=Math.round(r.height);GROUND=H-70;BLOCK=Math.min(46,H*0.085);}
-const scoreEl=document.getElementById('score'),stiltInd=document.getElementById('stiltInd');
+const scoreEl=document.getElementById('score'),stiltInd=document.getElementById('stiltInd'),diffBadge=document.getElementById('diffBadge');
 const startScreen=document.getElementById('startScreen'),overScreen=document.getElementById('overScreen'),overMsg=document.getElementById('overMsg');
 
-let state='menu',px,stiltTarget,stiltVis,barriers,scroll,score,legPhase,broken;
+// ---- difficulty presets ----
+const DIFF={
+  easy:      {label:'🟢 Easy',       speed:3.6, speedGrow:0.02, gapMin:300, gapMax:420, holeChance:0.0,  roofChance:0.0,  maxH:2},
+  middle:    {label:'🟡 Middle',     speed:4.6, speedGrow:0.03, gapMin:260, gapMax:380, holeChance:0.18, roofChance:0.0,  maxH:3},
+  hard:      {label:'🟠 Hard',       speed:5.6, speedGrow:0.045,gapMin:230, gapMax:340, holeChance:0.25, roofChance:0.22, maxH:3},
+  veryhard:  {label:'🔴 Very Hard',  speed:6.6, speedGrow:0.06, gapMin:200, gapMax:300, holeChance:0.30, roofChance:0.30, maxH:4},
+  impossible:{label:'⚫ Impossible', speed:7.8, speedGrow:0.08, gapMin:170, gapMax:250, holeChance:0.38, roofChance:0.38, maxH:4},
+};
+let diffKey='middle', D=DIFF.middle;
+
+let state='menu',px,stiltTarget,stiltVis,barriers,scroll,score,legPhase,broken,brokenReason;
 
 function reset(){
   fit();
-  px=W*0.26; stiltTarget=1; stiltVis=1; barriers=[]; scroll=4; score=0; legPhase=0; broken=false;
-  let x=W+200;
-  for(let i=0;i<4;i++){ barriers.push(makeBarrier(x)); x+=260+Math.random()*120; }
+  px=W*0.26; stiltTarget=1; stiltVis=1; barriers=[]; scroll=D.speed; score=0; legPhase=0; broken=false; brokenReason='';
+  let x=W+220;
+  for(let i=0;i<4;i++){ barriers.push(makeBarrier(x)); x+=D.gapMin+Math.random()*(D.gapMax-D.gapMin); }
   scoreEl.textContent='0';
+  diffBadge.textContent=D.label;
   updateInd();
 }
-function makeBarrier(x){ return {x, h:1+Math.floor(Math.random()*3), passed:false, w:BLOCK}; }
+
+// barrier kinds: 'block'  (stand tall enough on stilts to clear, height 1..maxH)
+//                'hole'   (a wide pit in the grass — needs tall stilts to stride over, like a tricky block)
+//                'roofed' (a block topped with a roof — stiltTarget must be >= h AND <= h+1, clear it but not bash the roof)
+function makeBarrier(x){
+  const roll=Math.random();
+  let kind='block', h=1+Math.floor(Math.random()*D.maxH);
+  if(roll < D.holeChance){ kind='hole'; h=2+Math.floor(Math.random()*(D.maxH-1)); }
+  else if(roll < D.holeChance + D.roofChance){ kind='roofed'; h=1+Math.floor(Math.random()*(D.maxH-1)); }
+  return {x, h, kind, passed:false, w:BLOCK*(kind==='hole'?1.5:1)};
+}
+
 function start(){reset();state='play';startScreen.classList.add('hidden');overScreen.classList.add('hidden');}
-function over(){state='over';broken=true;overMsg.textContent='You cleared '+score+' barriers.';overScreen.classList.remove('hidden');}
+function over(reason){state='over';broken=true;brokenReason=reason;overMsg.textContent=reason+' You cleared '+score+' barriers on '+D.label+'.';overScreen.classList.remove('hidden');}
 
 function raise(){ if(state!=='play')return; stiltTarget=Math.min(4,stiltTarget+1); updateInd(); }
-function updateInd(){ stiltInd.textContent='Stilts: '+'\u25AE'.repeat(stiltTarget)+'\u25AF'.repeat(4-stiltTarget)+' ('+stiltTarget+'/4)'; }
+function updateInd(){ stiltInd.textContent='Stilts: '+'▮'.repeat(stiltTarget)+'▯'.repeat(4-stiltTarget)+' ('+stiltTarget+'/4)'; }
 
 document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();raise();}});
 cv.addEventListener('mousedown',raise);
 cv.addEventListener('touchstart',e=>{e.preventDefault();raise();},{passive:false});
-document.getElementById('startBtn').onclick=start;
-document.getElementById('againBtn').onclick=start;
+
+document.querySelectorAll('.diff-btn').forEach(b=>b.onclick=()=>{
+  diffKey=b.dataset.d; D=DIFF[diffKey]; start();
+});
+document.getElementById('againBtn').onclick=()=>{
+  startScreen.classList.remove('hidden'); overScreen.classList.add('hidden'); state='menu';
+};
 
 function loop(){
   requestAnimationFrame(loop);
@@ -2175,36 +2218,67 @@ function loop(){
   for(let i=0;i<3;i++){const cx2=((-(scroll*0.3*performance.now()/16)+i*220)%(W+140)+W+140)%(W+140)-70;ctx.beginPath();ctx.ellipse(cx2,80+i*34,38,16,0,0,7);ctx.fill();}
 
   if(state==='play'){
-    scroll=4+Math.min(5,score*0.12);
+    scroll=D.speed+Math.min(6,score*D.speedGrow);
     legPhase+=scroll*0.05;
     stiltVis+=(stiltTarget-stiltVis)*0.35;
 
     for(const b of barriers){
       b.x-=scroll;
       if(!b.passed && b.x < px-6){
-        if(stiltTarget>=b.h){ b.passed=true; score++; scoreEl.textContent=score; stiltTarget=1; updateInd(); }
-        else { over(); }
+        let cleared=false;
+        if(b.kind==='block'){ cleared = stiltTarget>=b.h; }
+        else if(b.kind==='hole'){ cleared = stiltTarget>=b.h; } // wide pit — needs tall stilts to stride across
+        else if(b.kind==='roofed'){ cleared = stiltTarget>=b.h && stiltTarget<=b.h+1; }
+        if(cleared){ b.passed=true; score++; scoreEl.textContent=score; stiltTarget=1; updateInd(); }
+        else {
+          if(b.kind==='hole') over('You fell into a hole!');
+          else if(b.kind==='roofed') over(stiltTarget>b.h+1?'You hit the roof above!':'Your stilts were too short!');
+          else over('Your stilts were too short!');
+          return;
+        }
       }
     }
-    barriers=barriers.filter(b=>b.x>-80);
+    barriers=barriers.filter(b=>b.x>-90);
     let lastX=barriers.length?Math.max.apply(null,barriers.map(b=>b.x)):px;
-    while(lastX < W+260){ const nb=makeBarrier(lastX+240+Math.random()*160); barriers.push(nb); lastX=nb.x; }
+    while(lastX < W+260){ const nx=lastX+D.gapMin+Math.random()*(D.gapMax-D.gapMin); const nb=makeBarrier(nx); barriers.push(nb); lastX=nx; }
   }
 
   ctx.fillStyle='#5fbf4f';ctx.fillRect(0,GROUND,W,H-GROUND);
   ctx.fillStyle='#4aa83f';ctx.fillRect(0,GROUND,W,7);
   ctx.fillStyle='#8b6b3f';ctx.fillRect(0,GROUND+7,W,H-GROUND-7);
 
-  if(state!=='menu') for(const b of barriers){
-    for(let k=0;k<b.h;k++){
-      const by=GROUND-(k+1)*BLOCK;
-      ctx.fillStyle='#4aa83f';ctx.fillRect(b.x-b.w/2,by,b.w,BLOCK);
-      ctx.fillStyle='#5fcf55';ctx.fillRect(b.x-b.w/2,by,b.w,6);
-      ctx.strokeStyle='#2f7a28';ctx.lineWidth=2;ctx.strokeRect(b.x-b.w/2,by,b.w,BLOCK);
-    }
-  }
-
+  if(state!=='menu') for(const b of barriers) drawBarrier(b);
   drawStick(px||W*0.26, state==='menu'?1:stiltVis);
+}
+
+function drawBarrier(b){
+  if(b.kind==='hole'){
+    ctx.fillStyle='#2a1d10';
+    ctx.fillRect(b.x-b.w/2,GROUND,b.w,H-GROUND);
+    ctx.fillStyle='#1a120a';
+    ctx.beginPath();ctx.ellipse(b.x,GROUND+4,b.w/2,8,0,0,7);ctx.fill();
+    // a small marker showing how tall you must be to stride it
+    ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=2;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(b.x,GROUND-b.h*BLOCK);ctx.lineTo(b.x,GROUND);ctx.stroke();
+    ctx.setLineDash([]);
+    return;
+  }
+  for(let k=0;k<b.h;k++){
+    const by=GROUND-(k+1)*BLOCK;
+    ctx.fillStyle='#4aa83f';ctx.fillRect(b.x-b.w/2,by,b.w,BLOCK);
+    ctx.fillStyle='#5fcf55';ctx.fillRect(b.x-b.w/2,by,b.w,6);
+    ctx.strokeStyle='#2f7a28';ctx.lineWidth=2;ctx.strokeRect(b.x-b.w/2,by,b.w,BLOCK);
+  }
+  if(b.kind==='roofed'){
+    const roofY=GROUND-(b.h+1)*BLOCK;
+    ctx.fillStyle='#8a5a3a';
+    ctx.fillRect(b.x-b.w/2-6,roofY,b.w+12,14);
+    ctx.fillStyle='#6e4329';
+    ctx.fillRect(b.x-b.w/2-6,roofY+10,b.w+12,4);
+    // little hatching to suggest stone ceiling
+    ctx.strokeStyle='#5a3520';ctx.lineWidth=1.5;
+    for(let lx=-b.w/2;lx<b.w/2;lx+=10){ ctx.beginPath(); ctx.moveTo(b.x+lx,roofY); ctx.lineTo(b.x+lx-4,roofY+14); ctx.stroke(); }
+  }
 }
 
 function drawStick(x,stiltBlocks){
@@ -2236,7 +2310,7 @@ function drawStick(x,stiltBlocks){
 }
 
 window.addEventListener('resize',fit);
-fit();reset();state='menu';loop();
+fit();state='menu';loop();
 </script>
 </body>
 </html>
@@ -2249,24 +2323,23 @@ fit();reset();state='menu';loop();
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;font-family:'Trebuchet MS',sans-serif;user-select:none;}
-  body{background:#2a2236;display:flex;align-items:center;justify-content:center;}
-  #wrap{position:relative;width:100%;max-width:560px;height:100%;max-height:660px;}
+  body{background:#1c2a1e;display:flex;align-items:center;justify-content:center;}
+  #wrap{position:relative;width:100%;max-width:580px;height:100%;max-height:660px;}
   canvas{display:block;width:100%;height:100%;}
   .hud{position:absolute;top:10px;left:0;right:0;padding:0 16px;display:flex;justify-content:space-between;
        color:#fff;font-weight:bold;font-size:18px;pointer-events:none;text-shadow:0 2px 4px rgba(0,0,0,.5);}
   .controls-hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;color:#fff;
        font-size:12px;opacity:.65;pointer-events:none;}
-  .touch{position:absolute;bottom:16px;display:flex;gap:12px;}
+  .touch{position:absolute;bottom:16px;display:flex;gap:12px;width:100%;justify-content:flex-end;padding-right:16px;}
   .tbtn{width:84px;height:60px;border-radius:14px;background:rgba(255,255,255,.16);
-       border:2px solid rgba(255,255,255,.4);color:#fff;font-size:15px;font-weight:bold;
-       display:flex;align-items:center;justify-content:center;}
+       border:2px solid rgba(255,255,255,.4);color:#fff;font-size:14px;font-weight:bold;
+       display:flex;align-items:center;justify-content:center;text-align:center;}
   .tbtn:active{background:rgba(255,255,255,.34);}
-  #jumpBtn{right:16px;} #shootBtn{right:116px;}
-  .overlay-screen{position:absolute;inset:0;background:rgba(25,18,35,.93);display:flex;flex-direction:column;
-       align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;gap:13px;}
-  .overlay-screen h2{font-size:28px;color:#ffd84d;}
-  .overlay-screen p{font-size:15px;line-height:1.5;max-width:340px;opacity:.92;}
-  .play-btn{margin-top:6px;background:#4dd0e1;color:#10303a;border:none;padding:12px 28px;border-radius:99px;
+  .overlay-screen{position:absolute;inset:0;background:rgba(18,28,20,.94);display:flex;flex-direction:column;
+       align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;gap:12px;overflow-y:auto;}
+  .overlay-screen h2{font-size:27px;color:#bff05a;}
+  .overlay-screen p{font-size:14px;line-height:1.5;max-width:350px;opacity:.92;}
+  .play-btn{margin-top:6px;background:#5fd0ff;color:#0f303a;border:none;padding:12px 28px;border-radius:99px;
        font-size:17px;font-weight:bold;cursor:pointer;}
   .play-btn.alt{background:#ffd84d;color:#3a2e10;}
   .play-btn:active{transform:scale(.96);}
@@ -2279,15 +2352,18 @@ fit();reset();state='menu';loop();
   <canvas id="c"></canvas>
   <div class="hud"><span id="leftHud">🪙 0 / 5</span><span id="rightHud"></span></div>
   <div class="touch">
-    <div class="tbtn" id="shootBtn">💧 Water<br>(S)</div>
-    <div class="tbtn" id="jumpBtn">⤴ Jump<br>(Space)</div>
+    <div class="tbtn" id="shootBtn">💧<br>S</div>
+    <div class="tbtn" id="jumpBtn">⤴<br>Space</div>
   </div>
-  <div class="controls-hint">Space = jump · S = shoot water · hit 5 coins to reach the boss</div>
+  <div class="controls-hint">Space = jump (tap twice in the air to double-jump) · S = shoot water</div>
 
   <div class="overlay-screen" id="startScreen">
     <h2>💧 Coin Runner</h2>
-    <p>You run forward automatically. <b>Space</b> to jump over stones. <b>S</b> shoots water — it flies straight at your current height and keeps going until it hits a <b>coin</b> 🪙 or a stone.</p>
-    <p>Jump to line up with floating coins! Hit <b>5 coins</b> and you teleport to the <b>boss</b> — splash him 10 times to win.</p>
+    <p>You're a brave <b>elf</b> 🧝 running through the forest automatically. <b>Space</b> jumps over stones — press it
+    <b>again in mid-air</b> for a <b>double-jump</b>! <b>S</b> shoots water straight ahead at your current height — jump first, then
+    shoot, to hit coins floating up high.</p>
+    <p>Touch a coin to collect it too. Five coins shot teleports you to a <b>goblin</b> 👺 boss arena — he hides behind
+    a shield until he digs up a stone to throw, so only splash him while he's mid-throw. Land 10 hits to win!</p>
     <button class="play-btn" id="startBtn">Start Running</button>
   </div>
   <div class="overlay-screen hidden" id="overScreen">
@@ -2299,31 +2375,32 @@ fit();reset();state='menu';loop();
 
 <script>
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');
-let W=560,H=660,GROUND=0;
-function fit(){const r=cv.getBoundingClientRect();W=cv.width=Math.round(r.width);H=cv.height=Math.round(r.height);GROUND=H-80;}
+let W=580,H=660,GROUND=0;
+function fit(){const r=cv.getBoundingClientRect();W=cv.width=Math.round(r.width);H=cv.height=Math.round(r.height);GROUND=H-78;}
 const leftHud=document.getElementById('leftHud'),rightHud=document.getElementById('rightHud');
 const startScreen=document.getElementById('startScreen'),overScreen=document.getElementById('overScreen');
 const overTitle=document.getElementById('overTitle'),overMsg=document.getElementById('overMsg'),overBtns=document.getElementById('overBtns');
 
 let state='menu',mode='run';
-let player,stones,coins,waters,scroll,coinsShot,baseSpeed,coinTimer,bossStoneTimer;
+let player,stones,coins,waters,scroll,coinsShot,baseSpeed,coinTimer,bossStoneTimer,grassBlades;
 let boss;
-const JUMP_V=-12.5, GRAV=0.6;
-const HEIGHTS=()=>[GROUND-20, GROUND-110, GROUND-200]; // coin heights (low/mid/high)
+const JUMP_V=-13.5, GRAV=0.5;
+const HEIGHTS=()=>[GROUND-22, GROUND-115, GROUND-205];
 
 function reset(full){
   fit();
-  player={x:W*0.22,y:GROUND-20,vy:0,r:20,onGround:true};
+  player={x:W*0.22,y:GROUND-20,vy:0,r:20,onGround:true,jumpsLeft:2,anim:0};
   stones=[];coins=[];waters=[];
   scroll=5;baseSpeed=5;coinTimer=0;bossStoneTimer=0;
   if(full){coinsShot=0;}
   mode='run';
+  grassBlades=[]; for(let i=0;i<40;i++) grassBlades.push({x:Math.random()*W, ph:Math.random()*6.28});
   updateHud();
 }
 function start(){reset(true);state='play';startScreen.classList.add('hidden');overScreen.classList.add('hidden');}
 function updateHud(){
   if(mode==='run'){ leftHud.textContent='🪙 '+coinsShot+' / 5'; rightHud.textContent='⚡ x'+(baseSpeed/5).toFixed(1); }
-  else { leftHud.textContent='💧 Boss hits: '+boss.hits+' / 10'; rightHud.textContent='👹 BOSS'; }
+  else { leftHud.textContent='💧 Boss hits: '+boss.hits+' / 10'; rightHud.textContent='👺 BOSS'; }
 }
 function gameOver(msg){
   state='over'; overTitle.textContent='💥 Game Over'; overMsg.textContent=msg;
@@ -2333,27 +2410,30 @@ function gameOver(msg){
 }
 function bossWin(){
   state='over'; overTitle.textContent='🏆 Boss Defeated!';
-  overMsg.textContent='You splashed the boss 10 times!';
+  overMsg.textContent='You splashed the goblin 10 times! The forest is safe again.';
   overBtns.innerHTML='<button class="play-btn" id="contBtn">Continue Running</button>'+
                      '<button class="play-btn alt" id="restBtn">Start Over</button>';
   document.getElementById('contBtn').onclick=()=>{reset(true);state='play';overScreen.classList.add('hidden');};
   document.getElementById('restBtn').onclick=start;
   overScreen.classList.remove('hidden');
 }
-
 function goBoss(){
-  mode='boss'; boss={x:W-90,y:GROUND-70,hp:10,hits:0,w:70,h:130};
+  mode='boss'; boss={x:W-130,y:GROUND-72,hp:10,hits:0,w:74,h:128,
+    phase:'shield', phaseT:0, shieldDur:150, digDur:40, throwDur:36, cooldown:0};
   stones=[];coins=[];waters=[];bossStoneTimer=0;
-  player.x=W*0.22;player.y=GROUND-20;player.vy=0;player.onGround=true;
+  player.x=W*0.22;player.y=GROUND-20;player.vy=0;player.onGround=true;player.jumpsLeft=2;
   updateHud();
 }
 
-// input
-function jump(){ if(state!=='play')return; if(player.onGround){player.vy=JUMP_V;player.onGround=false;} }
-function shoot(){ if(state!=='play')return; waters.push({x:player.x+player.r,y:player.y,vx:scroll+7,r:8}); }
+// input — double jump: first press from ground, second press while airborne
+function jump(){
+  if(state!=='play')return;
+  if(player.jumpsLeft>0){ player.vy=JUMP_V*(player.onGround?1:0.92); player.onGround=false; player.jumpsLeft--; player.anim=8; }
+}
+function shoot(){ if(state!=='play')return; const spd = mode==='boss' ? 11 : scroll+7; waters.push({x:player.x+player.r,y:player.y,vx:spd,r:7,trail:[]}); }
 document.addEventListener('keydown',e=>{
-  if(e.code==='Space'){e.preventDefault();jump();}
-  if(e.key==='s'||e.key==='S'){e.preventDefault();shoot();}
+  if(e.code==='Space'){e.preventDefault(); if(!e.repeat) jump();}
+  if(e.key==='s'||e.key==='S'){e.preventDefault(); if(!e.repeat) shoot();}
 });
 function bindTap(id,fn){const el=document.getElementById(id);
   const h=e=>{e.preventDefault();fn();};
@@ -2363,39 +2443,42 @@ document.getElementById('startBtn').onclick=start;
 
 function loop(){
   requestAnimationFrame(loop);
-  // bg
+  if(window.__autopilot) window.__autopilot();
   const g=ctx.createLinearGradient(0,0,0,H);
-  if(mode==='boss'){g.addColorStop(0,'#3a1f2e');g.addColorStop(1,'#1a0e16');}
-  else{g.addColorStop(0,'#3b2f57');g.addColorStop(1,'#241b38');}
+  if(mode==='boss'){g.addColorStop(0,'#241a30');g.addColorStop(1,'#140e1c');}
+  else{g.addColorStop(0,'#bfe6c8');g.addColorStop(1,'#7fc98f');}
   ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
 
   if(state==='play'){
-    // physics
     player.vy+=GRAV; player.y+=player.vy;
-    if(player.y>=GROUND-20){player.y=GROUND-20;player.vy=0;player.onGround=true;}
+    if(player.y>=GROUND-20){player.y=GROUND-20;player.vy=0;player.onGround=true;player.jumpsLeft=2;}
+    if(player.anim>0)player.anim--;
 
     if(mode==='run') updateRun(); else updateBoss();
 
-    // waters
-    for(const w of waters){ w.x+=w.vx; }
+    for(const w of waters){ w.trail.push({x:w.x,y:w.y}); if(w.trail.length>6)w.trail.shift(); w.x+=w.vx; }
     waters=waters.filter(w=>w.x<W+40);
   }
 
-  // ground
-  ctx.fillStyle=mode==='boss'?'#4a3145':'#4a3a6a';ctx.fillRect(0,GROUND,W,H-GROUND);
-  ctx.fillStyle=mode==='boss'?'#5e3f57':'#5d4a85';ctx.fillRect(0,GROUND,W,6);
+  // ground (grass)
+  ctx.fillStyle=mode==='boss'?'#2e2438':'#4a8f4a';ctx.fillRect(0,GROUND,W,H-GROUND);
+  ctx.fillStyle=mode==='boss'?'#3a2e48':'#3c7a3c';ctx.fillRect(0,GROUND,W,6);
+  if(mode!=='boss'){
+    ctx.strokeStyle='#5fae5f';ctx.lineWidth=2;
+    for(const b of grassBlades){
+      const sway=Math.sin(performance.now()/300+b.ph)*3;
+      ctx.beginPath();ctx.moveTo(b.x,GROUND);ctx.lineTo(b.x+sway,GROUND-12);ctx.stroke();
+    }
+  }
 
   drawScene();
 }
 
 function updateRun(){
   scroll=baseSpeed;
-  // spawn stones
   if(Math.random()<0.018){ if(stones.every(s=>s.x<W-160)) stones.push({x:W+30,y:GROUND-22,w:30,h:42}); }
-  // spawn coins every ~10s
   coinTimer++;
   if(coinTimer> 600){ coinTimer=0; const hs=HEIGHTS(); coins.push({x:W+30,y:hs[Math.floor(Math.random()*hs.length)],r:15,got:false}); }
-  // also a few coins sprinkled
   if(Math.random()<0.006){ const hs=HEIGHTS(); coins.push({x:W+30,y:hs[Math.floor(Math.random()*hs.length)],r:15,got:false}); }
 
   for(const s of stones){ s.x-=scroll; }
@@ -2403,13 +2486,18 @@ function updateRun(){
   stones=stones.filter(s=>s.x>-50);
   coins=coins.filter(c=>!c.got && c.x>-40);
 
-  // stone collision (must jump over)
   for(const s of stones){
     if(Math.abs(s.x-player.x)<player.r*0.7+s.w/2 && player.y+player.r > s.y-2){
       gameOver('You ran into a stone! Coins this run: '+coinsShot); return;
     }
   }
-  // water hits coins (same height) or stones (blocked)
+  // touch-collect: just walking into a coin also collects it
+  for(const c of coins){
+    if(!c.got && Math.abs(c.x-player.x)<c.r+player.r*0.6 && Math.abs(c.y-player.y)<c.r+player.r*0.6){
+      c.got=true; coinsShot++; baseSpeed=Math.min(9,baseSpeed+0.5); updateHud();
+      if(coinsShot>=5){ goBoss(); return; }
+    }
+  }
   for(const w of waters){
     for(const s of stones){ if(Math.abs(w.x-s.x)<s.w/2+w.r && Math.abs(w.y-(s.y))<s.h){ w.dead=true; } }
     for(const c of coins){
@@ -2424,85 +2512,163 @@ function updateRun(){
 
 function updateBoss(){
   scroll=0;
-  // boss throws a stone every 4s (~240 frames)
-  bossStoneTimer++;
-  if(bossStoneTimer>=240){ bossStoneTimer=0; stones.push({x:boss.x-30,y:GROUND-22,w:30,h:42,vx:-6,thrown:true}); }
+  // boss phase machine: shield (safe) -> dig (telegraph) -> throw (vulnerable + throws stone) -> shield...
+  boss.phaseT++;
+  if(boss.phase==='shield' && boss.phaseT>=boss.shieldDur){ boss.phase='dig'; boss.phaseT=0; }
+  else if(boss.phase==='dig' && boss.phaseT>=boss.digDur){
+    boss.phase='throw'; boss.phaseT=0;
+    stones.push({x:boss.x-30,y:GROUND-22,w:30,h:42,vx:-6,thrown:true});
+  }
+  else if(boss.phase==='throw' && boss.phaseT>=boss.throwDur){ boss.phase='shield'; boss.phaseT=0; }
+
   for(const s of stones){ s.x+=s.vx||0; }
   stones=stones.filter(s=>s.x>-50);
-  // thrown stone hits player (dodge by jumping)
   for(const s of stones){
     if(Math.abs(s.x-player.x)<player.r*0.7+s.w/2 && player.y+player.r > s.y-2){
-      gameOver('The boss\u2019s stone hit you! Hits landed: '+boss.hits+'/10'); return;
+      gameOver('The goblin\u2019s stone hit you! Hits landed: '+boss.hits+'/10'); return;
     }
   }
-  // water hits boss
   for(const w of waters){
-    if(w.x+w.r > boss.x-boss.w/2 && w.y>boss.y-boss.h/2 && w.y<boss.y+boss.h/2){
+    const vulnerable = boss.phase==='throw';
+    if(vulnerable && w.x+w.r > boss.x-boss.w/2 && w.y>boss.y-boss.h/2 && w.y<boss.y+boss.h/2){
       w.dead=true; boss.hits++; boss.hp--; updateHud();
       if(boss.hits>=10){ bossWin(); return; }
+    } else if(!vulnerable && w.x+w.r > boss.x-boss.w/2-10 && w.y>boss.y-boss.h/2 && w.y<boss.y+boss.h/2){
+      w.dead=true; // blocked by the shield
     }
-    // stones block water
-    for(const s of stones){ if(Math.abs(w.x-s.x)<s.w/2+w.r && Math.abs(w.y-s.y)<s.h){ w.dead=true; } }
+    for(const s of stones){ if(!s.thrown && Math.abs(w.x-s.x)<s.w/2+w.r && Math.abs(w.y-s.y)<s.h){ w.dead=true; } }
   }
   waters=waters.filter(w=>!w.dead);
 }
 
 function drawScene(){
   if(state==='menu'){ drawRunner(); return; }
-  // coins
   for(const c of coins){ if(c.got)continue;
     ctx.fillStyle='#ffd84d';ctx.beginPath();ctx.arc(c.x,c.y,c.r,0,7);ctx.fill();
     ctx.fillStyle='#caa12b';ctx.beginPath();ctx.arc(c.x,c.y,c.r*0.6,0,7);ctx.fill();
-    ctx.fillStyle='#ffd84d';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('$',c.x,c.y+5);
+    ctx.fillStyle='#fff8d6';ctx.beginPath();ctx.arc(c.x-c.r*0.3,c.y-c.r*0.3,c.r*0.22,0,7);ctx.fill();
   }
-  // stones
   for(const s of stones){
     ctx.fillStyle='#8a8a96';ctx.beginPath();
     ctx.ellipse(s.x,s.y+s.h*0.25,s.w*0.7,s.h*0.5,0,0,7);ctx.fill();
     ctx.fillStyle='#6f6f7a';ctx.beginPath();ctx.ellipse(s.x-3,s.y+s.h*0.2,s.w*0.4,s.h*0.3,0,0,7);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,.25)';ctx.beginPath();ctx.ellipse(s.x-5,s.y+s.h*0.08,s.w*0.18,s.h*0.12,0,0,7);ctx.fill();
   }
-  // waters
+  // realistic-ish water bolts with a trailing droplet streak
   for(const w of waters){
-    ctx.fillStyle='#5fd0ff';ctx.beginPath();ctx.ellipse(w.x,w.y,w.r*1.4,w.r,0,0,7);ctx.fill();
-    ctx.fillStyle='rgba(255,255,255,.6)';ctx.beginPath();ctx.arc(w.x-w.r*0.3,w.y-w.r*0.3,w.r*0.4,0,7);ctx.fill();
+    for(let i=0;i<w.trail.length;i++){
+      const t=w.trail[i], a=(i+1)/w.trail.length*0.35;
+      ctx.fillStyle='rgba(95,208,255,'+a.toFixed(2)+')';
+      ctx.beginPath();ctx.ellipse(t.x,t.y,w.r*1.1*((i+1)/w.trail.length),w.r*0.7*((i+1)/w.trail.length),0,0,7);ctx.fill();
+    }
+    const grd=ctx.createRadialGradient(w.x-w.r*0.3,w.y-w.r*0.3,1,w.x,w.y,w.r*1.4);
+    grd.addColorStop(0,'#e8fbff');grd.addColorStop(0.5,'#5fd0ff');grd.addColorStop(1,'#1f9fd8');
+    ctx.fillStyle=grd;ctx.beginPath();ctx.ellipse(w.x,w.y,w.r*1.3,w.r*0.85,0,0,7);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,.7)';ctx.beginPath();ctx.ellipse(w.x-w.r*0.4,w.y-w.r*0.3,w.r*0.35,w.r*0.2,0,0,7);ctx.fill();
   }
-  // boss
-  if(mode==='boss'&&boss){
-    ctx.fillStyle='#b13a5e';
-    roundRect(boss.x-boss.w/2,boss.y-boss.h/2,boss.w,boss.h,12);ctx.fill();
-    // eyes
-    ctx.fillStyle='#ffe14d';ctx.beginPath();ctx.arc(boss.x-14,boss.y-30,8,0,7);ctx.arc(boss.x+14,boss.y-30,8,0,7);ctx.fill();
-    ctx.fillStyle='#1a0e16';ctx.beginPath();ctx.arc(boss.x-14,boss.y-30,3,0,7);ctx.arc(boss.x+14,boss.y-30,3,0,7);ctx.fill();
-    // mouth
-    ctx.strokeStyle='#1a0e16';ctx.lineWidth=3;ctx.beginPath();ctx.arc(boss.x,boss.y-2,16,0.15*Math.PI,0.85*Math.PI);ctx.stroke();
-    // hp bar
-    ctx.fillStyle='#3a1f2e';ctx.fillRect(boss.x-40,boss.y-boss.h/2-18,80,9);
-    ctx.fillStyle='#ff5b7a';ctx.fillRect(boss.x-40,boss.y-boss.h/2-18,80*(boss.hp/10),9);
-  }
+  if(mode==='boss'&&boss) drawGoblin();
   drawRunner();
 }
 
-function drawRunner(){
-  const p=player||{x:W*0.22,y:GROUND-20,r:20};
-  const x=p.x,y=p.y,r=p.r;
-  // body
-  ctx.fillStyle='#4dd0e1';
-  roundRect(x-r*0.7,y-r,r*1.4,r*2,8);ctx.fill();
-  // face
-  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x+r*0.2,y-r*0.3,4,0,7);ctx.fill();
-  ctx.fillStyle='#10303a';ctx.beginPath();ctx.arc(x+r*0.3,y-r*0.3,2,0,7);ctx.fill();
-  // water tank hint
-  ctx.fillStyle='#2aa7bd';ctx.fillRect(x-r*0.7,y+r*0.4,r*1.4,r*0.5);
+function drawGoblin(){
+  const x=boss.x,y=boss.y,w=boss.w,h=boss.h;
+  const digBob = boss.phase==='dig' ? Math.sin(boss.phaseT*0.6)*4 : 0;
+  ctx.save();ctx.translate(x,y+digBob);
   // legs
-  ctx.strokeStyle='#2aa7bd';ctx.lineWidth=4;
-  const lp=(p.onGround?Math.sin(performance.now()/80)*5:0);
-  ctx.beginPath();ctx.moveTo(x-5,y+r);ctx.lineTo(x-5+lp,y+r+10);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(x+5,y+r);ctx.lineTo(x+5-lp,y+r+10);ctx.stroke();
+  ctx.fillStyle='#3a6b2e';
+  ctx.fillRect(-w*0.28,h*0.28,w*0.22,h*0.26);
+  ctx.fillRect(w*0.06,h*0.28,w*0.22,h*0.26);
+  // body
+  ctx.fillStyle='#5a9a3e';
+  roundRectAt(-w*0.36,-h*0.18,w*0.72,h*0.5,10);ctx.fill();
+  // belt
+  ctx.fillStyle='#5a3a20';ctx.fillRect(-w*0.36,h*0.16,w*0.72,h*0.08);
+  // head
+  ctx.fillStyle='#6fb24a';
+  ctx.beginPath();ctx.ellipse(0,-h*0.32,w*0.32,h*0.2,0,0,7);ctx.fill();
+  // ears
+  ctx.beginPath();ctx.moveTo(-w*0.30,-h*0.36);ctx.lineTo(-w*0.5,-h*0.46);ctx.lineTo(-w*0.26,-h*0.24);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(w*0.30,-h*0.36);ctx.lineTo(w*0.5,-h*0.46);ctx.lineTo(w*0.26,-h*0.24);ctx.closePath();ctx.fill();
+  // eyes
+  ctx.fillStyle='#ffe14d';ctx.beginPath();ctx.arc(-w*0.12,-h*0.34,5,0,7);ctx.arc(w*0.12,-h*0.34,5,0,7);ctx.fill();
+  ctx.fillStyle='#1a1208';ctx.beginPath();ctx.arc(-w*0.12,-h*0.34,2,0,7);ctx.arc(w*0.12,-h*0.34,2,0,7);ctx.fill();
+  // mouth + tusks
+  ctx.strokeStyle='#1a1208';ctx.lineWidth=2.4;ctx.beginPath();ctx.arc(0,-h*0.22,8,0.1*Math.PI,0.9*Math.PI);ctx.stroke();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(-6,-h*0.22+5);ctx.lineTo(-3,-h*0.22+12);ctx.lineTo(-1,-h*0.22+5);ctx.fill();
+  ctx.beginPath();ctx.moveTo(6,-h*0.22+5);ctx.lineTo(3,-h*0.22+12);ctx.lineTo(1,-h*0.22+5);ctx.fill();
+
+  // arms / shield / throw
+  if(boss.phase==='shield'){
+    // a big round wooden shield held in front (toward player)
+    ctx.fillStyle='#7a5230';
+    ctx.beginPath();ctx.ellipse(-w*0.45,-h*0.02,w*0.26,h*0.32,0,0,7);ctx.fill();
+    ctx.strokeStyle='#5a3a1c';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(-w*0.45,-h*0.02,w*0.26,h*0.32,0,0,7);ctx.stroke();
+    ctx.fillStyle='#9a7040';ctx.beginPath();ctx.arc(-w*0.45,-h*0.02,6,0,7);ctx.fill();
+  } else if(boss.phase==='dig'){
+    // crouching, arm reaching into the ground
+    ctx.strokeStyle='#5a9a3e';ctx.lineWidth=9;ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(-w*0.30,h*0.0);ctx.lineTo(-w*0.55,h*0.30+digBob);ctx.stroke();
+    ctx.fillStyle='#8a8a96';ctx.beginPath();ctx.ellipse(-w*0.55,h*0.34,10,7,0,0,7);ctx.fill();
+  } else { // throw — arm raised mid-throw, vulnerable
+    ctx.strokeStyle='#5a9a3e';ctx.lineWidth=9;ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(-w*0.28,-h*0.05);ctx.lineTo(-w*0.6,-h*0.36);ctx.stroke();
+    ctx.fillStyle='#ff8a8a';ctx.beginPath();ctx.arc(0,0,w*0.55,0,7);ctx.globalAlpha=0.08;ctx.fill();ctx.globalAlpha=1;
+  }
+  ctx.restore();
+
+  // hp bar
+  ctx.fillStyle='#2a1430';ctx.fillRect(x-42,y-h/2-20,84,9);
+  ctx.fillStyle='#ff5b7a';ctx.fillRect(x-42,y-h/2-20,84*(boss.hp/10),9);
+  // phase label
+  ctx.fillStyle = boss.phase==='throw' ? '#ffe14d' : 'rgba(255,255,255,.55)';
+  ctx.font='bold 11px sans-serif';ctx.textAlign='center';
+  ctx.fillText(boss.phase==='shield'?'🛡 shielded':boss.phase==='dig'?'⛏ digging…':'🪨 throwing! (hit now)', x, y-h/2-26);
 }
-function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+function drawRunner(){
+  const p=player||{x:W*0.22,y:GROUND-20,r:20,onGround:true,anim:0};
+  const x=p.x,y=p.y,r=p.r;
+  ctx.save();ctx.translate(x,y);
+  const lean = p.onGround?0:-0.12;
+  ctx.rotate(lean);
+  // legs (running cycle)
+  const lp=(p.onGround?Math.sin(performance.now()/80)*6:4);
+  ctx.strokeStyle='#3a6b2e';ctx.lineWidth=4;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-5,r*0.5);ctx.lineTo(-5+lp,r*1.0);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(5,r*0.5);ctx.lineTo(5-lp,r*1.0);ctx.stroke();
+  // tunic body
+  ctx.fillStyle='#3f8f4a';
+  roundRectAt(-r*0.62,-r*0.5,r*1.24,r*1.15,8);ctx.fill();
+  ctx.fillStyle='#2f6f38';ctx.fillRect(-r*0.62,r*0.25,r*1.24,r*0.3);
+  // belt
+  ctx.fillStyle='#8a5a2e';ctx.fillRect(-r*0.62,r*0.18,r*1.24,r*0.1);
+  // head
+  ctx.fillStyle='#f0c89a';ctx.beginPath();ctx.arc(0,-r*0.85,r*0.5,0,7);ctx.fill();
+  // elf ears
+  ctx.fillStyle='#f0c89a';
+  ctx.beginPath();ctx.moveTo(-r*0.46,-r*0.95);ctx.lineTo(-r*0.85,-r*1.05);ctx.lineTo(-r*0.4,-r*0.78);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(r*0.46,-r*0.95);ctx.lineTo(r*0.85,-r*1.05);ctx.lineTo(r*0.4,-r*0.78);ctx.closePath();ctx.fill();
+  // hair / hood point
+  ctx.fillStyle='#2f6f38';
+  ctx.beginPath();ctx.moveTo(-r*0.5,-r*1.05);ctx.lineTo(0,-r*1.5);ctx.lineTo(r*0.5,-r*1.05);ctx.closePath();ctx.fill();
+  // eyes
+  ctx.fillStyle='#2a1e12';ctx.beginPath();ctx.arc(-r*0.16,-r*0.85,2.4,0,7);ctx.arc(r*0.16,-r*0.85,2.4,0,7);ctx.fill();
+  // water flask on belt
+  ctx.fillStyle='#5fd0ff';ctx.fillRect(r*0.5,-r*0.05,r*0.28,r*0.36);
+  ctx.strokeStyle='#2a8fb8';ctx.lineWidth=1.5;ctx.strokeRect(r*0.5,-r*0.05,r*0.28,r*0.36);
+  // double-jump sparkle when a mid-air jump was just used
+  if(p.anim>0 && !p.onGround){
+    ctx.fillStyle='rgba(255,255,255,'+(p.anim/8).toFixed(2)+')';
+    ctx.beginPath();ctx.arc(0,r*0.9,r*0.9,0,7);ctx.fill();
+  }
+  ctx.restore();
+}
+function roundRectAt(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
 
 window.addEventListener('resize',fit);
 fit();reset(true);state='menu';loop();
+window.__debug = ()=>({state, mode, player, stones, coins, boss, coinsShot});
+window.__autopilot = null; // tests can set this to a function() called once per frame
 </script>
 </body>
 </html>
