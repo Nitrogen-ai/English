@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Mission Quiz · Sommerbad Pankow</title>
+<style>
+  /* ── Design tokens ─────────────────────────────────────────── */
+  :root {
+    --leaf:   #2f7d4f;
+    --sky:    #2a6f9e;
+    --sun:    #e8a93a;
+    --amber:  #fbe7c6;
+    --bark:   #5a3d1e;
+    --ink:    #1e1e1e;
+    --cream:  #fdf8f0;
+    --white:  #ffffff;
+    --green-ok:  #d4edda;
+    --green-bd:  #2f7d4f;
+    --red-no:    #fde8e8;
+    --red-bd:    #c0392b;
+    --grey:   #f2ede6;
+    --shadow: 0 4px 24px rgba(90,61,30,.10);
+  }
+
+  /* ── Reset & base ───────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── Header ─────────────────────────────────────────────────── */
+  header {
+    width: 100%;
+    background: var(--leaf);
+    color: var(--white);
+    padding: 18px 24px 14px;
+    text-align: center;
+  }
+  header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+    font-weight: 700;
+    letter-spacing: .02em;
+    line-height: 1.2;
+  }
+  header p {
+    font-size: .78rem;
+    opacity: .85;
+    margin-top: 3px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Progress bar ───────────────────────────────────────────── */
+  #progress-wrap {
+    width: 100%;
+    max-width: 680px;
+    padding: 18px 20px 0;
+  }
+  #progress-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--bark);
+    letter-spacing: .04em;
+  }
+  #progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: var(--amber);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  #progress-bar-fill {
+    height: 100%;
+    background: var(--leaf);
+    border-radius: 99px;
+    transition: width .45s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+
+  /* ── Main card ──────────────────────────────────────────────── */
+  #quiz-wrap {
+    width: 100%;
+    max-width: 680px;
+    padding: 18px 20px 32px;
+    flex: 1;
+  }
+  .card {
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 28px 28px 22px;
+    transition: transform .15s ease;
+  }
+
+  /* ── Topic badge + emoji ────────────────────────────────────── */
+  .topic-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .topic-badge {
+    display: inline-block;
+    background: var(--amber);
+    color: var(--bark);
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 6px;
+  }
+  .topic-emoji {
+    font-size: 2.2rem;
+    line-height: 1;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .topic-emoji.pop {
+    transform: scale(1.55) rotate(-6deg);
+  }
+
+  /* ── Question ───────────────────────────────────────────────── */
+  .question {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+
+  /* ── Answers ────────────────────────────────────────────────── */
+  .answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 480px) {
+    .answers { grid-template-columns: 1fr; }
+  }
+  .ans-btn {
+    background: var(--white);
+    border: 2px solid var(--amber);
+    border-radius: 11px;
+    padding: 13px 14px;
+    font-size: .88rem;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.4;
+    transition: background .15s, border-color .15s, transform .1s;
+  }
+  .ans-btn:hover:not(:disabled) {
+    background: var(--amber);
+    border-color: var(--sun);
+    transform: translateY(-2px);
+  }
+  .ans-btn:disabled { cursor: default; }
+  .ans-btn.correct {
+    background: var(--green-ok);
+    border-color: var(--green-bd);
+    color: #1a4a2a;
+    font-weight: 700;
+  }
+  .ans-btn.wrong {
+    background: var(--red-no);
+    border-color: var(--red-bd);
+    color: #7b1d1d;
+  }
+
+  /* ── Feedback box ───────────────────────────────────────────── */
+  #feedback {
+    margin-top: 16px;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: .83rem;
+    line-height: 1.55;
+    display: none;
+  }
+  #feedback.show { display: block; }
+  #feedback.correct-fb {
+    background: var(--green-ok);
+    border: 1.5px solid var(--green-bd);
+    color: #1a4a2a;
+  }
+  #feedback.wrong-fb {
+    background: var(--red-no);
+    border: 1.5px solid var(--red-bd);
+    color: #7b1d1d;
+  }
+  #feedback strong { font-weight: 700; }
+
+  /* ── Next button ────────────────────────────────────────────── */
+  #next-btn {
+    display: none;
+    margin-top: 18px;
+    width: 100%;
+    background: var(--sky);
+    color: var(--white);
+    border: none;
+    border-radius: 11px;
+    padding: 14px;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+  }
+  #next-btn:hover { background: #1f587e; transform: translateY(-1px); }
+  #next-btn.show { display: block; }
+
+  /* ── Score screen ───────────────────────────────────────────── */
+  #score-screen {
+    display: none;
+    width: 100%;
+    max-width: 680px;
+    padding: 18px 20px 40px;
+    text-align: center;
+  }
+  #score-screen.show { display: block; }
+  .score-card {
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 36px 28px 32px;
+  }
+  .score-mega {
+    font-size: 5rem;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .score-number {
+    font-family: Georgia, serif;
+    font-size: clamp(2.2rem, 7vw, 3.5rem);
+    font-weight: 700;
+    color: var(--leaf);
+    line-height: 1;
+    margin: 10px 0 6px;
+  }
+  .score-label {
+    font-size: .85rem;
+    color: #666;
+    margin-bottom: 18px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .score-message {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--bark);
+    line-height: 1.6;
+    max-width: 420px;
+    margin: 0 auto 26px;
+  }
+  .score-stars {
+    font-size: 2rem;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  /* ── Stat pills at the end ──────────────────────────────────── */
+  .stat-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .stat-pill {
+    background: var(--amber);
+    border-radius: 99px;
+    padding: 6px 16px;
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--bark);
+  }
+
+  /* ── Missed list ────────────────────────────────────────────── */
+  #missed-wrap {
+    text-align: left;
+    margin-top: 24px;
+    border-top: 2px solid var(--amber);
+    padding-top: 18px;
+    display: none;
+  }
+  #missed-wrap h3 {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    color: var(--bark);
+    margin-bottom: 10px;
+  }
+  .missed-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--grey);
+    font-size: .82rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .missed-item em { color: var(--green-bd); font-style: normal; font-weight: 700; }
+
+  /* ── Restart btn ────────────────────────────────────────────── */
+  #restart-btn {
+    margin-top: 24px;
+    background: var(--leaf);
+    color: var(--white);
+    border: none;
+    border-radius: 11px;
+    padding: 14px 36px;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  #restart-btn:hover { background: #246040; }
+
+  /* ── Shake animation (wrong answer) ────────────────────────── */
+  @keyframes shake {
+    0%,100%{ transform: translateX(0); }
+    20%    { transform: translateX(-7px); }
+    40%    { transform: translateX(6px); }
+    60%    { transform: translateX(-5px); }
+    80%    { transform: translateX(4px); }
+  }
+  .shake { animation: shake .4s ease; }
+
+  /* ── Confetti dots ──────────────────────────────────────────── */
+  .confetti-dot {
+    position: fixed;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: confettiFall 1s ease-out forwards;
+  }
+  @keyframes confettiFall {
+    0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(120px) rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Summer Team Mission Quiz</h1>
+  <p>Sommerbad Pankow · Class Outing · 32 Questions</p>
+</header>
+
+<div id="progress-wrap">
+  <div id="progress-row">
+    <span id="q-counter">Question 1 of 32</span>
+    <span id="score-counter">Score: 0</span>
+  </div>
+  <div id="progress-bar-bg"><div id="progress-bar-fill"></div></div>
+</div>
+
+<div id="quiz-wrap">
+  <div class="card" id="card">
+    <div class="topic-row">
+      <span class="topic-badge" id="topic-badge"></span>
+      <span class="topic-emoji" id="topic-emoji"></span>
+    </div>
+    <p class="question" id="question-text"></p>
+    <div class="answers" id="answers"></div>
+    <div id="feedback"></div>
+    <button id="next-btn">Next question →</button>
+  </div>
+</div>
+
+<div id="score-screen">
+  <div class="score-card">
+    <div class="score-mega" id="score-mega"></div>
+    <div class="score-stars" id="score-stars"></div>
+    <div class="score-number" id="score-num"></div>
+    <div class="score-label">out of 32 correct</div>
+    <p class="score-message" id="score-msg"></p>
+    <div class="stat-row">
+      <span class="stat-pill" id="pct-pill"></span>
+      <span class="stat-pill" id="streak-pill"></span>
+    </div>
+    <div id="missed-wrap">
+      <h3>📝 Review these cards again:</h3>
+      <div id="missed-list"></div>
+    </div>
+    <button id="restart-btn">🔄 Try again</button>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────
+//  Quiz data  (32 questions)
+// ─────────────────────────────────────────────────────────────────
+const QS = [
+  {
+    topic: "Swimming & a longer life", emoji: "🏊",
+    q: "In the 32-year study of 40,565 people, by how much did regular swimmers beat walkers on death rates?",
+    opts: ["25% lower", "50% lower", "70% lower", "90% lower"],
+    ans: 1,
+    why: "Swimmers had <strong>50%</strong> lower death rates than walkers and 49% lower than runners — the biggest advantage of any exercise group studied."
+  },
+  {
+    topic: "The 2-hour nature dose", emoji: "🌳",
+    q: "How many minutes per week in nature gave people about 59% higher odds of reporting good health?",
+    opts: ["30 minutes", "60 minutes", "120 minutes", "300 minutes"],
+    ans: 2,
+    why: "<strong>120 minutes</strong> (2 hours) per week was the threshold. The benefit peaked at 200–300 minutes — and it didn't matter whether you did it in one long visit or several short ones."
+  },
+  {
+    topic: "Friends keep you alive", emoji: "🤝",
+    q: "Across 148 studies of 308,849 people, by how much did strong social ties raise the odds of survival?",
+    opts: ["20%", "35%", "50%", "75%"],
+    ans: 2,
+    why: "<strong>50%</strong> — as powerful for your health as quitting smoking. Researchers called it one of the most striking findings in health science."
+  },
+  {
+    topic: "Trees boost your immune system", emoji: "🌲",
+    q: "Breathing 'phytoncides' — chemicals trees release — raised cancer-fighting 'natural killer' cell activity by about...",
+    opts: ["20%", "35%", "50%", "80%"],
+    ans: 2,
+    why: "About <strong>50%</strong> — and the effect lasted <em>up to 30 days</em> after just a forest trip. This is why Japan and Korea now prescribe forest visits."
+  },
+  {
+    topic: "Forest air calms you down", emoji: "😌",
+    q: "In 24 Japanese forests, a forest walk lowered the stress hormone cortisol compared to a city walk by about...",
+    opts: ["4%", "8%", "16%", "30%"],
+    ans: 2,
+    why: "About <strong>16%</strong> cortisol drop, plus a 6% lower pulse rate. Cortisol is the hormone your body makes when stressed — lower is calmer."
+  },
+  {
+    topic: "One hour beats the blues", emoji: "🏃",
+    q: "According to the HUNT study, just one hour of exercise per week could prevent about ___ of future depression cases.",
+    opts: ["5%", "12%", "25%", "40%"],
+    ans: 1,
+    why: "<strong>12%</strong> — at any intensity. Even a slow walk counts. The researchers said this was one of the most cost-effective mental health interventions known."
+  },
+  {
+    topic: "Move to protect your brain", emoji: "🚶",
+    q: "The 2024 Lancet Commission found that about what percentage of dementia cases could be prevented by tackling 14 lifestyle risk factors?",
+    opts: ["20%", "30%", "45%", "65%"],
+    ans: 2,
+    why: "<strong>45%</strong> — and physical inactivity is one of the 14 factors on the list. Moving your body is one of the most important things you can do for your brain."
+  },
+  {
+    topic: "Active midlife, sharper old age", emoji: "💪",
+    q: "Compared to the least active people, the most active had ___ lower dementia risk in late life.",
+    opts: ["20%", "35%", "45%", "65%"],
+    ans: 2,
+    why: "<strong>45%</strong> lower risk in late life, and 41% lower in midlife. Being active in your 40s and 50s really pays off decades later."
+  },
+  {
+    topic: "Eat for your memory", emoji: "🥗",
+    q: "Close followers of the brain-friendly 'MIND' diet had ___ lower risk of Alzheimer's disease.",
+    opts: ["25%", "35%", "53%", "70%"],
+    ans: 2,
+    why: "<strong>53%</strong> lower risk — and even people who followed it moderately had 35% lower risk. The MIND diet focuses on leafy greens, berries, nuts, fish and olive oil."
+  },
+  {
+    topic: "Walk your way to ideas", emoji: "💡",
+    q: "Stanford researchers found that walking increased creative output by an average of ___ compared with sitting.",
+    opts: ["20%", "40%", "60%", "80%"],
+    ans: 2,
+    why: "<strong>60%</strong> — and it worked both outdoors and on an indoor treadmill. The effect was immediate. So if you're stuck on a problem, go for a walk!"
+  },
+  {
+    topic: "Five minutes is enough", emoji: "🌿",
+    q: "How little exercise in a green space is enough to measurably lift both mood and self-esteem?",
+    opts: ["1 minute", "5 minutes", "15 minutes", "30 minutes"],
+    ans: 1,
+    why: "<strong>5 minutes</strong> is enough! The effect was biggest in young people. Any green space counts — a park, a garden, even a grassy field."
+  },
+  {
+    topic: "Sport reshaped society", emoji: "🏅",
+    q: "Which US law expanded girls' access to school sports and later boosted college attendance and wages?",
+    opts: ["Title V", "Title VII", "Title IX", "Title XII"],
+    ans: 2,
+    why: "<strong>Title IX</strong> (1972) — a 10-point rise in girls' sports participation led to about 1 point more college attendance and entry into better-paid professions."
+  },
+  {
+    topic: "Games train the brain", emoji: "🎲",
+    q: "Games that challenge self-control and memory measurably build which brain skills?",
+    opts: ["Motor functions", "Reflex functions", "Sensory functions", "Executive functions"],
+    ans: 3,
+    why: "<strong>Executive functions</strong> — the 'manager' skills of the brain: focus, planning, self-control, and teamwork. These are the same skills needed for school and work."
+  },
+  {
+    topic: "The 'high' is real", emoji: "✨",
+    q: "The blissful feeling after exercise is driven partly by which body chemicals?",
+    opts: ["Adrenaline & insulin", "Endorphins only", "Endocannabinoids & endorphins", "Dopamine & serotonin"],
+    ans: 2,
+    why: "<strong>Endocannabinoids & endorphins</strong> — your body's own cannabis-like molecules (endocannabinoids) also play a big role, not just the famous endorphins."
+  },
+  {
+    topic: "A view of trees heals", emoji: "🏥",
+    q: "In Ulrich's 1984 hospital study, tree-view patients left after 7.96 days. How long did brick-wall patients stay?",
+    opts: ["8.10 days", "8.30 days", "8.70 days", "9.20 days"],
+    ans: 2,
+    why: "<strong>8.70 days</strong> — almost a full extra day in hospital. Tree-view patients also needed fewer painkillers and got fewer negative comments in nurses' notes."
+  },
+  {
+    topic: "Secrets of the longest-lived", emoji: "🌍",
+    q: "In Blue Zone regions like Okinawa, Japan, what are the tight social friend groups called?",
+    opts: ["Keiraku", "Moai", "Ikigai", "Kaizen"],
+    ans: 1,
+    why: "<strong>Moai</strong> — a social group of 5–6 lifelong friends who support each other. Researchers believe these close bonds are key to Okinawans' remarkable longevity."
+  },
+  {
+    topic: "Awe fights inflammation", emoji: "😮",
+    q: "Feeling awe — under tall trees or an open sky — was linked to lower levels of which inflammation marker?",
+    opts: ["IL-2", "IL-4", "IL-6", "IL-10"],
+    ans: 2,
+    why: "<strong>IL-6</strong> — an inflammation marker in the blood. Awe was the emotion most strongly linked to lower IL-6 levels, more than happiness or pride."
+  },
+  {
+    topic: "Catch some sun", emoji: "🌞",
+    q: "Sunlight enables your skin to produce which vitamin, essential for strong bones, immunity and steady mood?",
+    opts: ["Vitamin A", "Vitamin B12", "Vitamin C", "Vitamin D"],
+    ans: 3,
+    why: "<strong>Vitamin D</strong> — your skin makes it directly from sunlight. Deficiency is linked to weak bones, low immunity and low mood. Today at Sommerbad is perfect!"
+  },
+  {
+    topic: "Daylight fixes your sleep", emoji: "😴",
+    q: "After one week camping with only natural daylight, by how much did people's body clocks shift earlier?",
+    opts: ["30 minutes earlier", "1 hour earlier", "2 hours earlier", "4 hours earlier"],
+    ans: 2,
+    why: "<strong>2 hours earlier</strong> — campers fell asleep near sunset and woke at sunrise. Artificial electric light is one of the main reasons people sleep too late."
+  },
+  {
+    topic: "Japan prescribes forests", emoji: "🗾",
+    q: "In what year did Japan's government officially coin the word 'shinrin-yoku' (forest bathing)?",
+    opts: ["1964", "1974", "1982", "1995"],
+    ans: 2,
+    why: "<strong>1982</strong> — coined by the Japanese Ministry of Agriculture, Forestry and Fisheries. Today doctors in Japan actually prescribe forest visits as preventive medicine."
+  },
+  {
+    topic: "Korea's healing forests", emoji: "🏞",
+    q: "South Korea built dozens of official national 'healing forests'. What do people go there for?",
+    opts: ["Sports competitions", "Wildlife photography", "Guided nature therapy", "Tree-planting programmes"],
+    ans: 2,
+    why: "<strong>Guided nature therapy</strong> — professional therapists lead recovery programmes in these forests. South Korea treats nature therapy as real medicine."
+  },
+  {
+    topic: "The Nordic outdoor life", emoji: "🏕",
+    q: "What does the Scandinavian concept 'friluftsliv' mean in English?",
+    opts: ["Cold-water swimming", "Forest medicine", "Open-air living", "Nordic skiing"],
+    ans: 2,
+    why: "<strong>Open-air living</strong> — the deep cultural belief that time outdoors is essential to a good life. Coined by the Norwegian playwright Henrik Ibsen in 1859."
+  },
+  {
+    topic: "Germany's own nature cure", emoji: "💧",
+    q: "Germany's nature-cure tradition reaches back to the 1800s — to which historical person?",
+    opts: ["Alexander von Humboldt", "Rudolf Virchow", "Sebastian Kneipp", "Max Pettenkofer"],
+    ans: 2,
+    why: "<strong>Sebastian Kneipp</strong> (1821–1897) — a priest who developed cold-water cures and nature therapy. Today 'Waldbaden' (forest bathing) continues this tradition."
+  },
+  {
+    topic: "Eat together, feel better", emoji: "🍲",
+    q: "In a survey of 2,000 people, sharing meals more often made people feel more...",
+    opts: ["Thin and athletic", "Happy, trusting and satisfied", "Focused and energetic", "Rich and successful"],
+    ans: 1,
+    why: "<strong>Happy, trusting and satisfied</strong> — the more often people ate together with others, the better their wellbeing across all these measures."
+  },
+  {
+    topic: "Team sport, stronger mind", emoji: "⚽",
+    q: "Children and teens who play team sports showed fewer signs of which conditions?",
+    opts: ["Boredom and fatigue", "Anxiety and depression", "Confusion and memory loss", "Anger and aggression"],
+    ans: 1,
+    why: "<strong>Anxiety and depression</strong> — plus stronger social skills. The effect was bigger for team sports than for individual sports, suggesting the group element matters."
+  },
+  {
+    topic: "Exercise grows your memory", emoji: "🧠",
+    q: "One year of aerobic exercise grew older adults' hippocampus — the brain's memory centre — by about...",
+    opts: ["0.5%", "1%", "2%", "5%"],
+    ans: 2,
+    why: "<strong>2%</strong> — effectively reversing 1–2 years of age-related brain shrinkage. The hippocampus is a small, curved part of the brain crucial for forming memories."
+  },
+  {
+    topic: "Nature quiets worry", emoji: "🍃",
+    q: "A 90-minute walk in nature reduced which type of thoughts — while a city walk did not?",
+    opts: ["Creative thinking", "Happy memories", "Repetitive negative thoughts", "Planning for the future"],
+    ans: 2,
+    why: "<strong>Repetitive negative thoughts</strong> — sometimes called 'rumination'. The city walk had no effect. Researchers measured activity in the brain area tied to rumination."
+  },
+  {
+    topic: "Cold water, warm mood", emoji: "🥶",
+    q: "In the documented cold-water swimming case, after swimming weekly in cold water, the patient was able to...",
+    opts: ["Win a swimming race", "Come off her depression medication", "Lose 20 kilograms", "Sleep 12 hours a night"],
+    ans: 1,
+    why: "<strong>Come off her medication</strong> — and remained well a year later. Cold water triggers a stress-adaptation response that may act like an antidepressant."
+  },
+  {
+    topic: "Play builds the social brain", emoji: "🤸",
+    q: "Free, rough-and-tumble play in youth helps 'wire' which part of the brain?",
+    opts: ["The cerebellum", "The hippocampus", "The prefrontal cortex", "The amygdala"],
+    ans: 2,
+    why: "<strong>The prefrontal cortex</strong> — the brain's front section that controls planning, self-control and social behaviour. It's shaped by physical, unstructured play as a child."
+  },
+  {
+    topic: "Athletes become leaders", emoji: "🏆",
+    q: "A long-term study found that former school athletes were more likely to volunteer, earn more, and...",
+    opts: ["Get married earlier", "Travel internationally", "Study for longer", "Take on leadership"],
+    ans: 3,
+    why: "<strong>Take on leadership</strong> — the team-sport experience builds responsibility and collaborative skills that transfer decades later into professional and community life."
+  },
+  {
+    topic: "Friends buffer stress", emoji: "🤗",
+    q: "Having a friend nearby during a stressful task lowered which body response?",
+    opts: ["Blood pressure", "Blood sugar", "Cortisol response", "Heart size"],
+    ans: 2,
+    why: "<strong>Cortisol response</strong> — your friend's presence literally calmed your biology. Company is not just emotionally nice; it physically reduces your stress hormones."
+  },
+  {
+    topic: "We're wired for nature", emoji: "🌱",
+    q: "What does the scientific word 'biophilia' describe?",
+    opts: ["The science of bacteria", "Humans' inborn bond with living things", "The study of biology", "A fear of nature"],
+    ans: 1,
+    why: "<strong>Humans' inborn bond with living things</strong> — coined by biologist E.O. Wilson in 1984. It explains why contact with nature restores tired attention and calms the mind."
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────
+//  State
+// ─────────────────────────────────────────────────────────────────
+let idx = 0, score = 0, maxStreak = 0, streak = 0;
+const missed = [];
+let shuffled = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ─────────────────────────────────────────────────────────────────
+//  Render question
+// ─────────────────────────────────────────────────────────────────
+function render() {
+  const q = shuffled[idx];
+  document.getElementById('q-counter').textContent = `Question ${idx+1} of ${shuffled.length}`;
+  document.getElementById('score-counter').textContent = `Score: ${score}`;
+  document.getElementById('progress-bar-fill').style.width = `${(idx/shuffled.length)*100}%`;
+  document.getElementById('topic-badge').textContent = q.topic;
+  document.getElementById('topic-emoji').textContent = q.emoji;
+  document.getElementById('topic-emoji').className = 'topic-emoji';
+  document.getElementById('question-text').textContent = q.q;
+
+  const fb = document.getElementById('feedback');
+  fb.className = '';
+  fb.style.display = 'none';
+  fb.innerHTML = '';
+  document.getElementById('next-btn').className = '';
+
+  const wrap = document.getElementById('answers');
+  wrap.innerHTML = '';
+
+  // shuffle options while tracking the correct one
+  const indices = shuffle([0,1,2,3]);
+  const correctIdx = indices.indexOf(q.ans);
+
+  indices.forEach((optIdx, btnPos) => {
+    const btn = document.createElement('button');
+    btn.className = 'ans-btn';
+    btn.textContent = q.opts[optIdx];
+    btn.dataset.pos = btnPos;
+    btn.dataset.isCorrect = (btnPos === correctIdx) ? '1' : '0';
+    btn.addEventListener('click', () => choose(btn, correctIdx, q));
+    wrap.appendChild(btn);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+//  Handle answer choice
+// ─────────────────────────────────────────────────────────────────
+function choose(btn, correctIdx, q) {
+  const allBtns = document.querySelectorAll('.ans-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const isCorrect = btn.dataset.isCorrect === '1';
+  const fb = document.getElementById('feedback');
+  const card = document.getElementById('card');
+  const emoji = document.getElementById('topic-emoji');
+
+  // mark buttons
+  allBtns.forEach((b, i) => {
+    if (b.dataset.isCorrect === '1') b.classList.add('correct');
+    else if (b === btn && !isCorrect) b.classList.add('wrong');
+  });
+
+  if (isCorrect) {
+    score++;
+    streak++;
+    maxStreak = Math.max(maxStreak, streak);
+    fb.className = 'correct-fb show';
+    fb.style.display = 'block';
+    fb.innerHTML = `✅ <strong>Correct!</strong> ${q.why}`;
+    emoji.classList.add('pop');
+    setTimeout(() => emoji.classList.remove('pop'), 400);
+    spawnConfetti();
+  } else {
+    streak = 0;
+    missed.push(q.topic);
+    fb.className = 'wrong-fb show';
+    fb.style.display = 'block';
+    fb.innerHTML = `❌ <strong>Not quite.</strong> ${q.why}`;
+    card.classList.add('shake');
+    setTimeout(() => card.classList.remove('shake'), 420);
+  }
+
+  document.getElementById('score-counter').textContent = `Score: ${score}`;
+  document.getElementById('next-btn').className = 'show';
+}
+
+// ─────────────────────────────────────────────────────────────────
+//  Confetti
+// ─────────────────────────────────────────────────────────────────
+function spawnConfetti() {
+  const colors = ['#2f7d4f','#e8a93a','#2a6f9e','#fbe7c6','#5a3d1e'];
+  const card = document.getElementById('card');
+  const rect = card.getBoundingClientRect();
+  for (let i = 0; i < 12; i++) {
+    const d = document.createElement('div');
+    d.className = 'confetti-dot';
+    d.style.left = `${rect.left + Math.random()*rect.width}px`;
+    d.style.top  = `${rect.top  + Math.random()*(rect.height*0.4)}px`;
+    d.style.background = colors[Math.floor(Math.random()*colors.length)];
+    d.style.animationDelay = `${Math.random()*0.3}s`;
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 1100);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+//  Next
+// ─────────────────────────────────────────────────────────────────
+document.getElementById('next-btn').addEventListener('click', () => {
+  idx++;
+  if (idx < shuffled.length) {
+    render();
+  } else {
+    showScore();
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────
+//  Score screen
+// ─────────────────────────────────────────────────────────────────
+function showScore() {
+  document.getElementById('quiz-wrap').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+  const ss = document.getElementById('score-screen');
+  ss.classList.add('show');
+
+  const pct = Math.round((score/32)*100);
+  let mega, stars, msg;
+
+  if (score === 32) {
+    mega = '🏆'; stars = '⭐⭐⭐⭐⭐';
+    msg = 'Perfect score! You mastered every single fact from the mission cards. You could teach this class!';
+  } else if (score >= 28) {
+    mega = '🌟'; stars = '⭐⭐⭐⭐⭐';
+    msg = 'Outstanding! You absorbed almost everything from the cards. Your brain clearly loves a good walk in the sun.';
+  } else if (score >= 22) {
+    mega = '😎'; stars = '⭐⭐⭐⭐';
+    msg = 'Great result! You really paid attention during the mission. Review the cards you missed and you\'ll nail it next time.';
+  } else if (score >= 16) {
+    mega = '💪'; stars = '⭐⭐⭐';
+    msg = 'Good effort! You got the key ideas. Go back and read the cards you missed — the facts are fascinating once they sink in.';
+  } else if (score >= 8) {
+    mega = '🌱'; stars = '⭐⭐';
+    msg = 'A solid start! The mission was about talking to your classmates — find someone who got a card you struggled with and ask them to explain it again.';
+  } else {
+    mega = '🤸'; stars = '⭐';
+    msg = 'Time to go back to the cards! Every fact on this quiz was on a card you held today. Ask your classmates — that\'s what the mission was for!';
+  }
+
+  document.getElementById('score-mega').textContent = mega;
+  document.getElementById('score-stars').textContent = stars;
+  document.getElementById('score-num').textContent = `${score} / 32`;
+  document.getElementById('score-msg').textContent = msg;
+  document.getElementById('pct-pill').textContent = `${pct}% correct`;
+  document.getElementById('streak-pill').textContent = maxStreak > 1 ? `Best streak: ${maxStreak} in a row 🔥` : 'Keep practising!';
+
+  if (missed.length > 0) {
+    const mw = document.getElementById('missed-wrap');
+    mw.style.display = 'block';
+    const ml = document.getElementById('missed-list');
+    // deduplicate
+    const unique = [...new Set(missed)];
+    ml.innerHTML = unique.map(t => `<div class="missed-item">📌 <em>${t}</em> — find the card with this topic and re-read it!</div>`).join('');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+//  Restart
+// ─────────────────────────────────────────────────────────────────
+document.getElementById('restart-btn').addEventListener('click', () => {
+  idx = 0; score = 0; maxStreak = 0; streak = 0; missed.length = 0;
+  shuffled = shuffle(QS);
+  document.getElementById('score-screen').classList.remove('show');
+  document.getElementById('quiz-wrap').style.display = '';
+  document.getElementById('progress-wrap').style.display = '';
+  render();
+});
+
+// ─────────────────────────────────────────────────────────────────
+//  Boot
+// ─────────────────────────────────────────────────────────────────
+shuffled = shuffle(QS);
+render();
+</script>
+</body>
+</html>
