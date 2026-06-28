@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sylt Class Trip - Compliment Wheel</title>
+    <style>
+        :root {
+            --navy: #1a365d;
+            --seafoam: #2ed573;
+            --ocean: #1e90ff;
+            --sand: #f7d794;
+            --bg-beach: #f1f5f9;
+            --white: #ffffff;
+            --dark: #2c3e50;
+            --coral: #ff6b6b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-beach);
+            background-image: radial-gradient(var(--sand) 0.5px, transparent 0.5px), radial-gradient(var(--sand) 0.5px, var(--bg-beach) 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 3px dashed var(--navy);
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .inbox-btn {
+            background-color: var(--navy);
+            color: var(--white);
+            border: 2px solid var(--ocean);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .inbox-btn:hover {
+            background-color: var(--ocean);
+            transform: scale(1.05);
+        }
+
+        .badge {
+            background-color: var(--coral);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 13px;
+        }
+
+        .app-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            max-width: 1100px;
+            position: relative;
+        }
+
+        /* Background Word Cloud Container */
+        .word-cloud-bg {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 1000px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(30, 144, 255, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .word-pair {
+            font-size: 13px;
+            color: #57606f;
+            background: white;
+            padding: 8px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 3px solid var(--ocean);
+            text-align: center;
+        }
+        .word-pair strong { color: var(--navy); }
+
+        .wheel-container {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(26, 54, 93, 0.2);
+            border: 4px solid var(--navy);
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .arrow {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 28px solid var(--coral);
+            z-index: 10;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 450px;
+            gap: 15px;
+        }
+
+        button.action-btn {
+            background-color: var(--ocean);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.4);
+            border-bottom: 4px solid #0072e3;
+        }
+
+        button.action-btn:active {
+            transform: translateY(2px);
+            border-bottom: 0px;
+        }
+
+        button.action-btn:disabled {
+            background-color: #b2bec3;
+            border-bottom: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .compliment-box {
+            display: none;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            border: 2px solid var(--sand);
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .compliment-box h3 {
+            color: var(--navy);
+        }
+
+        textarea {
+            width: 100%;
+            height: 90px;
+            padding: 12px;
+            border: 2px solid #ced6e0;
+            border-radius: 8px;
+            resize: none;
+            font-size: 15px;
+            outline: none;
+        }
+        textarea:focus { border-color: var(--ocean); }
+
+        /* Modals Layout */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 54, 93, 0.6);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            border-radius: 16px;
+            padding: 25px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 3px solid var(--navy);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #a4b0be;
+        }
+
+        .close-btn:hover { color: var(--navy); }
+
+        .section-title {
+            margin: 15px 0 10px 0;
+            color: var(--navy);
+            border-bottom: 2px dashed #ced6e0;
+            padding-bottom: 5px;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Grid for Unread First Names */
+        .names-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .name-card {
+            background: #eef2f7;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            color: var(--navy);
+            cursor: pointer;
+            border: 1px solid #dcdde1;
+            transition: all 0.2s;
+        }
+
+        .name-card:hover {
+            background: var(--sand);
+            transform: translateY(-2px);
+        }
+
+        /* Read Box List Styling */
+        .read-item {
+            background: #f8f9fa;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border-left: 4px solid var(--seafoam);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .tracking-id {
+            background: #dfe4ea;
+            color: #2c3e50;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        /* Reader Reveal View overlay */
+        .reveal-box {
+            text-align: center;
+            padding: 20px 10px;
+        }
+        .reveal-text {
+            font-style: italic;
+            font-size: 18px;
+            color: var(--navy);
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚓ Sylt Class Trip: Compliment Mail</h1>
+        <button class="inbox-btn" onclick="openInbox()">
+            📬 Letter Box <span class="badge" id="inbox-count">0</span>
+        </button>
+    </header>
+
+    <div class="app-layout">
+        <div class="word-cloud-bg">
+            <div class="word-pair"><strong>Anchor / Anker:</strong> "You ground our class!"</div>
+            <div class="word-pair"><strong>Lighthouse / Leuchtturm:</strong> "Always helpful & bright."</div>
+            <div class="word-pair"><strong>Wattenmeer / Mudflats:</strong> "Fascinating & deep personality."</div>
+            <div class="word-pair"><strong>Seagull / Möwe:</strong> "Stealing hearts, not french fries."</div>
+            <div class="word-pair"><strong>High Tide / Flut:</strong> "Your positive energy is catching!"</div>
+            <div class="word-pair"><strong>Stormproof / Sturmfest:</strong> "You never panic on this trip."</div>
+            <div class="word-pair"><strong>Beach Chair / Strandkorb:</strong> "Pure cozy vibes with you."</div>
+            <div class="word-pair"><strong>Friesen-Teepunsch:</strong> "Sweet and warms up the whole room!"</div>
+        </div>
+
+        <div class="wheel-container">
+            <div class="arrow"></div>
+            <canvas id="wheel" width="400" height="400"></canvas>
+        </div>
+
+        <div class="controls">
+            <button class="action-btn" id="spin-btn" onclick="spinWheel()">Spin the Maritime Wheel!</button>
+            
+            <div class="compliment-box" id="compliment-box">
+                <h3>✍️ Message to: <span id="target-name">None</span></h3>
+                <textarea id="compliment-text" placeholder="Write an uplifting maritime note or compliment..."></textarea>
+                <button class="action-btn" style="background-color: var(--seafoam); border-color:#26af5f;" onclick="submitCompliment()">Cast Message in a Bottle</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="inbox-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('inbox-modal')">&times;</span>
+            <h2 style="color:var(--navy)">📬 The Ship's Postbox</h2>
+            
+            <div class="section-title"><span>Unread Letters (Anonymous Grid)</span></div>
+            <div class="names-grid" id="unread-names-list"></div>
+
+            <div class="section-title"><span>Read Compliments Vault</span></div>
+            <div id="read-compliments-list">
+                <p style="color:#a4b0be; text-align:center; font-size:14px; padding:10px;">No messages have been archived yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="reveal-modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <h3 style="color:var(--navy)">✉️ Private Message for <span id="reader-identity" style="color:var(--ocean)"></span></h3>
+            <div class="reveal-box">
+                <p class="reveal-text" id="revealed-compliment-string">"..."</p>
+                <button class="action-btn" style="padding:10px 30px; font-size:15px;" onclick="archiveCurrentMessage()">Close & Archive Letter</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set up target arrays
+        let availableNames = [
+            "FelixG", "Severin", "Julian", "Dominik", "Clara", "Bela", "Franz", "Marinus", 
+            "Milo", "Emma", "Rio", "Leandra", "Paul", "Matthäus", "Noah", "FelixL", 
+            "Juna", "Laurenzia", "Oswald", "Charlotte", "Laura", "Weiyang", "Caroline", 
+            "Ada", "Mathis", "Alexandra", "Jonathan", "Jakob", "Levia", "Ayumi", "Nathan", "Leah"
+        ];
+
+        let unreadCompliments = [];
+        let readCompliments = [];
+        let globalCounter = 0; // Policy tracing sequence number
+        
+        let selectedIndex = null;
+        let isSpinning = false;
+        let startAngle = 0;
+
+        let activeViewingIndex = null; // tracking which unread item is pulled up
+
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spin-btn");
+        const complimentBox = document.getElementById("compliment-box");
+        const targetNameSpan = document.getElementById("target-name");
+        const complimentText = document.getElementById("compliment-text");
+
+        // Maritime Color theme for slices
+        const colors = ["#1e90ff", "#2ed573", "#74b9ff", "#f7d794", "#ff6b6b", "#1a365d", "#54a0ff", "#00d2d3"];
+
+        function drawWheel() {
+            const numSlices = availableNames.length;
+            if (numSlices === 0) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "var(--navy)";
+                ctx.font = "bold 20px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText("All sailors have messages! ⚓", canvas.width / 2, canvas.height / 2);
+                spinBtn.disabled = true;
+                spinBtn.innerText = "Voyage Complete!";
+                return;
+            }
+
+            const sliceAngle = (2 * Math.PI) / numSlices;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < numSlices; i++) {
+                const angle = startAngle + i * sliceAngle;
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2, canvas.height / 2);
+                ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, angle, angle + sliceAngle);
+                ctx.lineTo(canvas.width / 2, canvas.height / 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(angle + sliceAngle / 2);
+                ctx.fillStyle = (colors[i % colors.length] === "#1a365d") ? "#ffffff" : "#2c3e50";
+                ctx.font = "bold 13px Arial";
+                ctx.textAlign = "right";
+                ctx.fillText(availableNames[i], canvas.width / 2 - 15, 5);
+                ctx.restore();
+            }
+        }
+
+        function spinWheel() {
+            if (isSpinning || availableNames.length === 0) return;
+            isSpinning = true;
+            complimentBox.style.display = "none";
+            spinBtn.disabled = true;
+
+            const spinDuration = 2500;
+            const spinStart = performance.now();
+            const initialRotation = startAngle;
+            const extraSpins = (Math.random() * 4 + 4) * 2 * Math.PI;
+
+            function animateSpin(timestamp) {
+                const elapsed = timestamp - spinStart;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                startAngle = initialRotation + easeOut * extraSpins;
+                drawWheel();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateSpin);
+                } else {
+                    isSpinning = false;
+                    calculateWinner();
+                }
+            }
+            requestAnimationFrame(animateSpin);
+        }
+
+        function calculateWinner() {
+            const numSlices = availableNames.length;
+            const sliceAngle = (2 * Math.PI) / numSlices;
+            let normalizedAngle = (startAngle % (2 * Math.PI));
+            if (normalizedAngle < 0) normalizedAngle += (2 * Math.PI);
+
+            let pointerAngle = (3 * Math.PI / 2) - normalizedAngle;
+            if (pointerAngle < 0) pointerAngle += (2 * Math.PI);
+
+            selectedIndex = Math.floor(pointerAngle / sliceAngle) % numSlices;
+            
+            targetNameSpan.innerText = availableNames[selectedIndex];
+            complimentText.value = "";
+            complimentBox.style.display = "flex";
+        }
+
+        function submitCompliment() {
+            const text = complimentText.value.trim();
+            if (!text) {
+                alert("Write a meaningful message before launching the bottle!");
+                return;
+            }
+
+            globalCounter++; // Increment Tracking Code Chronologically
+
+            // Store anonymously mapped strictly to target recipient
+            unreadCompliments.push({
+                id: globalCounter,
+                name: availableNames[selectedIndex],
+                text: text
+            });
+
+            // Decrement name from loop wheel dynamically
+            availableNames.splice(selectedIndex, 1);
+            
+            complimentBox.style.display = "none";
+            spinBtn.disabled = false;
+            
+            document.getElementById("inbox-count").innerText = unreadCompliments.length;
+            drawWheel();
+        }
+
+        function openInbox() {
+            buildInboxUI();
+            document.getElementById("inbox-modal").style.display = "flex";
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        function buildInboxUI() {
+            // 1. Render Unread Names Grid safely anonymized
+            const unreadContainer = document.getElementById("unread-names-list");
+            if (unreadCompliments.length === 0) {
+                unreadContainer.innerHTML = `<p style="grid-column: span 3; color:#a4b0be; text-align:center; font-size:14px;">No unread letters inside.</p>`;
+            } else {
+                unreadContainer.innerHTML = unreadCompliments.map((item, idx) => `
+                    <div class="name-card" onclick="revealLetter(${idx})">✉️ ${item.name}</div>
+                `).join('');
+            }
+
+            // 2. Render Read Vault containing hidden tracing codes
+            const readContainer = document.getElementById("read-compliments-list");
+            if (readCompliments.length === 0) {
+                readContainer.innerHTML = `<p style="color:#a4b0be; text-align:center; font-size:14px; padding:10px;">No messages have been archived yet.</p>`;
+            } else {
+                readContainer.innerHTML = readCompliments.map(item => `
+                    <div class="read-item">
+                        <span>💬 "${item.text}"</span>
+                        <span class="tracking-id">ID: #${String(item.id).padStart(3, '0')}</span>
+                    </div>
+                `).join('');
+            }
+            document.getElementById("inbox-count").innerText = unreadCompliments.length;
+        }
+
+        function revealLetter(index) {
+            activeViewingIndex = index;
+            const messageObj = unreadCompliments[index];
+            
+            // Set fields inside private viewer dialog
+            document.getElementById("reader-identity").innerText = messageObj.name;
+            document.getElementById("revealed-compliment-string").innerText = `"${messageObj.text}"`;
+            
+            // Trigger View
+            document.getElementById("reveal-modal").style.display = "flex";
+        }
+
+        function archiveCurrentMessage() {
+            if (activeViewingIndex === null) return;
+            
+            // Move item to read archive array
+            const message = unreadCompliments.splice(activeViewingIndex, 1)[0];
+            readCompliments.push(message);
+            
+            activeViewingIndex = null;
+            closeModal('reveal-modal');
+            buildInboxUI(); // Refresh Parent postbox view
+        }
+
+        // Run Initial Render Frame
+        drawWheel();
+    </script>
+</body>
+</html>
