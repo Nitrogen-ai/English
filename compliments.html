@@ -10,7 +10,7 @@
             --seafoam: #2ed573;
             --ocean: #1e90ff;
             --sand: #f7d794;
-            --bg-beach: #f1f5f9;
+            --bg-beach: #f8fafc;
             --white: #ffffff;
             --dark: #2c3e50;
             --coral: #ff6b6b;
@@ -25,16 +25,49 @@
 
         body {
             background-color: var(--bg-beach);
-            background-image: radial-gradient(var(--sand) 0.5px, transparent 0.5px), radial-gradient(var(--sand) 0.5px, var(--bg-beach) 0.5px);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
             color: var(--dark);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
+
+        /* Playful Background Wallpaper Styling */
+        .wallpaper-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none; /* Allows clicking elements on top */
+            opacity: 0.15;
+            overflow: hidden;
+        }
+
+        .wallpaper-quote {
+            position: absolute;
+            font-weight: bold;
+            color: var(--navy);
+            font-size: 14px;
+            white-space: nowrap;
+            transform: rotate(-5deg);
+        }
+
+        /* Positioning various drifting background quotes */
+        .q1 { top: 12%; left: 5%; font-size: 18px; }
+        .q2 { top: 8%; right: 8%; font-size: 15px; transform: rotate(4deg); }
+        .q3 { top: 25%; left: 80%; font-size: 16px; }
+        .q4 { top: 40%; left: 3%; font-size: 15px; transform: rotate(-8deg); }
+        .q5 { bottom: 15%; left: 6%; font-size: 17px; }
+        .q6 { bottom: 25%; right: 4%; font-size: 16px; transform: rotate(6deg); }
+        .q7 { bottom: 8%; left: 45%; font-size: 15px; }
+        .q8 { top: 30%; left: 12%; font-size: 14px; }
+        .q9 { bottom: 40%; right: 10%; font-size: 17px; transform: rotate(-3deg); }
+        .q10 { top: 50%; right: 5%; font-size: 14px; }
 
         header {
             width: 100%;
@@ -42,17 +75,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             border-bottom: 3px dashed var(--navy);
             padding-bottom: 15px;
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
             font-size: 26px;
             color: var(--navy);
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .inbox-btn {
@@ -88,40 +120,15 @@
             align-items: center;
             gap: 40px;
             width: 100%;
-            max-width: 1100px;
+            max-width: 500px;
             position: relative;
+            z-index: 10;
         }
-
-        /* Background Word Cloud Container */
-        .word-cloud-bg {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            width: 100%;
-            max-width: 1000px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 15px;
-            border: 1px solid rgba(30, 144, 255, 0.2);
-            margin-bottom: 10px;
-        }
-
-        .word-pair {
-            font-size: 13px;
-            color: #57606f;
-            background: white;
-            padding: 8px;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-left: 3px solid var(--ocean);
-            text-align: center;
-        }
-        .word-pair strong { color: var(--navy); }
 
         .wheel-container {
             position: relative;
-            width: 340px;
-            height: 340px;
+            width: 350px;
+            height: 350px;
             background: white;
             padding: 10px;
             border-radius: 50%;
@@ -145,14 +152,13 @@
             border-left: 18px solid transparent;
             border-right: 18px solid transparent;
             border-top: 28px solid var(--coral);
-            z-index: 10;
+            z-index: 12;
         }
 
         .controls {
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 450px;
             gap: 15px;
         }
 
@@ -193,9 +199,7 @@
             gap: 12px;
         }
 
-        .compliment-box h3 {
-            color: var(--navy);
-        }
+        .compliment-box h3 { color: var(--navy); }
 
         textarea {
             width: 100%;
@@ -245,20 +249,19 @@
             cursor: pointer;
             color: #a4b0be;
         }
-
         .close-btn:hover { color: var(--navy); }
 
         .section-title {
-            margin: 15px 0 10px 0;
+            margin: 20px 0 10px 0;
             color: var(--navy);
             border-bottom: 2px dashed #ced6e0;
             padding-bottom: 5px;
             font-size: 18px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
-        /* Grid for Unread First Names */
         .names-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -277,40 +280,65 @@
             border: 1px solid #dcdde1;
             transition: all 0.2s;
         }
+        .name-card:hover { background: var(--sand); transform: translateY(-2px); }
 
-        .name-card:hover {
-            background: var(--sand);
-            transform: translateY(-2px);
-        }
-
-        /* Read Box List Styling */
+        /* Read Items & Hidden IDs Styling */
         .read-item {
             background: #f8f9fa;
-            padding: 10px 12px;
+            padding: 12px;
             border-radius: 6px;
             margin-bottom: 8px;
             border-left: 4px solid var(--seafoam);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .read-item:hover { background: #f1f2f6; }
+
+        .read-main-line {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
         }
 
         .tracking-id {
+            display: none; /* Hidden unless clicked */
+            margin-top: 8px;
+            padding: 4px 8px;
             background: #dfe4ea;
-            color: #2c3e50;
-            padding: 2px 6px;
-            border-radius: 4px;
+            color: var(--navy);
             font-family: monospace;
             font-weight: bold;
             font-size: 12px;
+            border-radius: 4px;
+            width: fit-content;
         }
 
-        /* Reader Reveal View overlay */
-        .reveal-box {
-            text-align: center;
-            padding: 20px 10px;
+        /* Bottom Right Secret Teacher Dashboard Panel Trigger */
+        .admin-corner {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
         }
+
+        .admin-btn {
+            background: #74b9ff;
+            border: 1px solid var(--ocean);
+            color: var(--navy);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .admin-log-item {
+            padding: 6px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
         .reveal-text {
             font-style: italic;
             font-size: 18px;
@@ -322,6 +350,19 @@
 </head>
 <body>
 
+    <div class="wallpaper-container">
+        <div class="wallpaper-quote q1">⚓ Anchor / Anker: "You ground our class!"</div>
+        <div class="wallpaper-quote q2">🧭 Compass / Kompass: "Your advice fixes our course."</div>
+        <div class="wallpaper-quote q3">🌊 High Tide / Flut: "Your energy lifts everyone up!"</div>
+        <div class="wallpaper-quote q4">🐚 Shell / Muschel: "A rare gemstone found on the Sylt sands."</div>
+        <div class="wallpaper-quote q5">🪶 Seagull / Möwe: "Stealing hearts, never our french fries."</div>
+        <div class="wallpaper-quote q6">🧱 Stormproof / Sturmfest: "Calm and steady in every North Sea wind."</div>
+        <div class="wallpaper-quote q7">🛋️ Beach Chair / Strandkorb: "Pure cozy, relaxing vibes with you."</div>
+        <div class="wallpaper-quote q8">🪵 Amber / Bernstein: "Hidden talent waiting to shine bright!"</div>
+        <div class="wallpaper-quote q9">🗼 Lighthouse / Leuchtturm: "Your bright smile guides us home."</div>
+        <div class="wallpaper-quote q10">🫖 Friesentee: "Sweet, warm, and brings us all together."</div>
+    </div>
+
     <header>
         <h1>⚓ Sylt Class Trip: Compliment Mail</h1>
         <button class="inbox-btn" onclick="openInbox()">
@@ -330,17 +371,6 @@
     </header>
 
     <div class="app-layout">
-        <div class="word-cloud-bg">
-            <div class="word-pair"><strong>Anchor / Anker:</strong> "You ground our class!"</div>
-            <div class="word-pair"><strong>Lighthouse / Leuchtturm:</strong> "Always helpful & bright."</div>
-            <div class="word-pair"><strong>Wattenmeer / Mudflats:</strong> "Fascinating & deep personality."</div>
-            <div class="word-pair"><strong>Seagull / Möwe:</strong> "Stealing hearts, not french fries."</div>
-            <div class="word-pair"><strong>High Tide / Flut:</strong> "Your positive energy is catching!"</div>
-            <div class="word-pair"><strong>Stormproof / Sturmfest:</strong> "You never panic on this trip."</div>
-            <div class="word-pair"><strong>Beach Chair / Strandkorb:</strong> "Pure cozy vibes with you."</div>
-            <div class="word-pair"><strong>Friesen-Teepunsch:</strong> "Sweet and warms up the whole room!"</div>
-        </div>
-
         <div class="wheel-container">
             <div class="arrow"></div>
             <canvas id="wheel" width="400" height="400"></canvas>
@@ -365,41 +395,54 @@
             <div class="section-title"><span>Unread Letters (Anonymous Grid)</span></div>
             <div class="names-grid" id="unread-names-list"></div>
 
-            <div class="section-title"><span>Read Compliments Vault</span></div>
-            <div id="read-compliments-list">
-                <p style="color:#a4b0be; text-align:center; font-size:14px; padding:10px;">No messages have been archived yet.</p>
-            </div>
+            <div class="section-title"><span>Read Compliments Vault (Click item to inspect)</span></div>
+            <div id="read-compliments-list"></div>
         </div>
     </div>
 
     <div class="modal" id="reveal-modal">
         <div class="modal-content" style="max-width: 400px; text-align: center;">
             <h3 style="color:var(--navy)">✉️ Private Message for <span id="reader-identity" style="color:var(--ocean)"></span></h3>
-            <div class="reveal-box">
+            <div style="text-align: center; padding: 20px 10px;">
                 <p class="reveal-text" id="revealed-compliment-string">"..."</p>
                 <button class="action-btn" style="padding:10px 30px; font-size:15px;" onclick="archiveCurrentMessage()">Close & Archive Letter</button>
             </div>
         </div>
     </div>
 
+    <div class="admin-corner">
+        <button class="admin-btn" onclick="openAdminLog()">📊 Log Tracker (<span id="admin-counter">0</span>)</button>
+    </div>
+
+    <div class="modal" id="admin-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-btn" onclick="closeModal('admin-modal')">&times;</span>
+            <h3 style="color:var(--navy); margin-bottom:15px;">📋 Chronological Submission Timeline</h3>
+            <div id="admin-log-container" style="max-height: 300px; overflow-y: auto;">
+                <p style="color:#a4b0be; font-size:12px;">No interactions registered yet.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Set up target arrays
-        let availableNames = [
+        // MASTER NAME LIST: You can add/remove names directly inside this array string!
+        // No code breakages will occur. The wheel expands/contracts automatically.
+        let originalNames = [
             "FelixG", "Severin", "Julian", "Dominik", "Clara", "Bela", "Franz", "Marinus", 
             "Milo", "Emma", "Rio", "Leandra", "Paul", "Matthäus", "Noah", "FelixL", 
             "Juna", "Laurenzia", "Oswald", "Charlotte", "Laura", "Weiyang", "Caroline", 
             "Ada", "Mathis", "Alexandra", "Jonathan", "Jakob", "Levia", "Ayumi", "Nathan", "Leah"
         ];
 
+        let availableNames = [...originalNames];
         let unreadCompliments = [];
         let readCompliments = [];
-        let globalCounter = 0; // Policy tracing sequence number
+        let globalCounter = 0; 
         
         let selectedIndex = null;
         let isSpinning = false;
         let startAngle = 0;
-
-        let activeViewingIndex = null; // tracking which unread item is pulled up
+        let activeViewingIndex = null;
 
         const canvas = document.getElementById("wheel");
         const ctx = canvas.getContext("2d");
@@ -408,7 +451,6 @@
         const targetNameSpan = document.getElementById("target-name");
         const complimentText = document.getElementById("compliment-text");
 
-        // Maritime Color theme for slices
         const colors = ["#1e90ff", "#2ed573", "#74b9ff", "#f7d794", "#ff6b6b", "#1a365d", "#54a0ff", "#00d2d3"];
 
         function drawWheel() {
@@ -454,7 +496,7 @@
             complimentBox.style.display = "none";
             spinBtn.disabled = true;
 
-            const spinDuration = 2500;
+            const spinDuration = 2200;
             const spinStart = performance.now();
             const initialRotation = startAngle;
             const extraSpins = (Math.random() * 4 + 4) * 2 * Math.PI;
@@ -496,26 +538,26 @@
         function submitCompliment() {
             const text = complimentText.value.trim();
             if (!text) {
-                alert("Write a meaningful message before launching the bottle!");
+                alert("Please type a compliment.");
                 return;
             }
 
-            globalCounter++; // Increment Tracking Code Chronologically
+            globalCounter++;
 
-            // Store anonymously mapped strictly to target recipient
             unreadCompliments.push({
                 id: globalCounter,
                 name: availableNames[selectedIndex],
                 text: text
             });
 
-            // Decrement name from loop wheel dynamically
             availableNames.splice(selectedIndex, 1);
-            
             complimentBox.style.display = "none";
             spinBtn.disabled = false;
             
             document.getElementById("inbox-count").innerText = unreadCompliments.length;
+            document.getElementById("admin-counter").innerText = globalCounter;
+            
+            appendAdminLog(globalCounter, text);
             drawWheel();
         }
 
@@ -529,7 +571,6 @@
         }
 
         function buildInboxUI() {
-            // 1. Render Unread Names Grid safely anonymized
             const unreadContainer = document.getElementById("unread-names-list");
             if (unreadCompliments.length === 0) {
                 unreadContainer.innerHTML = `<p style="grid-column: span 3; color:#a4b0be; text-align:center; font-size:14px;">No unread letters inside.</p>`;
@@ -539,15 +580,17 @@
                 `).join('');
             }
 
-            // 2. Render Read Vault containing hidden tracing codes
             const readContainer = document.getElementById("read-compliments-list");
             if (readCompliments.length === 0) {
                 readContainer.innerHTML = `<p style="color:#a4b0be; text-align:center; font-size:14px; padding:10px;">No messages have been archived yet.</p>`;
             } else {
-                readContainer.innerHTML = readCompliments.map(item => `
-                    <div class="read-item">
-                        <span>💬 "${item.text}"</span>
-                        <span class="tracking-id">ID: #${String(item.id).padStart(3, '0')}</span>
+                readContainer.innerHTML = readCompliments.map((item, index) => `
+                    <div class="read-item" onclick="toggleTrackingID(${index})">
+                        <div class="read-main-line">
+                            <span>💬 "${item.text}"</span>
+                            <span style="color:var(--ocean); font-size:11px; font-weight:bold;">🔎 Tap for Code</span>
+                        </div>
+                        <div class="tracking-id" id="track-id-${index}">Chronological ID: #${String(item.id).padStart(3, '0')}</div>
                     </div>
                 `).join('');
             }
@@ -557,28 +600,39 @@
         function revealLetter(index) {
             activeViewingIndex = index;
             const messageObj = unreadCompliments[index];
-            
-            // Set fields inside private viewer dialog
             document.getElementById("reader-identity").innerText = messageObj.name;
             document.getElementById("revealed-compliment-string").innerText = `"${messageObj.text}"`;
-            
-            // Trigger View
             document.getElementById("reveal-modal").style.display = "flex";
         }
 
         function archiveCurrentMessage() {
             if (activeViewingIndex === null) return;
-            
-            // Move item to read archive array
             const message = unreadCompliments.splice(activeViewingIndex, 1)[0];
             readCompliments.push(message);
-            
             activeViewingIndex = null;
             closeModal('reveal-modal');
-            buildInboxUI(); // Refresh Parent postbox view
+            buildInboxUI();
         }
 
-        // Run Initial Render Frame
+        function toggleTrackingID(idx) {
+            const el = document.getElementById(`track-id-${idx}`);
+            el.style.display = (el.style.display === "block") ? "none" : "block";
+        }
+
+        function openAdminLog() {
+            document.getElementById("admin-modal").style.display = "flex";
+        }
+
+        function appendAdminLog(num, msg) {
+            const container = document.getElementById("admin-log-container");
+            if (num === 1) container.innerHTML = ""; // purge placeholders
+            
+            const div = document.createElement('div');
+            div.className = "admin-log-item";
+            div.innerHTML = `<strong>[Entry #${String(num).padStart(3, '0')}]</strong>: "${msg}"`;
+            container.appendChild(div);
+        }
+
         drawWheel();
     </script>
 </body>
