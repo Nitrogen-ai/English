@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Warm-Up Lab · Year 8 Recap</title>
+<style>
+  :root{
+    --cream:#faf6ee; --card:#fffdf8; --ink:#1a2420; --muted:#5c6b64;
+    --teal:#1e5d52; --teal-d:#12463d; --terra:#a83610; --gold:#c9a961;
+    --good:#2f8f4e; --good-bg:#e6f4ea; --retry:#b4471f; --retry-bg:#fbeae1;
+    --line:#e7dfce;
+    --serif:Georgia,'Iowan Old Style','Palatino Linotype',serif;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --mono:ui-monospace,'JetBrains Mono','SF Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:var(--sans); color:var(--ink); background:var(--cream);
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(circle at 12% 8%, #f3ecdb 0, transparent 42%),
+                     radial-gradient(circle at 88% 92%, #eef3ee 0, transparent 45%);
+    min-height:100vh;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:24px 18px 60px;}
+  sub{font-size:.72em} sup{font-size:.72em}
+  .mono{font-family:var(--mono)}
+
+  /* top bar: bit-strip + progress + score */
+  .hud{display:flex; align-items:center; gap:16px; margin-bottom:18px;}
+  .bits{display:flex; gap:5px; flex:0 0 auto}
+  .bit{width:13px; height:20px; border-radius:3px; background:#e0d7c2; border:1px solid #d3c8ac}
+  .bit.on{background:linear-gradient(180deg,#3fe0c0,#1e9d86); border-color:#12463d}
+  .hud-meta{flex:1; min-width:0}
+  .bar{height:12px; background:#ece3d1; border-radius:20px; overflow:hidden; box-shadow:inset 0 1px 2px rgba(0,0,0,.08)}
+  .bar > i{display:block; height:100%; width:0;
+    background:linear-gradient(90deg,var(--teal),var(--gold)); border-radius:20px;
+    transition:width .5s cubic-bezier(.22,1,.36,1)}
+  .hud-line{display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-top:6px}
+  .streak{font-weight:700; color:var(--terra)}
+  .streak.dim{color:var(--muted); font-weight:600}
+
+  h1{font-family:var(--serif); font-weight:700; font-size:30px; line-height:1.15; margin:0 0 6px; letter-spacing:-.01em}
+  .eyebrow{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--teal); font-weight:700}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:22px 22px 24px; box-shadow:0 10px 30px -18px rgba(30,60,45,.4);}
+  .qtags{display:flex; gap:8px; align-items:center; margin-bottom:12px; flex-wrap:wrap}
+  .tag{font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; padding:4px 10px; border-radius:999px}
+  .tag.cat{background:var(--teal); color:#fff}
+  .tag.lvl-Easy{background:var(--good-bg); color:var(--good)}
+  .tag.lvl-Medium{background:#fdf2d8; color:#8a6d1f}
+  .tag.lvl-Hard{background:var(--retry-bg); color:var(--retry)}
+  .prompt{font-family:var(--serif); font-size:21px; line-height:1.35; margin:0 0 6px}
+  .fig{margin:14px 0 4px; text-align:center}
+  .fig svg{max-width:100%; height:auto}
+  pre.code{text-align:left; background:#20303a; color:#e9f3ef; border-radius:12px; padding:12px 15px;
+    margin:14px 0 0; font-family:var(--mono); font-size:14px; line-height:1.5; overflow:auto}
+  pre.code .kw{color:#7fd1bb} pre.code .num{color:#f0b06a} pre.code .fn{color:#e6d08a}
+
+  .opts{display:flex; flex-direction:column; gap:10px; margin-top:16px}
+  .opt{display:flex; align-items:center; gap:12px; width:100%; text-align:left; font:inherit; font-size:16px;
+    padding:14px 16px; border-radius:13px; cursor:pointer; background:#fff; border:1.5px solid var(--line); color:var(--ink);
+    transition:border-color .15s, background .15s, transform .06s}
+  .opt.mono span:last-child{font-family:var(--mono); font-size:15px}
+  .opt:hover:not(:disabled){border-color:var(--teal); background:#f6faf8}
+  .opt:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+  .opt:active:not(:disabled){transform:translateY(1px)}
+  .opt .key{flex:0 0 auto; width:26px; height:26px; border-radius:7px; display:grid; place-items:center;
+    background:#efe8d8; color:var(--teal-d); font-weight:700; font-size:14px}
+  .opt.correct{border-color:var(--good); background:var(--good-bg)}
+  .opt.correct .key{background:var(--good); color:#fff}
+  .opt.wrong{border-color:var(--retry); background:var(--retry-bg); opacity:.9}
+  .opt.wrong .key{background:var(--retry); color:#fff}
+  .opt:disabled{cursor:default} .opt.faded{opacity:.5}
+  .shake{animation:shake .38s}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+
+  .numrow{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap}
+  .numrow input{flex:1; min-width:160px; font:inherit; font-size:18px; padding:13px 15px;
+    border:1.5px solid var(--line); border-radius:13px; background:#fff; font-family:var(--mono)}
+  .numrow input:focus{outline:3px solid var(--gold); outline-offset:1px; border-color:var(--teal)}
+
+  .btn{font:inherit; font-weight:700; font-size:16px; padding:13px 22px; border-radius:13px; border:none; cursor:pointer;
+    background:var(--teal); color:#fff; transition:transform .06s, background .15s}
+  .btn:hover{background:var(--teal-d)} .btn:active{transform:translateY(1px)}
+  .btn:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+  .btn.ghost{background:transparent; color:var(--teal); border:1.5px solid var(--teal)}
+  .btn.ghost:hover{background:#eef5f2}
+  .btn.big{font-size:18px; padding:15px 30px}
+
+  .fb{margin-top:16px; border-radius:14px; padding:15px 17px; display:none; animation:pop .3s ease}
+  .fb.show{display:block}
+  .fb.ok{background:var(--good-bg); border:1.5px solid #bfe3ca}
+  .fb.hint{background:#fdf6e3; border:1.5px solid #eddcae}
+  @keyframes pop{from{transform:scale(.97); opacity:0}to{transform:scale(1); opacity:1}}
+  .fb .head{display:flex; align-items:center; gap:9px; font-weight:700; font-size:16px; margin-bottom:5px}
+  .fb.ok .head{color:var(--good)} .fb.hint .head{color:#8a6d1f}
+  .fb .expl{font-size:15px; color:var(--ink)}
+  .fb .expl .mono, .fb .expl b{color:var(--teal-d)}
+  .spark{width:20px;height:20px;flex:0 0 auto}
+  .foot{display:flex; justify-content:flex-end; gap:10px; margin-top:18px}
+
+  .hero{text-align:center; padding:8px 4px 4px}
+  .hero .badge{width:130px; height:auto; margin:6px auto 12px; display:block}
+  .lead{font-size:17px; color:var(--muted); max-width:52ch; margin:10px auto 22px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:0 auto 26px; max-width:560px}
+  .chip{font-size:13px; font-weight:600; padding:7px 13px; border-radius:999px; background:#fff; border:1px solid var(--line); color:var(--teal-d)}
+  .center{text-align:center}
+  .score-ring{font-family:var(--serif); font-size:52px; font-weight:700; color:var(--teal); line-height:1}
+  .hidden{display:none}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+  @media (max-width:520px){ h1{font-size:25px} .prompt{font-size:19px} .bit{width:10px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hud" id="hud" hidden>
+    <div class="bits" id="bits" aria-hidden="true">
+      <span class="bit"></span><span class="bit"></span><span class="bit"></span><span class="bit"></span>
+      <span class="bit"></span><span class="bit"></span><span class="bit"></span><span class="bit"></span>
+    </div>
+    <div class="hud-meta">
+      <div class="bar"><i id="barfill"></i></div>
+      <div class="hud-line">
+        <span id="progtxt">Question 1 of 15</span>
+        <span class="streak dim" id="streaktxt">Streak: 0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- START -->
+  <section id="start" class="card hero">
+    <div class="eyebrow">English · Year 8 · Recap</div>
+    <svg class="badge" viewBox="0 0 150 90" aria-hidden="true"><circle cx="75" cy="45" r="34" fill="#20303a"/><circle cx="75" cy="45" r="34" fill="none" stroke="#c9a961" stroke-width="2"/><g font-family="ui-monospace,monospace" font-size="10" fill="#7fd1bb" text-anchor="middle"><text x="75" y="20">N</text><text x="75" y="77">S</text><text x="110" y="49">E</text><text x="40" y="49">W</text></g><polygon points="75,23 82,45 75,45" fill="#e2564a"/><polygon points="75,23 68,45 75,45" fill="#a83610"/><polygon points="75,67 68,45 75,45" fill="#e9f3ef"/><polygon points="75,67 82,45 75,45" fill="#eafbe6"/><circle cx="75" cy="45" r="3.2" fill="#c9a961"/></svg>
+    <h1>Warm-Up Lab</h1>
+    <p class="lead">Warm up with 15 quick questions before your team takes on the big <b>Year&nbsp;8 English Jeopardy</b>. From New York and New Orleans to California, South Dakota and our class trip to Sylt – and even a wrong answer gives you a hint and an explanation. You’ve got this.</p>
+    <div class="chips"><span class="chip">New York</span><span class="chip">New Orleans</span><span class="chip">California</span><span class="chip">South Dakota</span><span class="chip">Class Trip: Sylt</span></div>
+    <button class="btn big" id="startBtn">Let’s go</button>
+  </section>
+
+  <section id="quiz" class="card hidden" aria-live="polite"></section>
+  <section id="end" class="card hero hidden"></section>
+</div>
+
+<script>
+const SVG = {
+  spark:'<svg class="spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 6.6L21 10l-6.8 2.4L12 19l-2.2-6.6L3 10l6.8-2.4z" fill="#c9a961"/></svg>',
+  bulb:'<svg class="spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z" fill="#e7b93a"/><rect x="9" y="18" width="6" height="2.4" rx="1.2" fill="#8a6d1f"/><rect x="9.6" y="21" width="4.8" height="2" rx="1" fill="#8a6d1f"/></svg>',
+  liberty:'<svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" rx="14" fill="#fffdf8" stroke="#e7dfce"/><g fill="#1e5d52"><circle cx="100" cy="42" r="14"/><path d="M100 20 l3 10 -3 -2 -3 2 z"/><path d="M86 34 l-8 -4 4 8 z"/><path d="M114 34 l8 -4 -4 8 z"/><path d="M92 30 l-6 -7 2 8 z"/><path d="M108 30 l6 -7 -2 8 z"/><rect x="94" y="56" width="12" height="42" rx="4"/><path d="M94 60 q-14 -6 -20 -22 l6 -2 q6 14 16 18 z"/><rect x="70" y="30" width="5" height="12" rx="2"/><path d="M68 30 l4 -8 4 8 z" fill="#c9a961"/></g><rect x="82" y="98" width="36" height="16" rx="3" fill="#5c6b64"/><text x="100" y="126" text-anchor="middle" font-family="system-ui" font-size="11" fill="#5c6b64">New York Harbour</text></svg>',
+  film:'<svg viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="120" rx="14" fill="#fffdf8" stroke="#e7dfce"/><g transform="rotate(-6 60 55)"><rect x="24" y="42" width="72" height="16" fill="#20303a"/><g fill="#faf6ee"><rect x="28" y="45" width="8" height="4" transform="skewX(-20)"/><rect x="44" y="45" width="8" height="4" transform="skewX(-20)"/><rect x="60" y="45" width="8" height="4" transform="skewX(-20)"/><rect x="76" y="45" width="8" height="4" transform="skewX(-20)"/></g><rect x="24" y="58" width="72" height="34" fill="#2b3d47"/></g><g fill="#c9a961"><path d="M150 40 l4 12 12 0 -10 8 4 12 -10 -7 -10 7 4 -12 -10 -8 12 0z"/></g><text x="165" y="104" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="700" fill="#a83610">Hollywood</text></svg>',
+  wave:'<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="120" rx="14" fill="#fffdf8" stroke="#e7dfce"/><path d="M0 74 q20 -14 40 0 t40 0 40 0 40 0 40 0 40 0 v46 H0 z" fill="#bfe3ea"/><path d="M0 86 q20 -12 40 0 t40 0 40 0 40 0 40 0 40 0 v34 H0 z" fill="#1e5d52" opacity="0.85"/><g fill="#8a6d1f"><path d="M120 50 q10 -10 24 -6 -6 6 -14 8 z"/></g><text x="120" y="34" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="700" fill="#1e5d52">North Sea &middot; Sylt</text></svg>'
+};
+function C(html){return `<pre class="code">${html}</pre>`;}
+
+/* 15 warm-up questions across the five Year-8 topics (different angles than the Jeopardy) */
+const Q = [
+ {cat:"New York", lvl:"Easy", type:"mc",
+  prompt:"Which nickname belongs to <b>New York City</b>?",
+  opts:["The Windy City","The Big Apple","The City of Angels","Sin City"], correct:1,
+  hint:"Windy City = Chicago, City of Angels = Los Angeles, Sin City = Las Vegas.",
+  expl:"New York\u2019s nickname is <b>The Big Apple</b>."},
+
+ {cat:"New York", lvl:"Medium", type:"mc", fig:SVG.liberty,
+  prompt:"The <b>Statue of Liberty</b> in New York Harbour was a gift to the USA from which country?",
+  opts:["Great Britain","Spain","France","Italy"], correct:2,
+  hint:"The same country that later sold Louisiana to the USA in 1803.",
+  expl:"The <b>Statue of Liberty</b> was a gift from <b>France</b>, unveiled in 1886."},
+
+ {cat:"New York", lvl:"Medium", type:"mc",
+  prompt:"Every New Year\u2019s Eve a glowing ball drops at midnight in this bright, screen-covered New York square.",
+  opts:["Times Square","Central Park","Trafalgar Square","Wall Street"], correct:0,
+  hint:"It\u2019s also called the \u201cCrossroads of the World\u201d.",
+  expl:"<b>Times Square</b> hosts the famous New Year\u2019s Eve \u201cball drop\u201d."},
+
+ {cat:"New Orleans", lvl:"Easy", type:"mc",
+  prompt:"New Orleans is world-famous as the birthplace of which style of music?",
+  opts:["Country","Jazz","Reggae","K-pop"], correct:1,
+  hint:"Think of trumpets, saxophones and lots of improvisation.",
+  expl:"New Orleans is the <b>birthplace of jazz</b> (around 1900)."},
+
+ {cat:"New Orleans", lvl:"Medium", type:"word", answer:"fat",
+  prompt:"The New Orleans carnival <span class='mono'>Mardi Gras</span> is French for \u201c____ Tuesday\u201d. Fill in the missing word.",
+  placeholder:"one word \u2026",
+  hint:"\u201cMardi\u201d = Tuesday, \u201cGras\u201d = ____ .",
+  expl:"<b>Mardi Gras = \u201cFat Tuesday\u201d</b> \u2013 the last big feast before Lent."},
+
+ {cat:"New Orleans", lvl:"Medium", type:"mc",
+  prompt:"New Orleans is the largest city in which US state?",
+  opts:["Texas","Florida","Louisiana","California"], correct:2,
+  hint:"France sold this whole territory to the USA in 1803.",
+  expl:"New Orleans is the biggest city in <b>Louisiana</b>."},
+
+ {cat:"California", lvl:"Easy", type:"mc", fig:SVG.film,
+  prompt:"<b>Hollywood</b>, the home of the American film industry, is a district of which city?",
+  opts:["San Francisco","Los Angeles","San Diego","Sacramento"], correct:1,
+  hint:"The same city as the \u201cLA\u201d Lakers.",
+  expl:"<b>Hollywood</b> is a district of <b>Los Angeles</b>."},
+
+ {cat:"California", lvl:"Medium", type:"mc",
+  prompt:"<b>Silicon Valley</b> in California is the world centre of which industry?",
+  opts:["Oil drilling","Fishing","Computers &amp; the internet","Coal mining"], correct:2,
+  hint:"Apple, Google and Meta all have their headquarters there.",
+  expl:"<b>Silicon Valley</b> is the heart of the <b>computer and internet</b> industry."},
+
+ {cat:"California", lvl:"Hard", type:"word", answer:"sacramento",
+  prompt:"Surprisingly, the capital of California is neither Los Angeles nor San Francisco, but this city.",
+  placeholder:"city \u2026",
+  hint:"It starts with \u201cSac\u2026\u201d.",
+  expl:"The capital of California is <b>Sacramento</b>."},
+
+ {cat:"South Dakota", lvl:"Easy", type:"num", answer:4,
+  prompt:"How many presidents\u2019 faces are carved into <b>Mount Rushmore</b>?",
+  placeholder:"a number \u2026",
+  hint:"Washington, Jefferson, Lincoln \u2026 and one more.",
+  expl:"<b>Four</b> presidents: Washington, Jefferson, Theodore Roosevelt and Lincoln."},
+
+ {cat:"South Dakota", lvl:"Hard", type:"mc",
+  prompt:"Which president is <b>NOT</b> carved on Mount Rushmore?",
+  opts:["George Washington","Abraham Lincoln","Barack Obama","Thomas Jefferson"], correct:2,
+  hint:"The four faces were finished back in 1941.",
+  expl:"<b>Barack Obama</b> is not on Mount Rushmore \u2013 the carving was completed in 1941."},
+
+ {cat:"South Dakota", lvl:"Medium", type:"mc",
+  prompt:"The <b>Black Hills</b> of South Dakota are sacred land to which people?",
+  opts:["The Maya","The Lakota (Sioux)","The Inuit","The Aztecs"], correct:1,
+  hint:"A Great Plains people; Crazy Horse was one of their leaders.",
+  expl:"The <b>Lakota (Sioux)</b> hold the Black Hills sacred."},
+
+ {cat:"Sylt", lvl:"Easy", type:"mc", fig:SVG.wave,
+  prompt:"The class trip went to the island of <b>Sylt</b>, which lies in this sea.",
+  opts:["The Mediterranean","The Baltic Sea","The North Sea","The Black Sea"], correct:2,
+  hint:"Germany\u2019s rougher, western sea \u2013 home of the Wadden Sea.",
+  expl:"Sylt is a <b>North Sea</b> island in North Frisia."},
+
+ {cat:"Sylt", lvl:"Medium", type:"word", answer:"wadden",
+  prompt:"On the mudflat walk the class crossed the <span class='mono'>Wattenmeer</span> \u2013 in English, the \u201c____ Sea\u201d. Fill in the word.",
+  placeholder:"one word \u2026",
+  hint:"It sounds a little like the German \u201cWatt\u201d.",
+  expl:"The <b>Wattenmeer</b> is the <b>Wadden Sea</b> \u2013 a UNESCO World Natural Heritage site."},
+
+ {cat:"Sylt", lvl:"Medium", type:"mc",
+  prompt:"What did the class put on to go surfing in the cold North Sea?",
+  opts:["Raincoats","Wetsuits","Life rings","Ski jackets"], correct:1,
+  hint:"German: Neoprenanz\u00fcge.",
+  expl:"They wore <b>wetsuits</b> (Neoprenanz\u00fcge) to stay warm while surfing."}
+];
+
+const PRAISE=["Nice!","Spot on!","Exactly!","Perfect!","Well solved!","That\u2019s right!","You\u2019ve got it!","Bullseye!","Crystal clear!"];
+const NUDGE =["Almost \u2013 look again.","No worries \u2013 try once more.","Not quite, but you\u2019re close.","Good try! The hint will help.","So close \u2013 keep going."];
+
+let i=0, firstTry=0, solved=0, streak=0, triedWrong=false;
+const $=s=>document.querySelector(s);
+const hud=$("#hud"),quiz=$("#quiz"),startS=$("#start"),endS=$("#end");
+const barfill=$("#barfill"),progtxt=$("#progtxt"),streaktxt=$("#streaktxt");
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const norm=s=>(s||"").toLowerCase().replace(/[\s.,!?"'`]/g,"");
+
+function setProgress(){
+  const frac=i/Q.length;
+  barfill.style.width=(frac*100)+"%";
+  const lit=Math.round(frac*8);
+  document.querySelectorAll("#bits .bit").forEach((b,idx)=>b.classList.toggle("on",idx<lit));
+  progtxt.textContent=`Question ${Math.min(i+1,Q.length)} of ${Q.length}`;
+  streaktxt.textContent=`Streak: ${streak}`;
+  streaktxt.className="streak"+(streak>0?"":" dim");
+}
+
+function render(){
+  const q=Q[i]; triedWrong=false; setProgress();
+  let body=`<div class="qtags"><span class="tag cat">${q.cat}</span><span class="tag lvl-${q.lvl}">${q.lvl}</span></div>
+    <p class="prompt">${q.prompt}</p>
+    ${q.code?q.code:""}
+    ${q.fig?`<div class="fig">${q.fig}</div>`:""}`;
+  if(q.type==="mc"){
+    body+=`<div class="opts" id="opts">`+q.opts.map((o,idx)=>
+      `<button class="opt ${q.mono?'mono':''}" data-idx="${idx}"><span class="key">${String.fromCharCode(65+idx)}</span><span>${o}</span></button>`
+    ).join("")+`</div>`;
+  } else {
+    body+=`<div class="numrow">
+      <input id="numin" ${q.type==="num"?'inputmode="decimal"':''} autocomplete="off" placeholder="${q.placeholder||""}" aria-label="Answer">
+      <button class="btn" id="checkBtn">Check</button></div>`;
+  }
+  body+=`<div class="fb" id="fb"></div><div class="foot" id="foot"></div>`;
+  quiz.innerHTML=body;
+  if(q.type==="mc"){
+    quiz.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",onPick));
+  } else {
+    const inp=$("#numin");
+    $("#checkBtn").addEventListener("click",onEntry);
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter")onEntry();});
+    inp.focus();
+  }
+}
+
+function onPick(e){
+  const q=Q[i],btn=e.currentTarget,idx=+btn.dataset.idx;
+  if(idx===q.correct){
+    btn.classList.add("correct");
+    quiz.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(!b.classList.contains("correct"))b.classList.add("faded");});
+    win();
+  } else {
+    btn.classList.add("wrong","shake"); btn.disabled=true;
+    setTimeout(()=>btn.classList.remove("shake"),400); miss();
+  }
+}
+function onEntry(){
+  const q=Q[i],inp=$("#numin"),raw=(inp.value||"").trim();
+  let ok=false;
+  if(q.type==="num"){ const m=raw.replace(",",".").match(/-?\d+(\.\d+)?/); ok=m&&Math.abs(parseFloat(m[0])-q.answer)<1e-6; }
+  else { ok=norm(raw)===norm(q.answer); }
+  if(ok){ inp.disabled=true; $("#checkBtn").disabled=true; inp.style.borderColor="var(--good)"; inp.style.background="var(--good-bg)"; win(); }
+  else { inp.classList.add("shake"); setTimeout(()=>inp.classList.remove("shake"),400); inp.style.borderColor="var(--retry)"; miss(); inp.focus(); inp.select(); }
+}
+function win(){
+  const q=Q[i]; solved++;
+  if(!triedWrong){firstTry++;streak++;} else {streak=0;}
+  streaktxt.textContent=`Streak: ${streak}`; streaktxt.className="streak"+(streak>0?"":" dim");
+  const bonus=(!triedWrong&&streak>=3)?` <b>Streak ×${streak}!</b>`:"";
+  const fb=$("#fb"); fb.className="fb ok show";
+  fb.innerHTML=`<div class="head">${SVG.spark}<span>${triedWrong?"Got it!":rnd(PRAISE)}${bonus}</span></div><div class="expl">${q.expl}</div>`;
+  $("#foot").innerHTML=`<button class="btn" id="nextBtn">${i+1<Q.length?"Next":"Finish"}</button>`;
+  const nb=$("#nextBtn"); nb.addEventListener("click",next); nb.focus();
+}
+function miss(){
+  const q=Q[i]; triedWrong=true; streak=0;
+  streaktxt.textContent="Streak: 0"; streaktxt.className="streak dim";
+  const fb=$("#fb"); fb.className="fb hint show";
+  fb.innerHTML=`<div class="head">${SVG.bulb}<span>${rnd(NUDGE)}</span></div><div class="expl"><b>Hint:</b> ${q.hint}</div>`;
+  if(!$("#revealBtn")){ $("#foot").innerHTML=`<button class="btn ghost" id="revealBtn">Show answer</button>`; $("#revealBtn").addEventListener("click",reveal); }
+}
+function reveal(){
+  const q=Q[i];
+  if(q.type==="mc"){
+    quiz.querySelectorAll(".opt").forEach(b=>{b.disabled=true; if(+b.dataset.idx===q.correct)b.classList.add("correct"); else b.classList.add("faded");});
+  } else {
+    const inp=$("#numin"); inp.disabled=true; $("#checkBtn").disabled=true;
+    inp.value=(q.type==="num")?String(q.answer):q.answer; inp.style.borderColor="var(--good)"; inp.style.background="var(--good-bg)";
+  }
+  const fb=$("#fb"); fb.className="fb ok show";
+  fb.innerHTML=`<div class="head">${SVG.spark}<span>Here’s the answer – take a good look!</span></div><div class="expl">${q.expl}</div>`;
+  $("#foot").innerHTML=`<button class="btn" id="nextBtn">${i+1<Q.length?"Next":"Finish"}</button>`;
+  const nb=$("#nextBtn"); nb.addEventListener("click",next); nb.focus();
+}
+function next(){ i++; if(i<Q.length){render(); window.scrollTo({top:0,behavior:"smooth"});} else finish(); }
+
+function finish(){
+  setProgress(); quiz.classList.add("hidden"); hud.hidden=true; endS.classList.remove("hidden");
+  let title,msg;
+  if(firstTry===Q.length){title="Flawless!";msg="All 15 questions on the first try – you’re ready to lead your team to the top in the Jeopardy game.";}
+  else if(firstTry>=11){title="Strong run!";msg="Great work. Take one more look at the questions that tripped you up and your team will be hard to beat.";}
+  else if(firstTry>=7){title="Solid base!";msg="Good going! Review the tricky topics once and you’ll rack up points in the Jeopardy.";}
+  else {title="Good start!";msg="Every round makes you surer. Go through the quiz again – the explanations will stick.";}
+  endS.innerHTML=`
+    <div class="eyebrow">Results</div>
+    <svg class="badge" viewBox="0 0 150 90" aria-hidden="true"><circle cx="75" cy="45" r="34" fill="#20303a"/><circle cx="75" cy="45" r="34" fill="none" stroke="#c9a961" stroke-width="2"/><g font-family="ui-monospace,monospace" font-size="10" fill="#7fd1bb" text-anchor="middle"><text x="75" y="20">N</text><text x="75" y="77">S</text><text x="110" y="49">E</text><text x="40" y="49">W</text></g><polygon points="75,23 82,45 75,45" fill="#e2564a"/><polygon points="75,23 68,45 75,45" fill="#a83610"/><polygon points="75,67 68,45 75,45" fill="#e9f3ef"/><polygon points="75,67 82,45 75,45" fill="#eafbe6"/><circle cx="75" cy="45" r="3.2" fill="#c9a961"/></svg>
+    <h1>${title}</h1>
+    <div class="score-ring">${firstTry}<span style="font-size:26px;color:var(--muted)">/${Q.length}</span></div>
+    <p class="lead">right on the first try · ${solved}/${Q.length} solved in the end</p>
+    <p class="lead" style="margin-top:-6px">${msg}</p>
+    <div class="foot" style="justify-content:center"><button class="btn big" id="againBtn">Practice again</button></div>`;
+  $("#againBtn").addEventListener("click",()=>{
+    i=0;firstTry=0;solved=0;streak=0; endS.classList.add("hidden"); quiz.classList.remove("hidden"); hud.hidden=false;
+    render(); window.scrollTo({top:0,behavior:"smooth"});
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+$("#startBtn").addEventListener("click",()=>{ startS.classList.add("hidden"); hud.hidden=false; quiz.classList.remove("hidden"); render(); });
+</script>
+</body>
+</html>
