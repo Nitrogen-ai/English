@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Believe Board · Student Council</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Caveat:wght@500;600;700&family=Oswald:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --wall:#173845;        /* deep locker-room wall */
+  --wall-2:#0f2731;
+  --steel:#2f6f8c;       /* locker steel blue */
+  --steel-dark:#245a73;
+  --steel-line:#1c4a60;
+  --wood:#a9723f;        /* door / bench wood */
+  --wood-dark:#7f5227;
+  --wood-line:#5f3d1c;
+  --paper:#f5ecd6;       /* torn paper */
+  --paper-2:#efe4c6;
+  --ink:#1d3a5c;         /* marker ink */
+  --brick:#c1553f;       /* jersey accent */
+  --brick-dark:#9d3f2d;
+  --chalk:#eef4f3;       /* light text on dark */
+  --chalk-dim:#a9c2c9;
+  --gold:#e8c15a;        /* scoreboard highlight */
+  --line:rgba(255,255,255,.10);
+  --shadow:0 18px 40px rgba(0,0,0,.35);
+  --r:14px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Nunito",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--chalk);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #1f4a5a 0%, transparent 60%),
+    linear-gradient(180deg,var(--wall) 0%, var(--wall-2) 100%);
+  min-height:100vh;
+  line-height:1.5;
+}
+a{color:inherit}
+
+/* ---------------- top bar ---------------- */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:12px clamp(14px,4vw,40px);
+  background:rgba(11,29,37,.82);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;flex-direction:column;margin-right:auto;min-width:0}
+.brand b{
+  font-family:"Oswald",sans-serif;font-weight:700;letter-spacing:.14em;
+  font-size:clamp(15px,2.6vw,20px);text-transform:uppercase;color:var(--gold);
+}
+.brand span{font-size:12.5px;color:var(--chalk-dim);letter-spacing:.02em}
+
+.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{
+  font-family:"Nunito";font-weight:700;font-size:13px;
+  color:var(--chalk);background:rgba(255,255,255,.06);
+  border:1px solid var(--line);border-radius:999px;
+  padding:8px 14px;cursor:pointer;transition:background .15s,border-color .15s,transform .1s;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.btn:hover{background:rgba(255,255,255,.12)}
+.btn:active{transform:translateY(1px)}
+.btn.on{background:var(--brick);border-color:var(--brick);color:#fff}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{
+  font-family:"Oswald";font-weight:600;letter-spacing:.08em;font-size:12.5px;
+  background:transparent;color:var(--chalk-dim);border:0;padding:8px 13px;cursor:pointer;
+}
+.lang button.active{background:var(--gold);color:#2a2411}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+
+/* ---------------- layout ---------------- */
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(14px,4vw,40px)}
+section{padding:clamp(34px,6vw,64px) 0}
+.eyebrow{
+  font-family:"Oswald";text-transform:uppercase;letter-spacing:.22em;
+  font-size:12px;color:var(--gold);font-weight:600;margin:0 0 8px;
+}
+h2{font-family:"Oswald";font-weight:700;letter-spacing:.01em;font-size:clamp(24px,4vw,34px);margin:0 0 8px}
+.lead{color:var(--chalk-dim);max-width:64ch;margin:0 0 26px;font-size:15.5px}
+
+/* ---------------- hero / locker room ---------------- */
+.stage{
+  padding:clamp(20px,4vw,40px) 0 clamp(30px,5vw,56px);
+}
+.hero-head{text-align:center;max-width:70ch;margin:0 auto clamp(18px,3vw,30px)}
+.hero-head .eyebrow{color:var(--gold)}
+.hero-head h1{
+  font-family:"Oswald";font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  font-size:clamp(26px,5vw,44px);margin:2px 0 10px;color:var(--chalk);
+}
+.hero-head p{color:var(--chalk-dim);font-size:15px;margin:0 auto;max-width:58ch}
+
+/* the locker wall scene */
+.scene{
+  position:relative;
+  border-radius:20px;
+  padding:clamp(24px,4vw,54px) clamp(16px,4vw,54px) clamp(70px,9vw,96px);
+  background:
+    /* bench/floor strip */
+    linear-gradient(180deg, transparent 0 calc(100% - 66px), var(--wood-dark) calc(100% - 66px) 100%),
+    /* locker vertical seams */
+    repeating-linear-gradient(90deg,
+      var(--steel) 0 78px,
+      var(--steel-line) 78px 80px,
+      var(--steel-dark) 80px 84px,
+      var(--steel-line) 84px 86px),
+    var(--steel);
+  box-shadow:var(--shadow), inset 0 2px 0 rgba(255,255,255,.08);
+  overflow:hidden;
+}
+/* locker vents + top rail */
+.scene::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 22px, rgba(0,0,0,.05) 22px 23px) ,
+    linear-gradient(180deg, rgba(0,0,0,.22), transparent 90px);
+  mix-blend-mode:multiply;opacity:.5;
+}
+/* wood bench top highlight */
+.scene::after{
+  content:"";position:absolute;left:0;right:0;bottom:66px;height:5px;
+  background:linear-gradient(180deg,#c98a4e,var(--wood));opacity:.9;
+}
+
+.scene-grid{
+  position:relative;z-index:2;
+  display:grid;
+  grid-template-columns:1fr minmax(190px,300px) 1fr;
+  grid-template-rows:auto auto;
+  align-items:end;
+  column-gap:clamp(12px,2.4vw,26px);
+  row-gap:0;
+}
+.sign-slot{grid-column:2;grid-row:1;justify-self:center;z-index:5;margin-bottom:-6px;position:relative}
+/* tape strips live on the wrapper so the sign's torn clip-path can't cut them */
+.sign-slot::before,.sign-slot::after{
+  content:"";position:absolute;top:6px;z-index:6;height:22px;width:60px;
+  background:rgba(226,214,170,.55);box-shadow:0 1px 2px rgba(0,0,0,.14);
+  border-left:1px dashed rgba(0,0,0,.10);border-right:1px dashed rgba(0,0,0,.10);
+}
+.sign-slot::before{left:22%;transform:rotate(-7deg)}
+.sign-slot::after{right:22%;transform:rotate(8deg)}
+.col-left{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:clamp(14px,2.4vw,26px);align-items:flex-end;padding-bottom:6px}
+.col-right{grid-column:3;grid-row:2;display:flex;flex-direction:column;gap:clamp(14px,2.4vw,26px);align-items:flex-start;padding-bottom:6px}
+.door-slot{grid-column:2;grid-row:2;justify-self:center}
+
+/* the door */
+.door{
+  width:min(300px,74vw);height:clamp(300px,42vw,430px);
+  border-radius:8px 8px 0 0;
+  background:
+    linear-gradient(180deg,#b67e46,var(--wood) 60%,#9a6635),
+    var(--wood);
+  border:3px solid var(--wood-line);border-bottom:0;
+  box-shadow:inset 0 0 0 6px rgba(0,0,0,.06), inset 0 8px 22px rgba(0,0,0,.18), 0 10px 26px rgba(0,0,0,.3);
+  position:relative;display:flex;flex-direction:column;align-items:center;
+  padding:22px 18px;gap:16px;
+}
+/* recessed panels */
+.door .panel{
+  width:100%;flex:1;border-radius:5px;
+  background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(255,255,255,.05));
+  box-shadow:inset 0 0 0 2px var(--wood-line), inset 0 4px 12px rgba(0,0,0,.22);
+}
+.door .plate{
+  align-self:center;margin-top:2px;
+  background:linear-gradient(180deg,#d9c48a,#b99a52);
+  color:#3a2f12;font-family:"Oswald";font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;font-size:12px;padding:6px 12px;border-radius:3px;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.3);text-align:center;
+}
+.door .handle{
+  position:absolute;top:52%;right:14px;width:12px;height:34px;border-radius:6px;
+  background:linear-gradient(180deg,#f0d98a,#b98f3c);box-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+
+/* ---------- torn paper (shared) ---------- */
+.paper{
+  position:relative;background:var(--paper);color:var(--ink);
+  box-shadow:0 10px 22px rgba(0,0,0,.28);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.35),transparent 40%),
+                   radial-gradient(120% 80% at 50% 0%, rgba(0,0,0,.03), transparent 60%);
+}
+.paper::after{ /* tape */
+  content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-3deg);
+  width:64px;height:22px;background:rgba(226,214,170,.55);
+  border-left:1px dashed rgba(0,0,0,.12);border-right:1px dashed rgba(0,0,0,.12);
+  box-shadow:0 1px 2px rgba(0,0,0,.12);
+}
+/* the motto sign */
+.sign{
+  width:min(360px,80vw);min-height:112px;padding:20px 22px 26px;
+  transform:rotate(-2.2deg);
+  clip-path:polygon(0% 6%,4% 0,17% 5%,33% 1%,50% 6%,66% 1%,83% 5%,96% 0,100% 7%,99% 94%,100% 100%,84% 96%,67% 100%,50% 95%,33% 100%,16% 96%,3% 100%,0 93%);
+}
+.sign::after{display:none} /* central tape is provided by the wrapper for the sign */
+.sign .editable{
+  font-family:"Permanent Marker",cursive;font-size:clamp(24px,4.6vw,38px);
+  line-height:1.02;text-align:center;color:var(--ink);letter-spacing:.5px;
+  text-transform:uppercase;word-break:break-word;
+}
+.sign .cap{font-family:"Caveat";font-size:14px;text-align:center;color:#6a5a3c;margin-top:6px;opacity:.85}
+
+/* rule notes */
+.note{
+  width:min(230px,42vw);min-height:120px;padding:16px 16px 14px;border-radius:2px;
+}
+.col-left .note:nth-child(1){transform:rotate(-2.4deg)}
+.col-left .note:nth-child(2){transform:rotate(1.8deg)}
+.col-right .note:nth-child(1){transform:rotate(2.2deg)}
+.col-right .note:nth-child(2){transform:rotate(-1.6deg)}
+.note .num{
+  position:absolute;top:-13px;left:-11px;width:30px;height:30px;border-radius:50%;
+  background:var(--brick);color:#fff;font-family:"Oswald";font-weight:700;
+  display:grid;place-items:center;font-size:15px;box-shadow:0 3px 7px rgba(0,0,0,.35);z-index:3;
+}
+.note .rlabel{font-family:"Caveat";font-weight:700;color:#8a6a3e;font-size:15px;margin-bottom:4px}
+.note .editable{
+  font-family:"Permanent Marker",cursive;color:var(--ink);font-size:clamp(15px,2vw,18px);
+  line-height:1.22;word-break:break-word;min-height:52px;
+}
+
+/* editable behaviour */
+.editable{outline:none;cursor:text}
+.editable.empty::before{
+  content:attr(data-ph);color:rgba(29,58,92,.4);font-style:normal;pointer-events:none;
+}
+.scene-hint{
+  position:relative;z-index:2;text-align:center;margin:clamp(20px,3vw,30px) auto 0;
+  color:var(--chalk-dim);font-size:13.5px;max-width:60ch;
+}
+.scene-hint b{color:var(--gold)}
+
+/* focus / projection mode */
+body.focus .ideas,body.focus .squad,body.focus .srcnotes,body.focus footer{display:none}
+body.focus .stage{padding-top:8px}
+body.focus .scene{min-height:72vh;display:flex;flex-direction:column;justify-content:center}
+
+/* ---------------- ideas / scoreboard ---------------- */
+.ideas .wrap{max-width:940px}
+.board{display:flex;flex-direction:column;gap:10px}
+.rowk{
+  display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:14px;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;transition:background .15s,border-color .15s;
+}
+.rowk:hover{background:rgba(255,255,255,.07);border-color:rgba(232,193,90,.3)}
+.rowk .rank{
+  font-family:"Oswald";font-weight:700;font-size:20px;color:var(--gold);text-align:center;
+  border-right:1px solid var(--line);padding-right:8px;
+}
+.rowk .body{min-width:0}
+.rowk .name{font-weight:800;font-size:15.5px;color:var(--chalk);margin-bottom:6px}
+.rowk .idea{color:var(--chalk-dim);font-size:13.5px;margin-bottom:9px}
+.meter{height:9px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden}
+.meter > i{display:block;height:100%;border-radius:6px;
+  background:linear-gradient(90deg,var(--brick),var(--gold));transition:width .5s ease}
+.rowk .side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.count{font-family:"Oswald";font-weight:600;font-size:13px;color:var(--chalk-dim);white-space:nowrap}
+.count b{color:var(--gold);font-size:18px}
+.add{
+  font-family:"Nunito";font-weight:800;font-size:12.5px;color:var(--ink);
+  background:var(--paper);border:0;border-radius:999px;padding:7px 12px;cursor:pointer;
+  box-shadow:0 3px 8px rgba(0,0,0,.25);transition:transform .1s,box-shadow .15s;white-space:nowrap;
+}
+.add:hover{box-shadow:0 5px 12px rgba(0,0,0,.3)}
+.add:active{transform:translateY(1px)}
+
+/* ---------------- squad table ---------------- */
+.squad .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.filters{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.filters button{
+  font-family:"Nunito";font-weight:700;font-size:13px;color:var(--chalk-dim);
+  background:transparent;border:0;padding:8px 14px;cursor:pointer;white-space:nowrap;
+}
+.filters button.active{background:var(--brick);color:#fff}
+.search{
+  flex:1;min-width:180px;background:rgba(255,255,255,.05);border:1px solid var(--line);
+  border-radius:999px;color:var(--chalk);font-family:"Nunito";font-size:14px;padding:9px 16px;
+}
+.search::placeholder{color:var(--chalk-dim)}
+.tablecount{font-family:"Oswald";font-size:12.5px;letter-spacing:.06em;color:var(--chalk-dim);margin-left:auto;white-space:nowrap}
+
+.tablewrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:rgba(0,0,0,.14)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead th{
+  font-family:"Oswald";font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:11.5px;
+  color:var(--gold);text-align:left;padding:12px 16px;background:rgba(0,0,0,.25);
+  position:sticky;top:0;
+}
+tbody td{padding:12px 16px;border-top:1px solid var(--line);vertical-align:top;color:var(--chalk)}
+tbody tr:hover{background:rgba(255,255,255,.04)}
+td.name{font-weight:800;white-space:nowrap}
+td.ref{color:var(--chalk-dim);white-space:nowrap;font-size:13px}
+td.sum{color:var(--chalk-dim);min-width:240px}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;font-family:"Oswald";font-weight:600;
+  font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:999px;white-space:nowrap;
+}
+.pill.done{background:rgba(120,190,120,.16);color:#a9e0a0;border:1px solid rgba(120,190,120,.35)}
+.pill.unknown{background:rgba(255,255,255,.06);color:var(--chalk-dim);border:1px solid var(--line)}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.empty-row td{text-align:center;color:var(--chalk-dim);padding:26px;font-style:italic}
+
+/* source notes */
+.srcnotes .wrap{max-width:820px}
+details{
+  background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:var(--r);
+  padding:4px 18px;
+}
+summary{
+  cursor:pointer;font-family:"Oswald";font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  font-size:13px;color:var(--gold);padding:12px 0;list-style:none;
+}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"＋";margin-right:10px;color:var(--brick);font-weight:700}
+details[open] summary::before{content:"－"}
+details ul{margin:4px 0 16px;padding-left:20px;color:var(--chalk-dim);font-size:14px}
+details li{margin:7px 0}
+
+footer{
+  text-align:center;padding:30px 16px 46px;color:var(--chalk-dim);font-size:13px;border-top:1px solid var(--line);
+}
+footer b{color:var(--gold)}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+  background:var(--ink);color:#fff;font-weight:700;font-size:14px;
+  padding:12px 20px;border-radius:999px;box-shadow:0 12px 30px rgba(0,0,0,.4);
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:60;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------------- responsive ---------------- */
+@media (max-width:760px){
+  .scene-grid{grid-template-columns:1fr}
+  .sign-slot{grid-column:1;grid-row:1;margin-bottom:8px}
+  .door-slot{grid-column:1;grid-row:2}
+  .col-left{grid-column:1;grid-row:3;align-items:stretch}
+  .col-right{grid-column:1;grid-row:4;align-items:stretch}
+  .note,.col-left .note,.col-right .note{width:100%;transform:none}
+  .scene::after{bottom:0;display:none}
+  .scene{background:
+    repeating-linear-gradient(90deg,var(--steel) 0 60px,var(--steel-line) 60px 62px,var(--steel-dark) 62px 65px,var(--steel-line) 65px 67px),
+    var(--steel);}
+  .rowk{grid-template-columns:38px 1fr;grid-template-rows:auto auto}
+  .rowk .side{grid-column:1 / -1;flex-direction:row;justify-content:space-between;align-items:center}
+  td.sum{min-width:0}
+}
+
+@media (prefers-reduced-motion:no-preference){
+  .scene-grid > *{animation:settle .6s cubic-bezier(.2,.8,.25,1) both}
+  .sign-slot{animation-delay:.05s}
+  .col-left{animation-delay:.15s}.door-slot{animation-delay:.1s}.col-right{animation-delay:.2s}
+  @keyframes settle{from{opacity:0;transform:translateY(-10px) rotate(0)}to{opacity:1}}
+}
+
+@media print{
+  body{background:#fff;color:#111}
+  .topbar,.controls,.add,.toolbar,.scene-hint,footer,.srcnotes{display:none !important}
+  .scene{box-shadow:none;background:#fff;border:1px solid #999}
+  .paper{box-shadow:none;border:1px solid #bbb}
+  .rowk{border-color:#ccc}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <b>Believe Board</b>
+    <span data-i18n="tagline">Student council · rules for a good class community</span>
+  </div>
+  <div class="controls">
+    <button class="btn" id="focusBtn" data-i18n="focus">Focus</button>
+    <button class="btn" id="printBtn" data-i18n="print">Print</button>
+    <button class="btn" id="resetBtn" data-i18n="reset">Reset door</button>
+    <div class="lang" role="group" aria-label="Language">
+      <button data-lang="en" class="active">EN</button>
+      <button data-lang="de">DE</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HERO / LOCKER ROOM ===================== -->
+<section class="stage">
+  <div class="wrap">
+    <div class="hero-head">
+      <p class="eyebrow" data-i18n="hero_eyebrow">The wall by the office door</p>
+      <h1 data-i18n="hero_title">What we choose to believe</h1>
+      <p data-i18n="hero_sub">Write the motto your council agrees on above the door, and the four rules you all commit to around it. Tap any piece of paper to type.</p>
+    </div>
+
+    <div class="scene" id="scene">
+      <div class="scene-grid">
+        <div class="sign-slot">
+          <div class="paper sign">
+            <div class="editable" id="motto" data-field="motto" contenteditable="true"
+                 data-ph-en="Write your motto…" data-ph-de="Schreibt euer Motto…"
+                 role="textbox" aria-label="Motto"></div>
+            <div class="cap" data-i18n="sign_cap">the one thing we all agree on</div>
+          </div>
+        </div>
+
+        <div class="col-left">
+          <div class="paper note">
+            <div class="num">1</div>
+            <div class="rlabel" data-i18n="rule_lbl">our rule</div>
+            <div class="editable" id="r0" data-field="r0" contenteditable="true"
+                 data-ph-en="Rule one…" data-ph-de="Regel eins…" role="textbox" aria-label="Rule 1"></div>
+          </div>
+          <div class="paper note">
+            <div class="num">2</div>
+            <div class="rlabel" data-i18n="rule_lbl">our rule</div>
+            <div class="editable" id="r1" data-field="r1" contenteditable="true"
+                 data-ph-en="Rule two…" data-ph-de="Regel zwei…" role="textbox" aria-label="Rule 2"></div>
+          </div>
+        </div>
+
+        <div class="door-slot">
+          <div class="door" aria-hidden="true">
+            <div class="panel"></div>
+            <div class="plate" data-i18n="door_plate">Students' Council</div>
+            <div class="panel"></div>
+            <div class="handle"></div>
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="paper note">
+            <div class="num">3</div>
+            <div class="rlabel" data-i18n="rule_lbl">our rule</div>
+            <div class="editable" id="r2" data-field="r2" contenteditable="true"
+                 data-ph-en="Rule three…" data-ph-de="Regel drei…" role="textbox" aria-label="Rule 3"></div>
+          </div>
+          <div class="paper note">
+            <div class="num">4</div>
+            <div class="rlabel" data-i18n="rule_lbl">our rule</div>
+            <div class="editable" id="r3" data-field="r3" contenteditable="true"
+                 data-ph-en="Rule four…" data-ph-de="Regel vier…" role="textbox" aria-label="Rule 4"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="scene-hint">
+        <b data-i18n="hint_strong">Tap the paper to type.</b>
+        <span data-i18n="hint_rest"> Everything saves automatically in this browser, so you can come back to it next session.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== IDEAS / SCOREBOARD ===================== -->
+<section class="ideas">
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="ideas_eyebrow">The raw material</p>
+    <h2 data-i18n="ideas_title">Ideas from the locker room</h2>
+    <p class="lead" data-i18n="ideas_lead">Every rule idea the class wrote, grouped into themes and counted by how often it came up. Tap “→ Door” to send a theme onto the board.</p>
+    <div class="board" id="board"></div>
+  </div>
+</section>
+
+<!-- ===================== SQUAD SHEET ===================== -->
+<section class="squad">
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="squad_eyebrow">The squad sheet</p>
+    <h2 data-i18n="squad_title">Who handed in what</h2>
+    <p class="lead" data-i18n="squad_lead">Submissions that could be read and matched to a name, plus the pages where the name could not be made out. Search or filter to find a student.</p>
+
+    <div class="toolbar">
+      <div class="filters" id="filters" role="group" aria-label="Filter by status">
+        <button data-f="all" class="active" data-i18n="f_all">All</button>
+        <button data-f="done" data-i18n="f_done">Accomplished</button>
+        <button data-f="unknown" data-i18n="f_unknown">Name unclear</button>
+      </div>
+      <input class="search" id="search" type="search" data-ph-en="Search names…" data-ph-de="Namen suchen…" aria-label="Search names" />
+      <span class="tablecount" id="tablecount"></span>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="th_name">Name</th>
+            <th data-i18n="th_status">Status</th>
+            <th data-i18n="th_ref">Reference</th>
+            <th data-i18n="th_sum">Contribution</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SOURCE NOTES ===================== -->
+<section class="srcnotes">
+  <div class="wrap">
+    <details>
+      <summary data-i18n="notes_summary">Notes on the source data</summary>
+      <ul id="noteslist"></ul>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <p><b data-i18n="foot_a">The rulings are yours.</b> <span data-i18n="foot_b">Built for the students' council · works offline once loaded.</span></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* ----------------------------- data ----------------------------- */
+var THEMES = [
+  {r:1,f:11,en:{n:"Kindness, empathy & the Golden Rule",i:"Treat others the way you want to be treated; put being kind and caring first."},de:{n:"Freundlichkeit, Empathie & die Goldene Regel",i:"Behandle andere so, wie du selbst behandelt werden möchtest; sei vor allem freundlich und fürsorglich."}},
+  {r:2,f:9,en:{n:"Learning & growing from mistakes",i:"Mistakes aren't bad in themselves — use them as a chance to learn."},de:{n:"Aus Fehlern lernen und wachsen",i:"Fehler sind nichts Schlechtes — nutze sie als Lernchance."}},
+  {r:3,f:8,en:{n:"Staying calm when you're angry",i:"Take a moment to cool down before you speak or react."},de:{n:"Bei Wut ruhig bleiben",i:"Nimm dir bei Wut einen Moment zum Abkühlen, bevor du redest oder reagierst."}},
+  {r:4,f:7,en:{n:"Including outsiders & newcomers",i:"Actively welcome new people, help those with fewer friends, stop exclusion."},de:{n:"Außenseiter & Neue einbeziehen",i:"Heiße Neue aktiv willkommen, hilf denen mit weniger Freund:innen, stoppe Ausgrenzung."}},
+  {r:5,f:6,en:{n:"Open communication & sorting conflicts out",i:"Talk things through on purpose, or ask a neutral person to help."},de:{n:"Offen reden & Konflikte lösen",i:"Rede Dinge bewusst aus oder hol dir eine neutrale Person zur Vermittlung."}},
+  {r:6,f:5,en:{n:"No blaming, no judging",i:"Don't blame, judge, or keep the spotlight on someone who slipped up."},de:{n:"Nicht beschuldigen, nicht urteilen",i:"Beschuldige oder verurteile niemanden und stell niemanden bloß, der einen Fehler macht."}},
+  {r:7,f:5,en:{n:"Respect & equal worth",i:"Treat everyone as equally valuable and show basic respect."},de:{n:"Respekt & Gleichwertigkeit",i:"Behandle alle als gleichwertig und zeige grundlegenden Respekt."}},
+  {r:8,f:1,en:{n:"Support based on need",i:"Give each person the help they actually need."},de:{n:"Hilfe nach Bedarf",i:"Gib jeder Person genau die Hilfe, die sie wirklich braucht."}},
+  {r:9,f:1,en:{n:"Stepping back on a bad day",i:"On a rough day, take some space so it doesn't spill onto others."},de:{n:"An schlechten Tagen zurücktreten",i:"Zieh dich an einem schlechten Tag kurz zurück, damit es andere nicht belastet."}},
+  {r:10,f:1,en:{n:"Focus on your own path",i:"Mind your own way and stay out of other people's conflicts."},de:{n:"Auf den eigenen Weg konzentrieren",i:"Kümmere dich um deinen eigenen Weg und halt dich aus fremden Konflikten heraus."}}
+];
+var MAXF = 11;
+
+var refD = {en:"Digital results · p. 1", de:"Digitale Ergebnisse · S. 1"};
+function refH(p){ return {en:"Handwritten results · p. "+p, de:"Handschriftliche Ergebnisse · S. "+p}; }
+var refU = {en:"Unmatched anonymous page", de:"Nicht zugeordnete, anonyme Seite"};
+var sumU = {en:"Handed in, but no clearly readable or matched name on the page.", de:"Abgegeben, aber kein eindeutig lesbarer oder zugeordneter Name auf der Seite."};
+
+var DONE = [
+  {n:"Mathis", ref:refD, sum:{en:"Group work; handling mistakes constructively, stepping up for outsiders, staying calm.", de:"Gruppenarbeit; konstruktiver Umgang mit Fehlern, sich für Außenseiter einsetzen, ruhig bleiben."}},
+  {n:"Bela", ref:refD, sum:{en:"Reads as “Beta” in the OCR. Group with Mathis, Paul, Oswald.", de:"Im OCR als „Beta“ gelesen. Gruppe mit Mathis, Paul, Oswald."}},
+  {n:"Paul", ref:refD, sum:{en:"Reads as “Paal” in the OCR. Group with Mathis, Bela, Oswald.", de:"Im OCR als „Paal“ gelesen. Gruppe mit Mathis, Bela, Oswald."}},
+  {n:"Oswald", ref:refD, sum:{en:"Reads as “Osudd” in the OCR. Group with Mathis, Bela, Paul.", de:"Im OCR als „Osudd“ gelesen. Gruppe mit Mathis, Bela, Paul."}},
+  {n:"Levia", ref:refH(3), sum:{en:"Explicitly named. Tolerating mistakes, including others, cooling down.", de:"Namentlich genannt. Fehler tolerieren, andere einbeziehen, sich abkühlen."}},
+  {n:"Juna", ref:refH(8), sum:{en:"Explicitly named. Giving space, putting the team above an individual conflict.", de:"Namentlich genannt. Raum geben, das Team über den Einzelkonflikt stellen."}},
+  {n:"Emma", ref:refH(10), sum:{en:"Group with Weiyang. Kindness around mistakes, calming down, the Golden Rule.", de:"Gruppe mit Weiyang. Freundlicher Umgang mit Fehlern, sich beruhigen, Goldene Regel."}},
+  {n:"Weiyang", ref:refH(10), sum:{en:"Group with Emma.", de:"Gruppe mit Emma."}},
+  {n:"Severin", ref:refH(11), sum:{en:"Group with Julian and Noah. Constructive mistakes, quiet communication.", de:"Gruppe mit Julian und Noah. Konstruktiver Umgang mit Fehlern, ruhige Kommunikation."}},
+  {n:"Julian", ref:refH(11), sum:{en:"Group with Severin and Noah.", de:"Gruppe mit Severin und Noah."}},
+  {n:"Noah", ref:refH(11), sum:{en:"Group with Severin and Julian.", de:"Gruppe mit Severin und Julian."}},
+  {n:"Felix L.", ref:refH(1), sum:{en:"Reads as “FPl:×L” in the OCR. Mistakes help you learn; talk it through with a neutral person.", de:"Im OCR als „FPl:×L“ gelesen. Fehler helfen beim Lernen; mit einer neutralen Person sprechen."}}
+];
+
+var UNKNOWN_NAMES = ["Nathan","Leah","Ada","Felix G.","Matthäus","Milo","Leandra","Alexandra","Charlotte","Laurenzia","Rio","Marinus","Clara","Caroline","Laura","Franz","Jonathan","Ayumi"];
+
+var ROSTER = [];
+DONE.forEach(function(d){ ROSTER.push({name:d.n,status:"done",ref:d.ref,sum:d.sum}); });
+UNKNOWN_NAMES.forEach(function(n){ ROSTER.push({name:n,status:"unknown",ref:refU,sum:sumU}); });
+
+/* ----------------------------- i18n strings ----------------------------- */
+var T = {
+  en:{
+    tagline:"Student council · rules for a good class community",
+    focus:"Focus", print:"Print", reset:"Reset door",
+    hero_eyebrow:"The wall by the office door",
+    hero_title:"What we choose to believe",
+    hero_sub:"Write the motto your council agrees on above the door, and the four rules you all commit to around it. Tap any piece of paper to type.",
+    sign_cap:"the one thing we all agree on",
+    rule_lbl:"our rule",
+    door_plate:"Students' Council",
+    hint_strong:"Tap the paper to type.",
+    hint_rest:" Everything saves automatically in this browser, so you can come back to it next session.",
+    ideas_eyebrow:"The raw material",
+    ideas_title:"Ideas from the locker room",
+    ideas_lead:"Every rule idea the class wrote, grouped into themes and counted by how often it came up. Tap “→ Door” to send a theme onto the board.",
+    add:"→ Door", mentions:"mentions", mention:"mention",
+    squad_eyebrow:"The squad sheet",
+    squad_title:"Who handed in what",
+    squad_lead:"Submissions that could be read and matched to a name, plus the pages where the name could not be made out. Search or filter to find a student.",
+    f_all:"All", f_done:"Accomplished", f_unknown:"Name unclear",
+    th_name:"Name", th_status:"Status", th_ref:"Reference", th_sum:"Contribution",
+    st_done:"Task accomplished", st_unknown:"Name not recognizable",
+    count_tpl:"{n} of {t} students",
+    empty:"No students match your filter.",
+    notes_summary:"Notes on the source data",
+    notes:[
+      "Page 2 (marked “K5”) could not be read: the OCR fragmented it badly, so no rule ideas or name could be taken from it.",
+      "Pages 6 and 7 are the same submission scanned twice — counted once.",
+      "Names in quotation marks (e.g. “Beta”, “Paal”, “Osudd”, “FPl:×L”) are the raw OCR readings, matched to the most likely student name.",
+      "Idea counts are per theme: one point each time a group wrote a version of that idea across both files."
+    ],
+    foot_a:"The rulings are yours.",
+    foot_b:"Built for the students' council · works offline once loaded.",
+    t_added:"Added to the door", t_full:"All four rules are filled — clear one first.", t_reset:"Door cleared"
+  },
+  de:{
+    tagline:"Klassenrat · Regeln für ein gutes Klassenklima",
+    focus:"Fokus", print:"Drucken", reset:"Tür leeren",
+    hero_eyebrow:"Die Wand an der Bürotür",
+    hero_title:"Woran wir glauben wollen",
+    hero_sub:"Schreibt euer gemeinsames Motto über die Tür und die vier Regeln, auf die ihr euch alle einigt, drumherum. Tippt auf ein Papier, um zu schreiben.",
+    sign_cap:"das Eine, worauf wir uns alle einigen",
+    rule_lbl:"unsere Regel",
+    door_plate:"Klassenrat",
+    hint_strong:"Tippt auf das Papier, um zu schreiben.",
+    hint_rest:" Alles wird automatisch in diesem Browser gespeichert — ihr könnt nächstes Mal weitermachen.",
+    ideas_eyebrow:"Das Rohmaterial",
+    ideas_title:"Ideen aus der Kabine",
+    ideas_lead:"Alle Regel-Ideen der Klasse, in Themen gebündelt und nach Häufigkeit gezählt. Tippt auf „→ Tür“, um ein Thema auf das Board zu holen.",
+    add:"→ Tür", mentions:"Nennungen", mention:"Nennung",
+    squad_eyebrow:"Die Mannschaftsliste",
+    squad_title:"Wer was abgegeben hat",
+    squad_lead:"Abgaben, die lesbar waren und einem Namen zugeordnet werden konnten, plus die Seiten, deren Name nicht zu entziffern war. Sucht oder filtert nach einer Person.",
+    f_all:"Alle", f_done:"Erfüllt", f_unknown:"Name unklar",
+    th_name:"Name", th_status:"Status", th_ref:"Fundstelle", th_sum:"Beitrag",
+    st_done:"Aufgabe erfüllt", st_unknown:"Name nicht erkennbar",
+    count_tpl:"{n} von {t} Personen",
+    empty:"Keine Treffer für diesen Filter.",
+    notes_summary:"Hinweise zu den Quelldaten",
+    notes:[
+      "Seite 2 (mit „K5“ markiert) war nicht lesbar: Das OCR hat sie stark zerstückelt, daher konnten weder Regel-Ideen noch ein Name übernommen werden.",
+      "Seite 6 und 7 sind dieselbe Abgabe, zweimal gescannt — nur einmal gezählt.",
+      "Namen in Anführungszeichen (z. B. „Beta“, „Paal“, „Osudd“, „FPl:×L“) sind die reinen OCR-Lesungen, dem wahrscheinlichsten Namen zugeordnet.",
+      "Die Zählung ist pro Thema: ein Punkt jedes Mal, wenn eine Gruppe in einer der Dateien eine Variante dieser Idee geschrieben hat."
+    ],
+    foot_a:"Die Beschlüsse gehören euch.",
+    foot_b:"Für den Klassenrat gebaut · funktioniert offline, sobald geladen.",
+    t_added:"Auf die Tür übernommen", t_full:"Alle vier Regeln sind belegt — erst eine leeren.", t_reset:"Tür geleert"
+  }
+};
+
+/* ----------------------------- state ----------------------------- */
+var LKEY = "believeBoard.v1";
+var lang = "en";
+var filter = "all";
+var query = "";
+var store = {lang:"en", motto:"", r0:"", r1:"", r2:"", r3:""};
+
+function load(){
+  try{
+    var raw = window.localStorage.getItem(LKEY);
+    if(raw){ var o = JSON.parse(raw); for(var k in o){ if(store.hasOwnProperty(k)) store[k]=o[k]; } }
+  }catch(e){}
+  if(store.lang==="de"||store.lang==="en") lang = store.lang;
+}
+function save(){
+  try{ window.localStorage.setItem(LKEY, JSON.stringify(store)); }catch(e){}
+}
+
+/* ----------------------------- helpers ----------------------------- */
+function $(sel,ctx){ return (ctx||document).querySelector(sel); }
+function $all(sel,ctx){ return Array.prototype.slice.call((ctx||document).querySelectorAll(sel)); }
+
+var toastTimer;
+function toast(msg){
+  var t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 1900);
+}
+
+function setEmptyState(el){
+  var empty = el.textContent.replace(/\u200B/g,"").trim().length === 0;
+  if(empty){ el.classList.add("empty"); if(el.innerHTML!=="") el.innerHTML=""; }
+  else el.classList.remove("empty");
+}
+
+/* ----------------------------- editable fields ----------------------------- */
+function initEditable(){
+  $all(".editable").forEach(function(el){
+    var field = el.getAttribute("data-field");
+    if(store[field]) el.textContent = store[field];
+    el.setAttribute("data-ph", el.getAttribute("data-ph-"+lang) || "");
+    setEmptyState(el);
+
+    el.addEventListener("input", function(){
+      setEmptyState(el);
+      store[field] = el.textContent.replace(/\u200B/g,"").trim();
+      save();
+    });
+    // paste as plain text
+    el.addEventListener("paste", function(e){
+      e.preventDefault();
+      var text = (e.clipboardData || window.clipboardData).getData("text");
+      document.execCommand("insertText", false, text);
+    });
+  });
+}
+
+function fillFirstEmptyRule(text){
+  var ids = ["r0","r1","r2","r3"];
+  for(var i=0;i<ids.length;i++){
+    if(!store[ids[i]]){
+      store[ids[i]] = text;
+      var el = document.getElementById(ids[i]);
+      el.textContent = text; setEmptyState(el);
+      save();
+      toast(T[lang].t_added);
+      el.scrollIntoView({behavior:"smooth", block:"center"});
+      return true;
+    }
+  }
+  toast(T[lang].t_full);
+  return false;
+}
+
+/* ----------------------------- render: ideas ----------------------------- */
+function renderIdeas(){
+  var board = $("#board"); board.innerHTML = "";
+  THEMES.forEach(function(th){
+    var d = th[lang];
+    var pct = Math.max(6, Math.round(th.f / MAXF * 100));
+    var unit = th.f === 1 ? T[lang].mention : T[lang].mentions;
+    var row = document.createElement("div"); row.className = "rowk";
+    row.innerHTML =
+      '<div class="rank">'+th.r+'</div>'+
+      '<div class="body">'+
+        '<div class="name"></div>'+
+        '<div class="idea"></div>'+
+        '<div class="meter"><i style="width:'+pct+'%"></i></div>'+
+      '</div>'+
+      '<div class="side">'+
+        '<span class="count"><b>'+th.f+'</b> '+unit+'</span>'+
+        '<button class="add" type="button">'+T[lang].add+'</button>'+
+      '</div>';
+    row.querySelector(".name").textContent = d.n;
+    row.querySelector(".idea").textContent = d.i;
+    row.querySelector(".add").addEventListener("click", function(){ fillFirstEmptyRule(d.n); });
+    board.appendChild(row);
+  });
+}
+
+/* ----------------------------- render: roster ----------------------------- */
+function renderRoster(){
+  var tbody = $("#tbody"); tbody.innerHTML = "";
+  var shown = 0;
+  ROSTER.forEach(function(p){
+    if(filter !== "all" && p.status !== filter) return;
+    if(query && p.name.toLowerCase().indexOf(query) === -1) return;
+    shown++;
+    var tr = document.createElement("tr");
+    var stLabel = p.status === "done" ? T[lang].st_done : T[lang].st_unknown;
+    var tdName = document.createElement("td"); tdName.className="name"; tdName.textContent = p.name;
+    var tdStatus = document.createElement("td");
+    var pill = document.createElement("span"); pill.className = "pill "+p.status;
+    pill.innerHTML = '<span class="dot"></span>'; pill.appendChild(document.createTextNode(stLabel));
+    tdStatus.appendChild(pill);
+    var tdRef = document.createElement("td"); tdRef.className="ref"; tdRef.textContent = p.ref[lang];
+    var tdSum = document.createElement("td"); tdSum.className="sum"; tdSum.textContent = p.sum[lang];
+    tr.appendChild(tdName); tr.appendChild(tdStatus); tr.appendChild(tdRef); tr.appendChild(tdSum);
+    tbody.appendChild(tr);
+  });
+  if(shown === 0){
+    var er = document.createElement("tr"); er.className="empty-row";
+    var td = document.createElement("td"); td.colSpan = 4; td.textContent = T[lang].empty;
+    er.appendChild(td); tbody.appendChild(er);
+  }
+  $("#tablecount").textContent = T[lang].count_tpl.replace("{n}", shown).replace("{t}", ROSTER.length);
+}
+
+/* ----------------------------- render: notes ----------------------------- */
+function renderNotes(){
+  var ul = $("#noteslist"); ul.innerHTML = "";
+  T[lang].notes.forEach(function(txt){
+    var li = document.createElement("li"); li.textContent = txt; ul.appendChild(li);
+  });
+}
+
+/* ----------------------------- language ----------------------------- */
+function applyLang(next){
+  lang = next; store.lang = next; save();
+  document.documentElement.lang = next;
+  $all("[data-i18n]").forEach(function(el){
+    var key = el.getAttribute("data-i18n");
+    if(T[lang][key] != null) el.textContent = T[lang][key];
+  });
+  $all("[data-ph-en]").forEach(function(el){
+    if(el.classList.contains("editable")){
+      el.setAttribute("data-ph", el.getAttribute("data-ph-"+lang) || "");
+      setEmptyState(el);
+    } else if(el.tagName === "INPUT"){
+      el.setAttribute("placeholder", el.getAttribute("data-ph-"+lang) || "");
+    }
+  });
+  $all(".lang button").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-lang")===lang); });
+  renderIdeas(); renderRoster(); renderNotes();
+}
+
+/* ----------------------------- wire up ----------------------------- */
+function init(){
+  load();
+  initEditable();
+  applyLang(lang);
+
+  $all(".lang button").forEach(function(b){
+    b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
+  });
+
+  $("#focusBtn").addEventListener("click", function(){
+    var on = document.body.classList.toggle("focus");
+    this.classList.toggle("on", on);
+    if(on) window.scrollTo({top:0, behavior:"smooth"});
+  });
+  $("#printBtn").addEventListener("click", function(){ window.print(); });
+  $("#resetBtn").addEventListener("click", function(){
+    ["motto","r0","r1","r2","r3"].forEach(function(f){
+      store[f] = "";
+      var el = document.getElementById(f);
+      if(el){ el.textContent=""; setEmptyState(el); }
+    });
+    save(); toast(T[lang].t_reset);
+  });
+
+  $("#filters").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-f]"); if(!b) return;
+    filter = b.getAttribute("data-f");
+    $all("#filters button").forEach(function(x){ x.classList.toggle("active", x===b); });
+    renderRoster();
+  });
+  $("#search").addEventListener("input", function(){ query = this.value.trim().toLowerCase(); renderRoster(); });
+}
+
+if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+else init();
+</script>
+</body>
+</html>
