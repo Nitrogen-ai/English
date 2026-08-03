@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LP 00 &middot; Welcome back to Brighton &mdash; English Klasse 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --key: #14b8a6; --edge: #0d9488; --tint: #e1f7f4; --ktext: #ffffff;
+    --ink: #14302d; --ink-soft: #4c6e69; --bg: #f0faf8; --card: #fff;
+    --line: rgba(20,48,45,0.12); --sun: #ffc23d;
+    --ok: #39b56a; --ok-ink: #1c7a45; --no: #e8607a; --no-ink: #b13350;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink);
+    line-height: 1.65; padding-bottom: 2rem;
+    background-image:
+      linear-gradient(rgba(20,150,140,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20,150,140,0.05) 1px, transparent 1px);
+    background-size: 26px 26px, 26px 26px;
+  }
+  ::selection { background: var(--sun); color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--key); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 5vw; }
+
+  .topbar { background: var(--key); }
+  .back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    max-width: 860px; margin: 0 auto; padding: 0.7rem 5vw;
+    color: var(--ktext); text-decoration: none; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; letter-spacing: 0.06em;
+  }
+  .back:hover { text-decoration: underline; }
+
+  .lp-hero { padding: 2.4rem 0 1.4rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .b-sjw, .b-unit {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem;
+    letter-spacing: 0.08em; padding: 0.28rem 0.65rem; border-radius: 999px;
+  }
+  .b-sjw { background: var(--key); color: var(--ktext); box-shadow: 0 3px 0 var(--edge); }
+  .b-unit { background: var(--tint); color: var(--edge); border: 1.5px solid var(--key); }
+
+  .hero-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
+  .keycap {
+    font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.8rem;
+    color: var(--ktext); background: var(--key); box-shadow: 0 5px 0 var(--edge);
+    width: 62px; height: 62px; border-radius: 16px; display: grid; place-items: center; flex-shrink: 0;
+  }
+  h1 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.5rem, 4.5vw, 2.3rem); line-height: 1.1; }
+
+  .goal { font-size: 1.06rem; margin-bottom: 0.9rem; }
+  .goal b { color: var(--key); }
+  .rlp { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-soft); font-weight: 700; }
+  .rlp .tag { display: inline-block; background: #e3f5f2; padding: 0.06rem 0.42rem; border-radius: 6px; margin: 0 0.15rem 0.25rem 0; }
+  .rlp .tag.neu { background: var(--sun); color: var(--ink); }
+
+  .intro { font-size: 1.06rem; margin: 1.3rem 0 0.4rem; }
+  .intro p { margin-bottom: 0.6rem; }
+  .intro b { color: var(--edge); }
+
+  .block { background: var(--card); border: 2px solid var(--line); border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 1.1rem; }
+  .block h2 {
+    font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.25rem;
+    display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem;
+  }
+  .block h2 .dot { width: 14px; height: 14px; border-radius: 5px; background: var(--key); box-shadow: 0 2px 0 var(--edge); flex-shrink: 0; }
+
+  .figbox { border: 2px solid var(--line); border-radius: 16px; padding: 0.8rem; margin-bottom: 1.1rem; background: #f7fdfc; }
+  .figbox svg { width: 100%; height: auto; display: block; max-width: 320px; margin: 0 auto; animation: floaty 7s ease-in-out infinite; }
+  .figcap { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; color: var(--ink-soft); text-align: center; margin-top: 0.5rem; }
+
+  .quiz-intro { display: flex; gap: 0.5rem; align-items: center; font-weight: 700; color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 1rem; }
+  .quiz-intro .qi { width: 20px; height: 20px; color: var(--key); flex-shrink: 0; }
+
+  .q { border: 2px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; margin-bottom: 0.9rem; background: #fbfffe; transition: border-color 0.15s ease, background 0.15s ease; }
+  .q.solved { border-color: var(--ok); background: #f0fbf4; }
+  .q-text { font-weight: 700; font-size: 1.02rem; margin-bottom: 0.8rem; line-height: 1.5; }
+  .q-text .qnum { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.06em; color: var(--edge); background: var(--tint); padding: 0.14rem 0.5rem; border-radius: 999px; margin-right: 0.5rem; vertical-align: middle; }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+  .opt { display: flex; align-items: center; gap: 0.6rem; text-align: left; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: 11px; padding: 0.6rem 0.7rem; cursor: pointer; transition: transform 0.1s ease, border-color 0.1s ease, background 0.1s ease; }
+  .opt:hover:not(:disabled) { border-color: var(--key); transform: translateY(-1px); }
+  .opt .lt { flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.82rem; background: var(--tint); color: var(--edge); }
+  .opt.correct { border-color: var(--ok); background: #e9fbf0; color: var(--ok-ink); }
+  .opt.correct .lt { background: var(--ok); color: #fff; }
+  .opt.wrong { border-color: var(--no); background: #fdeef1; color: var(--no-ink); }
+  .opt.wrong .lt { background: var(--no); color: #fff; }
+  .opt:disabled { cursor: default; }
+  .q-fb { min-height: 1.3rem; margin-top: 0.7rem; font-weight: 700; font-size: 0.9rem; }
+  .q-fb.ok { color: var(--ok-ink); }
+  .q-fb.no { color: var(--no-ink); }
+  .quiz-progress { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft); margin-top: 0.6rem; }
+  @media (max-width: 520px) { .opts { grid-template-columns: 1fr; } }
+
+  .steps { list-style: none; counter-reset: step; display: grid; gap: 0.8rem; }
+  .steps li { display: flex; gap: 0.85rem; align-items: flex-start; }
+  .steps li::before { counter-increment: step; content: counter(step); flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px; background: var(--key); color: #fff; box-shadow: 0 3px 0 var(--edge); font-family: 'Fredoka', sans-serif; font-weight: 700; display: grid; place-items: center; }
+  .steps .st-body { padding-top: 0.1rem; }
+  .steps b { color: var(--edge); }
+
+  .reveal { margin-top: 1rem; }
+  .reveal-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.98rem;
+    color: var(--ktext); background: var(--key); border: none; border-radius: 12px;
+    padding: 0.65rem 1.1rem; box-shadow: 0 4px 0 var(--edge);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .reveal-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 var(--edge); }
+  .reveal-btn svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
+  .reveal-btn.open svg { transform: rotate(180deg); }
+  .reveal-body {
+    display: none; margin-top: 0.9rem; background: var(--tint); border: 2px dashed var(--key);
+    border-radius: 14px; padding: 1rem 1.1rem; font-size: 0.98rem;
+  }
+  .reveal-body.open { display: block; animation: fadeIn 0.25s ease; }
+  .reveal-body p { margin-bottom: 0.5rem; }
+  .reveal-body p:last-child { margin-bottom: 0; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .example {
+    background: #fff7e2; border: 1.5px solid var(--sun); border-radius: 12px;
+    padding: 0.8rem 1rem; margin-top: 0.9rem; font-size: 0.92rem;
+  }
+  .example b { color: #8a5a00; }
+
+  .safe-note { display: flex; gap: 0.6rem; align-items: center; background: #fff7e2; border: 1.5px solid var(--sun); border-radius: 12px; padding: 0.7rem 0.9rem; margin-top: 1rem; font-weight: 700; color: #8a5a00; font-size: 0.92rem; }
+  .safe-note svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  .merk { background: var(--key); color: #fff; border-radius: 18px; padding: 1.5rem 1.6rem; box-shadow: 0 5px 0 var(--edge); margin-bottom: 1.1rem; }
+  .merk h2 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.9rem; display: flex; gap: 0.6rem; align-items: center; }
+  .merk h2 svg { width: 24px; height: 24px; }
+  .merk .chain { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.1rem, 3.4vw, 1.5rem); line-height: 1.35; margin-bottom: 1rem; }
+  .merk ol { margin: 0 0 0.5rem 1.25rem; }
+  .merk li { font-weight: 600; margin-bottom: 0.25rem; }
+
+  .selfcheck-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; background: var(--tint); border-radius: 14px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .sc-label { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.98rem; }
+  .sc-stars { display: flex; gap: 0.3rem; }
+  .sc-star { width: 30px; height: 30px; background: none; border: none; padding: 0; cursor: pointer; color: rgba(20,48,45,0.22); transition: transform 0.12s ease, color 0.12s ease; }
+  .sc-star svg { width: 100%; height: 100%; display: block; }
+  .sc-star:hover { transform: scale(1.18) rotate(-6deg); }
+  .sc-star.on { color: var(--sun); }
+  .sc-feedback { font-family: 'Fredoka', sans-serif; font-weight: 600; color: var(--edge); opacity: 0; transition: opacity 0.2s ease; }
+  .sc-feedback.show { opacity: 1; }
+
+  .lp-nav { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-top: 1.6rem; flex-wrap: wrap; }
+  .lp-nav a, .lp-nav span.nav-empty { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.78rem; text-decoration: none; padding: 0.6rem 0.9rem; border-radius: 10px; }
+  .nav-prev, .nav-next { background: var(--card); border: 2px solid var(--key); color: var(--edge); box-shadow: 0 3px 0 var(--edge); transition: transform 0.12s ease, box-shadow 0.12s ease; }
+  .nav-prev:hover, .nav-next:hover { transform: translateY(2px); box-shadow: 0 1px 0 var(--edge); }
+  .nav-over { background: var(--key); color: var(--ktext); box-shadow: 0 3px 0 var(--edge); }
+  .nav-empty { color: rgba(20,48,45,0.28); border: 2px dashed var(--line); }
+
+  footer { text-align: center; margin-top: 2rem; padding: 1.4rem 5vw 0; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-soft); font-weight: 700; }
+
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../year6-kursuebersicht.html">&#8592; Back to the course overview</a>
+</div>
+
+<div class="wrap">
+  <header class="lp-hero">
+    <div class="badges">
+      <span class="b-sjw">SJW 1</span>
+      <span class="b-unit">Welcome-Unit</span>
+    </div>
+    <div class="hero-row">
+      <div class="keycap">00</div>
+      <h1>Welcome back to Brighton</h1>
+    </div>
+    <p class="goal"><b>Today you will:</b> warm up four new words (<i>such a, lovely, up, over</i>), write about what you remember from before the holidays, and get to know your new classmates.</p>
+    <p class="rlp"><span class="tag neu">neu &middot; Welcome-Unit</span><span class="tag">Vocabulary</span><span class="tag">Speaking &amp; writing</span></p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p><b>Welcome back to school!</b> You all look relaxed &mdash; I hope you had lovely holidays. Before we start the new topics, let&rsquo;s warm up our English together and get to know each other a little better.</p>
+      <p>Quick question to think about: <b>What is one nice thing that happened during your holidays?</b> Get ready to tell a partner.</p>
+    </section>
+
+    <section class="block quizblock">
+      <h2><span class="dot"></span>Word warm-up</h2>
+      <p class="quiz-intro"><svg class="qi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1.9-1.1 1.8"/><path d="M12 17h.01"/></svg>Tap the answer that fits. Green = correct. Wrong? Just try again!</p>
+
+      <div class="q" data-hint="&lsquo;Lovely&rsquo; describes something you like a lot &mdash; a nice, pretty thing.">
+        <p class="q-text"><span class="qnum">Q1</span>Translate <i>lovely</i> into German:</p>
+        <div class="opts">
+        <button class="opt">bunt</button>
+        <button class="opt">gut</button>
+        <button class="opt" data-correct="true">sch&ouml;n</button>
+        <button class="opt">schnell</button>
+        </div>
+        <p class="q-fb" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="q" data-hint="A noun (like &lsquo;day&rsquo;) follows &mdash; that&rsquo;s the job of &lsquo;such a&rsquo;.">
+        <p class="q-text"><span class="qnum">Q2</span>&bdquo;It&rsquo;s ___ nice day!&ldquo; &mdash; which word fits?</p>
+        <div class="opts">
+        <button class="opt">so</button>
+        <button class="opt" data-correct="true">such a</button>
+        <button class="opt">much</button>
+        <button class="opt">more</button>
+        </div>
+        <p class="q-fb" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="q" data-hint="No noun here &mdash; just the adjective &lsquo;warm&rsquo;. That&rsquo;s when we use &lsquo;so&rsquo;.">
+        <p class="q-text"><span class="qnum">Q3</span>&bdquo;The weather is ___ warm today!&ldquo; &mdash; which word fits?</p>
+        <div class="opts">
+        <button class="opt" data-correct="true">so</button>
+        <button class="opt">such a</button>
+        <button class="opt">up</button>
+        <button class="opt">over</button>
+        </div>
+        <p class="q-fb" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="q" data-hint="Think of the opposite of &lsquo;down&rsquo;.">
+        <p class="q-text"><span class="qnum">Q4</span>&bdquo;She jumped ___ onto the wall.&ldquo; &mdash; which word fits?</p>
+        <div class="opts">
+        <button class="opt" data-correct="true">up</button>
+        <button class="opt">over</button>
+        <button class="opt">lovely</button>
+        <button class="opt">such a</button>
+        </div>
+        <p class="q-fb" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="q" data-hint="Think: finished, done, no more.">
+        <p class="q-text"><span class="qnum">Q5</span>&bdquo;The summer holidays are finally ___.&ldquo; &mdash; which word fits?</p>
+        <div class="opts">
+        <button class="opt" data-correct="true">over</button>
+        <button class="opt">up</button>
+        <button class="opt">lovely</button>
+        <button class="opt">so</button>
+        </div>
+        <p class="q-fb" role="status" aria-live="polite"></p>
+      </div>
+
+      <p class="quiz-progress"></p>
+    </section>
+
+    <section class="block">
+      <h2><span class="dot"></span>Back in Brighton &mdash; think, pair, share</h2>
+      <ol class="steps">
+        <li><div class="st-body"><b>Think.</b> What do you remember about Brighton from last year? Write down at least three sentences (e.g. about the beach, the pier, the shops or the parks).</div></li>
+        <li><div class="st-body"><b>Pair.</b> Compare your sentences with a partner.</div></li>
+        <li><div class="st-body"><b>Share.</b> Be ready to read out your best sentence to the class.</div></li>
+      </ol>
+      <div class="example">
+        <b>Sentence starters:</b> There is &hellip; &middot; There are &hellip; &middot; The &hellip; is famous for &hellip; &middot; You can &hellip; at the &hellip;
+      </div>
+      <div class="reveal">
+        <button class="reveal-btn" type="button" data-target="reveal-brighton">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          Show a model answer
+        </button>
+        <div class="reveal-body" id="reveal-brighton">
+          <p>Brighton is a seaside town on the south coast of England. There is a long pebble beach and a famous pier with rides and games. The Lanes are small, colourful streets full of shops and cafés, and the Royal Pavilion is a beautiful old palace in the city centre. In summer, lots of tourists come to enjoy the sea, the sun and the lively atmosphere.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2><span class="dot"></span>Two truths and a lie &mdash; get to know your class</h2>
+      <ol class="steps">
+        <li><div class="st-body"><b>Write.</b> Write three sentences about yourself &mdash; two must be true, one must be a lie.</div></li>
+        <li><div class="st-body"><b>Read.</b> Read your three sentences to a partner (or a small group).</div></li>
+        <li><div class="st-body"><b>Guess.</b> Your partner asks follow-up questions and guesses which sentence is the lie.</div></li>
+      </ol>
+      <div class="example">
+        <b>Example (not a real answer &mdash; just the pattern):</b><br>
+        1. I have a pet dog. &middot; 2. I can play the guitar. &middot; 3. I have been to London.
+      </div>
+      <div class="reveal">
+        <button class="reveal-btn" type="button" data-target="reveal-game">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          Show useful questions
+        </button>
+        <div class="reveal-body" id="reveal-game">
+          <p>Use these to find out more before you guess: <i>Do you really have &hellip;? Since when can you &hellip;? What was it like?</i></p>
+          <p>Whoever guesses the most lies correctly after three rounds wins!</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block quizblock">
+      <h2><span class="dot"></span>Checkpoint &mdash; can you do it now?</h2>
+      <p class="quiz-intro"><svg class="qi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>One more round to check what stuck.</p>
+
+      <div class="q" data-hint="Look closely: what is the boy doing with the dog?">
+        <p class="q-text"><span class="qnum">Q6</span>Look at the picture. What is he doing?</p>
+        <div class="figbox">
+          <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A boy running with a dog on a park path">
+            <ellipse cx="130" cy="178" rx="110" ry="8" fill="#d7f3ee"/>
+            <path d="M10 150 Q130 120 250 150" fill="none" stroke="#a9ddd3" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="45" cy="60" r="22" fill="#7fd9c4"/>
+            <circle cx="215" cy="50" r="26" fill="#9be3d1"/>
+            <g>
+              <circle cx="150" cy="80" r="14" fill="#ffd9a0"/>
+              <rect x="138" y="92" width="24" height="34" rx="10" fill="var(--key)"/>
+              <path d="M138 100 L118 118" stroke="#ffd9a0" stroke-width="8" stroke-linecap="round"/>
+              <path d="M162 100 L182 108" stroke="#ffd9a0" stroke-width="8" stroke-linecap="round"/>
+              <path d="M144 124 L128 158" stroke="#2f6f63" stroke-width="9" stroke-linecap="round"/>
+              <path d="M158 124 L176 156" stroke="#2f6f63" stroke-width="9" stroke-linecap="round"/>
+            </g>
+            <g>
+              <ellipse cx="100" cy="150" rx="26" ry="15" fill="#c98a4f"/>
+              <circle cx="72" cy="142" r="12" fill="#c98a4f"/>
+              <path d="M65 132 L58 120" stroke="#c98a4f" stroke-width="6" stroke-linecap="round"/>
+              <path d="M78 130 L84 118" stroke="#c98a4f" stroke-width="6" stroke-linecap="round"/>
+              <path d="M118 148 L134 140" stroke="#c98a4f" stroke-width="7" stroke-linecap="round"/>
+              <path d="M112 160 L122 174" stroke="#c98a4f" stroke-width="7" stroke-linecap="round"/>
+            </g>
+          </svg>
+          <p class="figcap">A boy and his dog on a park path</p>
+        </div>
+        <div class="opts">
+        <button class="opt" data-correct="true">He is going for a run with his dog.</button>
+        <button class="opt">He is walking to school.</button>
+        <button class="opt">He is riding a bike.</button>
+        <button class="opt">He is washing the dog.</button>
+        </div>
+        <p class="q-fb" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="q" data-hint="Same family, similar face &mdash; think of the English word for that.">
+        <p class="q-text"><span class="qnum">Q7</span>Two students look very alike and always sit together at family parties. They are most likely &hellip;</p>
+        <div class="opts">
+        <button class="opt">neighbours</button>
+        <button class="opt" data-correct="true">siblings (brother/sister)</button>
+        <button class="opt">strangers</button>
+        <button class="opt">teachers</button>
+        </div>
+        <p class="q-fb" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="q" data-hint="No noun after the gap &mdash; just the adjective &lsquo;good&rsquo;.">
+        <p class="q-text"><span class="qnum">Q8</span>&bdquo;This cake tastes ___ good!&ldquo; &mdash; which word fits?</p>
+        <div class="opts">
+        <button class="opt" data-correct="true">so</button>
+        <button class="opt">such a</button>
+        <button class="opt">up</button>
+        <button class="opt">over</button>
+        </div>
+        <p class="q-fb" role="status" aria-live="polite"></p>
+      </div>
+
+      <p class="quiz-progress"></p>
+    </section>
+
+    <section class="merk">
+      <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.5h6c0-1.2.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg>Take this with you</h2>
+      <p class="chain">such a + noun &middot; so + adjective &middot; up &uarr; &middot; over &#10003;</p>
+      <ol>
+        <li>Use <b>such a</b> before a noun: &bdquo;such a nice day&ldquo;.</li>
+        <li>Use <b>so</b> before an adjective alone: &bdquo;so warm&ldquo;.</li>
+        <li><b>Up</b> = towards the top; <b>over</b> = finished, or across something.</li>
+        <li>You practised describing a place and getting to know your classmates in English.</li>
+      </ol>
+    </section>
+
+    <div class="selfcheck-wrap">
+      <span class="sc-label">How confident do you feel after this lesson?</span>
+      <div class="sc-stars" id="stars"></div>
+      <span class="sc-feedback" id="fb"></span>
+    </div>
+
+    <nav class="lp-nav">
+      <span class="nav-empty">First lernpfad</span>
+      <a class="nav-over" href="../../year6-kursuebersicht.html">&#8801; Course overview</a>
+      <span class="nav-empty">LP 01 &middot; coming soon</span>
+    </nav>
+  </main>
+
+  <footer>English &middot; Klasse 6 &middot; Schuljahr 2026/27 &middot; Welcome-Unit &middot; Welcome back to Brighton</footer>
+</div>
+
+<script>
+  (function(){
+    var letters = ['A','B','C','D'];
+    function updateProgress(){
+      document.querySelectorAll('.quizblock').forEach(function(b){
+        var total = b.querySelectorAll('.q').length;
+        var solved = b.querySelectorAll('.q.solved').length;
+        var p = b.querySelector('.quiz-progress');
+        if(!p) return;
+        p.textContent = (solved === total && total > 0) ? ('Great! All ' + total + ' solved ★') : ('Solved: ' + solved + ' / ' + total);
+      });
+    }
+    document.querySelectorAll('.q').forEach(function(q){
+      var opts = Array.prototype.slice.call(q.querySelectorAll('.opt'));
+      var fb = q.querySelector('.q-fb');
+      opts.forEach(function(opt, i){
+        var lt = document.createElement('span'); lt.className = 'lt'; lt.textContent = letters[i];
+        opt.insertBefore(lt, opt.firstChild);
+        opt.addEventListener('click', function(){
+          if(q.classList.contains('solved')) return;
+          if(opt.getAttribute('data-correct') === 'true'){
+            opt.classList.add('correct');
+            opts.forEach(function(o){ o.disabled = true; });
+            q.classList.add('solved');
+            fb.textContent = '✓ Correct!'; fb.className = 'q-fb ok';
+            updateProgress();
+          } else {
+            opt.classList.add('wrong'); opt.disabled = true;
+            fb.textContent = '✗ ' + (q.getAttribute('data-hint') || 'Try again.'); fb.className = 'q-fb no';
+          }
+        });
+      });
+    });
+    updateProgress();
+
+    document.querySelectorAll('.reveal-btn').forEach(function(btn){
+      var body = document.getElementById(btn.getAttribute('data-target'));
+      btn.addEventListener('click', function(){
+        var open = body.classList.toggle('open');
+        btn.classList.toggle('open', open);
+      });
+    });
+
+    var key = 'en6_lp_00';
+    var msgs = {1:'Fresh start — practice helps!',2:'Getting more confident.',3:'Solid!',4:'You’ve got this — great!'};
+    var svg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18.9 6.1 21l1.2-6.5L2.5 9.9l6.6-.9z"/></svg>';
+    var wrap = document.getElementById('stars'); var fb2 = document.getElementById('fb'); var stars = [];
+    for (var n = 1; n <= 4; n++) { var b = document.createElement('button'); b.className = 'sc-star'; b.type = 'button'; b.innerHTML = svg; b.setAttribute('aria-label', 'Level ' + n); wrap.appendChild(b); stars.push(b); }
+    function paint(l){ stars.forEach(function(s,i){ if(i<l) s.classList.add('on'); else s.classList.remove('on'); }); if(l>0){ fb2.textContent = msgs[l]; fb2.classList.add('show'); } else { fb2.textContent=''; fb2.classList.remove('show'); } }
+    var saved = 0; try { saved = parseInt(localStorage.getItem(key), 10) || 0; } catch(e) {} paint(saved);
+    stars.forEach(function(st,i){ st.addEventListener('click', function(){ var l=i+1; var last = stars[i].classList.contains('on') && (i===stars.length-1 || !stars[i+1].classList.contains('on')); if(last){ paint(0); try{ localStorage.removeItem(key); }catch(e){} } else { paint(l); try{ localStorage.setItem(key,l); }catch(e){} } }); });
+  })();
+</script>
+</body>
+</html>
