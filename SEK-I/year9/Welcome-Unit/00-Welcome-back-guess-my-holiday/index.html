@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome back: Guess My Holiday &amp; Seeing Each Other Again &mdash; English Klasse 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0f6d66; --teal-dark: #0a4d48; --teal-tint: #e3f2f0;
+    --coral: #ff7a45; --sand: #f6ecd8; --ink: #22302d; --ink-soft: #4c6058;
+    --line: rgba(34,48,45,0.14); --card: #ffffff; --sun: #ffc23d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', sans-serif; background: var(--sand); color: var(--ink);
+    line-height: 1.6; min-height: 100vh;
+  }
+  ::selection { background: var(--sun); color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 6px; }
+
+  .topbar { background: var(--teal); }
+  .back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    max-width: 1000px; margin: 0 auto; padding: 0.7rem 5vw;
+    color: #fff; text-decoration: none; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; letter-spacing: 0.06em;
+  }
+  .back:hover { text-decoration: underline; }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 5vw; }
+
+  .lp-hero { padding: 2rem 0 1.2rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; }
+  .badge {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem;
+    letter-spacing: 0.08em; padding: 0.28rem 0.65rem; border-radius: 999px;
+    background: var(--teal); color: #fff;
+  }
+  .badge.alt { background: var(--teal-tint); color: var(--teal-dark); border: 1.5px solid var(--teal); }
+  h1 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.5rem, 4.2vw, 2.2rem); line-height: 1.15; margin-bottom: 0.6rem; }
+  .goal { font-size: 1.02rem; color: var(--ink-soft); max-width: 62ch; }
+  .goal b { color: var(--teal); }
+
+  /* ============ DECK ============ */
+  .deck-wrap { padding: 1.2rem 0 3rem; }
+  .deck {
+    position: relative;
+    background: var(--teal-dark);
+    border-radius: 22px;
+    box-shadow: 0 10px 0 rgba(10,40,37,0.35);
+    min-height: 480px;
+    overflow: hidden;
+  }
+  .slide {
+    display: none;
+    padding: 2.4rem 2.4rem 2rem;
+    min-height: 480px;
+    color: #fff;
+    animation: fadeSlide 0.35s ease;
+  }
+  .slide.active { display: flex; flex-direction: column; }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .slide .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.7rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand); opacity: 0.85; margin-bottom: 0.6rem;
+  }
+  .slide h2 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.6rem); margin-bottom: 0.8rem; line-height: 1.1; }
+  .slide p.lead { font-size: 1.1rem; color: var(--sand); max-width: 60ch; margin-bottom: 0.6rem; }
+  .slide.on-sand { background: var(--sand); color: var(--ink); }
+  .slide.on-sand .eyebrow { color: var(--teal); }
+
+  /* how-to-play steps */
+  .steps { list-style: none; counter-reset: step; display: grid; gap: 0.9rem; margin-top: 1.2rem; }
+  .steps li { display: flex; gap: 1rem; align-items: flex-start; }
+  .steps li::before {
+    counter-increment: step; content: counter(step); flex-shrink: 0;
+    width: 36px; height: 36px; border-radius: 10px; background: var(--coral); color: #fff;
+    font-family: 'Fredoka', sans-serif; font-weight: 700; display: grid; place-items: center;
+  }
+  .steps .st-body { padding-top: 0.35rem; font-size: 1.02rem; }
+
+  /* sentence starter columns */
+  .starter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+  .starter-col { background: var(--teal); border-radius: 14px; padding: 1.1rem 1.2rem; }
+  .starter-col h3 { font-family: 'Fredoka', sans-serif; font-weight: 600; color: var(--coral); font-size: 1.05rem; margin-bottom: 0.7rem; }
+  .starter-col p { font-style: italic; font-size: 0.96rem; margin-bottom: 0.55rem; color: #fff; }
+  .on-sand .starter-col { background: var(--card); border: 2px solid var(--line); }
+  .on-sand .starter-col p { color: var(--ink); }
+  .on-sand .starter-col h3 { color: var(--teal); }
+
+  /* mystery photo slide */
+  .photo-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.4rem; margin-top: 1rem; flex: 1; }
+  @media (max-width: 700px) { .photo-layout { grid-template-columns: 1fr; } }
+  .photo-drop {
+    border: 3px dashed rgba(255,255,255,0.6); border-radius: 16px; background: rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.6rem;
+    min-height: 260px; cursor: pointer; padding: 1rem; text-align: center; position: relative; overflow: hidden;
+  }
+  .photo-drop:hover { border-color: var(--coral); }
+  .photo-drop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .photo-drop .hint { font-weight: 700; font-size: 1.05rem; }
+  .photo-drop .sub { font-size: 0.85rem; opacity: 0.8; }
+  .photo-drop input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .clear-photo {
+    margin-top: 0.6rem; align-self: flex-start; background: none; border: 2px solid rgba(255,255,255,0.5);
+    color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
+    padding: 0.4rem 0.8rem; border-radius: 8px; cursor: pointer;
+  }
+  .discuss-box { background: var(--teal); border-radius: 14px; padding: 1.1rem 1.2rem; }
+  .discuss-box h3 { font-family: 'Fredoka', sans-serif; color: var(--coral); font-size: 1.05rem; margin-bottom: 0.7rem; }
+  .discuss-box ul { list-style: none; display: grid; gap: 0.6rem; }
+  .discuss-box li { font-size: 0.98rem; }
+  .discuss-box li::before { content: "•  "; color: var(--coral); font-weight: 700; }
+
+  /* reveal slide */
+  .reveal-fields { display: grid; gap: 0.9rem; margin-top: 1rem; max-width: 560px; }
+  .reveal-field label {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--coral); margin-bottom: 0.3rem; font-weight: 700;
+  }
+  .reveal-field input {
+    width: 100%; font-family: 'Nunito', sans-serif; font-size: 1.05rem; font-weight: 700;
+    background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.35); border-radius: 10px;
+    padding: 0.6rem 0.8rem; color: #fff;
+  }
+  .reveal-field input::placeholder { color: rgba(255,255,255,0.55); font-weight: 500; }
+  .reveal-field input:focus { border-color: var(--coral); outline: none; }
+
+  /* find someone who table */
+  .fsw-table { width: 100%; border-collapse: collapse; margin-top: 1.1rem; font-size: 0.95rem; }
+  .fsw-table th { background: #5a5a5a; color: #fff; text-align: left; padding: 0.55rem 0.7rem; font-family: 'Fredoka', sans-serif; }
+  .fsw-table td { padding: 0.6rem 0.7rem; border: 1px solid var(--line); vertical-align: top; }
+  .fsw-table tr:nth-child(even) td { background: #ececec; }
+  .fsw-table td.blank { color: var(--ink-soft); }
+
+  /* nav controls */
+  .deck-nav {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1rem 1.4rem; background: rgba(0,0,0,0.15);
+  }
+  .deck-nav button {
+    font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.95rem;
+    background: var(--coral); color: #fff; border: none; border-radius: 10px;
+    padding: 0.6rem 1.1rem; cursor: pointer; box-shadow: 0 3px 0 #cc5c2c;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .deck-nav button:hover:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 #cc5c2c; }
+  .deck-nav button:disabled { opacity: 0.35; cursor: default; box-shadow: none; }
+  .deck-count { font-family: 'JetBrains Mono', monospace; color: #fff; font-size: 0.8rem; font-weight: 700; }
+  .deck-dots { display: flex; gap: 0.4rem; }
+  .deck-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+  .deck-dots span.on { background: var(--coral); }
+
+  .keys-hint { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-soft); margin-top: 0.8rem; }
+
+  footer { text-align: center; padding: 1.4rem 5vw 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-soft); font-weight: 700; }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../year9-kursuebersicht.html">&#8592; Back to the course overview</a>
+</div>
+
+<div class="wrap">
+  <header class="lp-hero">
+    <div class="badges">
+      <span class="badge">Welcome-Unit</span>
+      <span class="badge alt">Extra &middot; moderated</span>
+    </div>
+    <h1>Guess My Holiday &amp; Seeing Each Other Again</h1>
+    <p class="goal"><b>How to use this:</b> project this page in class and click through with the buttons or the arrow keys. Slide 4 lets you load each student's photo live; slide 5 has fields to fill in during the reveal.</p>
+  </header>
+
+  <div class="deck-wrap">
+    <div class="deck" id="deck">
+
+      <!-- 1: title -->
+      <section class="slide active">
+        <p class="eyebrow">Welcome back &middot; English &middot; Klasse 9</p>
+        <h2>Guess My Holiday</h2>
+        <p class="lead">A mystery photo guessing game, moderated by you, in English.</p>
+        <p class="lead">Before class, everyone secretly sent in one holiday photo. Nobody knows whose photo is whose yet, so let's find out together!</p>
+      </section>
+
+      <!-- 2: how to play -->
+      <section class="slide">
+        <p class="eyebrow">How to play</p>
+        <h2>Five simple steps</h2>
+        <ol class="steps">
+          <li><div class="st-body">One mystery photo appears on the screen, no names, just the picture.</div></li>
+          <li><div class="st-body">In small groups, guess together: Where was this taken? Who do you think it is?</div></li>
+          <li><div class="st-body">Use English guessing language, see the sentence starters on the next slide.</div></li>
+          <li><div class="st-body">The photographer reveals the destination and shares one highlight from the trip.</div></li>
+          <li><div class="st-body">Next photo, same again, until everyone's holiday has been guessed.</div></li>
+        </ol>
+      </section>
+
+      <!-- 3: sentence starters for guessing -->
+      <section class="slide">
+        <p class="eyebrow">Guessing language</p>
+        <h2>Sentence starters</h2>
+        <div class="starter-grid">
+          <div class="starter-col">
+            <h3>Making a guess</h3>
+            <p>&ldquo;I think this is &hellip;&rdquo;</p>
+            <p>&ldquo;It might be &hellip; because &hellip;&rdquo;</p>
+            <p>&ldquo;This looks like &hellip; to me.&rdquo;</p>
+            <p>&ldquo;My guess would be &hellip;&rdquo;</p>
+          </div>
+          <div class="starter-col">
+            <h3>Reasoning from clues</h3>
+            <p>&ldquo;Judging by the &hellip;, I&rsquo;d say &hellip;&rdquo;</p>
+            <p>&ldquo;The &hellip; suggests that &hellip;&rdquo;</p>
+            <p>&ldquo;You can tell from the &hellip; that &hellip;&rdquo;</p>
+          </div>
+          <div class="starter-col">
+            <h3>Asking for more</h3>
+            <p>&ldquo;Was it as &hellip; as it looks?&rdquo;</p>
+            <p>&ldquo;What was the best part?&rdquo;</p>
+            <p>&ldquo;Did anything go wrong?&rdquo;</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4: mystery photo (live upload) -->
+      <section class="slide">
+        <p class="eyebrow">Mystery photo #1</p>
+        <h2>Who does this belong to?</h2>
+        <div class="photo-layout">
+          <div>
+            <label class="photo-drop" id="photoDrop">
+              <span class="hint">📷 Click to load a holiday photo</span>
+              <span class="sub">(nothing is uploaded anywhere, it only shows on this screen)</span>
+              <input type="file" accept="image/*" id="photoInput">
+            </label>
+            <button class="clear-photo" id="clearPhoto" type="button">Remove photo</button>
+          </div>
+          <div class="discuss-box">
+            <h3>Discuss</h3>
+            <ul>
+              <li>Where do you think this is?</li>
+              <li>What season / time of day is it?</li>
+              <li>What was this person probably doing there?</li>
+              <li>Who in class do you think took this photo?</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5: reveal -->
+      <section class="slide">
+        <p class="eyebrow">Reveal</p>
+        <h2>The real story</h2>
+        <div class="reveal-fields">
+          <div class="reveal-field">
+            <label>Destination</label>
+            <input type="text" placeholder="Type the destination here…">
+          </div>
+          <div class="reveal-field">
+            <label>Photographer</label>
+            <input type="text" placeholder="Name…">
+          </div>
+          <div class="reveal-field">
+            <label>How I got there</label>
+            <input type="text" placeholder="…">
+          </div>
+          <div class="reveal-field">
+            <label>Best moment</label>
+            <input type="text" placeholder="…">
+          </div>
+          <div class="reveal-field">
+            <label>One English word I learned there</label>
+            <input type="text" placeholder="…">
+          </div>
+        </div>
+      </section>
+
+      <!-- 6: transition -->
+      <section class="slide on-sand" style="align-items:center; justify-content:center; text-align:center;">
+        <p class="eyebrow">Well guessed, everyone!</p>
+        <h2>Great work!</h2>
+        <p class="lead" style="margin: 0 auto;">Next up: let&rsquo;s catch up properly. Grab the &ldquo;Find someone who &hellip;&rdquo; sheet and find out what your classmates are looking forward to this year.</p>
+      </section>
+
+      <!-- 7: seeing each other again intro + starters -->
+      <section class="slide on-sand">
+        <p class="eyebrow">Welcome Unit &middot; worksheet</p>
+        <h2>Seeing each other again</h2>
+        <p class="lead">💬 Catch up with your classmates. You already know each other, so dig for the interesting stuff!</p>
+        <div class="starter-grid" style="margin-top: 1rem;">
+          <div class="starter-col">
+            <h3>Asking</h3>
+            <p>&ldquo;Did you &hellip;?&rdquo; &ldquo;What was it like?&rdquo; &ldquo;Why?&rdquo;</p>
+          </div>
+          <div class="starter-col">
+            <h3>Answering</h3>
+            <p>&ldquo;Yes, I did! It was &hellip;&rdquo; &ldquo;I think &hellip;&rdquo;</p>
+          </div>
+          <div class="starter-col">
+            <h3>Reacting</h3>
+            <p>&ldquo;That&rsquo;s cool!&rdquo; &ldquo;No way!&rdquo; &ldquo;Me too!&rdquo;</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8: find someone who table -->
+      <section class="slide on-sand">
+        <p class="eyebrow">Welcome Unit &middot; worksheet</p>
+        <h2>Find someone who &hellip;</h2>
+        <table class="fsw-table">
+          <tr><th>Find someone who &hellip;</th><th>name and some information</th></tr>
+          <tr><td>1. &hellip; did something outside their comfort zone these holidays. (What? How did it feel?)</td><td class="blank">&nbsp;</td></tr>
+          <tr><td>2. &hellip; has a goal for this school year they&rsquo;re genuinely excited about. (What is it? Why?)</td><td class="blank">&nbsp;</td></tr>
+          <tr><td>3. &hellip; discovered a new song, show or book these holidays they&rsquo;d recommend. (Title? Why?)</td><td class="blank">&nbsp;</td></tr>
+          <tr><td>4. &hellip; has an interesting story connected to English from the holidays. (What happened? Where?)</td><td class="blank">&nbsp;</td></tr>
+          <tr><td>5. &hellip; is especially looking forward to something this term. (What? Why?)</td><td class="blank">&nbsp;</td></tr>
+        </table>
+        <p class="lead" style="margin-top: 1.2rem;">✏️ What would <b>you</b> like to find out about your classmates or your teacher this year? Add at least one question of your own on your worksheet.</p>
+      </section>
+
+      <div class="deck-nav">
+        <button id="prevBtn" type="button">&#8592; Prev</button>
+        <div style="display:flex; align-items:center; gap:0.8rem;">
+          <div class="deck-dots" id="deckDots"></div>
+          <span class="deck-count" id="deckCount"></span>
+        </div>
+        <button id="nextBtn" type="button">Next &#8594;</button>
+      </div>
+    </div>
+    <p class="keys-hint">Tip: use the &#8592; and &#8594; arrow keys to move between slides.</p>
+  </div>
+
+  <footer>English &middot; Klasse 9 &middot; Schuljahr 2026/27 &middot; Welcome-Unit &middot; Guess My Holiday &amp; Seeing Each Other Again</footer>
+</div>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var prevBtn = document.getElementById('prevBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    var countEl = document.getElementById('deckCount');
+    var dotsWrap = document.getElementById('deckDots');
+    var current = 0;
+
+    slides.forEach(function (_, i) {
+      var dot = document.createElement('span');
+      dotsWrap.appendChild(dot);
+    });
+    var dots = Array.prototype.slice.call(dotsWrap.children);
+
+    function show(i) {
+      current = Math.max(0, Math.min(slides.length - 1, i));
+      slides.forEach(function (s, idx) { s.classList.toggle('active', idx === current); });
+      dots.forEach(function (d, idx) { d.classList.toggle('on', idx === current); });
+      countEl.textContent = (current + 1) + ' / ' + slides.length;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+    }
+
+    prevBtn.addEventListener('click', function () { show(current - 1); });
+    nextBtn.addEventListener('click', function () { show(current + 1); });
+    dots.forEach(function (d, idx) { d.addEventListener('click', function () { show(idx); }); d.style.cursor = 'pointer'; });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') show(current + 1);
+      if (e.key === 'ArrowLeft') show(current - 1);
+    });
+
+    show(0);
+
+    // ===== live mystery photo loader (local only, nothing is sent anywhere) =====
+    var photoInput = document.getElementById('photoInput');
+    var photoDrop = document.getElementById('photoDrop');
+    var clearPhoto = document.getElementById('clearPhoto');
+    var currentImg = null;
+
+    photoInput.addEventListener('change', function () {
+      var file = photoInput.files && photoInput.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        if (currentImg) currentImg.remove();
+        currentImg = document.createElement('img');
+        currentImg.src = e.target.result;
+        photoDrop.appendChild(currentImg);
+        photoDrop.querySelector('.hint').style.display = 'none';
+        photoDrop.querySelector('.sub').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    clearPhoto.addEventListener('click', function () {
+      if (currentImg) { currentImg.remove(); currentImg = null; }
+      photoDrop.querySelector('.hint').style.display = '';
+      photoDrop.querySelector('.sub').style.display = '';
+      photoInput.value = '';
+    });
+  })();
+</script>
+</body>
+</html>
