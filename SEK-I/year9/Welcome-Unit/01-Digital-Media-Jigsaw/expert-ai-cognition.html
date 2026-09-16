@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expert Group: AI and Your Thinking Brain &mdash; Digital Media Jigsaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --acc: #7c5cf0; --acc-edge: #5a39cf; --acc-tint: #ece7fe;
+    --ink: #1a2340; --ink-soft: #4f5b80; --line: rgba(26,35,64,0.14);
+    --card: #ffffff; --bg: #f4f1fe; --sun: #ffc23d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; }
+  ::selection { background: var(--sun); color: var(--ink); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 5vw; }
+
+  .topbar { background: var(--acc); }
+  .back { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 880px; margin: 0 auto; padding: 0.75rem 5vw; color: #fff; text-decoration: none; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; letter-spacing: 0.05em; }
+  .back:hover { text-decoration: underline; }
+
+  header.hero { padding: 2.2rem 0 1.4rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .badge { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; background: var(--acc); color: #fff; }
+  .badge.alt { background: var(--acc-tint); color: var(--acc-edge); border: 1.5px solid var(--acc); }
+  .flag { font-size: 1.6em; vertical-align: -0.15em; margin-right: 0.2em; }
+  h1 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.6rem, 4.4vw, 2.4rem); line-height: 1.15; margin-bottom: 0.7rem; }
+  .mission { font-size: 1.02rem; color: var(--ink-soft); max-width: 62ch; }
+  .mission b { color: var(--acc-edge); }
+
+  section { padding: 1.6rem 0; }
+  h2 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.35rem; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.55rem; }
+  h2 .num { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--acc); color: #fff; font-size: 0.95rem; box-shadow: 0 3px 0 var(--acc-edge); flex-shrink: 0; }
+
+  .facts { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .facts li { background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 0.85rem 1.05rem; display: flex; gap: 0.7rem; align-items: flex-start; }
+  .facts li::before { content: '\2713'; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--acc-tint); color: var(--acc-edge); font-weight: 700; font-size: 0.75rem; display: grid; place-items: center; margin-top: 0.1rem; }
+
+  .quotes { display: flex; flex-direction: column; gap: 0.9rem; }
+  blockquote { background: var(--acc); color: #fff; border-radius: 16px; padding: 1.2rem 1.4rem; position: relative; box-shadow: 0 6px 0 var(--acc-edge); }
+  blockquote p { font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 1.05rem; line-height: 1.45; margin-bottom: 0.5rem; }
+  blockquote cite { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; opacity: 0.88; font-style: normal; }
+
+  .sources { display: flex; flex-direction: column; gap: 0.7rem; }
+  .src { display: block; background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 0.9rem 1.1rem; text-decoration: none; color: var(--ink); transition: border-color 0.15s ease, transform 0.15s ease; }
+  .src:hover { border-color: var(--acc); transform: translateY(-2px); }
+  .src .src-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .src .src-title { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1rem; }
+  .src .src-pub { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--acc-edge); background: var(--acc-tint); padding: 0.15rem 0.5rem; border-radius: 6px; flex-shrink: 0; }
+  .src .src-note { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.3rem; }
+  .src .src-url { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-soft); margin-top: 0.35rem; word-break: break-all; }
+
+  .bridge { background: var(--acc-tint); border: 2px dashed var(--acc); border-radius: 18px; padding: 1.3rem 1.4rem; }
+  .bridge ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .bridge li { font-weight: 700; color: var(--acc-edge); }
+  .bridge li span { font-weight: 400; color: var(--ink); display: block; }
+
+  .notes textarea { width: 100%; min-height: 130px; resize: vertical; border: 2px solid var(--line); border-radius: 14px; padding: 0.9rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.98rem; color: var(--ink); background: var(--card); }
+  .notes textarea:focus { border-color: var(--acc); outline: none; }
+  .notes .hint { font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+  .save-state { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--acc-edge); margin-top: 0.4rem; opacity: 0; transition: opacity 0.3s ease; }
+  .save-state.show { opacity: 1; }
+
+  footer { padding: 2rem 0 3rem; }
+  .footlink { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--acc); color: #fff; text-decoration: none; font-family: 'Fredoka', sans-serif; font-weight: 600; padding: 0.75rem 1.3rem; border-radius: 14px; box-shadow: 0 5px 0 var(--acc-edge); }
+  .footlink:hover { transform: translateY(2px); box-shadow: 0 3px 0 var(--acc-edge); }
+</style>
+</head>
+<body>
+
+<div class="topbar"><a class="back" href="index.html">&#8592; Back to the jigsaw overview</a></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="badges">
+    <span class="badge">Expert group</span>
+    <span class="badge alt">10 minutes</span>
+    <span class="badge alt">Read &amp; discuss alone, then report back</span>
+  </div>
+  <h1><span class="flag">🧠</span>AI and Your Thinking Brain</h1>
+  <p class="mission">Letting AI write your essay feels easy &mdash; but does your brain lose something when it stops doing the hard work? Your mission: find out <b>what</b> scientists actually measured, and be ready to explain it to your home group without reading off the page.</p>
+</header>
+
+<section class="facts-section">
+  <h2><span class="num">1</span>Key facts</h2>
+  <ul class="facts">
+    <li>In 2025, researchers at MIT&rsquo;s Media Lab published a study called &ldquo;Your Brain on ChatGPT,&rdquo; looking at how using AI for writing affects the brain.</li>
+    <li>54 participants were split into three groups over four months: one used ChatGPT, one used a search engine, and one wrote essays using only their own brain.</li>
+    <li>Using EEG sensors (which measure brain waves), researchers found that ChatGPT users showed the weakest brain connectivity, and the &ldquo;brain-only&rdquo; group showed the strongest.</li>
+    <li>The more external help (AI) a person used, the more their brain activity &ldquo;scaled down&rdquo; &mdash; the researchers call this build-up of mental shortcuts &ldquo;cognitive debt.&rdquo;</li>
+    <li>ChatGPT users had more trouble remembering what they had just written and felt less personal ownership of their own essays.</li>
+    <li>Because AI answers sound fluent and confident, people often trust them even when they are shallow or wrong &mdash; researchers call this the &ldquo;illusion of fluency.&rdquo;</li>
+    <li>The study is small and was not yet peer-reviewed when published, so the researchers themselves say the results are preliminary, not final proof.</li>
+    <li>Later 2026 research, with 666 participants, also linked heavier AI use to lower self-rated critical thinking &mdash; but scientists stress this research area is still new.</li>
+  </ul>
+</section>
+
+<section class="quotes">
+  <h2><span class="num">2</span>In their own words</h2>
+  <blockquote>
+    <p>&ldquo;Brain connectivity systematically scaled down with the amount of external support.&rdquo;</p>
+    <cite>&mdash; MIT Media Lab researchers, &ldquo;Your Brain on ChatGPT&rdquo;</cite>
+  </blockquote>
+  <blockquote>
+    <p>&ldquo;It has not yet been peer-reviewed, thus all the conclusions are to be treated with caution and as preliminary.&rdquo;</p>
+    <cite>&mdash; MIT Media Lab researchers, on their own study&rsquo;s limits</cite>
+  </blockquote>
+</section>
+
+<section class="sources">
+  <h2><span class="num">3</span>Go deeper: your sources</h2>
+  <a class="src" href="https://www.media.mit.edu/projects/your-brain-on-chatgpt/overview/" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Your Brain on ChatGPT &mdash; project overview</span><span class="src-pub">MIT Media Lab</span></div>
+    <p class="src-note">The original research team&rsquo;s own summary &mdash; the primary source, explained clearly.</p>
+    <p class="src-url">media.mit.edu/projects/your-brain-on-chatgpt/overview</p>
+  </a>
+  <a class="src" href="https://theconversation.com/mit-researchers-say-using-chatgpt-can-rot-your-brain-the-truth-is-a-little-more-complicated-259450" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">MIT researchers say using ChatGPT can rot your brain. The truth is a little more complicated</span><span class="src-pub">The Conversation</span></div>
+    <p class="src-note">Written by academics for a general audience &mdash; explains the study fairly, including its limits.</p>
+    <p class="src-url">theconversation.com/mit-researchers-say-using-chatgpt-&hellip;</p>
+  </a>
+  <a class="src" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12723506/" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Your brain on ChatGPT (full research paper)</span><span class="src-pub">PMC / National Institutes of Health</span></div>
+    <p class="src-note">The full scientific paper &mdash; for anyone who wants to check the real data. Advanced reading.</p>
+    <p class="src-url">pmc.ncbi.nlm.nih.gov/articles/PMC12723506</p>
+  </a>
+</section>
+
+<section class="bridge">
+  <h2><span class="num">4</span>Bridge questions &mdash; take these to your home group</h2>
+  <ol>
+    <li>Students using AI felt LESS ownership over their own writing.<span>When have you felt proud of something you made yourself? Does AI help change that feeling?</span></li>
+    <li>There is a difference between AI as a &ldquo;shortcut&rdquo; (it thinks for you) and AI as a &ldquo;thinking partner&rdquo; (it helps you think).<span>Can you give an example of each for schoolwork?</span></li>
+    <li>The researchers themselves say &ldquo;treat with caution&rdquo; &mdash; the science is not finished yet.<span>Does that change how seriously we should take this topic, or not?</span></li>
+  </ol>
+</section>
+
+<section class="notes">
+  <h2><span class="num">5</span>Your expert notes</h2>
+  <p class="hint">Write 3 facts + 1 question you want to bring into your home group. Saved automatically on this device.</p>
+  <textarea id="notes" placeholder="1. ...&#10;2. ...&#10;3. ...&#10;My question for the group: ..."></textarea>
+  <p class="save-state" id="saveState">Saved &#10003;</p>
+</section>
+
+</div>
+
+<footer class="wrap">
+  <a class="footlink" href="index.html">&#8592; Back to the jigsaw overview</a>
+</footer>
+
+<script>
+  var ta = document.getElementById('notes');
+  var state = document.getElementById('saveState');
+  var key = 'en9_jigsaw_notes_ai_cognition';
+  try { ta.value = localStorage.getItem(key) || ''; } catch (e) {}
+  var timer;
+  ta.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      try { localStorage.setItem(key, ta.value); } catch (e) {}
+      state.classList.add('show');
+      setTimeout(function () { state.classList.remove('show'); }, 1200);
+    }, 500);
+  });
+</script>
+
+</body>
+</html>

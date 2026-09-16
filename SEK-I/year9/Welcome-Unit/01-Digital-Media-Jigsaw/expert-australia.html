@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expert Group: Social Media Law in Australia &mdash; Digital Media Jigsaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --acc: #0d9488; --acc-edge: #0a6e64; --acc-tint: #dff5f2;
+    --ink: #1a2340; --ink-soft: #4f5b80; --line: rgba(26,35,64,0.14);
+    --card: #ffffff; --bg: #f0fbf9; --sun: #ffc23d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; }
+  ::selection { background: var(--sun); color: var(--ink); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 5vw; }
+
+  .topbar { background: var(--acc); }
+  .back { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 880px; margin: 0 auto; padding: 0.75rem 5vw; color: #fff; text-decoration: none; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; letter-spacing: 0.05em; }
+  .back:hover { text-decoration: underline; }
+
+  header.hero { padding: 2.2rem 0 1.4rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .badge { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; background: var(--acc); color: #fff; }
+  .badge.alt { background: var(--acc-tint); color: var(--acc-edge); border: 1.5px solid var(--acc); }
+  .flag { font-size: 1.6em; vertical-align: -0.15em; margin-right: 0.2em; }
+  h1 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.6rem, 4.4vw, 2.4rem); line-height: 1.15; margin-bottom: 0.7rem; }
+  .mission { font-size: 1.02rem; color: var(--ink-soft); max-width: 62ch; }
+  .mission b { color: var(--acc-edge); }
+
+  section { padding: 1.6rem 0; }
+  h2 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.35rem; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.55rem; }
+  h2 .num { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--acc); color: #fff; font-size: 0.95rem; box-shadow: 0 3px 0 var(--acc-edge); flex-shrink: 0; }
+
+  .facts { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .facts li { background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 0.85rem 1.05rem; display: flex; gap: 0.7rem; align-items: flex-start; }
+  .facts li::before { content: '\2713'; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--acc-tint); color: var(--acc-edge); font-weight: 700; font-size: 0.75rem; display: grid; place-items: center; margin-top: 0.1rem; }
+
+  .quotes { display: flex; flex-direction: column; gap: 0.9rem; }
+  blockquote { background: var(--acc); color: #fff; border-radius: 16px; padding: 1.2rem 1.4rem; position: relative; box-shadow: 0 6px 0 var(--acc-edge); }
+  blockquote p { font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 1.05rem; line-height: 1.45; margin-bottom: 0.5rem; }
+  blockquote cite { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; opacity: 0.88; font-style: normal; }
+
+  .sources { display: flex; flex-direction: column; gap: 0.7rem; }
+  .src { display: block; background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 0.9rem 1.1rem; text-decoration: none; color: var(--ink); transition: border-color 0.15s ease, transform 0.15s ease; }
+  .src:hover { border-color: var(--acc); transform: translateY(-2px); }
+  .src .src-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .src .src-title { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1rem; }
+  .src .src-pub { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--acc-edge); background: var(--acc-tint); padding: 0.15rem 0.5rem; border-radius: 6px; flex-shrink: 0; }
+  .src .src-note { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.3rem; }
+  .src .src-url { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-soft); margin-top: 0.35rem; word-break: break-all; }
+
+  .bridge { background: var(--acc-tint); border: 2px dashed var(--acc); border-radius: 18px; padding: 1.3rem 1.4rem; }
+  .bridge ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .bridge li { font-weight: 700; color: var(--acc-edge); }
+  .bridge li span { font-weight: 400; color: var(--ink); display: block; }
+
+  .notes textarea { width: 100%; min-height: 130px; resize: vertical; border: 2px solid var(--line); border-radius: 14px; padding: 0.9rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.98rem; color: var(--ink); background: var(--card); }
+  .notes textarea:focus { border-color: var(--acc); outline: none; }
+  .notes .hint { font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+  .save-state { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--acc-edge); margin-top: 0.4rem; opacity: 0; transition: opacity 0.3s ease; }
+  .save-state.show { opacity: 1; }
+
+  footer { padding: 2rem 0 3rem; }
+  .footlink { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--acc); color: #fff; text-decoration: none; font-family: 'Fredoka', sans-serif; font-weight: 600; padding: 0.75rem 1.3rem; border-radius: 14px; box-shadow: 0 5px 0 var(--acc-edge); }
+  .footlink:hover { transform: translateY(2px); box-shadow: 0 3px 0 var(--acc-edge); }
+</style>
+</head>
+<body>
+
+<div class="topbar"><a class="back" href="index.html">&#8592; Back to the jigsaw overview</a></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="badges">
+    <span class="badge">Expert group</span>
+    <span class="badge alt">10 minutes</span>
+    <span class="badge alt">Read &amp; discuss alone, then report back</span>
+  </div>
+  <h1><span class="flag">🇦🇺</span>Social Media Law in Australia</h1>
+  <p class="mission">Australia was the first country in the world to ban under-16s from social media &mdash; by law. Your mission: find out <b>how</b> the ban actually works, <b>whether</b> it is working, and be ready to explain it to your home group without reading off the page.</p>
+</header>
+
+<section class="facts-section">
+  <h2><span class="num">1</span>Key facts</h2>
+  <ul class="facts">
+    <li>Since 10 December 2025, Australia has had the world&rsquo;s first national law banning under-16s from having accounts on major social media platforms.</li>
+    <li>Covered platforms include Instagram, TikTok, Snapchat, Facebook, X, YouTube, Reddit, Threads, Kick and Twitch.</li>
+    <li>The law makes the <b>platforms</b> responsible, not the kids or their parents &mdash; companies must take &ldquo;reasonable steps&rdquo; to stop under-16 accounts, e.g. facial age-estimation, ID upload or linked bank details.</li>
+    <li>Companies that do not comply can be fined up to A$49.5 million (about US$33 million) &mdash; the government has also announced plans to double that maximum to A$99 million. There is no penalty for the young people themselves.</li>
+    <li>By mid-January 2026, more than 4.7 million accounts believed to belong to under-16s had been deactivated, removed or restricted.</li>
+    <li>A regulator study found that more than 8 in 10 young teens are still finding ways to use social media &mdash; for example with VPNs, a fake birth date, or less-regulated apps like Lemon8.</li>
+    <li>Some teens describe positive effects: 14-year-old Amy told the BBC she feels &ldquo;free&rdquo; without the pressure of keeping up a Snapchat presence.</li>
+    <li>Other countries, including the UK and several in the EU, are watching closely to see whether they should introduce a similar law.</li>
+  </ul>
+</section>
+
+<section class="quotes">
+  <h2><span class="num">2</span>In their own words</h2>
+  <blockquote>
+    <p>&ldquo;I feel free.&rdquo;</p>
+    <cite>&mdash; Amy, 14, on life without Snapchat, quoted by the BBC (via CNBC)</cite>
+  </blockquote>
+  <blockquote>
+    <p>&ldquo;More than eight in ten young Australian teens and preteens are continuing to use social media platforms despite the government&rsquo;s prohibition for children under 16.&rdquo;</p>
+    <cite>&mdash; findings reported by Australia&rsquo;s internet regulator, cited by Al Jazeera</cite>
+  </blockquote>
+</section>
+
+<section class="sources">
+  <h2><span class="num">3</span>Go deeper: your sources</h2>
+  <a class="src" href="https://www.unicef.org.au/unicef-youth/staying-safe-online/social-media-ban-explainer" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Social media ban in Australia | A simple guide</span><span class="src-pub">UNICEF Australia</span></div>
+    <p class="src-note">Written for young people, in plain English &mdash; the easiest place to start.</p>
+    <p class="src-url">unicef.org.au/unicef-youth/staying-safe-online/social-media-ban-explainer</p>
+  </a>
+  <a class="src" href="https://www.esafety.gov.au/about-us/industry-regulation/social-media-age-restrictions" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Social media age restrictions</span><span class="src-pub">eSafety Commissioner (Australian Government)</span></div>
+    <p class="src-note">The official government regulator&rsquo;s own page &mdash; the primary source for how the law works.</p>
+    <p class="src-url">esafety.gov.au/about-us/industry-regulation/social-media-age-restrictions</p>
+  </a>
+  <a class="src" href="https://www.cnbc.com/2026/01/15/australias-social-media-ban-for-teens-how-its-going.html" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Australia&rsquo;s social media ban for teens, how it&rsquo;s going</span><span class="src-pub">CNBC</span></div>
+    <p class="src-note">A January 2026 progress check &mdash; what has worked, what hasn&rsquo;t, and how teens really feel.</p>
+    <p class="src-url">cnbc.com/2026/01/15/australias-social-media-ban-for-teens-how-its-going.html</p>
+  </a>
+</section>
+
+<section class="bridge">
+  <h2><span class="num">4</span>Bridge questions &mdash; take these to your home group</h2>
+  <ol>
+    <li>Australia makes the tech companies responsible, not the kids.<span>Who should be responsible for healthy device use in OUR class &mdash; the school, the app, or us?</span></li>
+    <li>More than 8 in 10 teens found workarounds.<span>Do you think a strict rule (like a ban) or a shared class agreement works better to change behaviour?</span></li>
+    <li>Amy said she feels &ldquo;free&rdquo; without social media pressure.<span>What would make YOU feel less pressure from your phone or tablet?</span></li>
+  </ol>
+</section>
+
+<section class="notes">
+  <h2><span class="num">5</span>Your expert notes</h2>
+  <p class="hint">Write 3 facts + 1 question you want to bring into your home group. Saved automatically on this device.</p>
+  <textarea id="notes" placeholder="1. ...&#10;2. ...&#10;3. ...&#10;My question for the group: ..."></textarea>
+  <p class="save-state" id="saveState">Saved &#10003;</p>
+</section>
+
+</div>
+
+<footer class="wrap">
+  <a class="footlink" href="index.html">&#8592; Back to the jigsaw overview</a>
+</footer>
+
+<script>
+  var ta = document.getElementById('notes');
+  var state = document.getElementById('saveState');
+  var key = 'en9_jigsaw_notes_australia';
+  try { ta.value = localStorage.getItem(key) || ''; } catch (e) {}
+  var timer;
+  ta.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      try { localStorage.setItem(key, ta.value); } catch (e) {}
+      state.classList.add('show');
+      setTimeout(function () { state.classList.remove('show'); }, 1200);
+    }, 500);
+  });
+</script>
+
+</body>
+</html>

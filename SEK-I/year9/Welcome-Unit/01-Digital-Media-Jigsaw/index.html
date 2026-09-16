@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Media Jigsaw: Going Digital, Staying Healthy &mdash; English Grade 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef2fb; --ink: #1a2340; --ink-soft: #4f5b80; --line: rgba(26,35,64,0.14);
+    --card: #ffffff; --primary: #3b6fd6; --primary-edge: #2851ab; --primary-tint: #e6edfb;
+    --sun: #ffc23d;
+    --c-be: #3b6fd6; --c-be-edge: #2851ab;
+    --c-au: #0d9488; --c-au-edge: #0a6e64;
+    --c-dk: #df3a53; --c-dk-edge: #b52539;
+    --c-env: #2e9e4f; --c-env-edge: #1e7538;
+    --c-cog: #7c5cf0; --c-cog-edge: #5a39cf;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.62; }
+  ::selection { background: var(--sun); color: var(--ink); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 5vw; }
+
+  .topbar { background: var(--primary); }
+  .back { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 1080px; margin: 0 auto; padding: 0.75rem 5vw; color: #fff; text-decoration: none; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; letter-spacing: 0.05em; }
+  .back:hover { text-decoration: underline; }
+
+  header.hero { padding: 2.6rem 0 1.8rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
+  .badge { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.32rem 0.75rem; border-radius: 999px; background: var(--primary); color: #fff; }
+  .badge.alt { background: var(--primary-tint); color: var(--primary-edge); border: 1.5px solid var(--primary); }
+  h1 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.8rem, 5vw, 2.9rem); line-height: 1.12; margin-bottom: 0.8rem; max-width: 18ch; }
+  h1 .u { color: var(--primary); }
+  .mission { font-size: 1.08rem; color: var(--ink-soft); max-width: 66ch; font-weight: 600; }
+  .mission b { color: var(--ink); }
+
+  section { padding: 2.2rem 0; }
+  h2 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 0.4rem; }
+  .sub { color: var(--ink-soft); font-weight: 700; margin-bottom: 1.6rem; font-size: 0.98rem; }
+
+  /* ===== WHY ===== */
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .why-card { background: var(--card); border: 2px solid var(--line); border-radius: 16px; padding: 1.2rem 1.3rem; box-shadow: 0 4px 0 var(--line); }
+  .why-card .n { font-family: 'Fredoka', sans-serif; font-weight: 700; color: var(--primary); font-size: 1.3rem; margin-bottom: 0.4rem; }
+  .why-card h3 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.35rem; }
+  .why-card p { font-size: 0.92rem; color: var(--ink-soft); }
+
+  /* ===== PUZZLE DIAGRAM ===== */
+  .puzzle { display: flex; align-items: stretch; gap: 0.8rem; overflow-x: auto; padding-bottom: 0.4rem; }
+  .phase { flex: 1 1 220px; min-width: 220px; background: var(--card); border: 2px solid var(--line); border-radius: 18px; padding: 1.1rem 1.1rem 1.3rem; }
+  .phase-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.7rem; }
+  .phase-no { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); }
+  .phase-time { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.66rem; background: var(--primary-tint); color: var(--primary-edge); padding: 0.15rem 0.5rem; border-radius: 6px; }
+  .phase h3 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.08rem; margin-bottom: 0.8rem; }
+  .cluster-grid { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.9rem; }
+  .cluster { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; background: #f2f4fa; border-radius: 8px; padding: 5px; }
+  .cluster span { width: 11px; height: 11px; border-radius: 3px; display: block; }
+  .phase-desc { font-size: 0.86rem; color: var(--ink-soft); }
+  .arrow-col { display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: var(--primary); flex: 0 0 auto; }
+  @media (max-width: 760px) { .puzzle { flex-direction: column; } .arrow-col { transform: rotate(90deg); padding: 0.2rem 0; } }
+
+  /* ===== TOPIC CARDS ===== */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.1rem; }
+  .topic-card { display: block; text-decoration: none; color: #fff; background: var(--tc); border-radius: 20px; padding: 1.4rem 1.3rem 1.3rem; box-shadow: 0 7px 0 var(--tc-edge); transition: transform 0.14s ease, box-shadow 0.14s ease; position: relative; }
+  .topic-card:hover { transform: translateY(4px); box-shadow: 0 3px 0 var(--tc-edge); }
+  .topic-card .flag { font-size: 2.1rem; display: block; margin-bottom: 0.6rem; }
+  .topic-card .country { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; margin-bottom: 0.35rem; }
+  .topic-card h3 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.22rem; line-height: 1.2; margin-bottom: 0.55rem; }
+  .topic-card p { font-size: 0.9rem; opacity: 0.94; margin-bottom: 0.9rem; }
+  .topic-card .go { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.18); padding: 0.35rem 0.7rem; border-radius: 999px; }
+  .tc-be { --tc: var(--c-be); --tc-edge: var(--c-be-edge); }
+  .tc-au { --tc: var(--c-au); --tc-edge: var(--c-au-edge); }
+  .tc-dk { --tc: var(--c-dk); --tc-edge: var(--c-dk-edge); }
+  .tc-env { --tc: var(--c-env); --tc-edge: var(--c-env-edge); }
+  .tc-cog { --tc: var(--c-cog); --tc-edge: var(--c-cog-edge); }
+
+  /* ===== TASK STEPS ===== */
+  .steps { display: flex; flex-direction: column; gap: 1rem; }
+  .step { background: var(--card); border: 2px solid var(--line); border-left: 6px solid var(--primary); border-radius: 14px; padding: 1.1rem 1.3rem; }
+  .step .step-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+  .step .step-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.12rem; }
+  .step .tchip { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem; background: var(--primary-tint); color: var(--primary-edge); padding: 0.18rem 0.55rem; border-radius: 6px; }
+  .step ol, .step ul { padding-left: 1.25rem; font-size: 0.95rem; color: var(--ink-soft); display: flex; flex-direction: column; gap: 0.3rem; }
+  .step ol li::marker, .step ul li::marker { color: var(--primary); font-weight: 700; }
+
+  /* ===== WORKSHEET ===== */
+  .worksheet { background: var(--card); border: 2px solid var(--line); border-radius: 20px; padding: 1.5rem; }
+  .ws-row { margin-bottom: 1.3rem; }
+  .ws-row:last-child { margin-bottom: 0; }
+  .ws-row h4 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem; }
+  .ws-row .ws-hint { font-size: 0.86rem; color: var(--ink-soft); margin-bottom: 0.6rem; }
+  .ws-lines { display: flex; flex-direction: column; gap: 0.5rem; }
+  .ws-line { display: flex; align-items: center; gap: 0.6rem; }
+  .ws-line .ws-no { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--primary); font-size: 0.85rem; width: 1.2rem; flex-shrink: 0; }
+  .ws-line input[type=text] { flex: 1; border: 2px solid var(--line); border-radius: 10px; padding: 0.55rem 0.8rem; font-family: 'Nunito', sans-serif; font-size: 0.96rem; color: var(--ink); background: #fbfcff; }
+  .ws-line input[type=text]:focus { border-color: var(--primary); outline: none; }
+  .ws-save { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--primary-edge); margin-top: 0.7rem; opacity: 0; transition: opacity 0.3s ease; }
+  .ws-save.show { opacity: 1; }
+  .ws-reset { margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.05em; background: none; border: 1.5px solid var(--line); color: var(--ink-soft); padding: 0.4rem 0.8rem; border-radius: 8px; cursor: pointer; }
+  .ws-reset:hover { border-color: var(--primary); color: var(--primary-edge); }
+
+  footer { padding: 1rem 0 3rem; }
+  .footlink { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: #fff; text-decoration: none; font-family: 'Fredoka', sans-serif; font-weight: 600; padding: 0.75rem 1.3rem; border-radius: 14px; box-shadow: 0 5px 0 var(--primary-edge); }
+  .footlink:hover { transform: translateY(2px); box-shadow: 0 3px 0 var(--primary-edge); }
+</style>
+</head>
+<body>
+
+<div class="topbar"><a class="back" href="../../year9-kursuebersicht.html">&#8592; Back to the course overview</a></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="badges">
+    <span class="badge">EXTRA &middot; Welcome-Unit</span>
+    <span class="badge alt">Group jigsaw</span>
+    <span class="badge alt">10 + 10 + 5&times;5 minutes</span>
+  </div>
+  <h1>Going Digital, <span class="u">Staying Healthy</span></h1>
+  <p class="mission">We are becoming a <b>tablet class</b>. Before we start, let&rsquo;s look at how other countries and researchers are handling phones, social media and AI &mdash; then decide, together, <b>our own goals and rules</b> for using our tablets and our own devices respectfully and in a healthy way.</p>
+</header>
+
+<!-- ===== WHY ===== -->
+<section>
+  <h2>Why this jigsaw?</h2>
+  <p class="sub">Four short reasons</p>
+  <div class="why-grid">
+    <div class="why-card"><div class="n">1</div><h3>Real evidence, not just opinions</h3><p>Belgium, Australia and Denmark have all made real decisions about phones, social media and screens &mdash; based on real research.</p></div>
+    <div class="why-card"><div class="n">2</div><h3>English in action</h3><p>Every source you read and every source you cite in your presentation is genuine, current, English-language material.</p></div>
+    <div class="why-card"><div class="n">3</div><h3>Your voice counts</h3><p>You are not just reading about other people&rsquo;s rules &mdash; you are writing your own, for our tablet class.</p></div>
+    <div class="why-card"><div class="n">4</div><h3>One puzzle, five pieces</h3><p>No single group has the full picture. You need all five expert topics to make a good decision &mdash; that&rsquo;s the point of a jigsaw.</p></div>
+  </div>
+</section>
+
+<!-- ===== HOW THE JIGSAW WORKS ===== -->
+<section>
+  <h2>How the jigsaw works</h2>
+  <p class="sub">Three phases &middot; watch the groups change shape</p>
+  <div class="puzzle">
+    <div class="phase">
+      <div class="phase-top"><span class="phase-no">Phase 1</span><span class="phase-time">10 min</span></div>
+      <h3>Expert groups</h3>
+      <div class="cluster-grid">
+        <div class="cluster"><span style="background:var(--c-be)"></span><span style="background:var(--c-be)"></span><span style="background:var(--c-be)"></span><span style="background:var(--c-be)"></span></div>
+        <div class="cluster"><span style="background:var(--c-au)"></span><span style="background:var(--c-au)"></span><span style="background:var(--c-au)"></span><span style="background:var(--c-au)"></span></div>
+        <div class="cluster"><span style="background:var(--c-dk)"></span><span style="background:var(--c-dk)"></span><span style="background:var(--c-dk)"></span><span style="background:var(--c-dk)"></span></div>
+        <div class="cluster"><span style="background:var(--c-env)"></span><span style="background:var(--c-env)"></span><span style="background:var(--c-env)"></span><span style="background:var(--c-env)"></span></div>
+        <div class="cluster"><span style="background:var(--c-cog)"></span><span style="background:var(--c-cog)"></span><span style="background:var(--c-cog)"></span><span style="background:var(--c-cog)"></span></div>
+      </div>
+      <p class="phase-desc">Same colour = same topic. Everyone with your colour meets up, reads the same material and becomes the class expert on it.</p>
+    </div>
+    <div class="arrow-col">&#8594;</div>
+    <div class="phase">
+      <div class="phase-top"><span class="phase-no">Phase 2</span><span class="phase-time">10 min</span></div>
+      <h3>Home groups</h3>
+      <div class="cluster-grid">
+        <div class="cluster"><span style="background:var(--c-be)"></span><span style="background:var(--c-au)"></span><span style="background:var(--c-dk)"></span><span style="background:var(--c-env)"></span></div>
+        <div class="cluster"><span style="background:var(--c-cog)"></span><span style="background:var(--c-be)"></span><span style="background:var(--c-au)"></span><span style="background:var(--c-dk)"></span></div>
+        <div class="cluster"><span style="background:var(--c-env)"></span><span style="background:var(--c-cog)"></span><span style="background:var(--c-be)"></span><span style="background:var(--c-au)"></span></div>
+        <div class="cluster"><span style="background:var(--c-dk)"></span><span style="background:var(--c-env)"></span><span style="background:var(--c-cog)"></span><span style="background:var(--c-be)"></span></div>
+      </div>
+      <p class="phase-desc">Now every colour sits together in one group. Each of you explains your topic &mdash; then together you draft goals &amp; rules for our tablet class.</p>
+    </div>
+    <div class="arrow-col">&#8594;</div>
+    <div class="phase">
+      <div class="phase-top"><span class="phase-no">Phase 3</span><span class="phase-time">5 min &times; group</span></div>
+      <h3>Presentations</h3>
+      <div class="cluster-grid">
+        <div class="cluster"><span style="background:var(--c-be)"></span><span style="background:var(--c-au)"></span><span style="background:var(--c-dk)"></span><span style="background:var(--c-env)"></span></div>
+        <div class="cluster"><span style="background:var(--c-cog)"></span><span style="background:var(--c-be)"></span><span style="background:var(--c-au)"></span><span style="background:var(--c-dk)"></span></div>
+      </div>
+      <p class="phase-desc">Each home group presents its goals and rules to the whole class &mdash; with at least one fact from each expert topic.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOPICS ===== -->
+<section id="topics">
+  <h2>Your five expert topics</h2>
+  <p class="sub">Tap your topic &mdash; the full English material is one click away</p>
+  <div class="topics-grid">
+    <a class="topic-card tc-be" href="expert-belgium.html">
+      <span class="flag">🇧🇪</span>
+      <div class="country">Belgium</div>
+      <h3>Phone Rules by Law</h3>
+      <p>A new national ban on phones in schools &mdash; three regions, three versions, one direction.</p>
+      <span class="go">Open expert material &rarr;</span>
+    </a>
+    <a class="topic-card tc-au" href="expert-australia.html">
+      <span class="flag">🇦🇺</span>
+      <div class="country">Australia</div>
+      <h3>Social Media Law</h3>
+      <p>The world&rsquo;s first law banning under-16s from social media &mdash; and how it&rsquo;s really going.</p>
+      <span class="go">Open expert material &rarr;</span>
+    </a>
+    <a class="topic-card tc-dk" href="expert-denmark.html">
+      <span class="flag">🇩🇰</span>
+      <div class="country">Denmark</div>
+      <h3>Tablet Retreat</h3>
+      <p>A tablet pioneer is pulling back &mdash; phones locked away, paper books coming back.</p>
+      <span class="go">Open expert material &rarr;</span>
+    </a>
+    <a class="topic-card tc-env" href="expert-ai-environment.html">
+      <span class="flag">🌍</span>
+      <div class="country">Worldwide</div>
+      <h3>AI&rsquo;s Environmental Footprint</h3>
+      <p>Every AI answer, image and video costs real electricity and real water. How much?</p>
+      <span class="go">Open expert material &rarr;</span>
+    </a>
+    <a class="topic-card tc-cog" href="expert-ai-cognition.html">
+      <span class="flag">🧠</span>
+      <div class="country">Worldwide</div>
+      <h3>AI and Your Thinking Brain</h3>
+      <p>An MIT brain-scan study asks: does letting AI think for you change how your brain works?</p>
+      <span class="go">Open expert material &rarr;</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== TASK STEPS ===== -->
+<section>
+  <h2>Your tasks, step by step</h2>
+  <p class="sub">Same three phases as the diagram above</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-head"><h3>1&#41; Expert group</h3><span class="tchip">10 MIN</span></div>
+      <ol>
+        <li>Open your topic card above &mdash; everyone with the same topic meets up.</li>
+        <li>Read the key facts and quotes together. Open at least one linked source.</li>
+        <li>Fill in <i>&ldquo;Your expert notes&rdquo;</i> on the page: 3 facts + 1 question.</li>
+        <li>Agree as a group: how will each of you explain this in under 60 seconds?</li>
+      </ol>
+    </div>
+    <div class="step">
+      <div class="step-head"><h3>2&#41; Home group</h3><span class="tchip">10 MIN</span></div>
+      <ol>
+        <li>Form a new group with one expert from each of the five topics.</li>
+        <li>Each expert explains their topic in under 60 seconds &mdash; the others listen and can ask one question.</li>
+        <li>Together, fill in the worksheet below: your goals and your rules.</li>
+        <li>Choose who presents which part in Phase 3.</li>
+      </ol>
+    </div>
+    <div class="step">
+      <div class="step-head"><h3>3&#41; Presentation</h3><span class="tchip">5 MIN &times; GROUP</span></div>
+      <ul>
+        <li>Name at least one fact from <b>each</b> of the five expert topics.</li>
+        <li>Present your group&rsquo;s top 2&ndash;3 goals and top 2&ndash;3 rules.</li>
+        <li>Explain <i>why</i> &mdash; connect back to what your experts found out.</li>
+        <li>Listen to the other groups: which ideas do we want to combine into our real class rules?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORKSHEET ===== -->
+<section id="worksheet">
+  <h2>Our goals &amp; rules worksheet</h2>
+  <p class="sub">Fill this in together during Phase 2 &mdash; use it in your Phase 3 presentation</p>
+  <div class="worksheet">
+    <div class="ws-row">
+      <h4>Our goals for becoming a tablet class</h4>
+      <p class="ws-hint">What do we want to achieve or get better at once we all have tablets?</p>
+      <div class="ws-lines" id="goals">
+        <div class="ws-line"><span class="ws-no">1</span><input type="text" data-key="goal1" placeholder="e.g. Use the tablet to learn more, not to get distracted more."></div>
+        <div class="ws-line"><span class="ws-no">2</span><input type="text" data-key="goal2" placeholder="e.g. ..."></div>
+        <div class="ws-line"><span class="ws-no">3</span><input type="text" data-key="goal3" placeholder="e.g. ..."></div>
+      </div>
+    </div>
+    <div class="ws-row">
+      <h4>Our rules for respectful &amp; healthy device use</h4>
+      <p class="ws-hint">Tablet <i>and</i> our own phones &mdash; in class and beyond.</p>
+      <div class="ws-lines" id="rules">
+        <div class="ws-line"><span class="ws-no">1</span><input type="text" data-key="rule1" placeholder="e.g. Screens down when someone is talking to us."></div>
+        <div class="ws-line"><span class="ws-no">2</span><input type="text" data-key="rule2" placeholder="e.g. ..."></div>
+        <div class="ws-line"><span class="ws-no">3</span><input type="text" data-key="rule3" placeholder="e.g. ..."></div>
+      </div>
+    </div>
+    <div class="ws-row">
+      <h4>One idea we took from each expert topic</h4>
+      <p class="ws-hint">Proof that you used all five puzzle pieces.</p>
+      <div class="ws-lines" id="expertidea">
+        <div class="ws-line"><span class="ws-no">🇧🇪</span><input type="text" data-key="idea-be" placeholder="Belgium: ..."></div>
+        <div class="ws-line"><span class="ws-no">🇦🇺</span><input type="text" data-key="idea-au" placeholder="Australia: ..."></div>
+        <div class="ws-line"><span class="ws-no">🇩🇰</span><input type="text" data-key="idea-dk" placeholder="Denmark: ..."></div>
+        <div class="ws-line"><span class="ws-no">🌍</span><input type="text" data-key="idea-env" placeholder="AI &amp; environment: ..."></div>
+        <div class="ws-line"><span class="ws-no">🧠</span><input type="text" data-key="idea-cog" placeholder="AI &amp; thinking: ..."></div>
+      </div>
+    </div>
+    <p class="ws-save" id="wsSave">Saved &#10003;</p>
+    <button class="ws-reset" id="wsReset" type="button">Clear this worksheet</button>
+  </div>
+</section>
+
+</div>
+
+<footer class="wrap">
+  <a class="footlink" href="../../year9-kursuebersicht.html">&#8592; Back to the course overview</a>
+</footer>
+
+<script>
+  var inputs = document.querySelectorAll('.worksheet input[data-key]');
+  var save = document.getElementById('wsSave');
+  var prefix = 'en9_jigsaw_worksheet_';
+  var timer;
+
+  inputs.forEach(function (inp) {
+    var key = prefix + inp.dataset.key;
+    try { inp.value = localStorage.getItem(key) || ''; } catch (e) {}
+    inp.addEventListener('input', function () {
+      clearTimeout(timer);
+      try { localStorage.setItem(key, inp.value); } catch (e) {}
+      timer = setTimeout(function () {
+        save.classList.add('show');
+        setTimeout(function () { save.classList.remove('show'); }, 1200);
+      }, 300);
+    });
+  });
+
+  document.getElementById('wsReset').addEventListener('click', function () {
+    if (!confirm('Clear all goals, rules and ideas on this device?')) return;
+    inputs.forEach(function (inp) {
+      inp.value = '';
+      try { localStorage.removeItem(prefix + inp.dataset.key); } catch (e) {}
+    });
+  });
+</script>
+
+</body>
+</html>

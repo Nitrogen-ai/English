@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English &middot; Klasse 9 &mdash; Course overview 2026/27</title>
+<title>English &middot; Grade 9 &mdash; Course overview 2026/27</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -65,14 +65,22 @@
   .hero-lead b { color: var(--ink); }
 
   .float-keys { position: absolute; inset: 0; pointer-events: none; z-index: -1; }
-  .fkey { position: absolute; font-family: 'Fredoka', sans-serif; font-weight: 600; display: grid; place-items: center; border-radius: 16px; color: #fff; box-shadow: 0 7px 0 var(--fkey-edge, rgba(0,0,0,0.25)); opacity: 0.92; }
-  .fk1 { top: 14%; right: 9%;  width: 70px; height: 70px; font-size: 1.7rem; background: #37a6f5; --fkey-edge:#1f7fce; animation: bob 6s ease-in-out infinite; }
-  .fk2 { top: 40%; right: 20%; width: 58px; height: 58px; font-size: 1.4rem; background: var(--coral); --fkey-edge:#df3a53; animation: bob 7s ease-in-out infinite 0.6s; }
-  .fk3 { top: 58%; right: 6%;  width: 84px; height: 84px; font-size: 0.9rem; background: var(--mint); --fkey-edge:#0d8f68; animation: bob 8s ease-in-out infinite 1.2s; }
-  .fk4 { top: 8%;  right: 30%; width: 54px; height: 54px; font-size: 1.3rem; background: var(--sun); color: var(--ink); --fkey-edge:#e39d00; animation: bob 6.5s ease-in-out infinite 0.3s; }
-  .fk5 { top: 70%; right: 27%; width: 64px; height: 64px; font-size: 0.78rem; background: #b455f0; --fkey-edge:#8f34cc; animation: bob 7.5s ease-in-out infinite 0.9s; }
-  @media (max-width: 820px) { .float-keys { opacity: 0.35; } }
-  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-16px) rotate(3deg); } }
+  .fkey {
+    position: absolute; display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.04em; color: #fff; background: var(--fkey-bg, #37a6f5);
+    border-radius: 999px; padding: 0.5rem 0.95rem;
+    box-shadow: 0 5px 0 var(--fkey-edge, rgba(0,0,0,0.22));
+    opacity: 0.9;
+  }
+  .fkey .flag { font-size: 1rem; }
+  .fk1 { top: 12%; right: 8%;  --fkey-bg:#37a6f5; --fkey-edge:#1f7fce; animation: bob 9s ease-in-out infinite; }
+  .fk2 { top: 38%; right: 22%; --fkey-bg:var(--coral); --fkey-edge:#df3a53; animation: bob 10s ease-in-out infinite 0.8s; }
+  .fk3 { top: 56%; right: 5%;  --fkey-bg:var(--mint); --fkey-edge:#0d8f68; animation: bob 11s ease-in-out infinite 1.6s; }
+  .fk4 { top: 6%;  right: 32%; --fkey-bg:#b455f0; --fkey-edge:#8f34cc; animation: bob 9.5s ease-in-out infinite 0.4s; }
+  .fk5 { top: 68%; right: 26%; --fkey-bg:#2851ab; --fkey-edge:#173c85; animation: bob 10.5s ease-in-out infinite 1.2s; }
+  @media (max-width: 820px) { .float-keys { opacity: 0.4; } }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes pop { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
@@ -197,14 +205,14 @@
 <!-- ================= HERO ================= -->
 <header class="hero">
   <div class="float-keys" aria-hidden="true">
-    <div class="fkey fk1">E</div>
-    <div class="fkey fk2">N</div>
-    <div class="fkey fk3">Hi!</div>
-    <div class="fkey fk4">G</div>
-    <div class="fkey fk5">&amp;</div>
+    <div class="fkey fk1"><span class="flag">🇦🇺</span> Australia</div>
+    <div class="fkey fk2"><span class="flag">🇮🇳</span> India</div>
+    <div class="fkey fk3"><span class="flag">🇬🇧</span> UK</div>
+    <div class="fkey fk4"><span class="flag">🇺🇸</span> USA</div>
+    <div class="fkey fk5"><span class="flag">🌍</span> worldwide</div>
   </div>
   <div class="wrap">
-    <span class="hero-eyebrow"><span class="blink"></span> English &middot; Klasse 9</span>
+    <span class="hero-eyebrow"><span class="blink"></span> English &middot; Grade 9</span>
     <h1 class="hero-title">Around the <span class="pop">English-speaking</span> <span class="pop2">world</span> &mdash; <span class="pop3">and beyond</span></h1>
     <p class="hero-lead">
       This year you&rsquo;ll travel &mdash; in English &mdash; from the <b>outback of Australia</b> to the <b>streets of Mumbai</b> and a <b>part-time job in London</b>, before looking beyond the UK to the wider English-speaking world. This page is your <b>map</b> for the whole year, and your <b>archive</b> for catching up, practising and finding things again.
@@ -258,13 +266,13 @@
     <div class="guide-grid">
       <div class="guide-item">
         <div class="num">1</div>
-        <h4>One lesson = one lernpfad</h4>
-        <p>Each English lesson gets its own interactive page &mdash; a &bdquo;lernpfad&ldquo;.</p>
+        <h4>One lesson = one learning path</h4>
+        <p>Each English lesson gets its own interactive page &mdash; a &ldquo;learning path&rdquo;.</p>
       </div>
       <div class="guide-item">
         <div class="num">2</div>
         <h4>Tap to open</h4>
-        <p>A tap on &bdquo;Lernpfad →&ldquo; opens that lesson&rsquo;s exercises.</p>
+        <p>A tap on &ldquo;Learning path →&rdquo; opens that lesson&rsquo;s exercises.</p>
       </div>
       <div class="guide-item">
         <div class="num">3</div>
@@ -274,12 +282,12 @@
       <div class="guide-item">
         <div class="num">4</div>
         <h4>More lessons coming</h4>
-        <p>Grey cards marked &bdquo;coming soon&ldquo; show what&rsquo;s planned and will get their own lernpfad over the year.</p>
+        <p>Grey cards marked &ldquo;coming soon&rdquo; show what&rsquo;s planned and will get their own learning path over the year.</p>
       </div>
     </div>
     <div class="legend">
       <span class="lg-title">// what do the badges mean?</span>
-      <span class="lg-item"><span class="niv ready">Lernpfad</span> ready to use</span>
+      <span class="lg-item"><span class="niv ready">Learning path</span> ready to use</span>
       <span class="lg-item"><span class="niv soon">coming soon</span> lesson planned, not built yet</span>
     </div>
   </div>
@@ -326,10 +334,21 @@
       <article class="lp" data-lp="extra-guess-my-holiday">
         <div class="lp-key"><div class="lp-week">EXTRA</div><div class="lp-no">&#9733;</div></div>
         <div class="lp-info">
-          <a class="lp-name" href="Welcome-Unit/00-Welcome-back-guess-my-holiday/index.html">Guess My Holiday &amp; Seeing Each Other Again <span class="lp-badge">Lernpfad</span> <span class="arrow">→</span></a>
+          <a class="lp-name" href="Welcome-Unit/00-Welcome-back-guess-my-holiday/index.html">Guess My Holiday &amp; Seeing Each Other Again <span class="lp-badge">Learning path</span> <span class="arrow">→</span></a>
           <p class="lp-goal"><b>You&rsquo;ll practise:</b> a moderated photo-guessing game with holiday photos sent in beforehand, guessing language, and a &ldquo;Find someone who &hellip;&rdquo; conversation with sentence starters about goals and highlights for the year.</p>
         </div>
       </article>
+
+      <article class="lp" data-lp="extra-digital-media-jigsaw">
+        <div class="lp-key"><div class="lp-week">EXTRA</div><div class="lp-no">&#9733;</div></div>
+        <div class="lp-info">
+          <a class="lp-name" href="Welcome-Unit/01-Digital-Media-Jigsaw/index.html">Going Digital, Staying Healthy: a Group Jigsaw <span class="lp-badge">Learning path</span> <span class="arrow">→</span></a>
+          <p class="lp-goal"><b>You&rsquo;ll practise:</b> a five-topic group jigsaw (expert groups &middot; home groups &middot; presentations) on phone rules in Belgium, the social media law in Australia, the tablet retreat in Denmark, and AI&rsquo;s environmental &amp; cognitive costs &mdash; ending in your own class goals and rules for becoming a tablet class.</p>
+        </div>
+      </article>
+
+      <article class="lp soon"><div class="lp-key"><div class="lp-week">WK 1</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Welcome to the world of English: opinions about English, varieties &amp; idioms <span class="lp-badge soon">coming soon</span></span></div></article>
+      <article class="lp soon"><div class="lp-key"><div class="lp-week">WK 2</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">The journey of English: how English spread around the world <span class="lp-badge soon">coming soon</span></span></div></article>
 
     </div>
   </article>
@@ -341,7 +360,11 @@
       <h3>Australia &mdash; the island continent</h3>
     </div>
     <div class="unit-body">
-      <article class="lp soon"><div class="lp-key"><div class="lp-week">LEAD-IN</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Song &amp; podcast: Australian English <span class="lp-badge soon">coming soon</span></span></div></article>
+      <article class="lp soon"><div class="lp-key"><div class="lp-week">WK 1</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Ideas of Australia &amp; a song for Australia <span class="lp-badge soon">coming soon</span></span></div></article>
+      <article class="lp soon"><div class="lp-key"><div class="lp-week">WK 2</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Landmarks of Australia &amp; fact finding <span class="lp-badge soon">coming soon</span></span></div></article>
+      <article class="lp soon"><div class="lp-key"><div class="lp-week">WK 3</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">The English we speak: Australian English <span class="lp-badge soon">coming soon</span></span></div></article>
+      <article class="lp soon"><div class="lp-key"><div class="lp-week">WK 4</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Down under (Bill Bryson): text &amp; opposites <span class="lp-badge soon">coming soon</span></span></div></article>
+      <article class="lp soon"><div class="lp-key"><div class="lp-week">WK 5</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Dangerous animals &amp; Ray&rsquo;s Roo Rescue <span class="lp-badge soon">coming soon</span></span></div></article>
       <article class="lp soon"><div class="lp-key"><div class="lp-week">PART A</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Speaking: animals, habitats &amp; the passive <span class="lp-badge soon">coming soon</span></span></div></article>
       <article class="lp soon"><div class="lp-key"><div class="lp-week">PART B</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Writing: an online post, the gerund <span class="lp-badge soon">coming soon</span></span></div></article>
       <article class="lp soon"><div class="lp-key"><div class="lp-week">PART C</div><div class="lp-no">&mdash;</div></div><div class="lp-info"><span class="lp-title-soon">Listening: modal verbs for advice <span class="lp-badge soon">coming soon</span></span></div></article>
@@ -413,7 +436,7 @@
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="foot-inner">
-    <div><b class="h">English &middot; Klasse 9</b><br>Schuljahr 2026/27<br>Unit 1 &ndash; Other English-Speaking Countries</div>
+    <div><b class="h">English &middot; Grade 9</b><br>School year 2026/27<br>Unit 1 &ndash; Other English-Speaking Countries</div>
   </div>
 </footer>
 

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expert Group: AI&rsquo;s Environmental Footprint &mdash; Digital Media Jigsaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --acc: #2e9e4f; --acc-edge: #1e7538; --acc-tint: #e3f6e8;
+    --ink: #1a2340; --ink-soft: #4f5b80; --line: rgba(26,35,64,0.14);
+    --card: #ffffff; --bg: #f0faf2; --sun: #ffc23d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; }
+  ::selection { background: var(--sun); color: var(--ink); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 5vw; }
+
+  .topbar { background: var(--acc); }
+  .back { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 880px; margin: 0 auto; padding: 0.75rem 5vw; color: #fff; text-decoration: none; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; letter-spacing: 0.05em; }
+  .back:hover { text-decoration: underline; }
+
+  header.hero { padding: 2.2rem 0 1.4rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .badge { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; background: var(--acc); color: #fff; }
+  .badge.alt { background: var(--acc-tint); color: var(--acc-edge); border: 1.5px solid var(--acc); }
+  .flag { font-size: 1.6em; vertical-align: -0.15em; margin-right: 0.2em; }
+  h1 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.6rem, 4.4vw, 2.4rem); line-height: 1.15; margin-bottom: 0.7rem; }
+  .mission { font-size: 1.02rem; color: var(--ink-soft); max-width: 62ch; }
+  .mission b { color: var(--acc-edge); }
+
+  section { padding: 1.6rem 0; }
+  h2 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.35rem; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.55rem; }
+  h2 .num { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--acc); color: #fff; font-size: 0.95rem; box-shadow: 0 3px 0 var(--acc-edge); flex-shrink: 0; }
+
+  .facts { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .facts li { background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 0.85rem 1.05rem; display: flex; gap: 0.7rem; align-items: flex-start; }
+  .facts li::before { content: '\2713'; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--acc-tint); color: var(--acc-edge); font-weight: 700; font-size: 0.75rem; display: grid; place-items: center; margin-top: 0.1rem; }
+
+  .quotes { display: flex; flex-direction: column; gap: 0.9rem; }
+  blockquote { background: var(--acc); color: #fff; border-radius: 16px; padding: 1.2rem 1.4rem; position: relative; box-shadow: 0 6px 0 var(--acc-edge); }
+  blockquote p { font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 1.05rem; line-height: 1.45; margin-bottom: 0.5rem; }
+  blockquote cite { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; opacity: 0.88; font-style: normal; }
+
+  .sources { display: flex; flex-direction: column; gap: 0.7rem; }
+  .src { display: block; background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 0.9rem 1.1rem; text-decoration: none; color: var(--ink); transition: border-color 0.15s ease, transform 0.15s ease; }
+  .src:hover { border-color: var(--acc); transform: translateY(-2px); }
+  .src .src-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .src .src-title { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1rem; }
+  .src .src-pub { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--acc-edge); background: var(--acc-tint); padding: 0.15rem 0.5rem; border-radius: 6px; flex-shrink: 0; }
+  .src .src-note { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.3rem; }
+  .src .src-url { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-soft); margin-top: 0.35rem; word-break: break-all; }
+
+  .bridge { background: var(--acc-tint); border: 2px dashed var(--acc); border-radius: 18px; padding: 1.3rem 1.4rem; }
+  .bridge ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .bridge li { font-weight: 700; color: var(--acc-edge); }
+  .bridge li span { font-weight: 400; color: var(--ink); display: block; }
+
+  .notes textarea { width: 100%; min-height: 130px; resize: vertical; border: 2px solid var(--line); border-radius: 14px; padding: 0.9rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.98rem; color: var(--ink); background: var(--card); }
+  .notes textarea:focus { border-color: var(--acc); outline: none; }
+  .notes .hint { font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+  .save-state { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--acc-edge); margin-top: 0.4rem; opacity: 0; transition: opacity 0.3s ease; }
+  .save-state.show { opacity: 1; }
+
+  footer { padding: 2rem 0 3rem; }
+  .footlink { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--acc); color: #fff; text-decoration: none; font-family: 'Fredoka', sans-serif; font-weight: 600; padding: 0.75rem 1.3rem; border-radius: 14px; box-shadow: 0 5px 0 var(--acc-edge); }
+  .footlink:hover { transform: translateY(2px); box-shadow: 0 3px 0 var(--acc-edge); }
+</style>
+</head>
+<body>
+
+<div class="topbar"><a class="back" href="index.html">&#8592; Back to the jigsaw overview</a></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="badges">
+    <span class="badge">Expert group</span>
+    <span class="badge alt">10 minutes</span>
+    <span class="badge alt">Read &amp; discuss alone, then report back</span>
+  </div>
+  <h1><span class="flag">🌍</span>AI&rsquo;s Environmental Footprint</h1>
+  <p class="mission">Every AI answer, image or video has to run on real machines, in real buildings, using real electricity and real water. Your mission: find out <b>how big</b> that footprint really is, and be ready to explain it to your home group without reading off the page.</p>
+</header>
+
+<section class="facts-section">
+  <h2><span class="num">1</span>Key facts</h2>
+  <ul class="facts">
+    <li>Worldwide, data centres (many of them running AI) used about 448 terawatt-hours of electricity last year &mdash; more than all but around 10 countries in the world.</li>
+    <li>By 2030, electricity demand from AI-focused data centres is expected to more than quadruple, reaching roughly 945 terawatt-hours &mdash; about as much as the whole of Japan uses today.</li>
+    <li>Producing that electricity created about 208 million tonnes of CO&#8322; in one year &mdash; roughly as much as the entire country of Argentina.</li>
+    <li>Cooling AI data centres uses huge amounts of fresh water: an estimated 1.2 trillion gallons (4.5 trillion litres) in a single year.</li>
+    <li>On a small scale: one AI-generated image uses roughly 29 millilitres of water (about two tablespoons); a short AI-generated video can use over 4 litres.</li>
+    <li>By 2030, AI data centres&rsquo; water use could equal the basic drinking-water needs of all 1.3 billion people in Sub-Saharan Africa for a year.</li>
+    <li>AI infrastructure (buildings, servers) is projected to cover more than 14,500 km&sup2; of land by 2030 &mdash; roughly twice the size of a megacity like Jakarta.</li>
+    <li>Researchers warn that making AI more efficient does not automatically shrink its footprint &mdash; cheaper, faster AI often just gets used more, a &ldquo;rebound effect.&rdquo;</li>
+  </ul>
+</section>
+
+<section class="quotes">
+  <h2><span class="num">2</span>In their own words</h2>
+  <blockquote>
+    <p>&ldquo;What surprised us most is how often the choices that look greenest from a carbon perspective end up worse for water or for land.&rdquo;</p>
+    <cite>&mdash; Dr Miriam Aczel, lead researcher, United Nations University</cite>
+  </blockquote>
+  <blockquote>
+    <p>&ldquo;More efficient and affordable AI&hellip; mean more consumption of AI, making the overall footprint far bigger than what we save.&rdquo;</p>
+    <cite>&mdash; Professor Kaveh Madani, Director, United Nations University Institute for Water, Environment and Health</cite>
+  </blockquote>
+</section>
+
+<section class="sources">
+  <h2><span class="num">3</span>Go deeper: your sources</h2>
+  <a class="src" href="https://www.iea.org/news/ai-is-set-to-drive-surging-electricity-demand-from-data-centres-while-offering-the-potential-to-transform-how-the-energy-sector-works" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">AI is set to drive surging electricity demand from data centres</span><span class="src-pub">International Energy Agency (IEA)</span></div>
+    <p class="src-note">The world&rsquo;s leading official energy agency &mdash; the most authoritative numbers on AI and electricity.</p>
+    <p class="src-url">iea.org/news/ai-is-set-to-drive-surging-electricity-demand&hellip;</p>
+  </a>
+  <a class="src" href="https://unu.edu/inweh/news/environmental-cost-of-AIs-Enrgy-use-carbon-water-and-land-footprints" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Rising Emissions, Depleting Water and Vanishing Land</span><span class="src-pub">United Nations University</span></div>
+    <p class="src-note">A UN research institute&rsquo;s report, with the clearest per-image and per-video water figures and direct scientist quotes.</p>
+    <p class="src-url">unu.edu/inweh/news/environmental-cost-of-AIs-Enrgy-use&hellip;</p>
+  </a>
+  <a class="src" href="https://phys.org/news/2026-06-nation-sized-environmental-footprints-ai.html" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Energy, water use and pollution of AI and data centers rival most countries</span><span class="src-pub">Phys.org</span></div>
+    <p class="src-note">A clear science-news summary that compares AI&rsquo;s footprint to whole countries &mdash; easy to picture.</p>
+    <p class="src-url">phys.org/news/2026-06-nation-sized-environmental-footprints-ai.html</p>
+  </a>
+</section>
+
+<section class="bridge">
+  <h2><span class="num">4</span>Bridge questions &mdash; take these to your home group</h2>
+  <ol>
+    <li>One AI image costs about two tablespoons of water.<span>Does that change how often you would ask an AI to generate an image &ldquo;just for fun&rdquo;?</span></li>
+    <li>Researchers say more efficient AI often just gets used more (the &ldquo;rebound effect&rdquo;).<span>Who is responsible for AI&rsquo;s footprint &mdash; the companies, the users, or governments? Where do WE fit in?</span></li>
+    <li>Think about how you use AI on your own devices.<span>What would a &ldquo;sustainable AI use&rdquo; rule look like for our tablet class?</span></li>
+  </ol>
+</section>
+
+<section class="notes">
+  <h2><span class="num">5</span>Your expert notes</h2>
+  <p class="hint">Write 3 facts + 1 question you want to bring into your home group. Saved automatically on this device.</p>
+  <textarea id="notes" placeholder="1. ...&#10;2. ...&#10;3. ...&#10;My question for the group: ..."></textarea>
+  <p class="save-state" id="saveState">Saved &#10003;</p>
+</section>
+
+</div>
+
+<footer class="wrap">
+  <a class="footlink" href="index.html">&#8592; Back to the jigsaw overview</a>
+</footer>
+
+<script>
+  var ta = document.getElementById('notes');
+  var state = document.getElementById('saveState');
+  var key = 'en9_jigsaw_notes_ai_environment';
+  try { ta.value = localStorage.getItem(key) || ''; } catch (e) {}
+  var timer;
+  ta.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      try { localStorage.setItem(key, ta.value); } catch (e) {}
+      state.classList.add('show');
+      setTimeout(function () { state.classList.remove('show'); }, 1200);
+    }, 500);
+  });
+</script>
+
+</body>
+</html>

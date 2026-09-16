@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expert Group: Tablet Retreat in Denmark &mdash; Digital Media Jigsaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --acc: #df3a53; --acc-edge: #b52539; --acc-tint: #fde8ea;
+    --ink: #1a2340; --ink-soft: #4f5b80; --line: rgba(26,35,64,0.14);
+    --card: #ffffff; --bg: #fdf1f2; --sun: #ffc23d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; }
+  ::selection { background: var(--sun); color: var(--ink); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 5vw; }
+
+  .topbar { background: var(--acc); }
+  .back { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 880px; margin: 0 auto; padding: 0.75rem 5vw; color: #fff; text-decoration: none; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; letter-spacing: 0.05em; }
+  .back:hover { text-decoration: underline; }
+
+  header.hero { padding: 2.2rem 0 1.4rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .badge { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; background: var(--acc); color: #fff; }
+  .badge.alt { background: var(--acc-tint); color: var(--acc-edge); border: 1.5px solid var(--acc); }
+  .flag { font-size: 1.6em; vertical-align: -0.15em; margin-right: 0.2em; }
+  h1 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.6rem, 4.4vw, 2.4rem); line-height: 1.15; margin-bottom: 0.7rem; }
+  .mission { font-size: 1.02rem; color: var(--ink-soft); max-width: 62ch; }
+  .mission b { color: var(--acc-edge); }
+
+  section { padding: 1.6rem 0; }
+  h2 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.35rem; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.55rem; }
+  h2 .num { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--acc); color: #fff; font-size: 0.95rem; box-shadow: 0 3px 0 var(--acc-edge); flex-shrink: 0; }
+
+  .facts { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .facts li { background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 0.85rem 1.05rem; display: flex; gap: 0.7rem; align-items: flex-start; }
+  .facts li::before { content: '\2713'; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--acc-tint); color: var(--acc-edge); font-weight: 700; font-size: 0.75rem; display: grid; place-items: center; margin-top: 0.1rem; }
+
+  .quotes { display: flex; flex-direction: column; gap: 0.9rem; }
+  blockquote { background: var(--acc); color: #fff; border-radius: 16px; padding: 1.2rem 1.4rem; position: relative; box-shadow: 0 6px 0 var(--acc-edge); }
+  blockquote p { font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 1.05rem; line-height: 1.45; margin-bottom: 0.5rem; }
+  blockquote cite { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; opacity: 0.88; font-style: normal; }
+
+  .sources { display: flex; flex-direction: column; gap: 0.7rem; }
+  .src { display: block; background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 0.9rem 1.1rem; text-decoration: none; color: var(--ink); transition: border-color 0.15s ease, transform 0.15s ease; }
+  .src:hover { border-color: var(--acc); transform: translateY(-2px); }
+  .src .src-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .src .src-title { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1rem; }
+  .src .src-pub { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--acc-edge); background: var(--acc-tint); padding: 0.15rem 0.5rem; border-radius: 6px; flex-shrink: 0; }
+  .src .src-note { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.3rem; }
+  .src .src-url { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-soft); margin-top: 0.35rem; word-break: break-all; }
+
+  .bridge { background: var(--acc-tint); border: 2px dashed var(--acc); border-radius: 18px; padding: 1.3rem 1.4rem; }
+  .bridge ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .bridge li { font-weight: 700; color: var(--acc-edge); }
+  .bridge li span { font-weight: 400; color: var(--ink); display: block; }
+
+  .notes textarea { width: 100%; min-height: 130px; resize: vertical; border: 2px solid var(--line); border-radius: 14px; padding: 0.9rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.98rem; color: var(--ink); background: var(--card); }
+  .notes textarea:focus { border-color: var(--acc); outline: none; }
+  .notes .hint { font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+  .save-state { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--acc-edge); margin-top: 0.4rem; opacity: 0; transition: opacity 0.3s ease; }
+  .save-state.show { opacity: 1; }
+
+  footer { padding: 2rem 0 3rem; }
+  .footlink { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--acc); color: #fff; text-decoration: none; font-family: 'Fredoka', sans-serif; font-weight: 600; padding: 0.75rem 1.3rem; border-radius: 14px; box-shadow: 0 5px 0 var(--acc-edge); }
+  .footlink:hover { transform: translateY(2px); box-shadow: 0 3px 0 var(--acc-edge); }
+</style>
+</head>
+<body>
+
+<div class="topbar"><a class="back" href="index.html">&#8592; Back to the jigsaw overview</a></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="badges">
+    <span class="badge">Expert group</span>
+    <span class="badge alt">10 minutes</span>
+    <span class="badge alt">Read &amp; discuss alone, then report back</span>
+  </div>
+  <h1><span class="flag">🇩🇰</span>Tablet Retreat in Denmark</h1>
+  <p class="mission">Denmark was one of the first countries to put tablets in every school bag &mdash; and now it is pulling back harder than almost anyone else. Your mission: find out <b>what</b> Denmark is changing and <b>why</b>, and be ready to explain it to your home group without reading off the page.</p>
+</header>
+
+<section class="facts-section">
+  <h2><span class="num">1</span>Key facts</h2>
+  <ul class="facts">
+    <li>Denmark was one of the earliest countries to bring tablets and digital books into schools, starting around 2011.</li>
+    <li>Since February 2025, the Danish government has pushed to make schools &ldquo;mobile-free&rdquo; &mdash; personal smartphones banned during both lessons and breaks.</li>
+    <li>From the 2025/2026 school year, students lock their phones in boxes at the start of the day; from 2026/2027 the rule also covers after-school clubs.</li>
+    <li>The rule targets personal smartphones and smartwatches &mdash; computers and tablets used for teaching, under a teacher&rsquo;s supervision, are still allowed, especially for older students.</li>
+    <li>The government invested DKK 540 million (about &euro;72 million) in physical paper books to reduce reliance on screens, plus DKK 2.6 billion in outdoor play areas for real-world interaction.</li>
+    <li>Ministry surveys from 2024 found that more than a third of Year 6 and Year 8 students were regularly distracted by phones in class.</li>
+    <li>Danish teens aged 13&ndash;18 logging heavy daily screen time showed links to worse school results and more mental-health problems.</li>
+    <li>Teachers report better focus, more energy and stronger social contact once phones are locked away; Denmark is also considering a proposed ban on social media for under-15s.</li>
+  </ul>
+</section>
+
+<section class="quotes">
+  <h2><span class="num">2</span>In their own words</h2>
+  <blockquote>
+    <p>&ldquo;Adults notice better focus, more energy, and stronger social contact when phones are put away.&rdquo;</p>
+    <cite>&mdash; News in Levels, Level 3 English summary for learners</cite>
+  </blockquote>
+  <blockquote>
+    <p>&ldquo;Paper books return to classrooms, and teachers use computers only under control.&rdquo;</p>
+    <cite>&mdash; News in Levels, describing the shift back to books</cite>
+  </blockquote>
+</section>
+
+<section class="sources">
+  <h2><span class="num">3</span>Go deeper: your sources</h2>
+  <a class="src" href="https://newsinlevels.com/products/denmark-schools-are-using-books-again-level-3/" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Denmark schools are using books again &mdash; Level 3</span><span class="src-pub">News in Levels</span></div>
+    <p class="src-note">Written especially for English learners (2,000&ndash;3,000-word vocabulary) &mdash; the easiest and most reliable place to start.</p>
+    <p class="src-url">newsinlevels.com/products/denmark-schools-are-using-books-again-level-3</p>
+  </a>
+  <a class="src" href="https://eurydice.eacea.ec.europa.eu/news/denmark-agreement-mobile-free-primary-and-lower-secondary-schools-and-school-based-leisure" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">Denmark: Agreement on mobile-free primary and lower secondary schools</span><span class="src-pub">Eurydice (European Commission)</span></div>
+    <p class="src-note">The official EU education-policy network &mdash; precise on what exactly the new law covers and when.</p>
+    <p class="src-url">eurydice.eacea.ec.europa.eu/news/denmark-agreement-mobile-free-&hellip;</p>
+  </a>
+  <a class="src" href="https://www.thelocal.dk/20250228/how-the-nordic-countries-are-tackling-the-scourge-of-screens" target="_blank" rel="noopener">
+    <div class="src-top"><span class="src-title">How the Nordic countries are tackling the scourge of screens</span><span class="src-pub">The Local Denmark</span></div>
+    <p class="src-note">English-language Danish news site &mdash; puts Denmark&rsquo;s move in context with its Nordic neighbours.</p>
+    <p class="src-url">thelocal.dk/20250228/how-the-nordic-countries-&hellip;</p>
+  </a>
+</section>
+
+<section class="bridge">
+  <h2><span class="num">4</span>Bridge questions &mdash; take these to your home group</h2>
+  <ol>
+    <li>Denmark still allows tablets for teaching, but bans personal phones.<span>Should we make the same distinction between our school tablet and our own phone?</span></li>
+    <li>Denmark invested in paper books and outdoor spaces, not just bans.<span>What could WE add to our tablet class &mdash; not just what should we forbid?</span></li>
+    <li>Danish students lock their phones in a box at the start of the day.<span>Would that work in our class? Why or why not?</span></li>
+  </ol>
+</section>
+
+<section class="notes">
+  <h2><span class="num">5</span>Your expert notes</h2>
+  <p class="hint">Write 3 facts + 1 question you want to bring into your home group. Saved automatically on this device.</p>
+  <textarea id="notes" placeholder="1. ...&#10;2. ...&#10;3. ...&#10;My question for the group: ..."></textarea>
+  <p class="save-state" id="saveState">Saved &#10003;</p>
+</section>
+
+</div>
+
+<footer class="wrap">
+  <a class="footlink" href="index.html">&#8592; Back to the jigsaw overview</a>
+</footer>
+
+<script>
+  var ta = document.getElementById('notes');
+  var state = document.getElementById('saveState');
+  var key = 'en9_jigsaw_notes_denmark';
+  try { ta.value = localStorage.getItem(key) || ''; } catch (e) {}
+  var timer;
+  ta.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      try { localStorage.setItem(key, ta.value); } catch (e) {}
+      state.classList.add('show');
+      setTimeout(function () { state.classList.remove('show'); }, 1200);
+    }, 500);
+  });
+</script>
+
+</body>
+</html>
