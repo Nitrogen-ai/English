@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lost in Sydney</title>
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --tile:#EDF1F2; --grout:#D3DBDD;
+  --paper:#FFFFFF; --paper2:#EEF3F4;
+  --ink:#14202B; --muted:#55636E; --hair:#C6D0D4;
+  --sign:#002664; --signText:#FFFFFF; --bar:#002664; --flapBg:#0D3A84;
+  --focus:#0072CE;
+  --tileImg:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='24'%3E%3Cpath d='M0 12L10 2L20 12L30 2L40 12M0 24L10 14L20 24L30 14L40 24' stroke='%23D3DBDD' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
+  --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --read:Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --tile:#0C1B30; --grout:#173052;
+    --paper:#15253B; --paper2:#1E314B;
+    --ink:#EAF0F4; --muted:#A3B2BF; --hair:#2E4560;
+    --sign:#06142B; --bar:#06142B; --flapBg:#123462;
+    --focus:#6CB4FF;
+    --tileImg:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='24'%3E%3Cpath d='M0 12L10 2L20 12L30 2L40 12M0 24L10 14L20 24L30 14L40 24' stroke='%23173052' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
+  }
+}
+:root[data-theme="dark"]{
+  --tile:#0C1B30; --grout:#173052;
+  --paper:#15253B; --paper2:#1E314B;
+  --ink:#EAF0F4; --muted:#A3B2BF; --hair:#2E4560;
+  --sign:#06142B; --bar:#06142B; --flapBg:#123462;
+  --focus:#6CB4FF;
+  --tileImg:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='24'%3E%3Cpath d='M0 12L10 2L20 12L30 2L40 12M0 24L10 14L20 24L30 14L40 24' stroke='%23173052' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; min-height:100vh;
+  background-color:var(--tile); background-image:var(--tileImg);
+  color:var(--ink); font-family:var(--ui);
+  -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%;
+}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* ---------- status bar ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar);color:#fff;box-shadow:0 3px 0 #F5C400}
+.status{max-width:780px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px 16px 8px}
+.clock{display:flex;align-items:center;gap:2px;perspective:300px}
+.flap{display:inline-block;min-width:.72em;text-align:center;background:var(--flapBg);color:#FFD200;border-radius:4px;padding:3px 4px 2px;
+  font:700 22px/1 var(--ui);font-variant-numeric:tabular-nums;position:relative;transform-origin:50% 50%}
+.flap.colon{background:none;min-width:auto;padding:3px 1px 2px}
+.flap:not(.colon)::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.45)}
+.flap.flip{animation:flip .42s cubic-bezier(.3,.7,.4,1)}
+@keyframes flip{0%{transform:rotateX(-90deg)}100%{transform:rotateX(0)}}
+.ampm{font:600 13px var(--ui);margin-left:5px;color:#B8C7DD}
+.batt{display:flex;align-items:center;gap:8px;font:700 17px var(--ui);font-variant-numeric:tabular-nums}
+.bicon{width:34px;height:17px;border:2px solid #fff;border-radius:4px;position:relative;padding:2px}
+.bicon::after{content:"";position:absolute;right:-5px;top:4px;width:3px;height:5px;background:#fff;border-radius:0 2px 2px 0}
+.bicon i{display:block;height:100%;border-radius:1px;background:#fff;transition:width .5s ease}
+.batt.low .bicon i{background:#FFD200}.batt.low{color:#FFD200}
+.batt.crit .bicon i{background:#EE352E}.batt.crit{color:#FF6B63}.batt.crit .bicon{border-color:#FF6B63}
+.status .spacer{flex:1}
+.menu{background:none;border:1.5px solid #6F86AA;color:#fff;border-radius:999px;padding:6px 14px;font:600 14px var(--ui);cursor:pointer}
+.preview-flag{font:600 13px var(--ui);background:#FFD200;color:#000;border-radius:4px;padding:3px 8px}
+.route{max-width:780px;margin:0 auto;display:flex;align-items:center;overflow-x:auto;padding:2px 16px 10px;scrollbar-width:none}
+.route::-webkit-scrollbar{display:none}
+.stop{flex:none;width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font:700 11px/1 var(--ui);font-variant-numeric:tabular-nums}
+.stop.now{width:30px;height:30px;font-size:13px;box-shadow:0 0 0 2px var(--bar),0 0 0 4px #fff}
+.link{flex:none;width:10px;height:3px;background:#4B6488}
+
+/* ---------- layout ---------- */
+.wrap{max-width:780px;margin:0 auto;padding:22px 16px 48px}
+.card{border-radius:8px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.06),0 14px 30px -12px rgba(0,0,0,.25)}
+.sign{background:var(--sign);color:var(--signText);position:relative;display:flex;align-items:center;gap:16px;padding:26px 22px 20px}
+.sign::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--line)}
+.bullet{flex:none;width:52px;height:52px;border-radius:10px;display:grid;place-items:center;background:var(--line);color:var(--lineFg);
+  font:800 22px/1 var(--ui);font-variant-numeric:tabular-nums}
+.sign h1{margin:0;font:700 clamp(25px,4.6vw,36px)/1.08 var(--ui);letter-spacing:-.01em}
+.paper{background:var(--paper);padding:18px 24px 26px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font:500 15px var(--ui);color:var(--muted);margin-bottom:6px}
+.meta b{color:var(--ink);font-weight:700}
+.voice{display:inline-flex;align-items:center;gap:6px}
+.voice svg{width:18px;height:18px}
+.voice.whisper{color:#168388}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 2px}
+.chip{font:600 14px var(--ui);border-radius:999px;padding:4px 11px;background:var(--paper2);color:var(--ink)}
+.chip.minus{background:#FDE3E1;color:#9B1C15}
+.chip.plus{background:#DDF1E4;color:#0B5E2B}
+:root[data-theme="dark"] .chip.minus{background:#4A2320;color:#FFB4AE}
+:root[data-theme="dark"] .chip.plus{background:#1D3B28;color:#9EE2B5}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .chip.minus{background:#4A2320;color:#FFB4AE}
+  :root:not([data-theme="light"]) .chip.plus{background:#1D3B28;color:#9EE2B5}
+}
+.story p{font:400 20px/1.62 var(--read);max-width:64ch;margin:16px 0 0}
+.gl{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;
+  text-decoration:underline;text-decoration-style:dotted;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--line)}
+.glbox{margin:10px 0 0;padding:10px 14px;border-left:4px solid var(--line);background:var(--paper2);font:500 17px/1.45 var(--ui);max-width:64ch}
+
+/* action */
+.action{margin:18px 0 0;background:linear-gradient(#E4002B 0 12px,#FFD200 12px);color:#000;border-radius:8px;padding:24px 16px 16px;max-width:64ch}
+.action .alabel{font:800 15px var(--ui);display:flex;align-items:center;gap:8px}
+.action .alabel::before{content:"";width:12px;height:12px;border-radius:50%;background:#000}
+.action p{margin:6px 0 12px !important;font:600 19px/1.4 var(--ui) !important}
+.abtn{background:#000;color:#FFD200;border:0;border-radius:999px;padding:10px 20px;font:700 16px var(--ui);cursor:pointer;min-width:140px}
+.abtn[disabled]{cursor:default;opacity:.9}
+
+/* fact */
+.fact{margin:20px 0 0;border:1.5px solid var(--hair);border-radius:8px;max-width:64ch}
+.fact summary{cursor:pointer;list-style:none;padding:11px 14px;font:700 16px var(--ui);display:flex;align-items:center;gap:10px}
+.fact summary::-webkit-details-marker{display:none}
+.fact summary::before{content:"i";display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--lineFg);font:italic 700 14px var(--read)}
+.fact[open] summary{border-bottom:1.5px solid var(--hair)}
+.fact p{margin:0;padding:12px 14px 14px;font:400 18px/1.55 var(--read)}
+
+/* options */
+.opts{margin-top:24px;display:grid;gap:10px}
+.opts.locked{opacity:.4;pointer-events:none}
+.lockhint{font:500 14px var(--ui);color:var(--muted);margin-top:18px}
+.opt{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  background:var(--paper);border:2px solid var(--ink);border-radius:10px;padding:13px 14px;font:600 17px/1.35 var(--ui)}
+.opt:hover{background:var(--paper2)}
+.opt:active{transform:translateY(1px)}
+.opt .dot{width:14px;height:14px;border-radius:4px;background:var(--to);box-shadow:0 0 0 1.5px rgba(0,0,0,.25)}
+.opt .costs{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.opt .cost{font:700 13px var(--ui);border-radius:999px;padding:3px 9px;background:var(--paper2);white-space:nowrap}
+.opt .cost.bat{background:#FDE3E1;color:#9B1C15}
+.opt .why{grid-column:2/4;font:500 13.5px var(--ui);color:var(--muted);margin-top:-4px}
+.opt[disabled]{opacity:.42;cursor:not-allowed;border-style:dashed}
+.opt.fits{border-color:var(--to);box-shadow:inset 0 0 0 1px var(--to)}
+
+/* start */
+.hero{padding:44px 26px 34px;flex-direction:column;align-items:flex-start;gap:18px}
+.hero h1{font-size:clamp(40px,8vw,66px);line-height:.98}
+.lines{display:flex;gap:8px}
+.lines span{width:26px;height:26px;border-radius:6px}
+.skyline{width:min(100%,420px);height:auto;color:#fff;opacity:.92;margin-top:4px}
+.paper h2{font:700 21px var(--ui);margin:22px 0 8px}
+.rules{margin:0;padding:0 0 0 20px;font:400 18px/1.55 var(--read);max-width:64ch}
+.rules li{margin:5px 0}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.names label{font:600 14px var(--ui);color:var(--muted);display:grid;gap:6px}
+.names input{font:500 18px var(--ui);padding:11px 12px;border:2px solid var(--hair);border-radius:8px;background:var(--paper);color:var(--ink)}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{border:0;border-radius:999px;padding:14px 24px;font:700 18px var(--ui);cursor:pointer;background:#002664;color:#fff}
+.btn.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.slot{border-radius:8px;padding:12px 10px;min-height:72px;display:flex;flex-direction:column;justify-content:space-between;
+  border:2px dashed var(--hair);color:var(--muted);font:600 14px/1.25 var(--ui)}
+.slot.got{border:0;background:var(--ec);color:var(--efg)}
+.slot small{font:500 12px var(--ui);opacity:.85}
+.tlink{background:none;border:0;color:var(--muted);font:500 14px var(--ui);text-decoration:underline;margin-top:26px;cursor:pointer;padding:0}
+
+/* ending */
+.ending .sign{padding:40px 24px 30px;flex-direction:column;align-items:flex-start;gap:14px}
+.ending .sign::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--line)}
+.ending .sign h1{font-size:clamp(38px,7vw,58px);}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.stat{background:var(--paper2);border-radius:8px;padding:12px 14px}
+.stat b{display:block;font:700 24px var(--ui);font-variant-numeric:tabular-nums}
+.stat span{font:500 13px var(--ui);color:var(--muted)}
+.endroute{display:flex;flex-wrap:wrap;align-items:center;row-gap:8px;margin-top:10px}
+.endroute .link{background:var(--hair)}
+.tasks{margin:0;padding-left:20px;font:400 18px/1.55 var(--read);max-width:64ch}
+.tasks li{margin:8px 0}
+.vmsg{margin-top:26px;border-top:6px solid #002664;padding-top:4px}
+.vmsg h3{font:700 17px var(--ui);margin:20px 0 8px}
+.vintro{font:400 18px/1.55 var(--read);max-width:64ch;margin:8px 0 0}
+.kw{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.kw li{font:600 14px/1.25 var(--ui);padding:5px 10px;border-radius:3px;max-width:100%;overflow-wrap:anywhere}
+.vhint{font:500 14px var(--ui);color:var(--muted);margin:8px 0 0}
+.fname{margin-top:20px;background:#FFD200;color:#000;border-left:8px solid #002664;padding:12px 14px;font:500 16px/1.4 var(--ui);overflow-wrap:anywhere}
+.fname b{font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace}
+:root[data-theme="dark"] .vmsg{border-top-color:#FFD200}
+:root[data-theme="dark"] .fname{background:#2B2600;color:#FFE566;border-left-color:#FFD200}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .vmsg{border-top-color:#FFD200}
+  :root:not([data-theme="light"]) .fname{background:#2B2600;color:#FFE566;border-left-color:#FFD200}
+}
+
+/* teacher */
+.tlist{display:grid;gap:6px;margin-top:10px}
+.trow{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;background:var(--paper2)}
+.trow .stop{width:30px;height:30px;font-size:12px}
+.trow .tt{font:600 15px/1.3 var(--ui)}
+.trow .tx{font:500 13px/1.4 var(--ui);color:var(--muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:3px}
+.trow .tx .stop{width:20px;height:20px;font-size:10px}
+.small{border:0;border-radius:999px;padding:8px 14px;font:600 14px var(--ui);background:#002664;color:#fff;cursor:pointer}
+.pin{display:flex;gap:8px;margin-top:10px}
+.pin input{font:600 20px var(--ui);width:120px;padding:10px 12px;border:2px solid var(--hair);border-radius:8px;letter-spacing:.2em;background:var(--paper);color:var(--ink)}
+.note{font:400 17px/1.55 var(--read);max-width:64ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font:500 14px var(--ui);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:4px}
+
+/* toast */
+.toast{position:fixed;left:50%;transform:translate(-50%,8px);top:calc(env(safe-area-inset-top,0px) + 96px);z-index:40;
+  display:flex;gap:8px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast span{white-space:nowrap;font:700 15px var(--ui);background:#002664;color:#fff;border-radius:999px;padding:8px 14px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.toast span.m{background:#D7153A}
+.toast span.p{background:#00954C}
+
+/* metro platform screen doors */
+.doors{position:fixed;inset:0;z-index:60;pointer-events:none}
+.door{position:absolute;top:0;bottom:0;width:50.5%;transition:transform .33s cubic-bezier(.7,0,.3,1);
+  background:linear-gradient(180deg,#D9E3E6 0 14%,#168388 14% 17%,rgba(205,224,230,.96) 17% 86%,#9AABB1 86%)}
+.door::after{content:"";position:absolute;top:30%;height:40%;left:18%;width:64%;border-radius:4px;
+  background:linear-gradient(135deg,rgba(255,255,255,.65),rgba(255,255,255,0) 60%);box-shadow:inset 0 0 0 2px rgba(22,131,136,.5)}
+.door.l{left:0;transform:translateX(-101%);box-shadow:inset -4px 0 0 #6E8288}
+.door.r{right:0;transform:translateX(101%);box-shadow:inset 4px 0 0 #6E8288}
+.doors.shut .door{transform:translateX(0)}
+
+/* card effects */
+.fx-glare .card,.card.fx-glare{animation:glare 2.4s ease-out 1 both}
+@keyframes glare{0%{filter:brightness(1.9) saturate(.2) contrast(.7)}100%{filter:none}}
+.fx-flicker .paper{animation:flick 2.6s linear 1}
+@keyframes flick{
+  0%,9%,13%,31%,35%,61%,66%,100%{filter:none}
+  10%,12%{filter:brightness(.45)}
+  32%,34%{filter:brightness(.65)}
+  62%,65%{filter:brightness(.4)}
+}
+.fx-mist .paper{background-image:radial-gradient(ellipse at 50% 115%,rgba(150,165,175,.35),transparent 62%)}
+
+@media (max-width:560px){
+  .paper{padding:16px 18px 22px}
+  .story p{font-size:19px}
+  .names{grid-template-columns:1fr}
+  .shelf{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:1fr 1fr}
+  .status{gap:12px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+<div class="top" id="top" hidden>
+  <div class="status" id="status"></div>
+  <div class="route" id="route" aria-label="Your route"></div>
+</div>
+<main class="wrap" id="app"></main>
+<div class="toast" id="toast" aria-live="polite"></div>
+<div class="doors" id="doors" aria-hidden="true"><div class="door l"></div><div class="door r"></div></div>
+
+<script>
+/*DATA_START*/
+const LINES = {
+  bondi:   {name:"Bondi Beach",   c:"#F5C400", fg:"#000000"},
+  coast:   {name:"Coastal Walk",  c:"#0072CE", fg:"#FFFFFF"},
+  road:    {name:"Bus & Taxi",    c:"#D7153A", fg:"#FFFFFF"},
+  train:   {name:"Trains",        c:"#F37021", fg:"#000000"},
+  harbour: {name:"Harbour",       c:"#00954C", fg:"#FFFFFF"},
+  city:    {name:"City",          c:"#7B2D8E", fg:"#FFFFFF"},
+  fin:     {name:"Gadigal",       c:"#168388", fg:"#FFFFFF"}
+};
+const ENDINGS = {
+  legend: {name:"Legendary",     c:"#FFD200", fg:"#000000"},
+  just:   {name:"Just in time",  c:"#00954C", fg:"#FFFFFF"},
+  late:   {name:"Too late",      c:"#CC0000", fg:"#FFFFFF"},
+  secret: {name:"Secret ending", c:"#E4007C", fg:"#FFFFFF"}
+};
+const CARDS = {
+1:{l:"bondi",title:"Bondi Beach, 3:15 pm",fx:"glare",
+text:`Twenty minutes ago you lay down on your towel after a swim. “Just for a second,” you told yourself. Now you open your eyes. The sun is burning, your left arm is bright red, and a seagull is eating the last bit of your sandwich. Your class is gone.
+
+Your teacher's words this morning: “Be back at the hostel by six. The bus to the airport leaves at six sharp – and the plane to Uluru won't wait for anyone.”
+
+The name of the hostel? No idea. You only remember three things: next door there is a fish and chip shop where a big white bird with a long black beak steals chips from tourists. The hostel is close to a station that has a new name – the name of the people who lived there first. And from your window you could see a tall, thin tower with a golden top.`,
+opts:[{t:`Run to the bus stop. A bus to the city is just arriving.`,to:40},{t:`Ask the lifeguards in the tower for help.`,to:42},{t:`Your class probably went along the cliffs. Follow the coastal walk.`,to:37},{t:`Search for your hostel on your phone.`,to:14,bat:3}],
+fact:`The name Bondi probably comes from an Aboriginal word that means “water breaking over rocks”. The beach is about one kilometre long.`},
+
+2:{l:"train",title:"Driverless",
+action:{text:`Both of you: lean forward as if you were sitting in the front car of a roller coaster. Say “Woooah!” – quietly.`},
+text:`You ride down the escalators. Glass walls with doors separate the platform from the tracks. A train glides in and the doors open – but there is nobody in the driver's cab. There is no driver's cab at all.
+
+You take the front seat and look out of the big front window into the tunnel. The lights rush toward you. It feels like a video game.
+
+A few minutes later a calm voice says: “Gadigal.” You get off.`,
+go:15,
+fact:`The trains of the Sydney Metro drive themselves. Gadigal station opened in 2024. It is named after the Gadigal people, who have lived in the area of today's city centre for thousands of years.`},
+
+3:{l:"road",title:"The back seat",voice:"whisper",
+action:{text:`The reader reads this card in a whisper. Both of you: don't move a muscle until the end of the card.`},
+text:`You drop onto the back seat. Finally. Then you notice it. On the window, right next to your face, sits a spider. A big one. Brown, hairy, with long legs. It is bigger than your hand. It doesn't move. You don't move either.
+
+Now you know why nobody sits here.
+
+An old man turns around. “Huntsman,” he says calmly. “Harmless. Well – mostly. Just don't scream, you'll scare her.” The bus stops at Central Station. The spider slowly walks up the window and disappears behind an ad.`,
+opts:[{t:`Get off here. Now.`,to:13},{t:`Stay on the bus until the very last stop.`,to:17,extra:10}],
+fact:`Huntsman spiders are big, but they are not dangerous for people. Many Australians just leave them alone in the house because they eat insects.`},
+
+4:{l:"road",title:"Oxford Street",extra:10,
+text:`The taxi turns onto Oxford Street – and stops. In front of you: a bus, a delivery truck and about a hundred cars. Somewhere ahead, a street festival has closed the road. Above a shop, a red, black and yellow flag is moving in the wind. The {{meter|a machine in a taxi that shows how much the ride costs}} keeps running.
+
+The driver sighs. “Could be ten minutes. Could be an hour. It's only a few blocks to Gadigal, mate. You'd be faster on foot. Just saying.”`,
+opts:[{t:`Pay and walk the rest of the way.`,to:15},{t:`Stay in the taxi and wait.`,to:15,extra:25},{t:`Call your teacher while you wait.`,to:20,bat:4}],
+fact:`The Aboriginal flag was designed by Harold Thomas in 1971. Black stands for the people, red for the earth and yellow for the sun.`},
+
+5:{ending:"just",title:"Just in time",
+text:`You run out of the hostel with your suitcase. The bus is waiting at the door with its engine running. Your whole class is pressing their faces against the windows. When you climb in, everybody cheers – not in a nice way. Your classmates will tease you all the way to the airport.
+
+Your teacher looks at you for a very long time. Then at your bright red arm. “Let me guess. You fell asleep on the beach.”
+
+You don't mind. You sit down, put in your earphones and smile. Next stop: Uluru. You made it.`},
+
+6:{ending:"legend",title:"Legendary",
+text:`You come down the stairs with your suitcase – and the lobby is quiet. No class. No teacher. No bus. For one terrible second you think they have left without you. Then the receptionist smiles. “Your group? They're not back yet, love.”
+
+You sit down on the old sofa, put your feet up and wait. Half an hour later the door flies open. Your class comes in, sunburnt and sandy. Your teacher has a red face and a phone in each hand. “WHERE WERE YOU?”
+
+You look up. “Here. For ages. Where were YOU?”
+
+Your classmates will talk about this moment until your final exams. You are over the moon.`},
+
+7:{l:"train",title:"Upper deck",extra:40,
+action:{text:`Both of you: lean your head against an invisible window and pretend to fall asleep for ten seconds.`,timer:10},
+text:`You jump in. The doors close behind you. Perfect! You climb the stairs to the upper deck of the double-decker train and sit down by the window.
+
+Ten minutes. Twenty minutes. The houses get smaller, the gardens get bigger. Then come the trees – gum trees, thousands of them. Far away, on the horizon, a line of mountains appears under a soft blue {{haze|air that is not completely clear, so things far away look a bit blurry}}.
+
+“Next stop: Blacktown,” says a voice. “This train runs to the Blue Mountains.” The Blue Mountains are two hours from the city. You get off at the next stop and take a train back. A very scenic mistake.`,
+back:{to:13,close:7},
+fact:`The Blue Mountains look blue because of the eucalyptus trees: tiny drops of oil from their leaves float in the air. In the “Black Summer” of 2019–2020, huge bushfires burned large parts of the mountains.`},
+
+8:{l:"fin",title:"The block",
+text:`You find two hostels right next to each other. Both are old brick buildings with wet towels hanging out of the windows. Both have a sign saying BACKPACKERS WELCOME. At first sight, you can't see any difference between them.
+
+Next to the Kookaburra Lodge there is a café. A fat grey cat is asleep in the window.
+
+Next to the Southern Cross Hostel there is a fish and chip shop. On the bin in front of it, a big white bird is pulling a chip out of a paper bag.`,
+opts:[{t:`Go into the Kookaburra Lodge.`,to:36},{t:`Go into the Southern Cross Hostel.`,to:45}],
+fact:`The Southern Cross is a group of stars that you can only see from the southern half of the Earth. You can find it on the Australian flag.`},
+
+9:{l:"coast",title:"The reader",
+text:`The man laughs. “Don't worry, I'm not a ghost. Not yet.” He is a volunteer guide. Every week he reads poems at the grave of Henry Lawson, a writer who wrote about the bush – about {{drought|a long time without rain}}, dust and lonely farms in the outback. “Lawson never had much money,” he says. “But he knew this land better than anyone.” He could probably talk about Lawson until midnight.
+
+When you finally get the chance to mention your problem, he thinks for a second. “A station with a new name? That'll be Gadigal. The metro. They named it after the Gadigal people.” He points south. “Walk on to Coogee and grab a bus or a taxi there.”`,
+go:21,
+fact:`Henry Lawson (1867–1922) is one of Australia's most famous writers. In his stories and poems he described the hard life in the bush. He is buried in Waverley Cemetery.`},
+
+10:{l:"harbour",title:"The Opera House",
+text:`Up close, the Opera House is enormous. And the roofs aren't simply white – they are covered with tiny tiles, some shiny, some matt. On the steps, a bride and groom are having their photos taken. A group of tourists is doing yoga.
+
+From here, you can see the whole harbour: the bridge, the ferries – and, behind the first towers of the city, a tall, thin tower with a golden top. Wait. You know that tower! You saw it this morning from your hostel window while you were brushing your teeth.`,
+opts:[{t:`Take a quick selfie with the Opera House first.`,to:26,bat:1},{t:`Walk through the Botanic Garden toward the tower.`,to:30},{t:`Walk back to the quay and up George Street toward the tower.`,to:12}],
+fact:`The Opera House opened in 1973. Its roofs are covered with more than a million tiles. It stands on Bennelong Point, named after Bennelong, a Wangal man who lived here more than 200 years ago.`},
+
+11:{l:"fin",title:"Hyde Park",
+text:`Hyde Park is a long, green park in the middle of the city. Huge fig trees make a tunnel of shade. People are lying on the grass, eating their lunch or sleeping in the sun. And everywhere: big white birds with long black beaks, walking around as if they owned the place. Ibises.
+
+One of them is pulling a whole sandwich out of a bin. Another one is chasing a pigeon. Your stomach starts talking to you. At the edge of the park you see a tiny shop with a sign: BÁNH MÌ – VIETNAMESE BAKERY.`,
+go:25,
+fact:`Hyde Park opened in 1810. It is the oldest public park in Australia.`},
+
+12:{l:"city",title:"George Street",
+text:`George Street is one of the oldest streets in Australia, but there are no cars on this part of it any more – just people and long, silent trams. Buskers, food courts, bubble tea, old sandstone buildings next to glass towers. On one single block you hear at least five different languages.
+
+On the corner, a crowd is standing at the entrance of a narrow lane full of colourful street art. Across the street, a pie shop smells so good that your stomach starts talking to you.`,
+opts:[{t:`Have a look at the street art.`,to:24},{t:`Buy something to eat. You're starving.`,to:41}],
+fact:`George Street is often called Australia's oldest street. Today, part of it is car-free – only trams and people.`},
+
+13:{l:"train",title:"Central Station",
+text:`Central Station is huge: an old sandstone building with a tall clock tower, and below it a maze of platforms, tunnels and escalators. Trains are arriving from everywhere. A screen says: BLUE MOUNTAINS – PLATFORM 1 – DEPARTING NOW.
+
+Then you see the signs: a white M on a teal background. METRO. Below it, the names of the next stations: Gadigal – Martin Place – Barangaroo.
+
+Gadigal. Your heart beats faster.`,
+opts:[{t:`Follow the signs to the metro.`,to:2},{t:`Jump on the double-decker train on platform 1 – the doors are closing!`,to:7},{t:`Walk up into the city instead. You've had enough of trains.`,to:35}],
+fact:`Central is the busiest railway station in Australia.`},
+
+14:{l:"bondi",title:"Search results",
+text:`You type “hostel bird golden tower” into your phone. It thinks for a long time. Then: 1,240 hostels in Sydney. And 57 videos of big white birds stealing sandwiches out of tourists' hands. People call them “bin chickens”. You watch one video. Then another one. It's absolutely hypnotic.
+
+When you finally look up, a seagull is standing next to your towel, staring at your screen as if it wanted to help. It doesn't.`,
+back:{to:1,close:14},
+fact:`The “bin chicken” is the Australian white ibis. It got its nickname because it eats out of rubbish bins. Many people in Sydney love it and hate it at the same time.`},
+
+15:{l:"fin",title:"Gadigal",
+text:`You come up the escalators into the afternoon light. Office workers in suits, tourists with maps, school kids eating ice cream. Somewhere a street musician is playing the guitar.
+
+And there – above the roofs – a tall, thin tower with a golden top. You know that tower! You saw it this morning from your window while you were brushing your teeth. The hostel must be very close.`,
+opts:[{t:`Follow the signs to the exits.`,to:49},{t:`Wait at the top of the escalators. Maybe your class is looking for you here.`,to:34}],
+fact:`Many places in Sydney have Aboriginal names – for example Bondi, Coogee, Parramatta and Woolloomooloo. Sydney Tower, the tower with the golden top, is 309 metres high.`},
+
+16:{l:"coast",title:"The cemetery",fx:"mist",
+text:`The path leads past a huge old cemetery right on the edge of the cliffs. White angels, stone crosses, gravestones leaning in all directions. The wind is cold up here. A sea {{mist|a thin cloud close to the ground or the water}} rolls in from the ocean. Suddenly you can't see the water any more – you can only hear it.
+
+Then you notice him. Between the graves stands an old man in a long dark coat and a dusty hat. He is holding a small book and reading out loud. To nobody. His voice is low. He stops. Slowly, he turns his head toward you.
+
+“You're a long way from home, aren't you?”`,
+opts:[{t:`Run!`,to:21},{t:`Stay where you are. You need courage now.`,to:9}]},
+
+17:{l:"harbour",title:"Circular Quay",
+text:`The bus stops at the harbour. Green and yellow ferries are coming and going. To your right, the Opera House – its white roofs look like the sails of a ship. Above you, the huge steel arch of the Harbour Bridge. Seagulls, tourists and ice cream everywhere.
+
+On the steps, a man is playing a long wooden instrument. Its deep, humming sound goes right through your stomach. A small crowd has stopped to listen.
+
+At the pier, a ferry is waiting with its doors open. The sign says: TARONGA ZOO.`,
+opts:[{t:`Walk over to the Opera House.`,to:10},{t:`Get on the ferry. You need a break – and you love animals.`,to:19},{t:`Walk west along the water, away from the crowds.`,to:47},{t:`Walk up into the city along George Street.`,to:12}],
+fact:`The didgeridoo comes from the north of Australia. The Yolŋu people of Arnhem Land call it yidaki. It is made from a tree trunk that termites have eaten hollow.`},
+
+18:{l:"bondi",title:"Rescue",batAuto:2,batOnce:true,
+action:{text:`Both of you: raise one arm high and wave it slowly from side to side – the signal for help in the water – until you have finished reading this card.`},
+text:`You call out every move. “He's drifting left! Now he's behind the big wave!” Jess talks into her radio. Seconds later a jet ski races across the water. Two lifeguards pull the man onto a rescue board and bring him back to the beach.
+
+He is coughing and very embarrassed. “Ich dachte, hier ist es sicher!” A tourist from Bavaria. You translate for the lifeguards.
+
+Jess looks at you for a long time. “Good eyes. And you speak German. Our volunteers are training new lifesavers tomorrow at six in the morning. You'd make a top lifesaver.” Then she hands you a cable. “Here – plug in your phone while you think about it.”`,
+opts:[{t:`Say yes. Who needs Uluru?`,to:27},{t:`Say no, thank her and run to the bus stop.`,to:40}]},
+
+19:{l:"harbour",title:"Taronga Zoo",extra:45,
+action:{text:`Both of you: hug an invisible tree, close your eyes and sleep like a koala for ten seconds.`,timer:10},
+text:`The ferry ride is awesome. The wind blows through your hair and the city passes by like a postcard. At the zoo you see everything: kangaroos lying in the shade like lazy dogs, a platypus that looks as if someone had built it out of spare parts, and koalas. Lots of koalas. All of them asleep.
+
+The giraffes have the best view in Sydney: behind them, the whole skyline. In the middle of it, a tall tower with a golden top. Hmm. That tower looks familiar.
+
+Then you check the time. Oh no. You run back to the ferry. That was a very cute mistake.`,
+back:{to:17,close:19},
+fact:`Koalas sleep up to 20 hours a day. They are not bears – they are marsupials, like kangaroos. Their babies are called joeys.`},
+
+20:{l:"road",title:"The call",
+text:`The phone rings. And rings. Then your teacher's voice: “G'day! You've reached my voicemail. I'm on a school trip in Australia, so please only call me in an emergency. Cheers!”
+
+Beep.
+
+“Sorry. This mailbox is full.”
+
+You stare at your phone. This IS an emergency.`,
+back:"prev"},
+
+21:{l:"coast",title:"Coogee",
+text:`Coogee Beach is smaller and quieter than Bondi. Kids are jumping off the rocks into the sea. In a rock pool you see a tiny blue fish and an orange starfish. “Cool, right?” says a boy with a snorkel. “But nothing like the reef. I was there last year. It's like swimming in a fish tank the size of Germany.”
+
+At the end of the beach there is a bus stop and a line of taxis.`,
+opts:[{t:`Take the bus.`,to:40},{t:`Take a taxi.`,to:23}],
+fact:`The Great Barrier Reef in Queensland is the largest coral reef system in the world. It is about 2,300 km long and almost as big as Germany. Warmer seas because of climate change are damaging the coral.`},
+
+22:{l:"harbour",title:"The stone bench",extra:15,
+action:{text:`Both of you: sit up very straight and stare into the distance like a governor's wife for ten seconds.`,timer:10},
+text:`The viewpoint is a bench cut straight into the sandstone rock at the end of a point. From here you can see the Opera House and the Harbour Bridge together – the most famous view in Australia. Everybody is taking photos: a wedding party, two influencers, a man with a drone.
+
+The guide tells the story of the bench: {{convicts|prisoners who were sent from Britain to Australia}} carved it for the governor's wife, who liked to sit here and watch the ships come in. “Convicts, governors, ships,” the guide says. “But before all that, this was already somebody's home.”
+
+Then the tour is over, and you walk up the hill toward the city.`,
+go:11,
+fact:`Mrs Macquarie's Chair was carved by convicts in 1810. Between 1788 and 1868, Britain sent more than 160,000 convicts to Australia.`},
+
+23:{l:"road",title:"Taxi",batAuto:2,batOnce:true,
+text:`The taxi smells of air freshener and meat pies. The driver doesn't stop talking: about cricket, about the heat, about his cousin who climbed Uluru in 1995 (“You can't do that any more, mate”) and about why people in Melbourne think their coffee is better (“It isn't”). A charging cable is hanging from the back of his seat. You plug in your phone.
+
+“So, where to?” You explain: a hostel, a bird, a station with a new name. The driver looks at you in the mirror. “Mate. I need a name.”`,
+opts:[{t:`“Gadigal!”`,to:4},{t:`“Central Station!”`,to:13},{t:`“I don't know. Just drive – I'll recognise it when I see it.”`,to:33}],
+fact:`Uluru is a sacred place for the Anangu, its traditional owners. Since 2019, climbing Uluru has been banned.`},
+
+24:{l:"city",title:"The mural",
+text:`The lane is full of colour. On the biggest wall, a young woman is spray-painting a huge face: an old woman with white hair and kind eyes. Around her, the artist has painted a river, birds and the red, black and yellow of the Aboriginal flag.
+
+“That's my {{nan|grandmother}},” the artist says. “When she was five, the government took her away from her family. She didn't see her mum again for thirty years.” She is quiet for a moment. Then she smiles. “She's ninety now. She's coming to see the painting next week.”
+
+Nobody here is taking selfies. You decide not to take a photo either. When you ask her for directions, she points up the street. “Gadigal? Through the park is the short way. Through Chinatown is the long way.”`,
+opts:[{t:`Take the short way through the park.`,to:11},{t:`Take the long way through Chinatown.`,to:35}],
+fact:`From about 1910 to the 1970s, many Aboriginal and Torres Strait Islander children were taken from their families by the government. They are called the Stolen Generations. In 2008, the Prime Minister said “sorry” to them in Parliament.`},
+
+25:{l:"fin",title:"The bakery",
+text:`The bakery smells of fresh bread, coriander and coffee. The owner, Mr Nguyen, runs it with his daughter. His parents came to Australia by boat in 1979, when he was a baby. “My roots are in Vietnam, but my home is here,” he says. On the wall there are photos of cricket players, a kangaroo road sign and a picture of a very proud family in front of a very small shop.
+
+You order a bánh mì. It's the best sandwich of your life. When you mention the fish and chip shop and the bird, his daughter rolls her eyes. “Gazza's! That ibis steals everybody's chips. We call him Kevin. One block that way.”`,
+go:8,
+fact:`Australia is very multicultural: more than a quarter of all Australians were born in another country, and almost half have at least one parent who was born overseas.`},
+
+26:{l:"harbour",title:"The photographer",extra:10,batAuto:4,
+text:`Before you can take your selfie, a family in matching T-shirts stops you. “Excuse me, honey – could you take a picture of us? We're on vacation from Texas!” You agree. Big mistake. “One more!” the dad shouts. And one more. “Now one where we all jump!” Twenty-three photos later he is finally happy.
+
+To say thank you, the mother lends you her power bank for ten minutes. When you ask about a station with a new name, she shakes her head. “No idea, honey. But that guide over there in the garden seems to know everything.”`,
+go:30},
+
+27:{ending:"secret",title:"Lifesaver",
+text:`Three years later. A hot Sunday in January. Bondi Beach is packed. You are sitting in the lifeguard tower, binoculars in your hand, sunscreen on your nose.
+
+Far out, outside the flags, a man raises one arm. You are on your rescue board before anyone else has even noticed him.
+
+That evening, a TV crew wants to interview you. “And how did you end up in Australia?” You grin. “I fell asleep on a towel.”
+
+You never made it to Uluru. You never made it back to Germany. But you made it at Bondi.`},
+
+28:{l:"coast",title:"The lookout",extra:10,
+action:{text:`Both of you: breathe out loudly like a whale – three times. Loud enough for your partner, quiet enough for everyone else.`},
+text:`A dark shape rises out of the water, turns in the air and crashes back into the sea. Spray everywhere. The crowd screams with joy. A humpback whale!
+
+A grey-haired woman with binoculars and a clipboard is counting. “Number two hundred and twelve this season,” she says proudly. She is a volunteer. Every spring she counts the whales that swim south past Sydney.
+
+Then she looks at your arm. “And you, love, need sunscreen.” She squeezes some into your hand and points south. “Keep walking. Past the cemetery you'll get to Coogee. Plenty of buses and taxis there.”`,
+go:16,
+fact:`Between May and November, tens of thousands of humpback whales swim along the east coast of Australia – north to have their babies in warm water, and south again in spring.`},
+
+29:{l:"bondi",title:"The chemist",extra:10,
+text:`Your arm is now the colour of a tomato. You walk into a small shop with a green cross above the door. In Germany it would be an Apotheke. Here it's a {{chemist|a shop that sells medicine – in American English: drugstore}}.
+
+The woman behind the counter takes one look at you. “Oh, love. No hat, no {{sunnies|Australian English: sunglasses}}, no sunscreen?” She points at an old poster on the wall: a cartoon seagull in a T-shirt. “Slip, slop, slap,” she says. “Every Aussie kid knows that. Slip on a shirt, slop on sunscreen, slap on a hat.”
+
+You buy sunscreen and a hat with a wide {{brim|the edge around a hat that keeps the sun off your face}}. Then you run to the bus stop in your {{thongs|Australian English: flip-flops}}.`,
+go:40,
+fact:`Australia has one of the highest skin cancer rates in the world. The “Slip, Slop, Slap” campaign started in 1981. Today, many schools have a “No hat, no play” rule.`},
+
+30:{l:"harbour",title:"The Botanic Garden",
+text:`Behind the Opera House is the Royal Botanic Garden: huge old trees, wide lawns, a view of the water. Somewhere above you, cockatoos are screaming like car alarms.
+
+A group of tourists is standing around a woman who is holding up a leaf. “Lemon myrtle,” she says. “Smell it. My people have used this plant for thousands of years – as food and as medicine.” She is a Gadigal woman and an Aboriginal guide. She talks about this land: the fish in the harbour, the shellfish on the rocks, the stories that belong to this place.
+
+When the tour takes a break, you ask her about the station with the new name. She smiles. “Gadigal? That's our name. Walk up the hill to Hyde Park. It's right there.”`,
+opts:[{t:`Follow her advice and walk to Hyde Park.`,to:11},{t:`Stay with the tour. It's going to a famous viewpoint.`,to:22}],
+fact:`For thousands of years, Gadigal women fished in Sydney Harbour from small canoes made of bark. Today, Aboriginal guides offer tours in the Botanic Garden.`},
+
+31:{l:"coast",title:"Swoop!",
+action:{text:`Both of you: put your hands on your heads and duck – now!`},
+text:`Something hits the top of your head. Hard. You look up. A black and white bird is flying away. Then it turns around. And comes back. Straight at you.
+
+You duck, you run, you scream. The bird follows you for fifty metres. Then it lands on a fence and looks at you as if nothing had happened.
+
+A cyclist stops next to you. Long cable ties are sticking out of her helmet – she looks like an angry hedgehog. “Magpie,” she says. “It's spring. They protect their nests. Welcome to Australia!”`,
+opts:[{t:`Walk on along the cliffs – far away from that bird.`,to:16},{t:`Ask the cyclist how to get to the city. “Bus, mate. Up there.”`,to:40}],
+fact:`In spring, some magpies swoop on people who come too close to their nests. That's why cyclists put cable ties on their helmets. Nobody is sure if it really helps.`},
+
+32:{l:"road",title:"On the bus",
+text:`The bus is packed. School kids in uniforms and wide hats are shouting and laughing. A man is carrying a surfboard that hits somebody's head every time the bus brakes. Outside, the beach disappears and the city slowly comes closer.
+
+There is one free seat next to a girl in a school uniform who is reading a book. At the very back, the long seat is completely empty. Strange – on such a full bus.`,
+opts:[{t:`Sit down next to the girl.`,to:48},{t:`Go to the empty back seat.`,to:3}]},
+
+33:{l:"road",title:"The Coathanger",extra:40,
+text:`The driver nods and drives off. Left. Right. Up a ramp. Suddenly you are on a huge steel bridge, high above the water. To your right, the Opera House is shining in the sun – white sails on blue water. It's breathtaking.
+
+Then the bridge ends. The city is behind you. A sign says: NORTH SYDNEY. The driver is happy. “Beautiful, eh? Want to see Manly too? Lovely beach.” You don't. The trip back costs you a lot of money – and the {{toll|money that you pay to use a road or a bridge}}.`,
+back:{to:23,close:33},
+fact:`Sydneysiders call the Harbour Bridge “the Coathanger” because of its shape. It opened in 1932. You can even climb to the top of its arch – 134 metres above the water.`},
+
+34:{l:"fin",title:"Waiting",extra:15,
+action:{text:`Both of you: hold your hands above your head like a cockatoo's crest and say “G'day!” in your best bird voice.`,after:0},
+text:`You wait. Five minutes. Ten. Fifteen. Hundreds of people rush past you – but not your class. Then an old woman with a shopping trolley stops right in front of you. On her shoulder sits a big white bird with a yellow {{crest|feathers that stand up on top of a bird's head}}.
+
+“G'day!” says the bird. You almost jump. “That's Rocky,” says the woman. “He talks more than my husband.” Rocky raises his crest and screams so loudly that a businessman drops his coffee.
+
+When you ask about the fish and chip shop with the bird, the woman laughs. “Gazza's? With the bin chicken? Through the park, love. Everybody knows that bird.”`,
+go:11,
+fact:`Sulphur-crested cockatoos are very clever. In Sydney, they have learned how to open rubbish bins – and they teach each other the trick.`},
+
+35:{l:"city",title:"Chinatown",extra:10,
+text:`The long way leads you through Chinatown and Haymarket. Red lanterns hang above the street. Restaurants sell dumplings, ramen, Thai curry and Korean fried chicken right next to each other. In a tiny shop an old man is making noodles by hand, pulling the dough longer and longer.
+
+A grandmother at a dumpling stall gives you a free dumpling. “You look hungry,” she says. She came from Hong Kong forty years ago. When you ask for directions, she points north. “Gadigal? Up George Street. Or take the metro from Central.”`,
+opts:[{t:`Walk up George Street.`,to:12},{t:`Walk to Central and take the metro.`,to:13}],
+fact:`After English, the languages most often spoken in Australian homes are Mandarin, Arabic, Vietnamese and Cantonese.`},
+
+36:{l:"fin",title:"The Kookaburra Lodge",extra:10,
+text:`The lobby of the Kookaburra Lodge is full of people in costumes – pirates, mermaids and a man dressed as a giant meat pie. A birthday party. Someone hands you a lemonade and asks if you are the birthday girl's cousin from Germany. You are about to explain when the receptionist looks at you over her glasses. “A school group? From Germany? Not here, {{darl|Australian English: short for darling}}.” Somebody walks you out – very politely.
+
+Outside, the grey cat in the café window watches you. It looks as if it had known the whole time.`,
+back:{to:8,close:36}},
+
+37:{l:"coast",title:"The cliffs",
+text:`The coastal walk follows the edge of the cliffs. Below you, huge waves crash against yellow and orange sandstone. Right next to the sea there is a swimming pool – waves keep washing over its wall, and people are swimming laps as if this was totally normal. Maybe it is.
+
+There is no sign of your class. Further along the path, a crowd is standing at a lookout, pointing at the sea. On the other side of the road you can see a bus stop.`,
+opts:[{t:`Join the crowd at the lookout.`,to:28},{t:`Hurry on along the path. Your class can't be far.`,to:31},{t:`Cross the road to the bus stop.`,to:40}],
+fact:`Ocean pools are swimming pools built into the rocks by the sea. There are more than 100 of them on the coast of New South Wales.`},
+
+38:{l:"bondi",title:"The carvings",
+action:{text:`Both of you: take one big step back. Now.`,after:1},
+text:`At the north end of the beach, a path leads up onto the rocks. On a flat piece of sandstone you can see lines that someone has carved into the stone: a huge fish, almost as long as a car. Maybe a shark. Maybe a whale.
+
+“Excuse me – could you step back, please?” A young woman in a ranger's shirt is smiling at you, but she means it. You look down. You are standing right on the fish's tail.
+
+Her name is Kirra. “These carvings were made by Aboriginal people a long, long time ago,” she explains. “My {{mob|a word that many Aboriginal people use for their family, community or people}} still tells the stories that belong to them. That's why we don't walk on them.” When you tell her about your hostel, she nods. “A station with the name of the first people? That's Gadigal. The new metro station in the city. The Gadigal are the {{traditional owners|the Aboriginal people whose land it has been for thousands of years}} of the city area.”`,
+opts:[{t:`Thank Kirra and run to the bus stop.`,to:40},{t:`Walk back across the beach. Your sunburn really hurts.`,to:46}],
+fact:`Aboriginal and Torres Strait Islander peoples have lived in Australia for more than 60,000 years. Their cultures are among the oldest living cultures in the world.`},
+
+39:{l:"fin",title:"The loo",extra:10,
+action:{text:`Both of you: stand up and cross your legs until you have finished reading this card.`,after:0},
+text:`You ask a security guard where the toilet is. “The {{loo|informal British and Australian English: toilet}}? Down there, on the left.” On the way you pass two workers. “Back in a sec, mate,” one of them says. “Gotta go to the {{dunny|very informal Australian English: toilet}}.” Three words for the same thing.
+
+There is a line of about twenty people. It moves very, very slowly. Ten minutes later you feel like a new person.`,
+back:{to:49,close:39}},
+
+40:{l:"road",title:"The bus",
+text:`The bus doors open with a hiss. “Tap on, mate,” says the driver. You look for a slot for your coins. There isn't one. “No cash, sorry. Card or phone.”
+
+Behind you, a line of surfers with wet hair is waiting. One of them sighs loudly.`,
+opts:[{t:`Tap your phone to pay.`,to:32,bat:1},{t:`Get out of the line and take a taxi instead.`,to:23}],
+fact:`Sydney's buses, trains and ferries don't take cash. You tap on and off with an Opal card, a bank card or your phone.`},
+
+41:{l:"city",title:"The pie shop",extra:10,batAuto:-1,
+action:{text:`One of you gets up and walks like an ibis once around your table – slowly, with a long neck.`,after:1},
+text:`You buy a meat pie with tomato sauce – “a real Aussie lunch”, the woman at the counter says. You also try a little bit of Vegemite on a cracker. Your face says everything. The woman laughs so hard that she has to sit down.
+
+You take one bite of your pie. Then something big and white lands next to you. A long black beak shoots forward, grabs your pie and runs off with it – runs, not flies. An ibis! You run after it through the crowd, filming everything on your phone, of course. It leads you straight into a park.`,
+go:11,
+fact:`Vegemite is a dark, salty spread made from yeast. Many Australians eat it on toast for breakfast – but only a very thin layer!`},
+
+42:{l:"bondi",title:"The lifeguard tower",
+text:`The lifeguard tower is full of screens, radios and surfboards. A young lifeguard is staring through her binoculars. Her name tag says JESS. “Not now, mate,” she says without looking at you. “Busy.”
+
+You follow her eyes. Far out, outside the red and yellow flags, a man is being pulled away from the beach – fast, although the water around him looks calm. He is raising one arm. Nobody on the beach has noticed. Except Jess. And now you.`,
+opts:[{t:`Help her: grab the second pair of binoculars and keep your eyes on the man.`,to:18},{t:`This isn't your business. Leave the tower and walk north along the beach.`,to:38}],
+fact:`Swim between the red and yellow flags – lifeguards watch that part of the beach. If a {{rip|a strong current that pulls water away from the beach}} pulls you out, don't fight it. Stay calm, float and raise one arm to call for help.`},
+
+43:{ending:"late",title:"Too late",
+text:`You run out of the hostel with your suitcase – just in time to see the back of the bus disappear around the corner. Gone.
+
+You sit down on the kerb. Then someone sits down next to you. It's your teacher. Your teacher stayed behind – for you. For a long time, nobody says anything. Then: “We're taking a taxi to the airport. You're paying. And you're sitting in the middle seat all the way to Uluru.”
+
+Your classmates will tease you about this until your final exams.`},
+
+44:{l:"fin",title:"Pitt Street Mall",extra:10,
+text:`Pitt Street Mall is full of shops: fashion, phones, sneakers, a shop that sells nothing but socks. You go into a big, shiny store to ask for directions. Everybody is paying with their phone or their watch. When a man pulls out a banknote, the shop assistant looks at it as if it was a dinosaur bone.
+
+Nobody has heard of a fish and chip shop with a bird. A security guard walks over. He is very friendly – and very clear. “Can I help you, mate? No? Then the exit is right there.”`,
+back:"prev",
+fact:`Australians hardly use cash any more. Most people pay with a card, a phone or a watch.`},
+
+45:{l:"fin",title:"The Southern Cross",
+action:{text:`Both of you: run on the spot and count the floors out loud – from 1 to 6.`,after:1},
+text:`You walk in. The lobby looks exactly like this morning. You have never been so happy to see a broken vending machine.
+
+Then you remember: your suitcase is still in your room. Sixth floor. And the {{lift|British and Australian English for elevator}} has a sign on it: OUT OF ORDER. Of course. You take the stairs.
+
+Out of breath, you grab your suitcase and run back down. Now check your clock.`,
+opts:[{t:`4:40 pm or earlier`,to:6,tmax:1000},{t:`4:45 pm to 6:00 pm`,to:5,tmin:1005,tmax:1080},{t:`Later than 6:00 pm`,to:43,tmin:1085}]},
+
+46:{l:"bondi",title:"Shark alarm",extra:10,
+action:{text:`Both of you: make a fin with one hand on top of your head and “swim” in a small circle. Five seconds!`,timer:5,after:0},
+text:`Halfway across the beach, a siren starts to howl. “Everybody out of the water, please!” a voice calls through a loudspeaker. Hundreds of swimmers run out of the waves. A woman drops her ice cream. A little boy starts crying. Everybody is staring at the sea.
+
+There – a grey fin. Then a second one. Then a third one – jumping out of the water. And another one doing a flip.
+
+“Dolphins!” somebody shouts. The whole beach starts laughing and cheering. A surfer next to you shakes his head. “Every time, mate. Every time.”`,
+go:29,
+fact:`Shark attacks are very rare. At many beaches in New South Wales, lifeguards use drones to look out for sharks.`},
+
+47:{l:"harbour",title:"Barangaroo",
+text:`West of the quay, the crowds disappear. A park with huge sandstone blocks runs along the water. Everything around it is new: glass towers, fancy restaurants, people in suits drinking {{flat whites|coffee with steamed milk – Australians and New Zealanders still argue about who invented it}}. But the plants in the park are old – the same kinds of plants that grew here long before the city existed.
+
+A sign tells you about the woman this place is named after: Barangaroo, a strong Cammeraygal woman who fished in the harbour and refused to follow the rules of the British newcomers. Next to the park there is an entrance with a white M on a teal background. METRO.`,
+opts:[{t:`Take the metro. Maybe it goes to Gadigal.`,to:2},{t:`Walk into the city along the busy streets.`,to:12}],
+fact:`Barangaroo lived in Sydney in the 1780s and 1790s. She was a Cammeraygal fisherwoman and the wife of Bennelong. Today, a whole part of the city and a metro station carry her name.`},
+
+48:{l:"road",title:"The girl from the station",
+text:`Her name is Ruby. “I'm from a station in Queensland,” she says. You are confused. “A train station?” She laughs. “No, mate. A cattle station. A farm. Ours is about as big as Berlin. Our next neighbours live eighty kilometres away.”
+
+Until she was twelve, Ruby went to the School of the Air: lessons online, her teacher on a screen hundreds of kilometres away. Now she goes to a {{boarding school|a school where students live during the school year}} in Sydney. “It's weird,” she says. “So many people. And I'm not even allowed on social media. I'm under sixteen.” You stare at her. She shrugs. “New law. You get used to it.”
+
+When you mention the station with the new name, she knows it at once. “Gadigal! Get off at Central and take the metro. It's just one stop.”`,
+go:13,
+fact:`Some cattle stations in the outback are huge – the biggest one, Anna Creek, is bigger than Israel. Since December 2025, Australians under 16 are not allowed to have accounts on many social media platforms.`},
+
+49:{l:"fin",title:"The exits",
+text:`Signs everywhere: PITT STREET MALL. HYDE PARK. MARTIN PLACE. A group of tourists is arguing in Spanish about which way to go. You know exactly how they feel.
+
+Through the glass doors on one side you can see trees – and lots of big white birds walking around on the grass.`,
+opts:[{t:`Follow the signs to Hyde Park.`,to:11},{t:`Follow the signs to Pitt Street Mall.`,to:44},{t:`You need a toilet first. Urgently.`,to:39}]}
+};
+/*DATA_END*/
+
+const START_T = 915;       // 3:15 pm in minutes
+const START_BAT = 7;
+const PIN = "1973";
+const KEY_STATE = "syd-maze-v1-state";
+const KEY_END = "syd-maze-v1-endings";
+
+const VOICE = {
+  title: "Your voice message (2–3 minutes)",
+  intro: "Your class is already at Uluru – and they want to know what happened to you! Record a voice message together and tell them about your afternoon in Sydney.",
+  prompts: [
+    "Where did you wake up – and how did you feel?",
+    "What did you see on your way? Animals, places, people …",
+    "What was your funniest or scariest moment?",
+    "What did you find out about Australia?",
+    "How did your adventure end? Would you do anything differently?"
+  ],
+  tips: [
+    "Both of you talk – take turns, like in the game.",
+    "Don't write a text. Look at your route and your keywords, then just talk.",
+    "Mistakes are OK. Keep talking!",
+    "Record 2–3 minutes, listen to it once, then upload it to Google Classroom. Both of you upload the file."
+  ]
+};
+
+/* ---------- storage ---------- */
+function load(key, fallback){ try{ const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
+function store(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+function drop(key){ try{ localStorage.removeItem(key); }catch(e){} }
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function rich(s){ return esc(s).replace(/\{\{([^|}]+)\|([^}]+)\}\}/g, (m,w,d) => `<button type="button" class="gl" data-w="${w}" data-d="${d}">${w}</button>`); }
+function colors(n){
+  const c = CARDS[n];
+  if(c.ending){ const e = ENDINGS[c.ending]; return {c:e.c, fg:e.fg}; }
+  const l = LINES[c.l]; return {c:l.c, fg:l.fg};
+}
+function fmt(t){ const h = Math.floor(t/60), m = t%60; return {hm:`${((h+11)%12)+1}:${String(m).padStart(2,"0")}`, ap: h>=12 ? "pm" : "am"}; }
+function fmtFull(t){ const f = fmt(t); return f.hm + " " + f.ap; }
+function stopHTML(n, now){ const k = colors(n); return `<span class="stop${now?" now":""}" style="background:${k.c};color:${k.fg}" title="${esc(CARDS[n].title)}">${n}</span>`; }
+function routeHTML(log){ return log.map((n,i) => (i ? '<span class="link"></span>' : "") + stopHTML(n, i===log.length-1)).join(""); }
+function keywordsHTML(log){
+  const seen = new Set();
+  const nums = log.filter(n => CARDS[n] && !CARDS[n].ending && !seen.has(n) && seen.add(n));
+  return `<ul class="kw">${nums.map(n => { const l = LINES[CARDS[n].l]; return `<li style="background:${l.c};color:${l.fg}">${esc(CARDS[n].title)}</li>`; }).join("")}</ul>`;
+}
+function fileName(names){
+  const clean = (v, fb) => String(v || "").trim().replace(/^Partner [12]$/, "").replace(/\s+/g, "-").replace(/[^\p{L}\p{N}-]/gu, "") || fb;
+  const nm = names || [];
+  return `Sydney_${clean(nm[0], "Partner1")}_${clean(nm[1], "Partner2")}`;
+}
+
+/* ---------- state ---------- */
+let S = null;          // current game
+let view = "start";    // start | game | teacher
+let teacherOpen = false;
+let prevClock = "";
+let timerHandle = null;
+
+function newGame(names, sandboxAt){
+  S = {cur: sandboxAt || 1, t: START_T, bat: START_BAT, log:[sandboxAt || 1], closed:{}, seen:{}, reader:0,
+       names: names, actionDone:false, last:null, sandbox: !!sandboxAt, checkT:null};
+  S.seen[S.cur] = true;
+  if(!S.sandbox) store(KEY_STATE, S);
+  view = "game"; prevClock = "";
+  render();
+}
+function save(){ if(S && !S.sandbox) store(KEY_STATE, S); }
+
+function isClosed(from, to){ return (S.closed[from] || []).includes(to); }
+
+function move(opt){
+  const target = CARDS[opt.to];
+  let extra = 0, batDelta = 0;
+  if(target.ending){
+    S.checkT = S.t;
+  } else {
+    extra = (opt.extra || 0) + (target.extra || 0);
+    S.t += 5 + extra;
+  }
+  batDelta -= (opt.bat || 0);
+  let auto = 0;
+  if(target.batAuto){ if(!(target.batOnce && S.seen[opt.to])) auto = target.batAuto; }
+  batDelta += auto;
+  S.bat = Math.max(0, Math.min(100, S.bat + batDelta));
+  S.seen[opt.to] = true;
+  S.log.push(opt.to);
+  S.cur = opt.to;
+  S.reader = S.reader ? 0 : 1;
+  S.actionDone = false;
+  S.last = {extra, auto, cost: opt.bat || 0, base: target.ending ? 0 : 5};
+  if(target.ending && !S.sandbox){
+    const got = load(KEY_END, []);
+    if(!got.includes(target.ending)){ got.push(target.ending); store(KEY_END, got); }
+  }
+  save();
+  showToast(S.last);
+  transition(render);
+}
+function goBack(){
+  const c = CARDS[S.cur];
+  let to, close;
+  if(c.back === "prev"){ to = S.log[S.log.length-2]; close = S.cur; }
+  else { to = c.back.to; close = c.back.close; }
+  (S.closed[to] = S.closed[to] || []).push(close);
+  move({to});
+}
+
+/* ---------- effects ---------- */
+function transition(cb){
+  if(reduce){ cb(); window.scrollTo(0,0); return; }
+  const d = $("#doors");
+  d.classList.add("shut");
+  setTimeout(() => { cb(); window.scrollTo(0,0); setTimeout(() => d.classList.remove("shut"), 90); }, 340);
+}
+let toastT = null;
+function showToast(last){
+  if(!last) return;
+  const parts = [];
+  if(last.base) parts.push(`<span>+${last.base + last.extra} min</span>`);
+  const net = last.auto - last.cost;
+  if(last.cost) parts.push(`<span class="m">−${last.cost} % battery</span>`);
+  if(last.auto > 0) parts.push(`<span class="p">+${last.auto} % battery</span>`);
+  if(last.auto < 0) parts.push(`<span class="m">${last.auto} % battery</span>`);
+  const t = $("#toast");
+  t.innerHTML = parts.join("");
+  clearTimeout(toastT);
+  setTimeout(() => t.classList.add("show"), reduce ? 0 : 420);
+  toastT = setTimeout(() => t.classList.remove("show"), reduce ? 2200 : 2600);
+}
+
+/* ---------- status ---------- */
+function renderStatus(){
+  const top = $("#top");
+  if(view !== "game"){ top.hidden = true; return; }
+  top.hidden = false;
+  const f = fmt(S.t);
+  const chars = f.hm.split("");
+  const prev = prevClock.padStart(chars.length, " ").split("");
+  const flaps = chars.map((ch,i) => ch === ":" ? '<span class="flap colon">:</span>'
+    : `<span class="flap${prevClock && prev[i] !== ch ? " flip" : ""}">${ch}</span>`).join("");
+  prevClock = f.hm;
+  const b = S.bat;
+  const cls = b <= 2 ? "crit" : b <= 4 ? "low" : "";
+  $("#status").innerHTML = `
+    <div class="clock" aria-label="Time ${fmtFull(S.t)}">${flaps}<span class="ampm">${f.ap}</span></div>
+    <div class="batt ${cls}" aria-label="Battery ${b} percent"><span class="bicon"><i style="width:${Math.min(100,b)}%"></i></span>${b} %</div>
+    <span class="spacer"></span>
+    ${S.sandbox ? '<span class="preview-flag">Vorschau</span><button class="menu" data-act="endpreview">Vorschau beenden</button>'
+                : '<button class="menu" data-act="menu">Menu</button>'}`;
+  const r = $("#route");
+  r.innerHTML = routeHTML(S.log);
+  r.scrollLeft = r.scrollWidth;
+}
+
+/* ---------- card ---------- */
+const SKYLINE = `<svg class="skyline" viewBox="0 0 320 70" aria-hidden="true"><path d="M0 66H320" stroke="currentColor" stroke-width="2"/><path d="M128 66V30M300 66V30" stroke="currentColor" stroke-width="3"/><path d="M140 66Q214 -2 288 66" fill="none" stroke="currentColor" stroke-width="3"/><path d="M152 66Q214 14 276 66" fill="none" stroke="currentColor" stroke-width="2"/><path d="M128 46H300" stroke="currentColor" stroke-width="2"/><path d="M10 66Q20 30 44 18Q40 44 46 66ZM36 66Q46 28 72 14Q66 44 72 66ZM62 66Q74 34 98 26Q92 48 96 66Z" fill="currentColor"/><path d="M232 66V8M228 14H236" stroke="#FFD200" stroke-width="3" opacity="0"/></svg>`;
+const VOICE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
+
+function actionHTML(a){
+  const label = a.timer ? `Start ${a.timer} s` : "Done";
+  return `<div class="action" role="group" aria-label="Action">
+    <div class="alabel">Action</div>
+    <p>${rich(a.text)}</p>
+    <button class="abtn" data-act="action" ${S.actionDone ? "disabled" : ""}>${S.actionDone ? "Done ✓" : label}</button>
+  </div>`;
+}
+
+function optionsHTML(c, n){
+  if(c.back){
+    const to = c.back === "prev" ? S.log[S.log.length-2] : c.back.to;
+    const k = colors(to);
+    return `<button class="opt" data-back="1" style="--to:${k.c}"><span class="dot"></span><span>Back to ${esc(CARDS[to].title)}</span><span class="costs"></span>
+      <span class="why">You can't take the same wrong turn twice – that option is now closed.</span></button>`;
+  }
+  if(c.go){
+    const k = colors(c.go);
+    return `<button class="opt" data-to="${c.go}" data-i="-1" style="--to:${k.c}"><span class="dot"></span><span>${esc(c.goLabel || "Continue")}</span><span class="costs"></span></button>`;
+  }
+  return c.opts.map((o,i) => {
+    const k = colors(o.to);
+    let why = "", dis = false, fits = false;
+    if(isClosed(n, o.to)){ dis = true; why = "You tried this already."; }
+    else if(o.bat && S.bat < o.bat){ dis = true; why = "Not enough battery."; }
+    if(o.tmin !== undefined || o.tmax !== undefined){
+      const ok = (o.tmin === undefined || S.t >= o.tmin) && (o.tmax === undefined || S.t <= o.tmax);
+      if(!ok){ dis = true; why = ""; } else fits = true;
+    }
+    const costs = (o.bat ? `<span class="cost bat">−${o.bat} % battery</span>` : "") + (o.extra ? `<span class="cost">+${o.extra} min</span>` : "");
+    return `<button class="opt${fits ? " fits" : ""}" data-i="${i}" style="--to:${k.c}" ${dis ? "disabled" : ""}>
+      <span class="dot"></span><span>${rich(o.t)}</span><span class="costs">${costs}</span>${why ? `<span class="why">${why}</span>` : ""}</button>`;
+  }).join("");
+}
+
+function renderCard(){
+  const n = S.cur, c = CARDS[n];
+  if(c.ending) return renderEnding();
+  const k = colors(n);
+  const reader = S.names[S.reader] || (S.reader ? "Partner 2" : "Partner 1");
+  const voice = c.voice === "whisper" ? '<span class="voice whisper">' + VOICE_SVG + 'Whisper</span>' : '<span class="voice">' + VOICE_SVG + 'Quiet voice</span>';
+  const chips = [];
+  if(S.last && S.log.length > 1){
+    if(S.last.extra) chips.push(`<span class="chip">This took longer: +${S.last.extra} min</span>`);
+    if(S.last.auto > 0) chips.push(`<span class="chip plus">+${S.last.auto} % battery</span>`);
+    if(S.last.auto < 0) chips.push(`<span class="chip minus">${S.last.auto} % battery</span>`);
+  }
+  const paras = c.text.split(/\n\s*\n/);
+  const a = c.action;
+  const after = a && a.after !== undefined ? a.after : -1;
+  let story = "";
+  if(a && after === -1) story += actionHTML(a);
+  paras.forEach((p,i) => { story += `<p>${rich(p)}</p>`; if(a && after === i) story += actionHTML(a); });
+  const needAction = a && !S.actionDone;
+  app.innerHTML = `
+  <article class="card fx-${c.fx || "none"}" style="--line:${k.c};--lineFg:${k.fg}">
+    <header class="sign"><span class="bullet">${n}</span><h1>${esc(c.title)}</h1></header>
+    <div class="paper">
+      <div class="meta"><span>Reader: <b>${esc(reader)}</b></span>${voice}</div>
+      ${chips.length ? `<div class="chips">${chips.join("")}</div>` : ""}
+      <div class="story">${story}</div>
+      ${c.fact ? `<details class="fact"><summary>Did you know?</summary><p>${rich(c.fact)}</p></details>` : ""}
+      ${needAction ? '<p class="lockhint">Do the action first – then you can choose.</p>' : ""}
+      <div class="opts${needAction ? " locked" : ""}" id="opts">${optionsHTML(c, n)}</div>
+    </div>
+  </article>`;
+}
+
+/* ---------- ending ---------- */
+function shelfHTML(){
+  const got = load(KEY_END, []);
+  return `<div class="shelf">` + Object.keys(ENDINGS).map(key => {
+    const e = ENDINGS[key], has = got.includes(key);
+    const name = has || key !== "secret" ? e.name : "?";
+    return `<div class="slot${has ? " got" : ""}" style="--ec:${e.c};--efg:${e.fg}">${esc(name)}<small>${has ? "Found" : "Not found yet"}</small></div>`;
+  }).join("") + `</div>`;
+}
+function renderEnding(){
+  const n = S.cur, c = CARDS[n], e = ENDINGS[c.ending];
+  const arrived = S.checkT !== null ? S.checkT : S.t;
+  const got = load(KEY_END, []).length;
+  app.innerHTML = `
+  <article class="card ending" style="--line:${e.c};--lineFg:${e.fg}">
+    <header class="sign"><span class="bullet">${n}</span><h1>${esc(e.name)}</h1></header>
+    <div class="paper">
+      <div class="story">${c.text.split(/\n\s*\n/).map(p => `<p>${rich(p)}</p>`).join("")}</div>
+      <div class="stats">
+        <div class="stat"><b>${fmtFull(arrived)}</b><span>${c.ending === "secret" ? "Time on stage" : "Time at the hotel"}</span></div>
+        <div class="stat"><b>${S.log.length}</b><span>Cards on your route</span></div>
+        <div class="stat"><b>${S.bat} %</b><span>Battery left</span></div>
+      </div>
+      <h2>Your route</h2>
+      <div class="endroute">${routeHTML(S.log)}</div>
+      <h2>Endings found on this device: ${got} of 4</h2>
+      ${shelfHTML()}
+      <section class="vmsg">
+        <h2>${esc(VOICE.title)}</h2>
+        <p class="vintro">${esc(VOICE.intro)}</p>
+        <h3>Your keywords</h3>
+        ${keywordsHTML(S.log)}
+        <p class="vhint">Take a screenshot of this screen before you record.</p>
+        <h3>Talk about …</h3>
+        <ul class="tasks">${VOICE.prompts.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+        <h3>Tips</h3>
+        <ul class="tasks">${VOICE.tips.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+        <div class="fname">Name your file: <b>${esc(fileName(S.names))}</b></div>
+      </section>
+      <div class="cta">
+        ${S.sandbox ? '<button class="btn" data-act="endpreview">Vorschau beenden</button>'
+                    : '<button class="btn" data-act="again">Play again</button><button class="btn alt" data-act="home">Start screen</button>'}
+      </div>
+    </div>
+  </article>`;
+  if(!S.sandbox) drop(KEY_STATE);
+}
+
+/* ---------- start ---------- */
+function renderStart(){
+  const saved = load(KEY_STATE, null);
+  const canContinue = saved && CARDS[saved.cur] && !CARDS[saved.cur].ending;
+  const names = (canContinue ? saved.names : load("syd-maze-v1-names", ["",""])) || ["",""];
+  const got = load(KEY_END, []).length;
+  app.innerHTML = `
+  <article class="card" style="--line:#F5C400;--lineFg:#000">
+    <header class="sign hero">
+      <div class="lines" aria-hidden="true">${Object.values(LINES).map(l => `<span style="background:${l.c}"></span>`).join("")}</div>
+      <h1>Lost in Sydney</h1>${SKYLINE}
+    </header>
+    <div class="paper">
+      <h2>How to play</h2>
+      <ul class="rules">
+        <li>Play with your partner on one phone or tablet. Sit next to each other.</li>
+        <li>Take turns reading the cards aloud. Use a quiet voice – only your partner should hear you. The app shows whose turn it is.</li>
+        <li>Talk about your options and only tap when you both agree. Can't agree? Play rock, paper, scissors.</li>
+        <li>Your clock starts at 3:15 pm. Every card adds 5 minutes. Some cards take longer.</li>
+        <li>Your battery starts at 7 %. Some options cost battery. When it's too low, you can't choose them.</li>
+        <li>When a card shows an action, do it together – right away.</li>
+        <li>Tap the underlined words to see what they mean.</li>
+        <li>There are four endings. One of them is secret.</li>
+        <li>At the end, you record a voice message together (2–3 minutes) about your adventure. So remember what happens!</li>
+      </ul>
+      <h2>Who is playing?</h2>
+      <div class="names">
+        <label>Partner 1<input id="n1" autocomplete="off" maxlength="20" value="${esc(names[0] || "")}"></label>
+        <label>Partner 2<input id="n2" autocomplete="off" maxlength="20" value="${esc(names[1] || "")}"></label>
+      </div>
+      <div class="cta">
+        ${canContinue ? `<button class="btn" data-act="continue">Continue at card ${saved.cur}</button><button class="btn alt" data-act="start">Start a new game</button>`
+                      : `<button class="btn" data-act="start">Start the game</button>`}
+      </div>
+      <h2>Endings found on this device: ${got} of 4</h2>
+      ${shelfHTML()}
+      <button class="tlink" data-act="teacher">Teacher view</button>
+    </div>
+  </article>`;
+}
+
+/* ---------- teacher ---------- */
+function exitsOf(c){
+  if(c.opts) return c.opts.map(o => o.to);
+  if(c.go) return [c.go];
+  if(c.back === "prev") return [];
+  if(c.back) return [c.back.to];
+  return [];
+}
+function renderTeacher(){
+  if(!teacherOpen){
+    app.innerHTML = `
+    <article class="card" style="--line:#000;--lineFg:#fff">
+      <header class="sign"><h1>Lehreransicht</h1></header>
+      <div class="paper">
+        <p class="note">Hier siehst du alle Karten mit ihren Verzweigungen. Bitte PIN eingeben.</p>
+        <div class="pin"><input id="pin" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="PIN"><button class="small" data-act="pin">Öffnen</button></div>
+        <div class="cta"><button class="btn alt" data-act="home">Zurück</button></div>
+      </div>
+    </article>`;
+    setTimeout(() => { const p = $("#pin"); if(p) p.focus(); }, 50);
+    return;
+  }
+  const rows = Object.keys(CARDS).map(Number).sort((a,b) => a-b).map(n => {
+    const c = CARDS[n];
+    const where = c.ending ? "Ende: " + ENDINGS[c.ending].name : LINES[c.l].name;
+    const ex = exitsOf(c).map(t => stopHTML(t)).join("");
+    const extras = [];
+    if(c.extra) extras.push("+" + c.extra + " min");
+    if(c.batAuto) extras.push((c.batAuto > 0 ? "+" : "") + c.batAuto + " % Akku" + (c.batOnce ? " (nur 1×)" : ""));
+    if(c.action) extras.push("ACTION");
+    if(c.back === "prev") extras.push("zurück zur vorherigen Karte");
+    else if(c.back) extras.push("zurück, Option " + c.back.close + " wird gesperrt");
+    if(c.opts) c.opts.forEach(o => { if(o.bat) extras.push("→" + o.to + ": −" + o.bat + " % Akku"); if(o.extra) extras.push("→" + o.to + ": +" + o.extra + " min"); });
+    return `<div class="trow">${stopHTML(n)}
+      <div><div class="tt">${esc(c.title)}</div><div class="tx">${esc(where)}${ex ? " · führt zu " + ex : ""}${extras.length ? " · " + esc(extras.join(", ")) : ""}</div></div>
+      <button class="small" data-preview="${n}">Vorschau</button></div>`;
+  }).join("");
+  app.innerHTML = `
+  <article class="card" style="--line:#000;--lineFg:#fff">
+    <header class="sign"><h1>Lehreransicht</h1></header>
+    <div class="paper">
+      <p class="note">Start 3:15 pm, jede Karte +5 min. Legendary bis 4:40 pm, Just in time bis 6:00 pm, danach Too late. Kürzester Weg zum Legendary-Ende: 11 Karten (ca. 4:05 pm). Das Secret Ending (Lifesaver) erreicht man über Karte 42 → 18. Die Vorschau startet eine Probe-Runde ab der gewählten Karte; sie wird nicht gespeichert und zählt keine Enden.</p>
+      <p class="note"><b>Abschluss:</b> Die Paare nehmen eine 2–3-minütige Sprachnachricht auf (Sprachmemo-App) und laden sie in Google Classroom hoch – beide Partner:innen geben dieselbe Datei ab. Kein Grammatikfokus; Grundlage sind die besuchten Karten (Keyword-Chips auf dem Endbildschirm). Bewertungsidee: Verständlichkeit, Flüssigkeit, Inhalt aus dem Spiel, beide sprechen etwa gleich viel.</p>
+      <div class="legend">${Object.values(LINES).map(l => `<span><i style="background:${l.c}"></i>${esc(l.name)}</span>`).join("")}</div>
+      <div class="cta">
+        <button class="small" data-act="resetend">Gefundene Enden auf diesem Gerät löschen</button>
+        <button class="small" data-act="resetgame">Laufendes Spiel löschen</button>
+        <button class="small" data-act="home">Zum Startbildschirm</button>
+      </div>
+      <div class="tlist">${rows}</div>
+    </div>
+  </article>`;
+}
+
+/* ---------- render + events ---------- */
+function render(){
+  clearInterval(timerHandle);
+  if(view === "start") renderStart();
+  else if(view === "teacher") renderTeacher();
+  else renderCard();
+  renderStatus();
+}
+
+function readNames(){
+  const a = ($("#n1") && $("#n1").value.trim()) || "";
+  const b = ($("#n2") && $("#n2").value.trim()) || "";
+  store("syd-maze-v1-names", [a,b]);
+  return [a || "Partner 1", b || "Partner 2"];
+}
+
+document.addEventListener("click", ev => {
+  const gl = ev.target.closest(".gl");
+  if(gl){
+    const host = gl.closest("p");
+    const next = host && host.nextElementSibling;
+    if(next && next.classList.contains("glbox") && next.dataset.w === gl.dataset.w){ next.remove(); return; }
+    document.querySelectorAll(".glbox").forEach(b => b.remove());
+    const box = document.createElement("div");
+    box.className = "glbox"; box.dataset.w = gl.dataset.w;
+    box.innerHTML = `<b>${esc(gl.dataset.w)}</b> – ${esc(gl.dataset.d)}`;
+    host.after(box);
+    return;
+  }
+  const el = ev.target.closest("[data-act],[data-i],[data-back],[data-preview]");
+  if(!el) return;
+  if(el.dataset.preview){ newGame(["Partner 1","Partner 2"], Number(el.dataset.preview)); return; }
+  if(el.dataset.back){ goBack(); return; }
+  if(el.dataset.i !== undefined){
+    const c = CARDS[S.cur];
+    if(c.action && !S.actionDone) return;
+    if(el.disabled) return;
+    const i = Number(el.dataset.i);
+    move(i === -1 ? {to: c.go} : c.opts[i]);
+    return;
+  }
+  const act = el.dataset.act;
+  if(act === "start"){ newGame(readNames()); }
+  else if(act === "continue"){ S = load(KEY_STATE, null); S.names = readNames(); view = "game"; prevClock = ""; save(); render(); }
+  else if(act === "menu"){ view = "start"; render(); }
+  else if(act === "home"){ view = "start"; teacherOpen = false; render(); window.scrollTo(0,0); }
+  else if(act === "again"){ newGame(S.names); }
+  else if(act === "teacher"){ view = "teacher"; render(); }
+  else if(act === "pin"){ if($("#pin").value === PIN){ teacherOpen = true; render(); } else { $("#pin").value = ""; $("#pin").placeholder = "falsch"; } }
+  else if(act === "endpreview"){ S = null; view = "teacher"; render(); window.scrollTo(0,0); }
+  else if(act === "resetend"){ drop(KEY_END); el.textContent = "Enden gelöscht"; }
+  else if(act === "resetgame"){ drop(KEY_STATE); el.textContent = "Spiel gelöscht"; }
+  else if(act === "action"){
+    const a = CARDS[S.cur].action;
+    const unlock = () => { S.actionDone = true; save(); el.textContent = "Done ✓"; el.disabled = true;
+      const o = $("#opts"); if(o) o.classList.remove("locked"); const h = document.querySelector(".lockhint"); if(h) h.remove(); };
+    if(!a.timer){ unlock(); return; }
+    let left = a.timer; el.disabled = true; el.textContent = left + " s";
+    clearInterval(timerHandle);
+    timerHandle = setInterval(() => { left--; if(left <= 0){ clearInterval(timerHandle); unlock(); } else el.textContent = left + " s"; }, 1000);
+  }
+});
+document.addEventListener("keydown", ev => { if(ev.key === "Enter" && ev.target.id === "pin"){ const b = document.querySelector('[data-act="pin"]'); if(b) b.click(); } });
+
+render();
+</script>
+</body>
+</html>
