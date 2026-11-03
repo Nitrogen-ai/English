@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word check: villain &ndash; still &middot; Unit 2 &mdash; English Klasse 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --key: #7c5cf0; --edge: #5a39cf; --tint: #ece7fe; --ktext: #ffffff;
+    --ink: #14302d; --ink-soft: #4c6e69; --bg: #f6f4fe; --card: #fff;
+    --line: rgba(20,48,45,0.12); --sun: #ffc23d;
+    --ok: #39b56a; --ok-ink: #1c7a45; --no: #e8607a; --no-ink: #b13350;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink);
+    line-height: 1.65; padding-bottom: 2rem;
+    background-image:
+      linear-gradient(rgba(20,150,140,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20,150,140,0.05) 1px, transparent 1px);
+    background-size: 26px 26px, 26px 26px;
+  }
+  ::selection { background: var(--sun); color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--key); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 5vw; }
+
+  .topbar { background: var(--key); }
+  .back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    max-width: 860px; margin: 0 auto; padding: 0.7rem 5vw;
+    color: var(--ktext); text-decoration: none; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; letter-spacing: 0.06em;
+  }
+  .back:hover { text-decoration: underline; }
+
+  .lp-hero { padding: 2.4rem 0 1.4rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .b-sjw, .b-unit {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.68rem;
+    letter-spacing: 0.08em; padding: 0.28rem 0.65rem; border-radius: 999px;
+  }
+  .b-sjw { background: var(--key); color: var(--ktext); box-shadow: 0 3px 0 var(--edge); }
+  .b-unit { background: var(--tint); color: var(--edge); border: 1.5px solid var(--key); }
+
+  .hero-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
+  .keycap {
+    font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.8rem;
+    color: var(--ktext); background: var(--key); box-shadow: 0 5px 0 var(--edge);
+    width: 62px; height: 62px; border-radius: 16px; display: grid; place-items: center; flex-shrink: 0;
+  }
+  h1 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.5rem, 4.5vw, 2.3rem); line-height: 1.1; }
+
+  .goal { font-size: 1.06rem; margin-bottom: 0.9rem; }
+  .goal b { color: var(--key); }
+  .rlp { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-soft); font-weight: 700; }
+  .rlp .tag { display: inline-block; background: #e3f5f2; padding: 0.06rem 0.42rem; border-radius: 6px; margin: 0 0.15rem 0.25rem 0; }
+  .rlp .tag.neu { background: var(--sun); color: var(--ink); }
+
+  .intro { font-size: 1.06rem; margin: 1.3rem 0 0.4rem; }
+  .intro p { margin-bottom: 0.6rem; }
+  .intro b { color: var(--edge); }
+
+  .block { background: var(--card); border: 2px solid var(--line); border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 1.1rem; }
+  .block h2 {
+    font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.25rem;
+    display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem;
+  }
+  .block h2 .dot { width: 14px; height: 14px; border-radius: 5px; background: var(--key); box-shadow: 0 2px 0 var(--edge); flex-shrink: 0; }
+
+  .figbox { border: 2px solid var(--line); border-radius: 16px; padding: 0.8rem; margin-bottom: 1.1rem; background: #f7fdfc; }
+  .figbox svg { width: 100%; height: auto; display: block; max-width: 320px; margin: 0 auto; animation: floaty 7s ease-in-out infinite; }
+  .figcap { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; color: var(--ink-soft); text-align: center; margin-top: 0.5rem; }
+
+  .quiz-intro { display: flex; gap: 0.5rem; align-items: center; font-weight: 700; color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 1rem; }
+  .quiz-intro .qi { width: 20px; height: 20px; color: var(--key); flex-shrink: 0; }
+
+  .q { border: 2px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; margin-bottom: 0.9rem; background: #fbfffe; transition: border-color 0.15s ease, background 0.15s ease; }
+  .q.solved { border-color: var(--ok); background: #f0fbf4; }
+  .q-text { font-weight: 700; font-size: 1.02rem; margin-bottom: 0.8rem; line-height: 1.5; }
+  .q-text .qnum { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.06em; color: var(--edge); background: var(--tint); padding: 0.14rem 0.5rem; border-radius: 999px; margin-right: 0.5rem; vertical-align: middle; }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+  .opt { display: flex; align-items: center; gap: 0.6rem; text-align: left; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: 11px; padding: 0.6rem 0.7rem; cursor: pointer; transition: transform 0.1s ease, border-color 0.1s ease, background 0.1s ease; }
+  .opt:hover:not(:disabled) { border-color: var(--key); transform: translateY(-1px); }
+  .opt .lt { flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.82rem; background: var(--tint); color: var(--edge); }
+  .opt.correct { border-color: var(--ok); background: #e9fbf0; color: var(--ok-ink); }
+  .opt.correct .lt { background: var(--ok); color: #fff; }
+  .opt.wrong { border-color: var(--no); background: #fdeef1; color: var(--no-ink); }
+  .opt.wrong .lt { background: var(--no); color: #fff; }
+  .opt:disabled { cursor: default; }
+  .q-fb { min-height: 1.3rem; margin-top: 0.7rem; font-weight: 700; font-size: 0.9rem; }
+  .q-fb.ok { color: var(--ok-ink); }
+  .q-fb.no { color: var(--no-ink); }
+  .quiz-progress { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft); margin-top: 0.6rem; }
+  @media (max-width: 520px) { .opts { grid-template-columns: 1fr; } }
+
+  .steps { list-style: none; counter-reset: step; display: grid; gap: 0.8rem; }
+  .steps li { display: flex; gap: 0.85rem; align-items: flex-start; }
+  .steps li::before { counter-increment: step; content: counter(step); flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px; background: var(--key); color: #fff; box-shadow: 0 3px 0 var(--edge); font-family: 'Fredoka', sans-serif; font-weight: 700; display: grid; place-items: center; }
+  .steps .st-body { padding-top: 0.1rem; }
+  .steps b { color: var(--edge); }
+
+  .reveal { margin-top: 1rem; }
+  .reveal-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.98rem;
+    color: var(--ktext); background: var(--key); border: none; border-radius: 12px;
+    padding: 0.65rem 1.1rem; box-shadow: 0 4px 0 var(--edge);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .reveal-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 var(--edge); }
+  .reveal-btn svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
+  .reveal-btn.open svg { transform: rotate(180deg); }
+  .reveal-body {
+    display: none; margin-top: 0.9rem; background: var(--tint); border: 2px dashed var(--key);
+    border-radius: 14px; padding: 1rem 1.1rem; font-size: 0.98rem;
+  }
+  .reveal-body.open { display: block; animation: fadeIn 0.25s ease; }
+  .reveal-body p { margin-bottom: 0.5rem; }
+  .reveal-body p:last-child { margin-bottom: 0; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .example {
+    background: #fff7e2; border: 1.5px solid var(--sun); border-radius: 12px;
+    padding: 0.8rem 1rem; margin-top: 0.9rem; font-size: 0.92rem;
+  }
+  .example b { color: #8a5a00; }
+
+  .safe-note { display: flex; gap: 0.6rem; align-items: center; background: #fff7e2; border: 1.5px solid var(--sun); border-radius: 12px; padding: 0.7rem 0.9rem; margin-top: 1rem; font-weight: 700; color: #8a5a00; font-size: 0.92rem; }
+  .safe-note svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  .merk { background: var(--key); color: #fff; border-radius: 18px; padding: 1.5rem 1.6rem; box-shadow: 0 5px 0 var(--edge); margin-bottom: 1.1rem; }
+  .merk h2 { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.9rem; display: flex; gap: 0.6rem; align-items: center; }
+  .merk h2 svg { width: 24px; height: 24px; }
+  .merk .chain { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: clamp(1.1rem, 3.4vw, 1.5rem); line-height: 1.35; margin-bottom: 1rem; }
+  .merk ol { margin: 0 0 0.5rem 1.25rem; }
+  .merk li { font-weight: 600; margin-bottom: 0.25rem; }
+
+  .selfcheck-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; background: var(--tint); border-radius: 14px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .sc-label { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.98rem; }
+  .sc-stars { display: flex; gap: 0.3rem; }
+  .sc-star { width: 30px; height: 30px; background: none; border: none; padding: 0; cursor: pointer; color: rgba(20,48,45,0.22); transition: transform 0.12s ease, color 0.12s ease; }
+  .sc-star svg { width: 100%; height: 100%; display: block; }
+  .sc-star:hover { transform: scale(1.18) rotate(-6deg); }
+  .sc-star.on { color: var(--sun); }
+  .sc-feedback { font-family: 'Fredoka', sans-serif; font-weight: 600; color: var(--edge); opacity: 0; transition: opacity 0.2s ease; }
+  .sc-feedback.show { opacity: 1; }
+
+  .lp-nav { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-top: 1.6rem; flex-wrap: wrap; }
+  .lp-nav a, .lp-nav span.nav-empty { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.78rem; text-decoration: none; padding: 0.6rem 0.9rem; border-radius: 10px; }
+  .nav-prev, .nav-next { background: var(--card); border: 2px solid var(--key); color: var(--edge); box-shadow: 0 3px 0 var(--edge); transition: transform 0.12s ease, box-shadow 0.12s ease; }
+  .nav-prev:hover, .nav-next:hover { transform: translateY(2px); box-shadow: 0 1px 0 var(--edge); }
+  .nav-over { background: var(--key); color: var(--ktext); box-shadow: 0 3px 0 var(--edge); }
+  .nav-empty { color: rgba(20,48,45,0.28); border: 2px dashed var(--line); }
+
+  footer { text-align: center; margin-top: 2rem; padding: 1.4rem 5vw 0; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-soft); font-weight: 700; }
+
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+  .scorebox { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8rem; background: var(--key); color: #fff; border-radius: 18px; padding: 1.2rem 1.4rem; box-shadow: 0 5px 0 var(--edge); margin: 1.4rem 0 1.1rem; }
+  .scorebox .big { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.6rem; line-height: 1.1; }
+  .scorebox .small { font-size: 0.92rem; opacity: 0.92; }
+  .again-btn { cursor: pointer; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.98rem; color: var(--edge); background: #fff; border: none; border-radius: 12px; padding: 0.6rem 1rem; box-shadow: 0 4px 0 rgba(0,0,0,0.18); }
+  .again-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.18); }
+  .stress { letter-spacing: 0.02em; }
+  .stress u { text-decoration-thickness: 3px; text-underline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../year6-kursuebersicht.html">&#8592; Back to the course overview</a>
+</div>
+
+<div class="wrap">
+  <header class="lp-hero">
+    <div class="badges">
+      <span class="b-sjw">Vocab practice</span>
+      <span class="b-unit">Unit 2 &middot; Part B</span>
+    </div>
+    <div class="hero-row">
+      <div class="keycap">&#9733;</div>
+      <h1>Word check: villain &ndash; still</h1>
+    </div>
+    <p class="goal"><b>Get ready for vocabulary test 4:</b> practise the new words from <i>villain</i> to <i>still</i> (textbook p. 296&ndash;298) &mdash; meanings, words in sentences, possessive pronouns, word stress and opposites.</p>
+    <p class="rlp"><span class="tag neu">Unit 2 &middot; Part B</span><span class="tag">Vocabulary</span><span class="tag">Multiple choice</span></p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p><b>How it works:</b> tap the answer you think is right. Wrong? You get a hint &mdash; just try again. The answers are mixed up every time you reload the page, so you can practise as often as you like.</p>
+      <p>Tip: first try without your book. Then check the words you got wrong in the vocabulary list.</p>
+    </section>
+
+    <div id="quiz"></div>
+
+    <div class="scorebox">
+      <div>
+        <div class="big" id="score">0 / 0</div>
+        <div class="small">solved on the first try: <b id="first">0</b></div>
+      </div>
+      <button class="again-btn" type="button" id="again">&#8635; Mix &amp; try again</button>
+    </div>
+
+    <div class="selfcheck-wrap">
+      <span class="sc-label">How well do you know these words?</span>
+      <div class="sc-stars" id="stars"></div>
+      <span class="sc-feedback" id="fb"></span>
+    </div>
+
+    <nav class="lp-nav">
+      <span class="nav-empty">Unit 2</span>
+      <a class="nav-over" href="../../year6-kursuebersicht.html">&#8801; Course overview</a>
+      <span class="nav-empty">Vocabulary practice</span>
+    </nav>
+  </main>
+
+  <footer>English &middot; Klasse 6 &middot; Schuljahr 2026/27 &middot; Unit 2 &middot; Word check: villain &ndash; still</footer>
+</div>
+
+<script>
+  (function(){
+    // The FIRST option is always the correct one; options are shuffled on load.
+    var BLOCKS = [
+      { title: 'What does it mean?', intro: 'Choose the German meaning.', qs: [
+        { q: 'sidekick', o: ['Begleiter/in, Kumpan/in', 'Schurke, Schurkin', 'Feind/in', 'Verkäufer/in'], h: 'Batman has Robin &mdash; a friend who helps him.' },
+        { q: 'shop assistant', o: ['Verkäufer/in', 'Schulleiter/in', 'Begleiter/in', 'der Laden an der Ecke'], h: 'This person works in a shop and helps you.' },
+        { q: 'tutorial', o: ['die Anleitung, das Lernprogramm', 'die Überschrift', 'das Lernposter', 'die Zeitschrift'], h: 'You watch it on YouTube to learn how to do something.' },
+        { q: '(to) organize', o: ['organisieren; ordnen', 'unterstreichen', 'umziehen (nach)', 'etwas ausstrecken'], h: 'It looks almost like the German word.' },
+        { q: '(to) move (to)', o: ['umziehen (nach)', 'kämpfen (um)', 'bezahlen', 'die Stirn runzeln'], h: 'You go to live in a new house or town.' },
+        { q: 'Actually, ...', o: ['eigentlich; übrigens; tatsächlich', 'bis jetzt; bis hierher', 'mehr ... als', 'nicht so ... wie'], h: 'You use it to correct someone politely.' },
+        { q: 'corner shop', o: ['der Tante-Emma-Laden, der Späti', 'das Kaufhaus', 'der Second-Hand-Laden', 'der Supermarkt'], h: 'A small shop, often at the end of a street.' },
+        { q: 'still', o: ['das Standbild', 'die Stille', 'der Spiegel', 'die Seite'], h: 'Careful: in this unit it is a picture from a film that does not move.' }
+      ]},
+      { title: 'Words in sentences', intro: 'Which word fits best?', qs: [
+        { q: 'It\'s cold outside. ___ your scarf on!', o: ['Put', 'Take', 'Hold', 'Pay'], h: 'The opposite is &ldquo;take off&rdquo;.' },
+        { q: 'My torch doesn\'t work. It needs a new ___.', o: ['battery', 'magazine', 'mirror', 'cloak'], h: 'It gives the torch its energy.' },
+        { q: 'We ___ to Bristol last year, so I go to a new school now.', o: ['moved', 'fought', 'paid', 'held'], h: 'We went to live in another town.' },
+        { q: 'I didn\'t want to go to the museum, but it was ___ really fun.', o: ['actually', 'so far', 'cheap', 'deep'], h: 'It was different from what I expected.' },
+        { q: 'In the photo, the sun is in the ___ right corner.', o: ['top', 'heading', 'side', 'ending'], h: 'The sun is up in the sky.' },
+        { q: 'This bag only costs two pounds. It\'s really ___!', o: ['cheap', 'second-hand', 'intelligent', 'deep'], h: 'It doesn\'t cost much money.' },
+        { q: 'My T-shirt is from a charity shop, so it\'s ___.', o: ['second-hand', 'deep', 'intelligent', 'top'], h: 'Somebody else wore it before you.' },
+        { q: 'Please ___ the new words in your exercise book with a red pen.', o: ['underline', 'organize', 'frown', 'hold out'], h: 'You draw a line under them.' },
+        { q: 'Football is ___ popular as basketball in my class. Everybody loves both!', o: ['as', 'more', 'most', 'than'], h: 'Both sports are equally popular: as ... as.' },
+        { q: 'Which is ___ interesting film you have ever seen?', o: ['the most', 'more', 'most than', 'as'], h: 'Long adjectives: the most + adjective.' }
+      ]},
+      { title: 'Mine, yours, his ...', intro: 'Choose the possessive pronoun.', qs: [
+        { q: 'Is this Leo\'s cap? &ndash; Yes, it\'s ___.', o: ['his', 'him', 'he', 'hers'], h: 'Leo is a boy.' },
+        { q: 'These aren\'t our pencils. They\'re ___. Ask the girls!', o: ['theirs', 'their', 'ours', 'yours'], h: 'They belong to the girls (they).' },
+        { q: 'Is that your phone, Mia? &ndash; Yes, it\'s ___.', o: ['mine', 'my', 'me', 'yours'], h: 'Mia talks about herself.' },
+        { q: 'Our garden is small, but ___ is huge, Mr and Mrs Jones!', o: ['yours', 'your', 'ours', 'you'], h: 'You talk to Mr and Mrs Jones (you).' },
+        { q: 'Whose cat is that? &ndash; It\'s ___. We got it last week.', o: ['ours', 'our', 'us', 'theirs'], h: 'It belongs to us (we).' }
+      ]},
+      { title: 'Stress it right!', intro: 'Which syllable do you stress? The stressed part is underlined.', qs: [
+        { q: 'intelligent', o: ['in<u>tel</u>ligent', '<u>in</u>telligent', 'intel<u>li</u>gent', 'intelli<u>gent</u>'], h: 'Stress on the 2nd syllable &mdash; not like in German.' },
+        { q: 'organize', o: ['<u>or</u>ganize', 'or<u>ga</u>nize', 'orga<u>nize</u>', 'all the same'], h: 'Stress on the 1st syllable.' },
+        { q: 'battery', o: ['<u>bat</u>tery', 'bat<u>te</u>ry', 'batte<u>ry</u>', 'all the same'], h: 'Stress on the 1st syllable &mdash; not like German &ldquo;Batterie&rdquo;.' },
+        { q: 'magazine', o: ['maga<u>zine</u>', '<u>ma</u>gazine', 'ma<u>ga</u>zine', 'all the same'], h: 'Stress on the last syllable.' }
+      ]},
+      { title: 'Opposites & odd one out', intro: 'Think about how the words belong together.', qs: [
+        { q: 'friend &#8596; ?', o: ['enemy', 'sidekick', 'villain', 'shop assistant'], h: 'Someone who fights against you.' },
+        { q: '(to) put a pullover on &#8596; ?', o: ['(to) take a pullover off', '(to) hold a pullover out', '(to) pay for a pullover', '(to) move a pullover'], h: 'The pullover comes off your body.' },
+        { q: 'top &#8596; ?', o: ['bottom', 'side', 'corner', 'still'], h: 'The lowest part.' },
+        { q: 'cheap &#8596; ?', o: ['expensive', 'second-hand', 'deep', 'cool'], h: 'It costs a lot of money.' },
+        { q: 'Odd one out: Which word is NOT something a superhero or villain wears?', o: ['mirror', 'cloak', 'mask', 'outfit'], h: 'You look into it, you don\'t wear it.' },
+        { q: 'Odd one out: Which word is NOT something you read?', o: ['syllable', 'magazine', 'tutorial', 'study poster'], h: 'It is only a part of a word.' }
+      ]}
+    ];
+
+    var letters = ['A','B','C','D'];
+    var quiz = document.getElementById('quiz');
+    var total = 0, solved = 0, first = 0;
+
+    function shuffle(a){ for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    function updateScore(){
+      document.getElementById('score').textContent = (solved === total) ? ('Great! All ' + total + ' solved ★') : ('Solved: ' + solved + ' / ' + total);
+      document.getElementById('first').textContent = first + ' / ' + total;
+      document.querySelectorAll('.quizblock').forEach(function(b){
+        var t = b.querySelectorAll('.q').length, s = b.querySelectorAll('.q.solved').length;
+        b.querySelector('.quiz-progress').textContent = (s === t) ? ('Great! All ' + t + ' solved ★') : ('Solved: ' + s + ' / ' + t);
+      });
+    }
+
+    function render(){
+      quiz.innerHTML = ''; total = 0; solved = 0; first = 0;
+      var n = 0;
+      BLOCKS.forEach(function(block){
+        var sec = document.createElement('section');
+        sec.className = 'block quizblock';
+        sec.innerHTML = '<h2><span class="dot"></span>' + block.title + '</h2><p class="quiz-intro">' + block.intro + '</p>';
+        block.qs.forEach(function(item){
+          n++; total++;
+          var q = document.createElement('div'); q.className = 'q';
+          var stress = block.title.indexOf('Stress') === 0;
+          q.innerHTML = '<p class="q-text"><span class="qnum">' + n + '</span>' + item.q + '</p><div class="opts"></div><p class="q-fb"></p>';
+          var box = q.querySelector('.opts'), fb = q.querySelector('.q-fb');
+          var opts = shuffle(item.o.map(function(text, i){ return { text: text, ok: i === 0 }; }));
+          var tries = 0, btns = [];
+          opts.forEach(function(op, i){
+            var b = document.createElement('button'); b.type = 'button'; b.className = 'opt' + (stress ? ' stress' : '');
+            b.innerHTML = '<span class="lt">' + letters[i] + '</span><span>' + op.text + '</span>';
+            b.addEventListener('click', function(){
+              if (q.classList.contains('solved')) return;
+              tries++;
+              if (op.ok) {
+                b.classList.add('correct'); btns.forEach(function(x){ x.disabled = true; });
+                q.classList.add('solved'); solved++; if (tries === 1) first++;
+                fb.textContent = '✓ Correct!'; fb.className = 'q-fb ok';
+                updateScore();
+              } else {
+                b.classList.add('wrong'); b.disabled = true;
+                fb.innerHTML = '✗ ' + item.h; fb.className = 'q-fb no';
+              }
+            });
+            btns.push(b); box.appendChild(b);
+          });
+          sec.appendChild(q);
+        });
+        var p = document.createElement('p'); p.className = 'quiz-progress'; sec.appendChild(p);
+        quiz.appendChild(sec);
+      });
+      updateScore();
+    }
+    render();
+    document.getElementById('again').addEventListener('click', function(){ render(); window.scrollTo({ top: quiz.offsetTop - 20, behavior: 'smooth' }); });
+
+    var key = 'en6_lp_u2_vocab_villain_still';
+    var msgs = {1:'Fresh start — practice helps!',2:'Getting more confident.',3:'Solid!',4:'You’ve got this — great!'};
+    var svg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18.9 6.1 21l1.2-6.5L2.5 9.9l6.6-.9z"/></svg>';
+    var wrap = document.getElementById('stars'); var fb2 = document.getElementById('fb'); var stars = [];
+    for (var s = 1; s <= 4; s++) { var b = document.createElement('button'); b.className = 'sc-star'; b.type = 'button'; b.innerHTML = svg; b.setAttribute('aria-label', 'Level ' + s); wrap.appendChild(b); stars.push(b); }
+    function paint(l){ stars.forEach(function(st,i){ if(i<l) st.classList.add('on'); else st.classList.remove('on'); }); if(l>0){ fb2.textContent = msgs[l]; fb2.classList.add('show'); } else { fb2.textContent=''; fb2.classList.remove('show'); } }
+    var saved = 0; try { saved = parseInt(localStorage.getItem(key), 10) || 0; } catch(e) {} paint(saved);
+    stars.forEach(function(st,i){ st.addEventListener('click', function(){ var l=i+1; var last = stars[i].classList.contains('on') && (i===stars.length-1 || !stars[i+1].classList.contains('on')); if(last){ paint(0); try{ localStorage.removeItem(key); }catch(e){} } else { paint(l); try{ localStorage.setItem(key,l); }catch(e){} } }); });
+  })();
+</script>
+</body>
+</html>
