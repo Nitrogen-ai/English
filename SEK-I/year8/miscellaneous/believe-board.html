@@ -472,39 +472,6 @@ footer b{color:var(--gold)}
   </div>
 </section>
 
-<!-- ===================== SQUAD SHEET ===================== -->
-<section class="squad">
-  <div class="wrap">
-    <p class="eyebrow" data-i18n="squad_eyebrow">The squad sheet</p>
-    <h2 data-i18n="squad_title">Who handed in what</h2>
-    <p class="lead" data-i18n="squad_lead">Submissions that could be read and matched to a name, plus the pages where the name could not be made out. Search or filter to find a student.</p>
-
-    <div class="toolbar">
-      <div class="filters" id="filters" role="group" aria-label="Filter by status">
-        <button data-f="all" class="active" data-i18n="f_all">All</button>
-        <button data-f="done" data-i18n="f_done">Accomplished</button>
-        <button data-f="unknown" data-i18n="f_unknown">Name unclear</button>
-      </div>
-      <input class="search" id="search" type="search" data-ph-en="Search names…" data-ph-de="Namen suchen…" aria-label="Search names" />
-      <span class="tablecount" id="tablecount"></span>
-    </div>
-
-    <div class="tablewrap">
-      <table>
-        <thead>
-          <tr>
-            <th data-i18n="th_name">Name</th>
-            <th data-i18n="th_status">Status</th>
-            <th data-i18n="th_ref">Reference</th>
-            <th data-i18n="th_sum">Contribution</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== SOURCE NOTES ===================== -->
 <section class="srcnotes">
   <div class="wrap">
@@ -539,31 +506,8 @@ var THEMES = [
 ];
 var MAXF = 11;
 
-var refD = {en:"Digital results · p. 1", de:"Digitale Ergebnisse · S. 1"};
-function refH(p){ return {en:"Handwritten results · p. "+p, de:"Handschriftliche Ergebnisse · S. "+p}; }
-var refU = {en:"Unmatched anonymous page", de:"Nicht zugeordnete, anonyme Seite"};
-var sumU = {en:"Handed in, but no clearly readable or matched name on the page.", de:"Abgegeben, aber kein eindeutig lesbarer oder zugeordneter Name auf der Seite."};
-
-var DONE = [
-  {n:"Mathis", ref:refD, sum:{en:"Group work; handling mistakes constructively, stepping up for outsiders, staying calm.", de:"Gruppenarbeit; konstruktiver Umgang mit Fehlern, sich für Außenseiter einsetzen, ruhig bleiben."}},
-  {n:"Bela", ref:refD, sum:{en:"Reads as “Beta” in the OCR. Group with Mathis, Paul, Oswald.", de:"Im OCR als „Beta“ gelesen. Gruppe mit Mathis, Paul, Oswald."}},
-  {n:"Paul", ref:refD, sum:{en:"Reads as “Paal” in the OCR. Group with Mathis, Bela, Oswald.", de:"Im OCR als „Paal“ gelesen. Gruppe mit Mathis, Bela, Oswald."}},
-  {n:"Oswald", ref:refD, sum:{en:"Reads as “Osudd” in the OCR. Group with Mathis, Bela, Paul.", de:"Im OCR als „Osudd“ gelesen. Gruppe mit Mathis, Bela, Paul."}},
-  {n:"Levia", ref:refH(3), sum:{en:"Explicitly named. Tolerating mistakes, including others, cooling down.", de:"Namentlich genannt. Fehler tolerieren, andere einbeziehen, sich abkühlen."}},
-  {n:"Juna", ref:refH(8), sum:{en:"Explicitly named. Giving space, putting the team above an individual conflict.", de:"Namentlich genannt. Raum geben, das Team über den Einzelkonflikt stellen."}},
-  {n:"Emma", ref:refH(10), sum:{en:"Group with Weiyang. Kindness around mistakes, calming down, the Golden Rule.", de:"Gruppe mit Weiyang. Freundlicher Umgang mit Fehlern, sich beruhigen, Goldene Regel."}},
-  {n:"Weiyang", ref:refH(10), sum:{en:"Group with Emma.", de:"Gruppe mit Emma."}},
-  {n:"Severin", ref:refH(11), sum:{en:"Group with Julian and Noah. Constructive mistakes, quiet communication.", de:"Gruppe mit Julian und Noah. Konstruktiver Umgang mit Fehlern, ruhige Kommunikation."}},
-  {n:"Julian", ref:refH(11), sum:{en:"Group with Severin and Noah.", de:"Gruppe mit Severin und Noah."}},
-  {n:"Noah", ref:refH(11), sum:{en:"Group with Severin and Julian.", de:"Gruppe mit Severin und Julian."}},
-  {n:"Felix L.", ref:refH(1), sum:{en:"Reads as “FPl:×L” in the OCR. Mistakes help you learn; talk it through with a neutral person.", de:"Im OCR als „FPl:×L“ gelesen. Fehler helfen beim Lernen; mit einer neutralen Person sprechen."}}
-];
-
-var UNKNOWN_NAMES = ["Nathan","Leah","Ada","Felix G.","Matthäus","Milo","Leandra","Alexandra","Charlotte","Laurenzia","Rio","Marinus","Clara","Caroline","Laura","Franz","Jonathan","Ayumi"];
-
+/* Namensliste und Abgabestatus bewusst entfernt (Datenschutz). */
 var ROSTER = [];
-DONE.forEach(function(d){ ROSTER.push({name:d.n,status:"done",ref:d.ref,sum:d.sum}); });
-UNKNOWN_NAMES.forEach(function(n){ ROSTER.push({name:n,status:"unknown",ref:refU,sum:sumU}); });
 
 /* ----------------------------- i18n strings ----------------------------- */
 var T = {
@@ -592,9 +536,8 @@ var T = {
     empty:"No students match your filter.",
     notes_summary:"Notes on the source data",
     notes:[
-      "Page 2 (marked “K5”) could not be read: the OCR fragmented it badly, so no rule ideas or name could be taken from it.",
+      "Page 2 (marked “K5”) could not be read: the OCR fragmented it badly, so no rule ideas could be taken from it.",
       "Pages 6 and 7 are the same submission scanned twice — counted once.",
-      "Names in quotation marks (e.g. “Beta”, “Paal”, “Osudd”, “FPl:×L”) are the raw OCR readings, matched to the most likely student name.",
       "Idea counts are per theme: one point each time a group wrote a version of that idea across both files."
     ],
     foot_a:"The rulings are yours.",
@@ -626,9 +569,8 @@ var T = {
     empty:"Keine Treffer für diesen Filter.",
     notes_summary:"Hinweise zu den Quelldaten",
     notes:[
-      "Seite 2 (mit „K5“ markiert) war nicht lesbar: Das OCR hat sie stark zerstückelt, daher konnten weder Regel-Ideen noch ein Name übernommen werden.",
+      "Seite 2 (mit „K5“ markiert) war nicht lesbar: Das OCR hat sie stark zerstückelt, daher konnten keine Regel-Ideen übernommen werden.",
       "Seite 6 und 7 sind dieselbe Abgabe, zweimal gescannt — nur einmal gezählt.",
-      "Namen in Anführungszeichen (z. B. „Beta“, „Paal“, „Osudd“, „FPl:×L“) sind die reinen OCR-Lesungen, dem wahrscheinlichsten Namen zugeordnet.",
       "Die Zählung ist pro Thema: ein Punkt jedes Mal, wenn eine Gruppe in einer der Dateien eine Variante dieser Idee geschrieben hat."
     ],
     foot_a:"Die Beschlüsse gehören euch.",
@@ -738,7 +680,7 @@ function renderIdeas(){
 
 /* ----------------------------- render: roster ----------------------------- */
 function renderRoster(){
-  var tbody = $("#tbody"); tbody.innerHTML = "";
+  var tbody = $("#tbody"); if(!tbody) return; tbody.innerHTML = "";
   var shown = 0;
   ROSTER.forEach(function(p){
     if(filter !== "all" && p.status !== filter) return;
@@ -817,13 +759,13 @@ function init(){
     save(); toast(T[lang].t_reset);
   });
 
-  $("#filters").addEventListener("click", function(e){
+  if($("#filters")) $("#filters").addEventListener("click", function(e){
     var b = e.target.closest("button[data-f]"); if(!b) return;
     filter = b.getAttribute("data-f");
     $all("#filters button").forEach(function(x){ x.classList.toggle("active", x===b); });
     renderRoster();
   });
-  $("#search").addEventListener("input", function(){ query = this.value.trim().toLowerCase(); renderRoster(); });
+  if($("#search")) $("#search").addEventListener("input", function(){ query = this.value.trim().toLowerCase(); renderRoster(); });
 }
 
 if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
