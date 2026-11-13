@@ -157,49 +157,51 @@ const when = s => `<span class="hl w-when">${s}</span>`;
 const how = s => `<span class="hl w-how">${s}</span>`;
 const why = s => `<span class="hl w-why">${s}</span>`;
 
-/* Highlighting a text and taking notes (SB p. 66). Solutions: Handreichung S. 144–146.
+/* Highlighting a text and taking notes (SB p. 66). Solutions: Handreichung S. 144–146 + SB-Lösungen.
    Colour code from the textbook: green = what, yellow = where, red = when,
    orange = how, blue = who, purple = why. */
 const PAGES = [
   { part: "Start", group: "start", nav: "Start", ref: "Textbook p. 66 · Books closed", title: "How do you remember a text?", sub: "Think first. Then click to see some ideas.", k: "340px", items: [
     { k: "What do you do when you want to remember what happens in a text?", a: `${it("I read the text several times.")} · ${it("I write down seven words. Then I can tell the story with these words.")}` },
-    { k: "Today you learn two important techniques for texts:", a: `${b("highlighting")} and ${b("taking notes")}` },
+    { k: "When you read a text, you often have to …", a: `… ${b("answer questions")} and ${b("say what it is about")}.` },
+    { k: "Today you learn two useful skills:", a: `${b("highlighting a text")} and ${b("taking notes")}` },
     { k: "What do you need today?", a: `coloured pens: ${what("green")} ${where("yellow")} ${when("red")} ${how("orange")} ${who("blue")} ${why("purple")}` } ] },
-  { words: 0, next: "📖 Open your textbook on p. 66. Read the box at the top. What are the two techniques?" },
+  { words: 0, next: "📖 Open your textbook on p. 66. Read the box at the top. What are the two skills?" },
 
-  { part: "1 Highlighting", group: "hl", nav: "Ex 1", ref: "Textbook p. 66 · Ex. 1 · Highlighting a text", title: "Which colour is for which question word?", sub: "Look at the highlighted words in the text. Match each colour to a wh-question word.", k: "200px", dense: true, items: [
-    { k: what("green"), a: `${b("what")} – things, activities` },
-    { k: where("yellow"), a: `${b("where")} – places` },
-    { k: when("red"), a: `${b("when")} – days, times` },
-    { k: how("orange"), a: `${b("how")} – the way you do it, how much` },
-    { k: who("blue"), a: `${b("who")} – people` },
-    { k: why("purple"), a: `${b("why")} – reasons` } ] },
-  { group: "hl", nav: "Rules", ref: "Textbook p. 66 · Reading box · How to highlight texts", title: "How to highlight texts", sub: "Why do the colours help? Should you highlight whole sentences?", k: "260px", next: "✍️ Copy the rules into your exercise book.", items: [
+  { part: "1 Highlighting", group: "hl", nav: "Ex 1", ref: "Textbook p. 66 · Ex. 1 · Churchill Square by Ryan Evans", title: "Which colour is for which question word?", sub: "Read Ryan's text. Look at the highlighted words. Match each colour to a wh-question word.", k: "170px", dense: true, items: [
+    { k: what("green"), a: `${b("what")} – Churchill Square · shopping centre · clothes shops, sports shops and toy shops` },
+    { k: where("yellow"), a: `${b("where")} – near the beach in Brighton · in the cafés` },
+    { k: when("red"), a: `${b("when")} – on Saturdays` },
+    { k: how("orange"), a: `${b("how")} – by bus · by car` },
+    { k: who("blue"), a: `${b("who")} – my best friend, Leo · Leo's mum` },
+    { k: why("purple"), a: `${b("why")} – because it has good clothes shops` } ] },
+  { group: "hl", nav: "Rules", ref: "Textbook p. 66 · Reading box · How to highlight texts", title: "How to highlight texts", sub: "The wh-questions (who, what, where, when, why and how) help you to find key details.", k: "260px", next: "✍️ Copy the rules into your exercise book.", items: [
     { k: "Why colours?", a: "You can find the information again very quickly – especially in long texts." },
     { k: "Whole sentences?", a: `${no("No!")} Then everything looks important and you can't find the key details.` },
     { k: "Rule 1", a: `Find ${b("key details")} with the help of the ${b("wh-question words")}.` },
     { k: "Rule 2", a: `Use a ${b("different colour")} for each wh-question word.` },
     { k: "Rule 3", a: `Highlight important ${b("words and phrases")}. Don't highlight complete sentences.` } ] },
 
-  { part: "2 Taking notes", group: "notes", nav: "Tips", ref: "Textbook p. 66 · Ex. 2 · Reading box", title: "Why do we take notes?", sub: "Read the tips in the second box together. (You can talk in German here.)", k: "300px", items: [
+  { part: "2 Taking notes", group: "notes", nav: "Tips", ref: "Textbook p. 66 · Ex. 2 · Reading box", title: "When you take notes …", sub: "Read the tips in the second box. Why do we take notes? (You can talk in German here.)", k: "300px", items: [
     { k: "What are notes for?", a: "They help you to remember information and to talk or write about it later." },
-    { k: "How are notes different from sentences?", a: `no full sentences · arrows ${b("→")} · symbols ${b("❤ ☺ ☹ + =")} · short forms ${b("Sat. · St. · hw")}` },
-    { k: "How to take notes", a: `Only write down the ${b("key details")}. · Use ${b("your own words")}. · Use ${b("short forms and symbols")}.` } ] },
-  { group: "notes", nav: "Ex 2", ref: "Textbook p. 66 · Ex. 2 · Taking notes", title: "Example notes on Ryan's text", sub: "Compare with a partner. Everybody has their own symbols – but use yours the same way every time.", k: "220px", items: [
-    { k: where("Where?"), a: "❤ Churchill Sq. / shopping centre near beach" },
-    { k: what("What?"), a: "clothes, sports, etc. + restaurants" },
-    { k: `${when("When?")} ${who("Who?")}`, a: "Ryan: on Sat. + Leo (best friend)" },
-    { k: how("How?"), a: "bus or car or Leo's mum" },
-    { k: why("Why?"), a: "☺ good clothes shops: try on + take pictures" } ] },
+    { k: "Tip 1 + 2", a: `${b("don't write everything down")} · note the ${b("key details")} only (e.g. answers to wh-questions)` },
+    { k: "Tip 3 + 4", a: `use ${b("your own words")} · use ${b("words, short forms and symbols")}` },
+    { k: "Symbols and short forms", a: `${b("❤ ☺ ☹ + = →")} · ${b("Sq. · Sat. · St. · hw")}` } ] },
+  { group: "notes", nav: "Ex 2", ref: "Textbook p. 66 · Ex. 2 · Taking notes", title: "Take notes for the rest of Ryan's text", sub: "The first two notes are in the book. Compare with a partner – everybody has their own symbols.", k: "190px", items: [
+    { k: "in the book", a: "– ❤ Churchill Sq. / shopping centre near beach  – clothes, sports, etc. + restaurants" },
+    { k: `${when("When?")} ${who("Who?")}`, a: "– Sat. + best friend Leo" },
+    { k: how("How?"), a: "– long way: bus or Leo's mum → car" },
+    { k: why("Why?"), a: "– ❤ because good clothes shops" },
+    { k: what("What?"), a: "– try on clothes + take photos → compare pics before buying" } ] },
 
-  { part: "3 Online shopping", group: "shop", nav: "Ex 3a", ref: "Textbook p. 66 · Ex. 3a · A text about online shopping", title: "Highlight the key details", sub: "Work on your copy. Use the colour code from ex. 1. Then click to check.", k: "150px", dense: true, items: [
-    { k: who("Who?"), a: "I (the writer) · Mum · Mum and Dad" },
-    { k: what("What?"), a: "need new things · books, games, T-shirts, … · the digital shopping bag · Mum checks the bag and pays · find cheaper things" },
+  { part: "3 Online shopping", group: "shop", nav: "Ex 3a", ref: "Textbook p. 66 · Ex. 3a · Bedroom shopping by Priya Patel", title: "Highlight the key details", sub: "Work on a copy of Priya's text. You can use just one colour. There's no 'right' or 'wrong' – compare examples.", k: "150px", dense: true, items: [
+    { k: who("Who?"), a: "I (Priya) · Mum · Mum and Dad" },
+    { k: what("What?"), a: "need new things · books, games, T-shirts, … · put things into the digital shopping bag · Mum checks the bag and pays · find cheaper things" },
     { k: where("Where?"), a: "online · from my bedroom · on different websites" },
-    { k: when("When?"), a: "sometimes · 24 hours a day · in the evenings · finish my homework first" },
-    { k: how("How?"), a: "find a website and put things into the shopping bag · quick and easy" },
-    { k: why("Why?"), a: "because it is quick and easy · no long shopping trips · you can compare prices" } ] },
-  { group: "shop", nav: "Ex 3b", ref: "Textbook p. 66 · Ex. 3b · Taking notes", title: "Take notes on the text", sub: "Use your highlighting. Use your own words, short forms and symbols.", kc: "60px", dense: true, columns: [
+    { k: when("When?"), a: "24 hours a day · in the evenings · finish my homework first" },
+    { k: how("How?"), a: "find a website · quick and easy" },
+    { k: why("Why?"), a: "because it is quick and easy · no long shopping trips with Mum and Dad · compare prices" } ] },
+  { group: "shop", nav: "Ex 3b", ref: "Textbook p. 66 · Ex. 3b · Taking notes", title: "Take notes on Priya's text", sub: "Read your highlighted details. Use your own words, short forms and symbols.", kc: "60px", dense: true, columns: [
     { title: "Shopping online", items: [
       { k: "1", a: "shops online for new things" },
       { k: "2", a: "puts books, games, T-shirts, … into shopping bag" },
@@ -210,17 +212,17 @@ const PAGES = [
       { k: "6", a: "easy to compare prices" },
       { k: "7", a: "can shop 24h/day" },
       { k: "8", a: "shops in evenings – has to finish hw first" } ] } ] },
-  { group: "shop", nav: "Ex 3c", ref: "Textbook p. 66 · Ex. 3c · Partner check", title: "Give your partner feedback", sub: "Use the rules from the two boxes as your checklist.", k: "260px", next: "🗣️ Present some notes to the class. Your partner says the feedback again.", items: [
-    { k: "Key details?", a: it("You found all the key details. / You forgot the time: in the evenings.") },
-    { k: "Colours?", a: it("You used a different colour for each wh-question word.") },
+  { group: "shop", nav: "Ex 3c", ref: "Textbook p. 66 · Ex. 3c · Partner check", title: "Give your partner feedback", sub: "Did he/she mark all the key details? Did he/she follow the tips in 2? More help: SMC 2, p. 216", k: "260px", next: "🗣️ Present some notes to the class. Your partner says the feedback again.", items: [
+    { k: "Key details?", a: it("You marked all the key details. / You forgot the time: in the evenings.") },
     { k: "Words, not sentences?", a: it("You didn't highlight complete sentences. Well done!") },
-    { k: "Notes?", a: it("Your notes are short. You used your own words and a symbol (=). Nice!") } ] },
+    { k: "Own words?", a: it("You used your own words. You didn't copy the text.") },
+    { k: "Short forms and symbols?", a: it("Your notes are short. You used a symbol (=) and a short form (hw). Nice!") } ] },
 
   { part: "Check", group: "check", nav: "Quick check", ref: "Quick check · I can highlight a text and take notes", title: "Quick check", sub: "Say the answer. Then click to check.", k: "470px", next: "🏠 Workbook p. 37, ex. 20 · p. 38, ex. 21 (in ex. 20 use the colours from the workbook)", items: [
     { k: "Which colour is for where?", a: where("yellow") },
     { k: "Do you highlight complete sentences?", a: `${no("No")} – only important words and phrases.` },
     { k: "Notes: “I go swimming every Saturday with my sister.”", a: b("swimming – every Sat. + sister") },
-    { k: "Short forms: Saturday · Street · homework", a: b("Sat. · St. · hw") },
+    { k: "Short forms: Saturday · Square · homework", a: b("Sat. · Sq. · hw") },
     { k: "What can ❤ mean in your notes?", a: `${b("love")} / ${b("favourite")}` },
     { k: "What do you want to do better with the next text? Write down two things.", a: it("I want to use one colour for each question word. I want to write shorter notes.") } ] },
 ];
