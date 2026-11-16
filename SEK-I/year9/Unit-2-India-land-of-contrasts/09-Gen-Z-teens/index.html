@@ -121,8 +121,28 @@
     .sub { font-size: 1rem; }
   }
 </style>
+<style>
+  /* Zeitsperre: bis OPEN_AT nur Hinweis statt Seite */
+  #lock { display: none; height: calc(100vh - 24px); height: calc(100dvh - 24px); align-items: center; justify-content: center; }
+  html.locked #lock { display: flex; }
+  html.locked .shell { display: none; }
+  #lock .card { background: rgba(255,255,255,.96); border-radius: 18px; box-shadow: 0 20px 40px rgba(0,0,0,.15); padding: 32px 28px; max-width: 460px; text-align: center; }
+  #lock h1 { margin: 0 0 10px; }
+  #lock p { color: var(--soft); font-size: 1.1rem; line-height: 1.4; }
+</style>
+<script>
+  // Seite gesperrt bis Freitag, 13.11.2026, 10:45 Uhr (Berlin, MEZ = UTC+1).
+  const OPEN_AT = new Date("2026-11-13T10:45:00+01:00");
+  if (Date.now() < OPEN_AT) {
+    document.documentElement.classList.add("locked");
+    const t = setInterval(() => {
+      if (Date.now() >= OPEN_AT) { clearInterval(t); document.documentElement.classList.remove("locked"); }
+    }, 15000);
+  }
+</script>
 </head>
 <body>
+<div id="lock"><div class="card"><h1>Not open yet</h1><p>This page opens on Friday at 10:45.</p></div></div>
 <div class="shell">
   <nav id="nav" aria-label="Pages"></nav>
   <main id="main"></main>
